@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: Jedsek's blogs
+subtitle: '与其浊富 | 宁比清贫'
+description: '人类的伟大之处<br>正是在于能够直面自身的渺小'
 keywords:
-author: John Doe
-language: en
+author: Jedsek
+language: zh-CN
 timezone: ''
 
 # URL
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: hexo-theme-next
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
