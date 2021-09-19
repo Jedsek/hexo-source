@@ -2,15 +2,16 @@
 title: rs-async-p1-课程说明
 date: 2021-09-12 11:43:19
 top: 9999
-tags: 
+tags: rust  
+categories: rust-async
 ---
-> 欢迎大家来到 rust 的异步系列教学  
+> 欢迎大家来到 Rust 的 异步 系列教学  
 <!-- more -->
 # 指南  
 - - -
 ## 课程说明  
 传送门如下:  
-- [博客 : Rust异步系列](https://jedsek-articles.blog.luogu.org/#type=rust-async) 
+- [博客 : Rust异步系列](https://jedsek.github.io/categories/rust-async/) 
 - [B站视频 : Rust编程语言-异步(Async)](https://www.bilibili.com/video/BV1uh41167Np)
 
 `博客` 的更新速度, 快于 `视频`  
@@ -23,7 +24,7 @@ tags:
 
 不需要太深, 基础便已足够  
 - - - 
-## 资料来源：
+## 资料来源
 1. `官方书籍`  
 [官方异步书籍](https://rust-lang.github.io/async-book/**)
 
