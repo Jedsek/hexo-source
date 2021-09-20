@@ -1,5 +1,5 @@
 ---
-title: about
+title: About
 type: about
 date: 2021-09-19 23:00:11
 comments: false
