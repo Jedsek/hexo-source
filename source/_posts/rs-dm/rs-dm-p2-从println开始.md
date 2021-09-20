@@ -25,6 +25,7 @@ fn main() {
 为什么括号里面的参数可以不一样?  
 
 亲爱的 TRPl 在教你写 [Hello World!](https://kaisery.github.io/trpl-zh-cn/ch01-02-hello-world.html#%E5%88%86%E6%9E%90%E8%BF%99%E4%B8%AA-rust-%E7%A8%8B%E5%BA%8F) 的时候, 告诉过你: 名字后加个感叹号, 就是个 `宏(macro)`  
+注: macro 的读音: [ˈmækroʊ]
 
 可是 macro 到底是啥?  
 ~~(算了算了, 反正只要会用就行了, 于是你点击了该网页的叉叉)~~  
@@ -148,6 +149,7 @@ fn main() {}
 ```
 
 3. 调用, 宏名+感叹号+传参:  
+(传入的参数, 若与任何 rule 都不匹配, 则报错)
 
 ```rust
 macro_rules! xxx {
