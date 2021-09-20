@@ -1,5 +1,6 @@
 ---
 title: rs-async-p4-状态的保存/变换
+abbrlink: rs-async-p4
 date: 2021-09-12 14:50:14
 top: 9996
 tags: rust

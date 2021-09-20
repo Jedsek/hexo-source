@@ -1,5 +1,6 @@
 ---
 title: rs-async-p3-Future
+abbrlink: rs-async-p3
 date: 2021-09-12 13:56:48
 top: 9997
 tags: rust

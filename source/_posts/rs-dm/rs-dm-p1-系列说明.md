@@ -1,5 +1,6 @@
 ---
-title: rs-dm-p1-课程说明
+title: rs-dm-p1-系列说明
+abbrlink: rs-dm-p1
 date: 2021-09-19 21:51:27
 top: 9899
 tags: rust
@@ -7,9 +8,7 @@ categories: rust-declarative-macro
 ---
 > 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列教学  
 <!-- more -->
-# 指南
-- - -
-## 课程说明:  
+# 课程说明:  
 **注: 请注意是 声明宏**
 传送门如下:  
 - [博客 : Rust声明宏系列](https://jedsek.github.io/categories/rust-declarative-macro/) 
@@ -20,7 +19,7 @@ categories: rust-declarative-macro
 
 此系列, 我们将学习Rust中的 `声明宏`  
 - - - 
-## 参考资料
+# 参考资料
 1. `书籍`
 - [宏小册](https://zjp-cn.github.io/tlborm/)  
 - [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/macro/macro.html)
@@ -29,7 +28,7 @@ categories: rust-declarative-macro
 - [【译】Rust宏: 教程与示例 (一)](https://zhuanlan.zhihu.com/p/353421021)
 - [【译】Rust宏: 教程与示例 (二)](https://zhuanlan.zhihu.com/p/356427780)
 - - -
-## 欢迎骚扰  
+# 欢迎骚扰  
 在下QQ: `2948804617`   
 如果有问题, 可以一起探讨 ~~(但别忘了我是大菜鸡哦)~~  
 

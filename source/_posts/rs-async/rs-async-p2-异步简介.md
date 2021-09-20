@@ -1,9 +1,10 @@
 ---
 title: rs-async-p2-异步简介
-date: 2021-09-12 12:04:09
+abbrlink: rs-async-p2
 top: 9998
 tags: rust
 categories: rust-async
+date: 2021-09-12 12:04:09
 ---
 > 来简单介绍一下异步吧  
 <!-- more -->
