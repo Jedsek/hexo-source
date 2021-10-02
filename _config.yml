@@ -49,7 +49,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: '    '
   wrap: true
   hljs: false
@@ -57,7 +57,7 @@ prismjs:
   enable: false
   preprocess: true
   line_number: true
-  tab_replace: ''
+  tab_replace: '    '
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -100,14 +100,14 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-next
+theme: next
 
 # Search
 search:
   path: search.xml
   field: post
   format: html
-  limit: 10000
+  limit: 100000
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
