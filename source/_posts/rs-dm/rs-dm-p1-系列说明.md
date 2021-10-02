@@ -4,7 +4,7 @@ abbrlink: rs-dm-p1
 date: 2021-09-19 21:51:27
 top: 9899
 tags: rust
-categories: rust-declarative-macro
+categories: rust-decl-macro
 ---
 > 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列教学  
 <!-- more -->
