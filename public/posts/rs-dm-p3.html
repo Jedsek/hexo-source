@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="正式系统的关于 macro 的 声明与使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rs-dm-p3-声明与使用">
+<meta property="og:url" content="https://jedsek.github.io/posts/rs-dm-p3">
+<meta property="og:site_name" content="Jedsek&#39;s blog">
+<meta property="og:description" content="正式系统的关于 macro 的 声明与使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-20T12:06:15.000Z">
+<meta property="article:modified_time" content="2021-10-02T07:28:09.877Z">
+<meta property="article:author" content="Jedsek">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://jedsek.github.io/posts/rs-dm-p3.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jedsek.github.io/posts/rs-dm-p3","path":"posts/rs-dm-p3.html","title":"rs-dm-p3-声明与使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>rs-dm-p3-声明与使用 | Jedsek's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Jedsek's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与其浊富 | 宁比清贫</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>about</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-amp-amp-%E5%B1%95%E5%BC%80"><span class="nav-number">1.</span> <span class="nav-text">参数 &amp;&amp; 展开</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">本质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">2.1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EAST"><span class="nav-number">2.2.</span> <span class="nav-text">关于AST</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0macro"><span class="nav-number">3.</span> <span class="nav-text">回到macro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#token%E7%B1%BB%E5%9E%8B%E5%AF%B9%E7%85%A7"><span class="nav-number">3.2.</span> <span class="nav-text">token类型对照</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jedsek"
+      src="/images/blue.jpg">
+  <p class="site-author-name" itemprop="name">Jedsek</p>
+  <div class="site-description" itemprop="description">人类的伟大之处<br>正是在于能够直面自身的渺小</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jedsek.github.io/posts/rs-dm-p3">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blue.jpg">
+      <meta itemprop="name" content="Jedsek">
+      <meta itemprop="description" content="人类的伟大之处<br>正是在于能够直面自身的渺小">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jedsek's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rs-dm-p3-声明与使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-20 20:06:15" itemprop="dateCreated datePublished" datetime="2021-09-20T20:06:15+08:00">2021-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-02 15:28:09" itemprop="dateModified" datetime="2021-10-02T15:28:09+08:00">2021-10-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/rust-decl-macro/" itemprop="url" rel="index"><span itemprop="name">rust-decl-macro</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>正式系统的关于 macro 的 声明与使用</p>
+</blockquote>
+<span id="more"></span>  
+<p>前一节, 我们大概清楚了 macro 的结构<br>现在让我们再来简单复习一遍:  </p>
+<ol>
+<li><code>macro_rules! (这是特点语法)</code> 来创建一个 macro</li>
+<li><code>rule(s) (匹配分支: 参数 =&gt; 展开代码)</code> 放在最外层的花括号内  </li>
+<li>调用宏时, 宏名 + 感叹号 + 括号内传参, 比如 <code>println!()</code></li>
+</ol>
+<hr>
+<h1 id="参数-amp-amp-展开"><a href="#参数-amp-amp-展开" class="headerlink" title="参数 &amp;&amp; 展开"></a>参数 &amp;&amp; 展开</h1><p>是时候引入一些新的东西了, 让我们来看个例子:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> my_macro &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;</span><br><span class="line">        $a</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ($a: expr, $b: expr) =&gt; &#123;</span><br><span class="line">        $a + $b</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    my_macro!(<span class="number">1</span>);      <span class="comment">// 1</span></span><br><span class="line">    my_macro!(<span class="number">1</span>, <span class="number">2</span>);   <span class="comment">// 1 + 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到, 每个 rule 之间的参数, 都有点奇怪:<br>$ + 参数名 + 类型说明, 如 <code>$a: expr</code><br>为何需要特意加上 $ 这个前缀? 马上就要讲到啦~  </p>
+<p>先来专注于 <code>expr</code> 这个后置的类型:<br><code>expr</code>, 全称为 <code>expression (表达式)</code><br>在第一次宏调用, 我们传入了 <code>1 (i32类型的字面量)</code>, 这当然是个表达式, 会与第一个 rule 成功匹配<br>这时, <code>my_macro!(1)</code> 这个部分, 就会被替换为 <code>相应的展开代码</code>  </p>
+<p>当全部的宏, 都被 替换/展开 后, 再编译这些生成的最终版本代码 </p>
+<p>对于每个 rule, 实际上可以这么抽象它: <code>(pattern) =&gt; (expansion)</code><br>即 <code>(模式) =&gt; (展开代码)</code> </p>
+<p>macro 的本质, 是根据传入的参数, 将调用部分给 替换/展开 为相应代码<br>即一个AST (Abstract Syntax Tree, 抽象语法树) 的节点 (设计编译原理, 马上就讲)<br>简单理解: <code>macro 的本质, 就是代码生成器, 一段用于生成代码的代码</code>  </p>
+<p>为了加深印象, 我们来玩个对应游戏:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">($a: expr) =&gt; &#123;$a&#125;;                     <span class="comment">// the first rule</span></span><br><span class="line">  |             |  </span><br><span class="line">  |         	|</span><br><span class="line">( <span class="number">1</span>      )      <span class="number">1</span>                       <span class="comment">// pass &amp;&amp; expand </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">($a: expr, $b: expr) =&gt; &#123; $a + $b&#125;;    <span class="comment">// the second rule</span></span><br><span class="line">  |      |  |              |    |</span><br><span class="line">  |      |  |              |    |</span><br><span class="line">( <span class="number">1</span>      ,  <span class="number">2</span>      ) =&gt;    <span class="number">1</span> +  <span class="number">2</span>      <span class="comment">// pass &amp;&amp; expand</span></span><br></pre></td></tr></table></figure>
+
+<p>我使用 <code>|</code> 来联系 <code>形参 &amp;&amp; 实参</code><br>你会惊讶的发现, 传参时的对应关系们, 除了 <code>$a &amp;&amp; 1</code> 与 <code>$b &amp;&amp; 2</code>, 还有个 <code>, &amp;&amp; ,</code>  </p>
+<p>对于第三组关系, 其实它也是参数, 不过已经固定死了<br>这种固定的, 如同字面量一样的参数, 其类型其实叫做 <code>Literal Token Tree(字面量标记树)</code>  </p>
+<p>因此, 假若 rule 中的参数没有 $前缀 进行区分:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> my &#123;</span><br><span class="line">    (a:expr) =&gt; &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    my!(<span class="number">1</span>);      <span class="comment">// no</span></span><br><span class="line">    my!(a:expr);  <span class="comment">// yes</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是特别狗日?  </p>
+<p>切记: <code>当你需要在传参时, 传入非字面量参数, 参数名前必须加上 $前缀 进行修饰</code>  </p>
+<p>接下来, 就要正式地讲讲本质了</p>
+<hr>
+<h1 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h1><h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>刚刚简单提了一嘴. macro 实际上是个代码生成器, 是一段用于生成代码的代码  </p>
+<p>为了理解这段话, 让我先来介绍一个概念: <code>token</code>  </p>
+<p>在更加抽象的层面上, 我并不将1视作i32类型, 并不将true视作bool类型, 并不将”xx”视作&amp;str类型<br>而是继续地进行抽象, 将这些值, 通通归类于 <code>expr类型(表达式类型)</code> 之下    </p>
+<p><code>token类型</code>, 我暂时以这么个简单名字, 指代某种更加抽象, 包含更广的类型<br>比如 表达式(expr类型), 语句(stmt类型), 标识符(ident类型) 等    </p>
+<p>实际上, 你写出来的Rust源代码, 将被解析为一大堆 <code>token</code><br>而这些 token, 之后又会被解析为 <code>AST (抽象语法树)</code>  </p>
+<h2 id="关于AST"><a href="#关于AST" class="headerlink" title="关于AST"></a>关于AST</h2><p>你想想, 假若由你来设计一个Rust编译器<br>首先, 不同的人写代码的风格不同, 那么你如何分析不同源码, 并生成目标码?<br>一步登天, 直接由源码生成目标码是不现实的, 难度太大  </p>
+<p>因此啊, 得有一些介于 源码与目标码 之间的 <code>中间表示/代码 (IR)</code>, 层层递进, 以达目的<br>注意, 是一些, 而不是一个, 这很好理解, 因为一层可能不够嘛<br>所以多来几层 <code>IR (中间代码)</code> , 顺便进行下分工 (每一层都处理了些特定的事情), 这也增强了可维护性  </p>
+<p>比如 <code>AST</code> , 它就是一种 IR, 它是目标码被生成的关键, 是代码的骨架<br>编译器在AST的基础上, 可能会再来几层中间代码 (进行优化或者其他什么功能), 最后生成目标码<br>(以 Rust 为例, 出现的大致IR: AST -&gt; HIR -&gt; MIR -&gt; LLVM_IR)</p>
+<p>而生成AST需要点啥? 需要一些 <code>token</code><br>比如 expr(表达式), stmt(语句), ident(标识符) 等  </p>
+<p>在这些小玩意的基础上, 组成一个更加庞大复杂的整体结构<br>它将tokens组织起来, 表达了代码的逻辑<br>这个庞然大物便是 AST 了  </p>
+<p>而 token 的生成, 是万里长征的第一步<br>只有正确地将 token 分门别类, 你才能创建正确的AST (这里的正确不包括逻辑正确)</p>
+<p>还记得之前在对应游戏中的一对吗: <code>, &amp;&amp; ,</code><br>我们说它是 <code>Literal Token Tree(字面量标记树)</code><br>字面上的意思: 这个 token 是字面量  </p>
+<p>但为什么它是单个token, 却又叫做token tree?<br>因为 <code>tree</code> 是可以只有一个节点的嘛<br>还可以有比较长的, 比如我们之前提到的宏:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> my &#123;</span><br><span class="line">    <span class="comment">// `a:expr` 是 `literal token tree`</span></span><br><span class="line">    (a:expr) =&gt; &#123; &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="回到macro"><a href="#回到macro" class="headerlink" title="回到macro"></a>回到macro</h1><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>通过中间代码, 我们层层递进, 向最终的目标码前进  </p>
+<p>其实你只需晓得, 编译成二进制的可执行版本, 需要 AST, 而 组成 AST 又需要 token 协助<br><del>(不明白也根本没有关系, 因为我实在懒得多讲编译方面了, 真的麻烦)</del></p>
+<p>macro 中, 其参数的类型, 便是token类型:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个macro, 求和传入的参数</span></span><br><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    () =&gt; &#123;&#125;;                            <span class="comment">// 空参时, 啥也不干</span></span><br><span class="line">    ($a: expr) =&gt; &#123; $a &#125;;                <span class="comment">// 一个参数时, 求和结果是自己</span></span><br><span class="line">    ($a: expr ; $b:expr) =&gt; &#123; $a + $b&#125;    <span class="comment">// 两个参数, 正常求和</span></span><br><span class="line">                                         <span class="comment">// 更多参数, 等我们学 `重复` 语法后再说  </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!();        <span class="comment">// 与第一个rule匹配, 木有展开的实际代码</span></span><br><span class="line">    sum!(<span class="number">1</span>);       <span class="comment">// 与第二个rule匹配, 展开/替换为: 1</span></span><br><span class="line">    sum!(<span class="number">1</span> ; <span class="number">2</span>); <span class="comment">// 与第三个rule匹配, 展开为: 1 + 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过使用 macro , 便能够站在更加抽象的视角上<br>操控传入的 token, 组成新的AST节点(生成新的代码), 参与编译的过程, 形成可执行的程序  </p>
+<p>像这种用代码生成代码的手段, 我们称之为 <code>Meta Programming (元编程)</code><br>比如标准库的一些骚操作: 一个宏, 传入参数为 <code>i32 i64 u32 u64</code>, 便能为这些类型自动实现一些trait  </p>
+<p>因为我们还没有学习牛逼哄哄的 <code>重复</code> 语法, 这里就随便写个宏, 作用是创建函数, 来演示下:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> create_func &#123;</span><br><span class="line">    ($fn_name: ident) =&gt; &#123;</span><br><span class="line">        <span class="function"><span class="keyword">fn</span> $<span class="title">fn_name</span></span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="built_in">stringify!</span>($fn_name)); </span><br><span class="line">            <span class="comment">// stringify 可以将传入的token字符串化, 记住就好, 内置的: `compiler built-in`</span></span><br><span class="line">            <span class="comment">// 这里使用它, 是因为无法直接打印 $fn_name, 不信你试试, 道理很简单, 懒得细讲了</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    create_func!(foo);</span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 最后生成的代码:</span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    fn foo() &#123;</span></span><br><span class="line"><span class="comment">        println!(&quot;&#123;&#125;&quot;, &quot;foo&quot;);</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    foo();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>像标准库那种定义一个宏, 为传入的类型批量地自动化, 生成实现trait的代码<br>这事情函数做不到吧? 这就是元编程的魅力, 大幅度减少手写代码量, 提高幸福感<br>rust 中重要的元编程手段之一, 就是声明宏了  </p>
+<h2 id="token类型对照"><a href="#token类型对照" class="headerlink" title="token类型对照"></a>token类型对照</h2><p>macro通过操控传入的token, 生成相应的代码<br>编译器再通过这些代码, 生成目标码(这里指可执行的二进制程序)  </p>
+<p>既然macro是要操控这些传入的token, 我们总得知道token类型吧?<br>只有规定宏参数的类型, 才能保证macro达到我们想要的目的 (这里指非字面量的参数)  </p>
+<p>所以, 辛苦你将下面的东西记一下哈<br>稍微记一下, 有个对照/印象就行, 多用几下保证你熟悉得不行:  </p>
+<ul>
+<li>ident: 标识符, 如函数名字, 变量名字, 关键字  </li>
+<li>stmt: statemen, 语句</li>
+<li>expr: expression, 表达式</li>
+<li>block: 代码块</li>
+<li>pat: pattern, 比如在match表达式下的 (pattern) =&gt; todo!(),</li>
+<li>path: 路径, 注意这里不指文件路径, 而是类似 std::io::stdin 的路径</li>
+<li>ty: type, 如i32, u32, String, Option<T>等  </li>
+<li>tt: token tree, 之后我会单独再讲解下它的  </li>
+<li>item: 条目/项, 例如函数定义  </li>
+<li>meta: 元条目/项, 比如#[allow(unsued)], meta就对应allow(unused)</li>
+<li>lifetime: 生命周期  </li>
+<li>vis: visibility, 可见性, 比如pub等, 也可能为空  </li>
+</ul>
+<p>那么今天就到这了, b站上的视频我会在周末一点点传到这个博客上的<br>视频上的文章内容, 当时没放到github上, 电脑坏了后直接没了……<br>我索性来一点点重写/补充好了, 顺便来个备份  </p>
+<p>tmd还有作业, 中秋放假==没放, 真棒啊 (怒)<br>咋们下节见~  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"><i class="fa fa-tag"></i> rust</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/rs-dm-p2" rel="prev" title="rs-dm-p2-从println开始">
+                  <i class="fa fa-chevron-left"></i> rs-dm-p2-从println开始
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jedsek</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.2/dist/mermaid.min.js","integrity":"sha256-UIQPVkGifpwMvDH5yGgORJ9sSTDq38zz6BGU6dNaKhM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: '1100px',
+  time: '0.02s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: false,
+  label: '🌓',
+  autoMatchOsTheme: false
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+if (window.darkmode && !window.darkmode.isActivated()) {
+  window.darkmode.toggle();
+  var toggleButtons = document.getElementsByClassName("darkmode-toggle");
+  for (i = 0; i < toggleButtons.length; i++) {
+    toggleButtons[i].classList.add("darkmode-toggle--white");
+  }
+}
+</script>
+
+</body>
+</html>

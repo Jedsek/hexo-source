@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="来简单介绍一下异步吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rs-async-p2-异步简介">
+<meta property="og:url" content="https://jedsek.github.io/posts/rs-async-p2">
+<meta property="og:site_name" content="Jedsek&#39;s blog">
+<meta property="og:description" content="来简单介绍一下异步吧">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-12T04:04:09.000Z">
+<meta property="article:modified_time" content="2021-10-02T07:11:36.553Z">
+<meta property="article:author" content="Jedsek">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://jedsek.github.io/posts/rs-async-p2.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jedsek.github.io/posts/rs-async-p2","path":"posts/rs-async-p2.html","title":"rs-async-p2-异步简介"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>rs-async-p2-异步简介 | Jedsek's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Jedsek's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与其浊富 | 宁比清贫</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>about</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro-to-Async"><span class="nav-number">1.</span> <span class="nav-text">Intro to Async</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">什么是异步编程?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E5%BC%82%E6%AD%A5"><span class="nav-number">1.2.</span> <span class="nav-text">为什么选择异步?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.</span> <span class="nav-text">异步优势</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jedsek"
+      src="/images/blue.jpg">
+  <p class="site-author-name" itemprop="name">Jedsek</p>
+  <div class="site-description" itemprop="description">人类的伟大之处<br>正是在于能够直面自身的渺小</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jedsek.github.io/posts/rs-async-p2">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blue.jpg">
+      <meta itemprop="name" content="Jedsek">
+      <meta itemprop="description" content="人类的伟大之处<br>正是在于能够直面自身的渺小">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jedsek's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rs-async-p2-异步简介
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-12 12:04:09" itemprop="dateCreated datePublished" datetime="2021-09-12T12:04:09+08:00">2021-09-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-02 15:11:36" itemprop="dateModified" datetime="2021-10-02T15:11:36+08:00">2021-10-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/rust-async/" itemprop="url" rel="index"><span itemprop="name">rust-async</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>来简单介绍一下异步吧  </p>
+</blockquote>
+<span id="more"></span>
+<h1 id="Intro-to-Async"><a href="#Intro-to-Async" class="headerlink" title="Intro to Async"></a>Intro to Async</h1><hr>
+<h2 id="什么是异步编程"><a href="#什么是异步编程" class="headerlink" title="什么是异步编程?"></a>什么是异步编程?</h2><p><strong>异步编程</strong> (Asynchronous programming)<br>是一种 <strong>并发编程模型</strong> </p>
+<p>特点是通过少量 <code>OS_thread (系统线程)</code><br>即可运行大量 <code>并发任务</code><br>在某些场景下, 可以疯狂压榨cpu的性能<br><del>(好吧, 有点废话……)</del></p>
+<hr>
+<h2 id="为什么选择异步"><a href="#为什么选择异步" class="headerlink" title="为什么选择异步?"></a>为什么选择异步?</h2><p>对于这个问题, 我们将对比 <strong>异步</strong> 与 其他 <strong>并发模型</strong><br>以此来告诉大家, 为什么选择异步:  </p>
+<p>1.<code>OS Thread (系统线程)</code><br>由操作系统提供线程, 进行并发, 如std::thread<br>Good_1:<br>简单易使用, 建模能力强, 足够传统<br>Good_2:<br>操作系统就是运行时, 与C语言交互方便<br>Bad_1:<br>数据同步困难, 易发生数据竞争<br>Bad_2:<br>小型任务数量巨大时, 若分别开一个线程, 所需内存与创建线程开销巨大, 性价比极低</p>
+<p>2.<code>Green Thread (绿色线程)</code><br>它几乎与系统线程一样, 不过 <code>Runtime(运行时,jvm/.net听说过吗?)</code> 从操作系统变为了程序本身<br>绿色线程 只是由程序本身模拟出来的, 类似系统线程的小型线程<br>Good:<br>这意味着, 程序本身对 Green_thread 有绝对的管理权<br>所以内存分配等方面的粒度更细, 根据任务大小调度内存<br>因此堆栈大小, 能够随时间推移而增长<br>并且创建/销毁/切换线程的代价又低又快, 轻松创建成千上万个绿色线程, 来处理任务<br>Bad_1:<br>它是程序本身实现模拟出来的线程, Runtime 比较巨大<br>运行时会一直存在, 即使你不用该特性, 导致拖累全局程序性能, 且难以与C库交互<br>这Rust在1.0版本前删去绿色线程的主要原因, 贯彻了零成本抽象<br>它无法在语言层面被Rust支持<br>Bad_2:<br>绿色线程在不同平台上, 其实现可能不同<br>对多平台的 支持/维护/改进 得靠实现者保证  </p>
+<p>由于 <code>OS Thread</code> 与 <code>Green Thread</code> 与 Rust 关系比较大:<br>一个是传统并发, 一个是Rust在1.0之后便舍弃的<br>所以只介绍这两个并发模型</p>
+<hr>
+<h2 id="异步优势"><a href="#异步优势" class="headerlink" title="异步优势"></a>异步优势</h2><p>3.<code>Async (异步)</code><br>我们终于要介绍异步了 ! 乌拉乌拉乌拉 ! ! !<br> <del>(没把你憋坏吧伙计?)</del>  </p>
+<p>我们以IO操作为例子, 毕竟这也是 异步 大放光彩的地方之一<br>假设我们正在单线程下, 读取文件, 并进行一个计算:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义文件</span></span><br><span class="line"><span class="keyword">let</span> file = <span class="comment">/*  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件, 获取数据 </span></span><br><span class="line"><span class="keyword">let</span> data = read(file);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进行一个计算</span></span><br><span class="line">compute()</span><br></pre></td></tr></table></figure>
+<p>以上面代码为例子, 我们会读取 <code>file</code> 获取 <code>data</code><br>期间, 我们的程序, 做不了任何其他事情<br>只有等待 <code>IO操作 (Input/Output, 输入/输出)</code> 完毕, 我们才能进行接下来的 <code>compute</code>  </p>
+<p><code>读取文件</code>, 属于 <code>IO操作</code><br>众所周知, IO操作很耗时, 等待它完成的时间可能会很长  </p>
+<p>有没有什么办法加快速度?<br>没错, 系统线程yyds:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义文件</span></span><br><span class="line"><span class="keyword">let</span> file = <span class="comment">/*  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 为每个读取任务新建线程, 并获取句柄</span></span><br><span class="line"><span class="keyword">let</span> handle_a = thread::spawan(|| read(file) );</span><br><span class="line"><span class="keyword">let</span> handle_b = thread::spawan(|| compute() );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用join阻塞调用线程, 确保句柄线程执行结束</span></span><br><span class="line"><span class="keyword">let</span> data = handle_a.join().unwrap();</span><br><span class="line">handle_b.join().unwrap();</span><br></pre></td></tr></table></figure>
+
+<p>因为两个任务 <code>read</code> 与 <code>compute</code> 是独立的, 无依赖性<br>所以我们 <code>spawn</code> 了两个线程<br>第一个, 用于读取文件, 获取数据<br>第二个, 用于在读取文件的同时, 执行着 <code>compute</code><br>虽然速度上来了, 但是代价也有, 那就是额外创建两个线程的开销<br>而异步, 就是只依靠单线程, 也能够完成上面的操作  </p>
+<p>(绿色线程不用想了, 不是说它不好, 但是它有较大的运行时, 语言层面是不可能支持的, 第三方库支持是可以的)  </p>
+<p>单线程中的异步(伪)代码如下:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义文件</span></span><br><span class="line"><span class="keyword">let</span> file = <span class="comment">/*  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件, 获取数据 </span></span><br><span class="line"><span class="keyword">let</span> data = read_async(file);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进行一个计算</span></span><br><span class="line">compute_async()</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到:<br><code>read</code> -&gt; <code>read_async</code><br><code>compute</code> -&gt; <code>compute_async</code>  </p>
+<p>我用伪代码表示, 这两个操作变成了异步操作<br>你无需关注这是如何变成异步版本的, 这里只是为了说明异步的概念<br>如下:    </p>
+<ul>
+<li><code>read</code>:<br>它会阻塞调用线程, 等待该操作完毕后<br>才继续往下执行 <code>compute</code>  </li>
+</ul>
+<p>阻塞期间是几乎不需要cpu参与运行的<br>程序此时傻乎乎地等待阻塞结束<br>无疑是对性能的浪费, 对cpu的不尊重  </p>
+<ul>
+<li><code>read_async</code>:<br>它处于阻塞时, 会运行<code>compute_async</code><br>线程由 <code>read_async</code> 接管变为由 <code>compute_async</code>接管<br>当阻塞时间结束, 则程序继续变为运行 <code>read_async</code></li>
+</ul>
+<p><code>read_async</code> 阻塞时, 程序是不会傻傻等待的:  </p>
+<p>若检测到它处于阻塞, 无法取得进展<br>则会运行其他异步任务, 由其他异步任务接管线程  </p>
+<hr>
+<p>总而言之, 异步操作, 其实就是:<br>若当前异步操作处于阻塞, 则可能运行其他异步操作(如果有其他非阻塞的异步操作)<br>使得cpu一直处于运算, 性能被极限压榨  </p>
+<p>异步操作, 就像是可以随意 <code>start/stop</code> 一般<br>调度程序能够对它们进行调度, 决定当前要运算哪个操作<br>确保不会因为阻塞而傻傻等待</p>
+<p>只需单线程, 就可以做到同时运行多个 <code>Task(异步任务)</code><br>异步当然也不排斥多线程:<br>一个线程就能压榨出高性能, 多个线程被压榨出来的性能岂不是更高?</p>
+<hr>
+<p>Q:<br>阻塞时期还能同时进行其他操作? IO操作不会占用cpu吗?<br>A:<br>现代电脑发展出了一些分担IO操作压力的高科技<br>所以cpu对IO操作的压力较小/没有, IO时能进行其他运算<br>只需要最后接收数据时, 出个场就行了  </p>
+<p>所以我们的程序不需要在等待输入输出时就那样等着<br>给他们找事情, 让他们闲不下来吧!  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"><i class="fa fa-tag"></i> rust</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/rs-async-p1" rel="prev" title="rs-async-p1-系列说明">
+                  <i class="fa fa-chevron-left"></i> rs-async-p1-系列说明
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/rs-async-p3" rel="next" title="rs-async-p3-Future">
+                  rs-async-p3-Future <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jedsek</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.2/dist/mermaid.min.js","integrity":"sha256-UIQPVkGifpwMvDH5yGgORJ9sSTDq38zz6BGU6dNaKhM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: '1100px',
+  time: '0.02s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: false,
+  label: '🌓',
+  autoMatchOsTheme: false
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+if (window.darkmode && !window.darkmode.isActivated()) {
+  window.darkmode.toggle();
+  var toggleButtons = document.getElementsByClassName("darkmode-toggle");
+  for (i = 0; i < toggleButtons.length; i++) {
+    toggleButtons[i].classList.add("darkmode-toggle--white");
+  }
+}
+</script>
+
+</body>
+</html>
