@@ -169,6 +169,7 @@ social:
   #YouTube: https://youtube.com/yourname || fab fa-youtube
   #Instagram: https://instagram.com/yourname || fab fa-instagram
   #Skype: skype:yourname?call|chat || fab fa-skype
+  RSS: /atom.xml || fas fa-rss
 
 social_icons:
   enable: true
@@ -929,3 +930,18 @@ neat_js:
     - '**/jquery.fancybox.pack.js'
     - '**/index.js' 
     - '**/fireworks.js'
+
+# RSS
+# https://github.com/hexojs/hexo-generator-feed
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:
