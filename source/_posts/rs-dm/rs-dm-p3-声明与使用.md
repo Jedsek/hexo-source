@@ -113,8 +113,8 @@ macro 不就是个代码生成器, 一段用来生成代码的代码吗
 
 其实, 你往括号里传入的东西, 都是参数 (除了空格)  
 对于第二个rule, 它的定义中, 分割两个expr的逗号本身, 也是形参  
-这种固定的, 如同字面量一样的参数, 只能被形如 `$xx:tt (tt代表token tree)` 所匹配  
-我姑且称它为 `Literal Token Tree(字面量标记树)`, 或者 `Metaliteral (元字面量)`
+这种固定的参数, 如同token中的字面量一样  
+我姑且称它为 `Literal Token(字面量标记)`, 或者 `Metaliteral (元字面量)`
 (因为我也不知道有什么对应术语, 所以用了 "姑且", 知道的麻烦告诉我)  
 
 因此, 假若 rule 中的参数没有 $前缀 进行区分:  
@@ -198,134 +198,79 @@ fn main() {
 (之后会讲几个实战: 比如B站视频中已经讲过的递推序列生成器, 博客的话, 我周六放学回来慢慢更吧......)
 - - -
 
-# 本质  
-## 引入
-刚刚简单提了一嘴. macro 实际上是个代码生成器, 是一段用于生成代码的代码  
+# 本质 (AST 与 Token)
+(如果还是不理解, 可以随便找个编译原理教程, 自己看看前几节即可)  
+(或者看看我B站的视频, 视频讲得比较浅, 比较通俗)  
 
-为了更加深入, 让我介绍一些概念
-
-在更加抽象的层面上, 我并不将1视作i32类型, 并不将true视作bool类型, 并不将"xx"视作&str类型  
-而是继续地进行抽象, 将这些值, 通通归类于 `expr类型(表达式类型)` 之下    
-
-`token类型`, 我暂时以这么个简单名字, 指代某种更加抽象, 包含更广的类型  
-比如 表达式(expr类型), 语句(stmt类型), 标识符(ident类型) 等    
-
-实际上, 你写出来的Rust源代码, 将被解析为一大堆 `token`  
-而这些 token, 之后又会被解析为 `AST (抽象语法树)`  
-
-## 关于AST
-你想想, 假若由你来设计一个Rust编译器  
+假若由你来设计一个Rust编译器  
 首先, 不同的人写代码的风格不同, 那么你如何分析不同源码, 并生成目标码?  
-一步登天, 直接由源码生成目标码是不现实的, 难度太大  
 
-因此啊, 得有一些介于 源码与目标码 之间的 `中间表示/代码 (IR)`, 层层递进, 以达目的  
-注意, 是一些, 而不是一个, 这很好理解, 因为一层可能不够嘛  
-所以多来几层 `IR (中间代码)` , 顺便进行下分工 (每一层都处理了些特定的事情), 这也增强了可维护性  
+若我们将每遍扫描并做点事情的过程, 称为 `pass`  
+pass 一次就生成了, 对于很大的源码来说, 这不现实吧  
 
-比如 `AST` , 它就是一种 IR, 它是目标码被生成的关键, 是代码的骨架  
-编译器在AST的基础上, 可能会再来几层中间代码 (进行优化或者其他什么功能), 最后生成目标码  
-(以 Rust 为例, 出现的大致IR: AST -> HIR -> MIR -> LLVM_IR)
+那我们就pass多次, 将 `从源码编译为目标码` 这个大问题, 分解为一大堆小问题  
+每一次pass都解决一个小问题, 那不就Ok了吗
 
-而生成AST需要点啥? 需要一些 `token`  
-比如 expr(表达式), stmt(语句), ident(标识符) 等  
+这种 `中间表示`, 就称为 `IR (Intermediate Representation )`  
+
+我们可以先把源码抽象为AST (源码被抽象后的树状表示, 抽象语法树, Abstract Syntax Tree)  
+比如我们用Rust的enum表示一下:  
+
+```rust
+// 该枚举: 一个AST节点可以是整数, 或者一个二元运算  
+enum ASTNode {
+	Int(i32), 
+	BinaryExpr {
+		op: Op,
+		lhs: Box<ASTNode>,
+		rhs: Box<ASTNode>,
+	}
+}
+
+// 二元运算的符号: 这里只抽象了加法
+enum Op {
+	Plus, 
+}
+```
+你只需明白AST是对源码的一层抽象产物就可以了  
+
+对于很少的源码, 已经可以直接转换为目标码了, 毕竟这时候AST也小  
+但是, 如果源码很大呢? AST已经很复杂了
+那就再抽象一层吧, 向目标语言逐渐靠拢, 比如向汇编靠拢, 提高性能  
+
+基于AST, 我们可以再来一些 `IR`, 层层递进, 以达目的  
+注意, 是一些, 而不是一个, 这很好理解, 因为一层可能还是不够嘛  
+
+`AST` 很重要, 是生成目标码的关键, 是代码的骨架  
+而另外的IR, 也是有必要的, 这也增强了可维护性  
+编译器在AST的基础上, 最终生成了目标码  
+(像Lisp之类的比较特殊, 源码就已经形如AST, 可能很多人写的第一个编译器就是Lisp了......)  
+
+生成AST需要点啥? 或者说, 它由什么组成?  
+由 expr(表达式), stmt(语句), ;(标点符号) 等组成  
+这些都叫做 `token`  
 
 在这些小玩意的基础上, 组成一个更加庞大复杂的整体结构  
-它将tokens组织起来, 表达了代码的逻辑  
+它将token们联系起来, 表达了代码的骨架  
 这个庞然大物便是 AST 了  
-
-而 token 的生成, 是万里长征的第一步  
-只有正确地将 token 分门别类, 你才能创建正确的AST (这里的正确不包括逻辑正确)
-
-还记得之前在对应游戏中的一对吗: `, && ,`  
-我们说它是 `Literal Token Tree(字面量标记树)`  
-字面上的意思: 这个 token 是字面量  
-
-但为什么它是单个token, 却又叫做token tree?  
-因为 `tree` 是可以只有一个节点的嘛  
-还可以有比较长的, 比如我们之前用来实例的宏:  
-```rust
-macro_rules! my {
-	// `a:expr` 是 `literal token tree`
-	(a:expr) => { };
-}
-```
-
 - - - 
-# 回到macro  
-## 例子
-通过中间代码, 我们层层递进, 向最终的目标码前进  
+# 回到Macro  
+## Token类型表
+生成AST需要Token协助  
 
-其实你只需晓得, 编译成二进制的可执行版本, 需要 AST, 而 组成 AST 又需要 token 协助
-~~(不明白也没多大关系, 因为我实在懒得多讲编译方面了, 真的麻烦)~~
+macro 中, 其参数的类型, 便是token类型  
 
-macro 中, 其参数的类型, 便是token类型:  
-```rust
-// 定义一个macro, 求和传入的参数
-macro_rules! sum {
-	() => {};                            // 空参时, 啥也不干
-	($a: expr) => { $a };                // 一个参数时, 求和结果是自己
-	($a: expr ; $b:expr) => { $a + $b}   // 两个参数, 正常求和
-	                                     // 更多参数, 等我们学 `重复` 语法后再说  
-}
+既然macro是要操控这些传入的token (或AST节点, 等会讲), 我们总得知道token类型吧?  
+只有规定宏参数的类型, 才能保证macro达到我们想要的目的 (这里指 `Metavariable`)  
 
-fn main() {
-	sum!();        // 与第一个rule匹配, 木有展开的实际代码
-	sum!(1);       // 与第二个rule匹配, 展开/替换为: 1
-	sum!(1 ; 2);   // 与第三个rule匹配, 展开为: 1 + 2
-}
-```
-
-我们通过使用 macro , 便能够站在更加抽象的视角上  
-操控传入的 token, 组成新的AST节点(生成新的代码), 参与编译的过程, 形成可执行的程序  
-
-像这种用代码生成代码的手段, 我们称之为 `Meta Programming (元编程)`  
-比如标准库的一些骚操作: 一个宏, 传入参数为 `i32 i64 u32 u64`, 便能为这些类型自动实现一些trait  
-
-因为我们还没有学习牛逼哄哄的 `重复` 语法, 这里就随便写个宏, 作用是创建函数, 来演示下:  
-```rust
-macro_rules! create_func {
-	($fn_name: ident) => {
-		fn $fn_name() {
-			println!("{}", stringify!($fn_name)); 
-			// stringify 可以将传入的token字符串化, 记住就好, 内置的: `compiler built-in`
-			// 这里使用它, 是因为无法直接打印 $fn_name, 不信你试试, 道理很简单, 懒得细讲了
-		}
-	};
-}
-fn main() {
-	create_func!(foo);
-	foo();
-}
-
-/* 最后生成的代码, 如下:
-fn main() {
-    fn foo() {
-        println!("{}", "foo");
-    }
-    foo();
-}
-*/
-```
-像标准库那种定义一个宏, 为传入的类型批量地自动化, 生成实现trait的代码  
-这事情函数做不到吧? 这就是元编程的魅力, 大幅度减少手写代码量, 提高幸福感  
-rust 中重要的元编程手段之一, 就是声明宏了  
-
-
-## token类型对照
-macro通过操控传入的token, 生成相应的代码  
-编译器再通过这些代码, 生成目标码(这里指可执行的二进制程序)  
-
-既然macro是要操控这些传入的token, 我们总得知道token类型吧?  
-只有规定宏参数的类型, 才能保证macro达到我们想要的目的 (这里指非字面量的参数)  
-
-所以, 辛苦你将下面的东西记一下哈  
-稍微记一下, 有个对照/印象就行, 多用几下保证你熟悉得不行:  
+所以, 辛苦你将下面的记一下  
+稍微记下, 有印象即可, 多用几下保证你熟悉得不行:  
 
 - `ident` -> 标识符, 如函数名字, 变量名字, 关键字  
 - `stmt` -> statemen, 语句
-- `expr` -> expression, 表达式
+- `expr` -> expression, 表达式, 如 `x` 与 `1_i32`
 - `literal` -> literal expression, 字面量表达式, expr的子集
-- `block` -> 代码块
+- `block` -> 代码块  
 - `pat` -> pattern, 比如在match表达式下的 (pattern) => todo!(),
 - `path` -> 路径, 注意这里不指文件路径, 而是类似 std::io::stdin 的路径
 - `ty` -> type, 如i32, u32, String, Option<T>等  
@@ -335,10 +280,149 @@ macro通过操控传入的token, 生成相应的代码
 - `lifetime` -> 生命周期  
 - `vis` -> visibility, 可见性, 比如pub等, 也可能为空  
 
+## TT
+这里有个比较特殊的类型 `tt`:  
 
-那么今天就到这了, b站上的视频我会在周末一点点传到这个博客上的  
-视频上的文章内容, 当时没放到github上, 电脑坏了后直接没了......
-我索性来一点点重写/补充好了, 顺便来个备份  
+`tt (Token Tree)`, 可以捕获 `Single Token`, 或者由 (), [], {} 及括号包裹起来的东西  
+让我们来点例子吧:  
+```rust
+macro_rules! aa {
+    ($a:tt) => {
+        println!("{}", stringify!($a));
+    };
+}
+fn main() {
+	// Single Token
+    aa!(123);          // Yes: 123
+    aa!(FuckYou);      // Yes: FuckYou
+    // aa!(Fuck You);     // No
+    // aa!(123 + 11);     // No
 
-tmd还有作业, 中秋放假等于没放, 真棒啊 (怒)
-咋们下节见~  
+	// (), [], {}
+	aa!([123]);        // Yes: [123]
+	aa!({123 + 123});  // Yes: { 123 + 123 }
+}
+```
+
+## AST节点
+
+macro 会将传入的token, 一个个解析为对应类型的AST节点 (除了少量token类型, 等会细讲)
+比如 `map!` 中, `$key:value` 与 `$val:expr`, 都会被解析为expr类型的AST节点:  
+```rust
+macro_rules! map {
+	($key:expr => $val:expr) => {{
+		let mut m = std::collections::HashMap::<_,_>::new();
+		m.insert($key, $val);
+		m
+	}};
+}
+fn main() {
+	let m = map!("普通上班族" => 33);
+	println!("{:?}",m);
+}
+
+
+/* 展开后, 可以看作是:
+fn main() {
+    let m = {
+        let mut m = std::collections::HashMap::<_,_>::new();
+        m.insert("普通上班族", 33);
+        m
+    };
+    println!("{:?}",m);
+}
+*/
+```
+
+我们通过使用 macro , 站在了更抽象的视角上  
+操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码), 最后再一起形成目标码  
+
+这有时会大大简化手写代码量, 如std中, 向宏传入些类型, 能自动生成为这些类型实现trait的代码
+
+值得注意的是, 宏将传入参数给AST节点化时, 有时意味着会产生不期望的结果  
+我直接用 [宏小册](https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md) 上面的代码了:  
+```rust
+macro_rules! capture_then_match_tokens {
+    ($e:expr) => {match_tokens!($e)};
+}
+macro_rules! match_tokens {
+    ($a:tt + $b:tt) => {"got an addition"};
+    (($i:ident)) => {"got an identifier"};
+    ($($other:tt)*) => {"got something else"};
+}
+fn main() {
+    println!("{}\n{}\n{}\n",
+        match_tokens!((caravan)),
+        match_tokens!(3 + 6),
+        match_tokens!(5)
+    );
+    println!("{}\n{}\n{}",
+        capture_then_match_tokens!((caravan)),
+        capture_then_match_tokens!(3 + 6),
+        capture_then_match_tokens!(5)
+    );
+}
+```
+
+输出结果会是:  
+```rust
+got an identifier
+got an addition
+got something else
+
+got something else
+got something else
+got something else
+```
+
+比如这里, `match_tokens` 捕获token, 然后将参数解析为一个expr类型的AST节点  
+它不再是token, 而是个AST节点了!  
+
+比如 `5 + 7`, 原本是可以与 `$a:tt + $b:tt` 相匹配, 也可以与 `$a: expr` 匹配
+但是经过二次传入(向 `capture_then_match_tokens` 传入的参数又传给 `match_tokens`) 后  
+`5 + 7` 变成AST表达式节点, 只能与 `$a: expr` 匹配, 而不能与 `$a:tt + $b:tt` 匹配  
+
+只有 `tt`, `ident`, `lifetime` 能免遭 AST节点化  
+好好理解下这块  
+## 匹配误区/歧义限制
+在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制  
+可以去看看 [宏小册](https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md)
+### 匹配误区
+来看看下面一段代码:
+```rust
+macro_rules! aa {
+	($a: expr) => {};
+	($a: ident +) => {}
+}
+fn main() {
+	aa!(a);   // Yes
+	aa!(a+);  // No
+}
+```
+
+按照你的直觉, `aa!(a+)` 应该会与第二个 rule 相匹配  
+但是实际上会报这么一个错误:
+```rust
+expected expression, found end of macro arguments
+// 期望表达式, 却发现宏参数结束了
+```
+
+你会发现实际上都是在与第一个rule尝试着进行匹配:  
+
+`a (lhs, left hand side)` 能被第一个rule匹配  
+而 `+ (二元加)` 因为可以尾随表达式, 也可以被第一个rule匹配
+但由于缺少 `rhs`, 此时会直接报错, 而不是去尝试匹配下一个rule  
+
+这避免了某些情况下, 发生不期望的匹配, 但你却不知道, 因此rule的顺序很重要  
+### 歧义限制  
+由于一些歧义, 为了向后兼容性与不破坏代码  
+当前对 `Metavariable` 后面可以跟的内容有所限制  
+详情可以去看 [Rust-Reference](https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions)  
+
+
+
+
+
+
+
+
