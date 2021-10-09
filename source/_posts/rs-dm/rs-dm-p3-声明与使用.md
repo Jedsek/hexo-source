@@ -281,10 +281,11 @@ macro 中, 其参数的类型, 便是token类型
 - `vis` -> visibility, 可见性, 比如pub等, 也可能为空  
 
 ## TT
-这里有个比较特殊的类型 `tt`:  
+这里有个比较特殊的类型 `tt (Token Tree)`  
+从字面上的意思来讲, 就是由Token组成的树(数据结构上的树)呗~~(废话)~~  
 
-`tt (Token Tree)`, 可以捕获 `Single Token`, 或者由 (), [], {} 及括号包裹起来的东西  
-让我们来点例子吧:  
+`tt`, 可以捕获 `Single Token`, 或者由 (), [], {} 及括号包裹起来的东西  
+作为 Token Tree 的根节点, 先让我们来点例子:  
 ```rust
 macro_rules! aa {
     ($a:tt) => {
@@ -303,6 +304,30 @@ fn main() {
 	aa!({123 + 123});  // Yes: { 123 + 123 }
 }
 ```
+上面的代码, 展示了 `tt` 可以匹配捕获哪些东西  
+再来看看下面的内容, 理解理解它:  
+(我们以`<<xxx>>`, 来表示xxx是一颗 Token Tree)  
+```rust
+// 你的眼中:
+1 + 2 + (3 + 4)
+// tt的眼中:
+<<1>> <<+>> <<2>> <<+>> <<( )>>
+                           |
+                           |
+                   <<3>> <<+>> <<4>>
+```
+这段代码的Token Tree共有5个:  
+1. <<1>>
+2. <<+>>
+3. <<2>>
+4. <<+>>
+5. <<(3 + 4)>>
+
+对于前面4个, 都是Single Token, 也就是只有根节点自己的Tree  
+对于第5个, 因为有()包裹, <<(...)>> 作为根节点, 它还有三个子节点 (这里正好处于同层)  
+
+有没有对 `Token后面跟着Tree` 更加理解?  
+
 
 ## AST节点
 
@@ -341,6 +366,7 @@ fn main() {
 
 值得注意的是, 宏将传入参数给AST节点化时, 有时意味着会产生不期望的结果  
 我直接用 [宏小册](https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md) 上面的代码了:  
+
 ```rust
 macro_rules! capture_then_match_tokens {
     ($e:expr) => {match_tokens!($e)};
@@ -401,7 +427,8 @@ fn main() {
 ```
 
 按照你的直觉, `aa!(a+)` 应该会与第二个 rule 相匹配  
-但是实际上会报这么一个错误:
+但是实际上会报这么一个错误:  
+
 ```rust
 expected expression, found end of macro arguments
 // 期望表达式, 却发现宏参数结束了
@@ -413,11 +440,14 @@ expected expression, found end of macro arguments
 而 `+ (二元加)` 因为可以尾随表达式, 也可以被第一个rule匹配
 但由于缺少 `rhs`, 此时会直接报错, 而不是去尝试匹配下一个rule  
 
-这避免了某些情况下, 发生不期望的匹配, 但你却不知道, 因此rule的顺序很重要  
+这避免了某些情况下, 发生不期望的匹配, 但你却不知, 因此rule的顺序很重要  
 ### 歧义限制  
 由于一些歧义, 为了向后兼容性与不破坏代码  
-当前对 `Metavariable` 后面可以跟的内容有所限制  
-详情可以去看 [Rust-Reference](https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions)  
+当前对 `Metavariable` 后面可以跟的内容有所限制, 详情可见 [Rust-Reference: 限制](https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions)  
+这里只需稍微看看, 留个印象, 实际使用时, 若在此方面报错, 则根据编译器的提示来改即可  
+~~(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)~~  
+~~(因为我也没有全部搞懂)~~  
+
 
 
 

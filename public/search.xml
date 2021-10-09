@@ -556,10 +556,21 @@ Yield1State &#123;
 <li><code>lifetime</code> -&gt; 生命周期  </li>
 <li><code>vis</code> -&gt; visibility, 可见性, 比如pub等, 也可能为空  </li>
 </ul>
-<h2 id="TT"><a href="#TT" class="headerlink" title="TT"></a>TT</h2><p>这里有个比较特殊的类型 <code>tt</code>:  </p>
-<p><code>tt (Token Tree)</code>, 可以捕获 <code>Single Token</code>, 或者由 (), [], {} 及括号包裹起来的东西<br>让我们来点例子吧:  </p>
+<h2 id="TT"><a href="#TT" class="headerlink" title="TT"></a>TT</h2><p>这里有个比较特殊的类型 <code>tt (Token Tree)</code><br>从字面上的意思来讲, 就是由Token组成的树(数据结构上的树)呗<del>(废话)</del>  </p>
+<p><code>tt</code>, 可以捕获 <code>Single Token</code>, 或者由 (), [], {} 及括号包裹起来的东西<br>作为 Token Tree 的根节点, 先让我们来点例子:  </p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> aa &#123;</span><br><span class="line">    ($a:tt) =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="built_in">stringify!</span>($a));</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Single Token</span></span><br><span class="line">    aa!(<span class="number">123</span>);          <span class="comment">// Yes: 123</span></span><br><span class="line">    aa!(FuckYou);      <span class="comment">// Yes: FuckYou</span></span><br><span class="line">    <span class="comment">// aa!(Fuck You);     // No</span></span><br><span class="line">    <span class="comment">// aa!(123 + 11);     // No</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// (), [], &#123;&#125;</span></span><br><span class="line">    aa!([<span class="number">123</span>]);        <span class="comment">// Yes: [123]</span></span><br><span class="line">    aa!(&#123;<span class="number">123</span> + <span class="number">123</span>&#125;);  <span class="comment">// Yes: &#123; 123 + 123 &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>上面的代码, 展示了 <code>tt</code> 可以匹配捕获哪些东西<br>再来看看下面的内容, 理解理解它:<br>(我们以<code>&lt;&lt;xxx&gt;&gt;</code>, 来表示xxx是一颗 Token Tree)  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 你的眼中:</span></span><br><span class="line"><span class="number">1</span> + <span class="number">2</span> + (<span class="number">3</span> + <span class="number">4</span>)</span><br><span class="line"><span class="comment">// tt的眼中:</span></span><br><span class="line">&lt;&lt;<span class="number">1</span>&gt;&gt; &lt;&lt;+&gt;&gt; &lt;&lt;<span class="number">2</span>&gt;&gt; &lt;&lt;+&gt;&gt; &lt;&lt;( )&gt;&gt;</span><br><span class="line">                           |</span><br><span class="line">                           |</span><br><span class="line">                   &lt;&lt;<span class="number">3</span>&gt;&gt; &lt;&lt;+&gt;&gt; &lt;&lt;<span class="number">4</span>&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>这段代码的Token Tree共有5个:  </p>
+<ol>
+<li>&lt;&lt;1&gt;&gt;</li>
+<li>&lt;&lt;+&gt;&gt;</li>
+<li>&lt;&lt;2&gt;&gt;</li>
+<li>&lt;&lt;+&gt;&gt;</li>
+<li>&lt;&lt;(3 + 4)&gt;&gt;</li>
+</ol>
+<p>对于前面4个, 都是Single Token, 也就是只有根节点自己的Tree<br>对于第5个, 因为有()包裹, &lt;&lt;(…)&gt;&gt; 作为根节点, 它还有三个子节点 (这里正好处于同层)  </p>
+<p>有没有对 <code>Token后面跟着Tree</code> 更加理解?  </p>
 <h2 id="AST节点"><a href="#AST节点" class="headerlink" title="AST节点"></a>AST节点</h2><p>macro 会将传入的token, 一个个解析为对应类型的AST节点 (除了少量token类型, 等会细讲)<br>比如 <code>map!</code> 中, <code>$key:value</code> 与 <code>$val:expr</code>, 都会被解析为expr类型的AST节点:  </p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> map &#123;</span><br><span class="line">    ($key:expr =&gt; $val:expr) =&gt; &#123;&#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> m = std::collections::HashMap::&lt;_,_&gt;::new();</span><br><span class="line">        m.insert($key, $val);</span><br><span class="line">        m</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map!(<span class="string">&quot;普通上班族&quot;</span> =&gt; <span class="number">33</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>,m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 展开后, 可以看作是:</span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    let m = &#123;</span></span><br><span class="line"><span class="comment">        let mut m = std::collections::HashMap::&lt;_,_&gt;::new();</span></span><br><span class="line"><span class="comment">        m.insert(&quot;普通上班族&quot;, 33);</span></span><br><span class="line"><span class="comment">        m</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    println!(&quot;&#123;:?&#125;&quot;,m);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 
@@ -578,13 +589,13 @@ Yield1State &#123;
 <h3 id="匹配误区"><a href="#匹配误区" class="headerlink" title="匹配误区"></a>匹配误区</h3><p>来看看下面一段代码:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> aa &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;&#125;;</span><br><span class="line">    ($a: ident +) =&gt; &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    aa!(a);   <span class="comment">// Yes</span></span><br><span class="line">    aa!(a+);  <span class="comment">// No</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>按照你的直觉, <code>aa!(a+)</code> 应该会与第二个 rule 相匹配<br>但是实际上会报这么一个错误:</p>
+<p>按照你的直觉, <code>aa!(a+)</code> 应该会与第二个 rule 相匹配<br>但是实际上会报这么一个错误:  </p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">expected expression, found end of <span class="keyword">macro</span> arguments</span><br><span class="line"><span class="comment">// 期望表达式, 却发现宏参数结束了</span></span><br></pre></td></tr></table></figure>
 
 <p>你会发现实际上都是在与第一个rule尝试着进行匹配:  </p>
 <p><code>a (lhs, left hand side)</code> 能被第一个rule匹配<br>而 <code>+ (二元加)</code> 因为可以尾随表达式, 也可以被第一个rule匹配<br>但由于缺少 <code>rhs</code>, 此时会直接报错, 而不是去尝试匹配下一个rule  </p>
-<p>这避免了某些情况下, 发生不期望的匹配, 但你却不知道, 因此rule的顺序很重要  </p>
-<h3 id="歧义限制"><a href="#歧义限制" class="headerlink" title="歧义限制"></a>歧义限制</h3><p>由于一些歧义, 为了向后兼容性与不破坏代码<br>当前对 <code>Metavariable</code> 后面可以跟的内容有所限制<br>详情可以去看 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">Rust-Reference</a>  </p>
+<p>这避免了某些情况下, 发生不期望的匹配, 但你却不知道<br>因此rule的顺序很重要, 需要你  </p>
+<h3 id="歧义限制"><a href="#歧义限制" class="headerlink" title="歧义限制"></a>歧义限制</h3><p>由于一些歧义, 为了向后兼容性与不破坏代码<br>当前对 <code>Metavariable</code> 后面可以跟的内容有所限制<br>详情可以去看 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">Rust-Reference: 限制</a><br>这里只需稍微看看, 留个印象<br>实际使用时, 若在此方面报错, 则根据编译器的提示来改即可<br><del>(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)</del><br><del>(因为我也没有全部搞懂)</del>  </p>
 ]]></content>
       <categories>
         <category>rust-decl-macro</category>
@@ -594,18 +605,11 @@ Yield1State &#123;
       </tags>
   </entry>
   <entry>
-    <title>rs-dm-p4-细枝末节的补充</title>
-    <url>/posts/rs-dm-p4.html</url>
+    <title>rs-dm-p4-重复</title>
+    <url>/posts/9559cbfc.html</url>
     <content><![CDATA[<blockquote>
-<p>关于 p3 的一些小补充: “空格忽略性”, “传参限制”  </p>
+<p>宏中非常重要的语法: 重复 (Repetition)</p>
 </blockquote>
-<span id="more"></span>
-<p>这一节会比较轻松, 讲一讲 <code>空格忽略性</code> 与 <code>传参匹配限制</code></p>
-<hr>
-<h1 id="空格忽略性"><a href="#空格忽略性" class="headerlink" title="空格忽略性"></a>空格忽略性</h1><p>这是一个很简单的性质: macro不匹配传入的空格<br>以我们之前玩的 <code>对应游戏</code> 为例子:  </p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">($a: expr, $b: expr) =&gt; &#123; $a + $b&#125;;    <span class="comment">// rule: matcher =&gt; transcriber</span></span><br><span class="line">  |      |  |              |    |</span><br><span class="line">  |      |  |              |    |</span><br><span class="line">( <span class="number">1</span>      ,  <span class="number">2</span>      ) =&gt;    <span class="number">1</span> +  <span class="number">2</span>      <span class="comment">// pass &amp;&amp; expand</span></span><br></pre></td></tr></table></figure>
-<p>我们会忽略传入的空格, 以便于在设计 <code>DSL (自己定义的语法)</code> 时更加自由, 整齐, 干净<br><del>(真是一大堆废话, 函数传参不也忽略)</del> </p>
-<h1 id="传参匹配限制"><a href="#传参匹配限制" class="headerlink" title="传参匹配限制"></a>传参匹配限制</h1><p>我们在传参时, 可能会报一些错误  </p>
 ]]></content>
       <categories>
         <category>rust-decl-macro</category>
