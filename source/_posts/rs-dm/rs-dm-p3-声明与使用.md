@@ -217,7 +217,7 @@ pass 一次就生成了, 对于很大的源码来说, 这不现实吧
 比如我们用Rust的enum表示一下:  
 
 ```rust
-// 该枚举: 一个AST节点可以是整数, 或者一个二元运算  
+// 该枚举: 一个AST节点可以是Int表达式或二元运算表达式  
 enum ASTNode {
 	Int(i32), 
 	BinaryExpr {
@@ -331,7 +331,7 @@ fn main() {
 
 ## AST节点
 
-macro 会将传入的token, 一个个解析为对应类型的AST节点 (除了少量token类型, 等会细讲)
+macro 会将传入的token, 解析为对应类型的AST节点 (除了少量token类型, 等下会讲到)  
 比如 `map!` 中, `$key:value` 与 `$val:expr`, 都会被解析为expr类型的AST节点:  
 ```rust
 macro_rules! map {
@@ -360,7 +360,7 @@ fn main() {
 ```
 
 我们通过使用 macro , 站在了更抽象的视角上  
-操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码), 最后再一起形成目标码  
+操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码)    
 
 这有时会大大简化手写代码量, 如std中, 向宏传入些类型, 能自动生成为这些类型实现trait的代码
 
@@ -408,11 +408,35 @@ got something else
 但是经过二次传入(向 `capture_then_match_tokens` 传入的参数又传给 `match_tokens`) 后  
 `5 + 7` 变成AST表达式节点, 只能与 `$a: expr` 匹配, 而不能与 `$a:tt + $b:tt` 匹配  
 
-只有 `tt`, `ident`, `lifetime` 能免遭 AST节点化  
-好好理解下这块  
+只有 `tt`, `ident`, `lifetime` 能免遭 AST节点化, 可以好好理解下这块  
+
+总结: 宏将一些捕获的token所AST节点化, 随后又展开为一个新AST节点, 来替换宏调用部分的AST节点  
+
+宏展开的结果是个某类型的AST节点, 这相比于C语言的 `#define` 宏, 有什么好处?  
+最直接的好处, 如下 ~~(相当于自动给你加上了括号)~~:
+```rust
+// C语言, 基于简单的文本替换
+#define SUM(a,b) a+b
+int main(void) {
+	SUM(2, 2);     // 2 * 2
+	5 * SUM(2, 2); // 5 * 2 + 2
+	return 0;
+}
+
+// Rust语言, 根据上下文推测出宏调用的AST节点应该被展开/替换为一个表达式类型的AST节点
+macro_rules! sum {
+	($a:expr,$b:expr) => {$a + $b};
+}
+fn main() {
+	sum!(2,2);     // 2 + 2
+	5 * sum!(2,2); // 5 * (2 + 2)
+}
+```
+
+
 ## 匹配误区/歧义限制
 在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制  
-可以去看看 [宏小册](https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md)
+即下面要讲的东西, 有时间的也可以去看看 [宏小册](https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md)
 ### 匹配误区
 来看看下面一段代码:
 ```rust
@@ -447,12 +471,3 @@ expected expression, found end of macro arguments
 这里只需稍微看看, 留个印象, 实际使用时, 若在此方面报错, 则根据编译器的提示来改即可  
 ~~(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)~~  
 ~~(因为我也没有全部搞懂)~~  
-
-
-
-
-
-
-
-
-

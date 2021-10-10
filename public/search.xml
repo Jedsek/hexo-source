@@ -529,7 +529,7 @@ Yield1State &#123;
 <p>那我们就pass多次, 将 <code>从源码编译为目标码</code> 这个大问题, 分解为一大堆小问题<br>每一次pass都解决一个小问题, 那不就Ok了吗</p>
 <p>这种 <code>中间表示</code>, 就称为 <code>IR (Intermediate Representation )</code>  </p>
 <p>我们可以先把源码抽象为AST (源码被抽象后的树状表示, 抽象语法树, Abstract Syntax Tree)<br>比如我们用Rust的enum表示一下:  </p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 该枚举: 一个AST节点可以是整数, 或者一个二元运算  </span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ASTNode</span></span> &#123;</span><br><span class="line">    Int(<span class="built_in">i32</span>), </span><br><span class="line">    BinaryExpr &#123;</span><br><span class="line">        op: Op,</span><br><span class="line">        lhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">        rhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二元运算的符号: 这里只抽象了加法</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Op</span></span> &#123;</span><br><span class="line">    Plus, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 该枚举: 一个AST节点可以是Int表达式或二元运算表达式  </span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ASTNode</span></span> &#123;</span><br><span class="line">    Int(<span class="built_in">i32</span>), </span><br><span class="line">    BinaryExpr &#123;</span><br><span class="line">        op: Op,</span><br><span class="line">        lhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">        rhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二元运算的符号: 这里只抽象了加法</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Op</span></span> &#123;</span><br><span class="line">    Plus, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>你只需明白AST是对源码的一层抽象产物就可以了  </p>
 <p>对于很少的源码, 已经可以直接转换为目标码了, 毕竟这时候AST也小<br>但是, 如果源码很大呢? AST已经很复杂了<br>那就再抽象一层吧, 向目标语言逐渐靠拢, 比如向汇编靠拢, 提高性能  </p>
 <p>基于AST, 我们可以再来一些 <code>IR</code>, 层层递进, 以达目的<br>注意, 是一些, 而不是一个, 这很好理解, 因为一层可能还是不够嘛  </p>
@@ -571,10 +571,10 @@ Yield1State &#123;
 </ol>
 <p>对于前面4个, 都是Single Token, 也就是只有根节点自己的Tree<br>对于第5个, 因为有()包裹, &lt;&lt;(…)&gt;&gt; 作为根节点, 它还有三个子节点 (这里正好处于同层)  </p>
 <p>有没有对 <code>Token后面跟着Tree</code> 更加理解?  </p>
-<h2 id="AST节点"><a href="#AST节点" class="headerlink" title="AST节点"></a>AST节点</h2><p>macro 会将传入的token, 一个个解析为对应类型的AST节点 (除了少量token类型, 等会细讲)<br>比如 <code>map!</code> 中, <code>$key:value</code> 与 <code>$val:expr</code>, 都会被解析为expr类型的AST节点:  </p>
+<h2 id="AST节点"><a href="#AST节点" class="headerlink" title="AST节点"></a>AST节点</h2><p>macro 会将传入的token, 解析为对应类型的AST节点 (除了少量token类型, 等下会讲到)<br>比如 <code>map!</code> 中, <code>$key:value</code> 与 <code>$val:expr</code>, 都会被解析为expr类型的AST节点:  </p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> map &#123;</span><br><span class="line">    ($key:expr =&gt; $val:expr) =&gt; &#123;&#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> m = std::collections::HashMap::&lt;_,_&gt;::new();</span><br><span class="line">        m.insert($key, $val);</span><br><span class="line">        m</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map!(<span class="string">&quot;普通上班族&quot;</span> =&gt; <span class="number">33</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>,m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 展开后, 可以看作是:</span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    let m = &#123;</span></span><br><span class="line"><span class="comment">        let mut m = std::collections::HashMap::&lt;_,_&gt;::new();</span></span><br><span class="line"><span class="comment">        m.insert(&quot;普通上班族&quot;, 33);</span></span><br><span class="line"><span class="comment">        m</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    println!(&quot;&#123;:?&#125;&quot;,m);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 
-<p>我们通过使用 macro , 站在了更抽象的视角上<br>操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码), 最后再一起形成目标码  </p>
+<p>我们通过使用 macro , 站在了更抽象的视角上<br>操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码)    </p>
 <p>这有时会大大简化手写代码量, 如std中, 向宏传入些类型, 能自动生成为这些类型实现trait的代码</p>
 <p>值得注意的是, 宏将传入参数给AST节点化时, 有时意味着会产生不期望的结果<br>我直接用 <a href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a> 上面的代码了:  </p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> capture_then_match_tokens &#123;</span><br><span class="line">    ($e:expr) =&gt; &#123;match_tokens!($e)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">macro_rules!</span> match_tokens &#123;</span><br><span class="line">    ($a:tt + $b:tt) =&gt; &#123;<span class="string">&quot;got an addition&quot;</span>&#125;;</span><br><span class="line">    (($i:ident)) =&gt; &#123;<span class="string">&quot;got an identifier&quot;</span>&#125;;</span><br><span class="line">    ($($other:tt)*) =&gt; &#123;<span class="string">&quot;got something else&quot;</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;\n&quot;</span>,</span><br><span class="line">        match_tokens!((caravan)),</span><br><span class="line">        match_tokens!(<span class="number">3</span> + <span class="number">6</span>),</span><br><span class="line">        match_tokens!(<span class="number">5</span>)</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;&quot;</span>,</span><br><span class="line">        capture_then_match_tokens!((caravan)),</span><br><span class="line">        capture_then_match_tokens!(<span class="number">3</span> + <span class="number">6</span>),</span><br><span class="line">        capture_then_match_tokens!(<span class="number">5</span>)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -584,8 +584,13 @@ Yield1State &#123;
 
 <p>比如这里, <code>match_tokens</code> 捕获token, 然后将参数解析为一个expr类型的AST节点<br>它不再是token, 而是个AST节点了!  </p>
 <p>比如 <code>5 + 7</code>, 原本是可以与 <code>$a:tt + $b:tt</code> 相匹配, 也可以与 <code>$a: expr</code> 匹配<br>但是经过二次传入(向 <code>capture_then_match_tokens</code> 传入的参数又传给 <code>match_tokens</code>) 后<br><code>5 + 7</code> 变成AST表达式节点, 只能与 <code>$a: expr</code> 匹配, 而不能与 <code>$a:tt + $b:tt</code> 匹配  </p>
-<p>只有 <code>tt</code>, <code>ident</code>, <code>lifetime</code> 能免遭 AST节点化<br>好好理解下这块  </p>
-<h2 id="匹配误区-歧义限制"><a href="#匹配误区-歧义限制" class="headerlink" title="匹配误区/歧义限制"></a>匹配误区/歧义限制</h2><p>在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制<br>可以去看看 <a href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a></p>
+<p>只有 <code>tt</code>, <code>ident</code>, <code>lifetime</code> 能免遭 AST节点化, 可以好好理解下这块  </p>
+<p>总结: 宏将一些捕获的token所AST节点化, 随后又展开为一个新AST节点, 来替换宏调用部分的AST节点  </p>
+<p>宏展开的结果是个某类型的AST节点, 这相比于C语言的 <code>#define</code> 宏, 有什么好处?<br>最直接的好处, 如下 <del>(相当于自动给你加上了括号)</del>:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// C语言, 基于简单的文本替换</span></span><br><span class="line">#define SUM(a,b) a+b</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    SUM(<span class="number">2</span>, <span class="number">2</span>);     <span class="comment">// 2 * 2</span></span><br><span class="line">    <span class="number">5</span> * SUM(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 5 * 2 + 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Rust语言, 根据上下文推测出宏调用的AST节点应该被展开/替换为一个表达式类型的AST节点</span></span><br><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    ($a:expr,$b:expr) =&gt; &#123;$a + $b&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!(<span class="number">2</span>,<span class="number">2</span>);     <span class="comment">// 2 + 2</span></span><br><span class="line">    <span class="number">5</span> * sum!(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">// 5 * (2 + 2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="匹配误区-歧义限制"><a href="#匹配误区-歧义限制" class="headerlink" title="匹配误区/歧义限制"></a>匹配误区/歧义限制</h2><p>在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制<br>即下面要讲的东西, 有时间的也可以去看看 <a href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a></p>
 <h3 id="匹配误区"><a href="#匹配误区" class="headerlink" title="匹配误区"></a>匹配误区</h3><p>来看看下面一段代码:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> aa &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;&#125;;</span><br><span class="line">    ($a: ident +) =&gt; &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    aa!(a);   <span class="comment">// Yes</span></span><br><span class="line">    aa!(a+);  <span class="comment">// No</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -594,8 +599,8 @@ Yield1State &#123;
 
 <p>你会发现实际上都是在与第一个rule尝试着进行匹配:  </p>
 <p><code>a (lhs, left hand side)</code> 能被第一个rule匹配<br>而 <code>+ (二元加)</code> 因为可以尾随表达式, 也可以被第一个rule匹配<br>但由于缺少 <code>rhs</code>, 此时会直接报错, 而不是去尝试匹配下一个rule  </p>
-<p>这避免了某些情况下, 发生不期望的匹配, 但你却不知道<br>因此rule的顺序很重要, 需要你  </p>
-<h3 id="歧义限制"><a href="#歧义限制" class="headerlink" title="歧义限制"></a>歧义限制</h3><p>由于一些歧义, 为了向后兼容性与不破坏代码<br>当前对 <code>Metavariable</code> 后面可以跟的内容有所限制<br>详情可以去看 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">Rust-Reference: 限制</a><br>这里只需稍微看看, 留个印象<br>实际使用时, 若在此方面报错, 则根据编译器的提示来改即可<br><del>(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)</del><br><del>(因为我也没有全部搞懂)</del>  </p>
+<p>这避免了某些情况下, 发生不期望的匹配, 但你却不知, 因此rule的顺序很重要  </p>
+<h3 id="歧义限制"><a href="#歧义限制" class="headerlink" title="歧义限制"></a>歧义限制</h3><p>由于一些歧义, 为了向后兼容性与不破坏代码<br>当前对 <code>Metavariable</code> 后面可以跟的内容有所限制, 详情可见 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">Rust-Reference: 限制</a><br>这里只需稍微看看, 留个印象, 实际使用时, 若在此方面报错, 则根据编译器的提示来改即可<br><del>(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)</del><br><del>(因为我也没有全部搞懂)</del>  </p>
 ]]></content>
       <categories>
         <category>rust-decl-macro</category>
@@ -606,10 +611,29 @@ Yield1State &#123;
   </entry>
   <entry>
     <title>rs-dm-p4-重复</title>
-    <url>/posts/9559cbfc.html</url>
+    <url>/posts/rs-dm-p4.html</url>
     <content><![CDATA[<blockquote>
 <p>宏中非常重要的语法: 重复 (Repetition)</p>
 </blockquote>
+<span id="more"></span>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><code>重复 (Repetition)</code> 是宏中无比重要的核心级语法, 想发挥宏的强大就必须用到它  </p>
+<p>该语法, 可以重复一段模式(一些Token), 出现在以下两个地方:  </p>
+<ul>
+<li>Matcher: 将一段指定的模式, 重复地匹配与捕获</li>
+<li>Transcriber: 将一段指定的模式, 重复地展开</li>
+</ul>
+<p><del>(废话, Rust的声明宏不就两个主要的部分嘛)</del></p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>假设你要设计一个宏, 模拟下面代码的传参时语法, 传入一些数字(不确定个数), 然后获取求和结果:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Examples:</span></span><br><span class="line"><span class="built_in">assert_eq!</span>( <span class="number">0</span>,  sum!() );</span><br><span class="line"><span class="built_in">assert_eq!</span>( <span class="number">15</span>, sum!(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>) );</span><br></pre></td></tr></table></figure>
+
+<p>对于固定个数的传参参数, 我们可以这样:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    () =&gt; &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    ($a: expr) =&gt; &#123;$a&#125;;</span><br><span class="line">    ($a: expr, $b: expr) =&gt; &#123;$a + $b&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但问题是参数不固定, 因此我们应该用到重复语法:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    () =&gt; &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    ($($a:expr),*) =&gt; &#123;</span><br><span class="line">        <span class="number">0</span> $(+ $a)*</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!();          <span class="comment">// 0</span></span><br><span class="line">    sum!(<span class="number">5</span>);         <span class="comment">// 5</span></span><br><span class="line">    sum!(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>); <span class="comment">// 15</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 ]]></content>
       <categories>
         <category>rust-decl-macro</category>
