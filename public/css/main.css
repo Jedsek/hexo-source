@@ -182,7 +182,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: Fira Code, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Fira Code, 'Fira Code', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 0.95em;
   line-height: 2;
   min-height: 100%;
@@ -195,7 +195,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Fira Code, Fira Code, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Fira Code, Fira Code, 'Fira Code', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 30px 0 15px;
@@ -545,7 +545,7 @@ pre figcaption a:hover {
 }
 pre,
 code {
-  font-family: Fira Code, consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
+  font-family: Fira Code, consolas, Menlo, monospace, 'Fira Code', 'PingFang SC', 'Microsoft YaHei';
 }
 code {
   border-radius: 3px;
@@ -1306,7 +1306,7 @@ pre code {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: Fira Code, Fira Code, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Fira Code, Fira Code, 'Fira Code', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1964,7 +1964,7 @@ pre code {
   width: 4px;
 }
 .post-body {
-  font-family: Fira Code, Fira Code, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Fira Code, Fira Code, 'Fira Code', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   overflow-wrap: break-word;
 }
 @media (min-width: 1200px) {
@@ -2151,7 +2151,7 @@ pre code {
 }
 .posts-expand .post-meta-container {
   color: #999;
-  font-family: Fira Code, Fira Code, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Fira Code, Fira Code, 'Fira Code', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 0.9em;
   margin-top: 3px;
 }
@@ -2919,3 +2919,35 @@ mark.search-keyword {
     margin-bottom: 10px;
   }
 }
+@font-face {
+  font-family: "iconfont"; /* Project id 2857321 */
+  src: url('//at.alicdn.com/t/font_2857321_3o0qw38nf2v.woff2?t=1633848329784') format('woff2'),
+       url('//at.alicdn.com/t/font_2857321_3o0qw38nf2v.woff?t=1633848329784') format('woff'),
+       url('//at.alicdn.com/t/font_2857321_3o0qw38nf2v.ttf?t=1633848329784') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bilibili-fill:before {
+  content: "\e75c";
+}
+
+.icon-email-fill:before {
+  content: "\e77e";
+}
+
+.icon-matuwang-zhihufangxingdianji:before {
+  content: "\e602";
+}
+
+.icon-QQ:before {
+  content: "\e882";
+}
+
+

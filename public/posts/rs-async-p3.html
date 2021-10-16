@@ -14,14 +14,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-minimal.css">
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 <meta name="description" content="Rust 中的 Future&#x2F;async&#x2F;.await 说明">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rs-async-p3-Future">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="Rust 中的 Future&#x2F;async&#x2F;.await 说明">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-09-12T05:56:48.000Z">
-<meta property="article:modified_time" content="2021-10-10T04:12:38.801Z">
+<meta property="article:modified_time" content="2021-09-12T05:56:48.000Z">
 <meta property="article:author" content="Jedsek">
 <meta property="article:tag" content="rust">
 <meta name="twitter:card" content="summary">
@@ -90,13 +90,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>home</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>about</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>tags</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
       </li>
   </ul>
@@ -151,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Future-async-await"><span class="nav-number">1.</span> <span class="nav-text">Future&#x2F;async&#x2F;.await</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E7%AF%87"><span class="nav-number">1.1.</span> <span class="nav-text">开篇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What%E2%80%99s-Future"><span class="nav-number">1.2.</span> <span class="nav-text">What’s Future</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.3.</span> <span class="nav-text">Future的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What%E2%80%99s-async"><span class="nav-number">1.4.</span> <span class="nav-text">What’s async</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="nav-number">1.5.</span> <span class="nav-text">Future的执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.5.1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%BF%90%E8%A1%8C%E6%97%B6%E6%89%A7%E8%A1%8C"><span class="nav-number">1.5.2.</span> <span class="nav-text">通过运行时执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#await-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.5.3.</span> <span class="nav-text">.await 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.5.4.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BE%E5%A3%B0"><span class="nav-number">1.6.</span> <span class="nav-text">尾声</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">开篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Future"><span class="nav-number">2.</span> <span class="nav-text">Future</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">2.2.</span> <span class="nav-text">定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Async"><span class="nav-number">3.</span> <span class="nav-text">Async</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">执行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runtime%E6%89%A7%E8%A1%8C"><span class="nav-number">4.2.</span> <span class="nav-text">Runtime执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Await"><span class="nav-number">5.</span> <span class="nav-text">Await</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">6.</span> <span class="nav-text">补充</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -166,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -182,6 +180,20 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;2948804617&amp;website&#x3D;www.oicqzone.com" rel="noopener" target="_blank"><i class="iconfont icon-QQ fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/673774482" title="B站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;673774482" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-fill fa-fw"></i>B站</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/zhu-xia-hun" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;zhu-xia-hun" rel="noopener" target="_blank"><i class="iconfont icon-matuwang-zhihufangxingdianji fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jed-sek@outlook.com" title="邮箱 → mailto:jed-sek@outlook.com" rel="noopener" target="_blank"><i class="iconfont icon-email-fill fa-fw"></i>邮箱</a>
+      </span>
+  </div>
 
 
 
@@ -242,13 +254,6 @@
 
       <time title="创建时间：2021-09-12 13:56:48" itemprop="dateCreated datePublished" datetime="2021-09-12T13:56:48+08:00">2021-09-12</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-10-10 12:12:38" itemprop="dateModified" datetime="2021-10-10T12:12:38+08:00">2021-10-10</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -279,10 +284,8 @@
         <blockquote>
 <p>Rust 中的 Future/async/.await 说明  </p>
 </blockquote>
-<span id="more"></span>
-
-<h1 id="Future-async-await"><a href="#Future-async-await" class="headerlink" title="Future/async/.await"></a>Future/async/.await</h1><hr>
-<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>大家好! 我们上一节已经知晓异步的基础概念<br>现在, 来看看Rust中的异步语法吧    </p>
+<span id="more"></span>  
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>大家好! 我们上一节已经知晓异步的基础概念<br>现在, 来看看Rust中的异步语法吧    </p>
 <p>在本节, 我们会知晓以下三个概念的大致含义:<br>(暂时不涉及背后原理, 原理之后专门出好几节来讲)   </p>
 <ul>
 <li>Future (trait)  </li>
@@ -291,7 +294,7 @@
 </ul>
 <p>开始旅途吧  </p>
 <hr>
-<h2 id="What’s-Future"><a href="#What’s-Future" class="headerlink" title="What’s Future"></a>What’s Future</h2><p><code>Future</code>, 一个标准/核心库中的trait<br>其完整路径为 <code>std/core::future::Future</code>   </p>
+<h1 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><code>Future</code>, 一个标准/核心库中的trait<br>其完整路径为 <code>std/core::future::Future</code>   </p>
 <p>此节我只会讲它的大致含义, 原理则放到后面几节专门来讲 <del>(原理太难, 一节根本不够)</del>  </p>
 <p>在Rust中, 一个实现了 Future(trait) 的类型<br>该类型的实例 (有时候直接被简称为 一个Future实例) 便代表 一次异步计算<br>可以将其交给 <code>Runtime(运行时)</code>, 从而异步执行   </p>
 <p><code>异步执行</code>, 也就是指:<br>当其他 异步任务 阻塞时, 当前 异步任务 有机会执行<br>或当前 异步任务 阻塞时, 其他 异步任务 有机会执行<br>总而言之, 阻塞时期执行其他任务, 不给cpu空闲的机会</p>
@@ -322,8 +325,7 @@
 </ul>
 <p><code>一个Future (一次异步计算)</code><br>可理解为, 是组成 <code>一个Task (一个异步任务)</code> 的最小单位 </p>
 <p>了解到了那么一点点后, 现在来正式看看呗 ?  </p>
-<hr>
-<h2 id="Future的定义"><a href="#Future的定义" class="headerlink" title="Future的定义"></a>Future的定义</h2><p>让我们来看看它的定义:</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>让我们来看看它的定义:</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Future</span></span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, cx: &amp;<span class="keyword">mut</span> Context&lt;<span class="symbol">&#x27;_</span>&gt;) -&gt; Poll&lt;Self::Output&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>下面简单了解一下:  </p>
 <ul>
@@ -339,7 +341,7 @@
 <p>若只是普通使用者, 并不需了解 <code>Future的定义</code> 背后之原理<br>但若不了解它, 又如何为某类型实现 Future 呢?  </p>
 <p>别急, Rust 为我们提供了关键字 <code>async</code>, 接着往下看吧   </p>
 <hr>
-<h2 id="What’s-async"><a href="#What’s-async" class="headerlink" title="What’s async"></a>What’s async</h2><p><code>async</code>, 一个关键字<br>用来创建 <code>一个匿名结构体的实例, 该结构体实现了Future</code><br>即, 它创建一个 <code>Future实例</code>  </p>
+<h1 id="Async"><a href="#Async" class="headerlink" title="Async"></a>Async</h1><p><code>async</code>, 一个关键字<br>用来创建 <code>一个匿名结构体的实例, 该结构体实现了Future</code><br>即, 它创建一个 <code>Future实例</code>  </p>
 <p>来个例子, 看看 async 的好处:   </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 </span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_str_1</span></span>() -&gt; <span class="built_in">String</span> &#123; </span><br><span class="line">    <span class="built_in">String</span>::from(<span class="string">&quot;Hello! World!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 </span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HelloStr</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Future <span class="keyword">for</span> HelloStr &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span> = <span class="built_in">String</span>;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, _cx: &amp;<span class="keyword">mut</span> Context&lt;<span class="symbol">&#x27;_</span>&gt;) -&gt; Poll&lt;Self::Output&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="built_in">str</span> = <span class="built_in">String</span>::from(<span class="string">&quot;Hello! World!&quot;</span>);</span><br><span class="line">        Poll::Ready(<span class="built_in">str</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">hello_str_2</span></span>() -&gt; <span class="keyword">impl</span> Future&lt;Output = <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    HelloStr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -347,7 +349,7 @@
 <p>看看它们两的返回值, 如下:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_str_1</span></span>() -&gt; <span class="built_in">String</span> &#123; </span><br><span class="line">    <span class="built_in">String</span>::from(<span class="string">&quot;Hello! World!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">hello_str_1() <span class="comment">// 返回值为 `impl Future&lt;Output = String&gt;`</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">hello_str_2</span></span>() -&gt; <span class="keyword">impl</span> Future&lt;Output = <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    HelloStr <span class="comment">// Future&lt;Output = String&gt; 的实例</span></span><br><span class="line">&#125;</span><br><span class="line">hello_str_2() <span class="comment">// 返回值为 `impl Future&lt;Output = String&gt;`  </span></span><br></pre></td></tr></table></figure>
 
-<hr>
+
 <p>注意, 异步函数的调用, 只是返回一个 Future实例<br><strong>但并没有开始执行, 它是惰性的</strong><br><strong>只有调用Future的poll方法, 才能推动它的执行</strong><br><strong>而调用poll方法的工作, 则交给了运行时(执行器)</strong>  </p>
 <p>这样的好处就在于:<br>将一个异步计算看作一个变量, 方便了传参等工作  </p>
 <p>比如, 你想舍弃某次 异步任务, 你只需要将 对应的Future实例 给 drop 掉, 使其所有权丢失即可</p>
@@ -360,25 +362,23 @@
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 返回值为 `impl Future&lt;Output = String&gt;`</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello</span></span>() -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="built_in">String</span>::from(<span class="string">&quot;Hello&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 该代码块创建了类型为 `impl Future&lt;Output = i32&gt;` 的实例</span></span><br><span class="line"><span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1_i32</span>;</span><br><span class="line">    a</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// `async block` 也可以使用move  </span></span><br><span class="line"><span class="comment">// 获得其中使用的变量的所有权  </span></span><br><span class="line"><span class="keyword">let</span> s = <span class="built_in">String</span>::new();</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">move</span> &#123;</span><br><span class="line">    &amp;s </span><br><span class="line">&#125;</span><br><span class="line">s; <span class="comment">// Error: use of moved value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 闭包因为不稳定, 我也懒得讲了......</span></span><br></pre></td></tr></table></figure>
 
 <p>创建一个Future实例, 想必大家已经了解一二<br>但是如何执行一个Future实例?  </p>
-<p>欲知后事如何, 请听下文揭晓 </p>
+<p>请接着往下看</p>
 <hr>
-<h2 id="Future的执行"><a href="#Future的执行" class="headerlink" title="Future的执行"></a>Future的执行</h2><h3 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h3><p>Rust语言本身并不提供 <code>异步运行时 (async runtime)</code>, 以便于语言内核保持精小, 便于进化/迭代/维护<br>异步运行时 由社区提供, 围绕语言本身提供的定义 (比如 Future) 进行支持/扩充, 来运行异步程序  </p>
+<h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>Rust语言本身并不提供 <code>异步运行时 (async runtime)</code>, 以便于语言内核保持精小, 便于进化/迭代/维护<br>异步运行时 由社区提供, 围绕语言本身提供的定义 (比如 Future) 进行支持/扩充, 来运行异步程序  </p>
 <p>可以仔细看看 Future 的完整路径: std::future/core::Future<br>注意到没有, 它也存在于核心库中 (核心库中对异步的支持, 并不只有 Future) </p>
 <p>这意味着只要你能使用Rust, 语言本身就会提供 Future 等定义<br>再加上异步运行时是可选的, 凭借 <code>cartes.io</code> 上提供的异步运行时相关的carte<br>在嵌入式环境下, 也能够轻松运行异步程序   </p>
 <p>在正式开始之前<br>请确保你已经在 <code>Cargo.toml</code> 中添加了如下代码:   </p>
 <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">async-std</span> = &#123; version = <span class="string">&quot;1.9&quot;</span>, features = [<span class="string">&quot;attributes&quot;</span>] &#125;</span><br></pre></td></tr></table></figure>
 
 <p>以 <code>async-std</code> 这个比较主流, 对新人友好的 <code>异步运行时crate</code> 为例子<br>我们指定了版本, 并且启用了 <code>attributes</code> 这个特性  </p>
-<p>好了, 马上开始咯!  </p>
-<hr>
-<h3 id="通过运行时执行"><a href="#通过运行时执行" class="headerlink" title="通过运行时执行"></a>通过运行时执行</h3><p>我们先来创建一个 <code>打印 &quot;hello world&quot; 的Future</code> 吧<br>并且使用 <code>async-std</code> 这个异步运行时环境来执行它:   </p>
+<h2 id="Runtime执行"><a href="#Runtime执行" class="headerlink" title="Runtime执行"></a>Runtime执行</h2><p>我们先来创建一个 <code>打印 &quot;hello world&quot; 的Future</code> 吧<br>并且使用 <code>async-std</code> 这个异步运行时环境来执行它:   </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> async_std::task;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_world</span></span>() &#123; </span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello wrold!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123; </span><br><span class="line">    <span class="keyword">let</span> fut = hello_world();</span><br><span class="line">    task::block_on(fut);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>还记得我们在本节开始不久, 就提到过的 <code>异步任务 (Top-level Future, 即顶层的异步计算)</code> 吗?<br>async_std::task, 该模块, 为我们提供了大量api, 来执行/操控 这些 <code>Task</code>  </p>
 <p>比如这里出现的 <code>task::block_on</code>:<br>传入一个 Future实例, Runtime 会执行它(调用poll方法), 并阻塞调用线程<br>该任务执行完毕后产出的值, 会作为 <code>block_on</code> 的返回值  </p>
 <p>我们执行了一个 Task, 并且这个 Task 是单个的 Future<br>但若我们想执行由多个 子Future 所组成的 Task, 又该怎么办?  </p>
 <p><code>.await</code> 关键字出场了! </p>
 <hr>
-<h3 id="await-关键字"><a href="#await-关键字" class="headerlink" title=".await 关键字"></a>.await 关键字</h3><p><code>.await</code> 只能出现在 <code>async fn/block</code> 内部<br>在某个 Future实例 的后面, 增加 <code>.await</code>, 那么 <code>该Future实例</code> 则会执行<br>但是, 它只是表述这么个逻辑而已, 因为Rust语言本身没有异步运行时(无执行能力)<br>真正执行的话, 得将 Future实例 交给运行时, 带动着执行里面的 子Future   </p>
+<h1 id="Await"><a href="#Await" class="headerlink" title="Await"></a>Await</h1><p><code>.await</code> 只能出现在 <code>async fn/block</code> 内部<br>在某个 Future实例 的后面, 增加 <code>.await</code>, 那么 <code>该Future实例</code> 则会执行<br>但是, 它只是表述这么个逻辑而已, 因为Rust语言本身没有异步运行时(无执行能力)<br>真正执行的话, 得将 Future实例 交给运行时, 带动着执行里面的 子Future   </p>
 <p>来看看它的使用:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> async_std::task;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello</span></span>() &#123;  </span><br><span class="line">    <span class="built_in">print!</span>(<span class="string">&quot;Hello &quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">world</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;world!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_world</span></span>() &#123; </span><br><span class="line">    hello().<span class="keyword">await</span>;</span><br><span class="line">    world().<span class="keyword">await</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123; </span><br><span class="line">    <span class="keyword">let</span> fut = hello_world();</span><br><span class="line">    task::block_on(fut);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -393,7 +393,7 @@
 <p><code>.await</code> 会指明 <code>执行某个Future</code> 这一逻辑<br>当 <code>xxx.await</code> 所在的 Task 交给 Runtime 执行, 并执行到 <code>xxx.await</code> 时<br><code>xxx</code> 这个Future实例会执行  </p>
 <p>若它阻塞 (这意味着 该Future所在的Task 也阻塞)<br>所以调度程序安排 其他Task, 在该空档期执行<br>若不阻塞, 就继续往下执行 (可能还有碰见 <code>.await</code> 哟), 直到 该Task 结束   </p>
 <hr>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><ul>
 <li><code>#[async_std::main]</code><br>这玩意无比常见, 是个属性宏, 要加在 main函数 头上<br>使得 main 前面能被 async 所修饰<br>程序运行时, main函数返回的 Future, 会自动交给 Runtime 开始运行, 如下:  </li>
 </ul>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[async_std::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    hello_world().<span class="keyword">await</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于:</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    async_std::task::block_on( <span class="keyword">async</span> &#123;</span><br><span class="line">        hello_world().<span class="keyword">await</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -403,18 +403,8 @@
 <li><code>async_std::task::spawn</code><br>因为这玩意也很常见, 所以就讲一讲:<br>向其传入 Future, 运行时会开始运行 该Task, 并返回 async_std::task::JoinHandle 的实例<br>它实现了 Future, 与标准库中的 <code>JoinHandle</code> 无比相似<br>不过那个运行 Thread, 而这个运行 Task, <code>join</code> 相应地变成 <code>.await</code><br>想让 该handle代表的Task 运行完毕, 应该在 该handle 前放上 <code>.await</code>:  </li>
 </ul>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> async_std::task;</span><br><span class="line"><span class="meta">#[async_std::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123; </span><br><span class="line">    <span class="keyword">let</span> handle = task::spawn(<span class="keyword">async</span> &#123;</span><br><span class="line">        <span class="number">1</span> + <span class="number">1</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">let</span> two:<span class="built_in">i32</span> = handle.<span class="keyword">await</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>终于结束了, 这一篇其实是重写版, 写到这真的累死了  </p>
-<p>我们学到了一些东西 (不涉及原理, 之后专门抽几节讲……):      </p>
-<ul>
-<li><code>Future</code>   </li>
-<li><code>async fn/block</code></li>
-<li><code>.await</code>  </li>
-<li><code>Async-Runtime&#39;s API</code>  </li>
-</ul>
-<p>只需要使用的, 看到这其实已经差不多了<br>普通异步程序也不怎么需要看 <code>Future</code> 定义中的 <code>poll</code> 方法<br>那里涉及到比较烦人的背后原理……  </p>
-<p>如果有问题的话, 可以在评论区留言<br>或者加在下qq交流也行 : <code>2948804617</code>  </p>
-<p>呼, 真的累死, 看番去了!<br>一周后再更吧 <del>(鸽神是也)</del></p>
+
+
 
     </div>
 

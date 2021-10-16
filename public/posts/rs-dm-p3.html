@@ -14,14 +14,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-minimal.css">
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 <meta name="description" content="正式系统的关于 macro 的 声明与使用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rs-dm-p3-声明与使用">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="正式系统的关于 macro 的 声明与使用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-09-20T12:06:15.000Z">
-<meta property="article:modified_time" content="2021-10-10T04:12:38.801Z">
+<meta property="article:modified_time" content="2021-09-20T12:06:15.000Z">
 <meta property="article:author" content="Jedsek">
 <meta property="article:tag" content="rust">
 <meta name="twitter:card" content="summary">
@@ -90,13 +90,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>home</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>about</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>tags</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
       </li>
   </ul>
@@ -151,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B"><span class="nav-number">1.</span> <span class="nav-text">框架建立</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E5%AE%8F%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">两种宏参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%8F%98%E9%87%8F-Metavariable"><span class="nav-number">2.1.</span> <span class="nav-text">元变量(Metavariable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E9%9D%A2%E9%87%8F-Metaliteral"><span class="nav-number">2.2.</span> <span class="nav-text">元字面量(Metaliteral)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E8%B4%A8-AST-%E4%B8%8E-Token"><span class="nav-number">3.</span> <span class="nav-text">本质 (AST 与 Token)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0Macro"><span class="nav-number">4.</span> <span class="nav-text">回到Macro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Token%E7%B1%BB%E5%9E%8B%E8%A1%A8"><span class="nav-number">4.1.</span> <span class="nav-text">Token类型表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TT"><span class="nav-number">4.2.</span> <span class="nav-text">TT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST%E8%8A%82%E7%82%B9"><span class="nav-number">4.3.</span> <span class="nav-text">AST节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E8%AF%AF%E5%8C%BA-%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6"><span class="nav-number">4.4.</span> <span class="nav-text">匹配误区&#x2F;歧义限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E8%AF%AF%E5%8C%BA"><span class="nav-number">4.4.1.</span> <span class="nav-text">匹配误区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6"><span class="nav-number">4.4.2.</span> <span class="nav-text">歧义限制</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B"><span class="nav-number">1.</span> <span class="nav-text">框架建立</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E5%AE%8F%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">两种宏参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%8F%98%E9%87%8F-Metavariable"><span class="nav-number">2.1.</span> <span class="nav-text">元变量(Metavariable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E9%9D%A2%E9%87%8F-Metaliteral"><span class="nav-number">2.2.</span> <span class="nav-text">元字面量(Metaliteral)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E8%B4%A8-AST-%E4%B8%8E-Token"><span class="nav-number">3.</span> <span class="nav-text">本质 (AST 与 Token)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0Macro"><span class="nav-number">4.</span> <span class="nav-text">回到Macro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Token%E7%B1%BB%E5%9E%8B%E8%A1%A8"><span class="nav-number">4.1.</span> <span class="nav-text">Token类型表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TT"><span class="nav-number">4.2.</span> <span class="nav-text">TT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST%E8%8A%82%E7%82%B9"><span class="nav-number">4.3.</span> <span class="nav-text">AST节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">4.4.</span> <span class="nav-text">匹配注意点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E8%AF%AF%E5%8C%BA"><span class="nav-number">4.4.1.</span> <span class="nav-text">匹配误区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6"><span class="nav-number">4.4.2.</span> <span class="nav-text">歧义限制</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -166,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -182,6 +180,20 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;2948804617&amp;website&#x3D;www.oicqzone.com" rel="noopener" target="_blank"><i class="iconfont icon-QQ fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/673774482" title="B站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;673774482" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-fill fa-fw"></i>B站</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/zhu-xia-hun" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;zhu-xia-hun" rel="noopener" target="_blank"><i class="iconfont icon-matuwang-zhihufangxingdianji fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jed-sek@outlook.com" title="邮箱 → mailto:jed-sek@outlook.com" rel="noopener" target="_blank"><i class="iconfont icon-email-fill fa-fw"></i>邮箱</a>
+      </span>
+  </div>
 
 
 
@@ -242,13 +254,6 @@
 
       <time title="创建时间：2021-09-20 20:06:15" itemprop="dateCreated datePublished" datetime="2021-09-20T20:06:15+08:00">2021-09-20</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-10-10 12:12:38" itemprop="dateModified" datetime="2021-10-10T12:12:38+08:00">2021-10-10</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -400,7 +405,7 @@
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C语言, 基于简单的文本替换</span></span><br><span class="line">#define SUM(a,b) a+b</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    SUM(<span class="number">2</span>, <span class="number">2</span>);     <span class="comment">// 2 * 2</span></span><br><span class="line">    <span class="number">5</span> * SUM(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 5 * 2 + 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Rust语言, 根据上下文推测出宏调用的AST节点应该被展开/替换为一个表达式类型的AST节点</span></span><br><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    ($a:expr,$b:expr) =&gt; &#123;$a + $b&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!(<span class="number">2</span>,<span class="number">2</span>);     <span class="comment">// 2 + 2</span></span><br><span class="line">    <span class="number">5</span> * sum!(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">// 5 * (2 + 2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="匹配误区-歧义限制"><a href="#匹配误区-歧义限制" class="headerlink" title="匹配误区/歧义限制"></a>匹配误区/歧义限制</h2><p>在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制<br>即下面要讲的东西, 有时间的也可以去看看 <a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a></p>
+<h2 id="匹配注意点"><a href="#匹配注意点" class="headerlink" title="匹配注意点"></a>匹配注意点</h2><p>在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制<br>即下面要讲的东西, 有时间的也可以去看看 <a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a></p>
 <h3 id="匹配误区"><a href="#匹配误区" class="headerlink" title="匹配误区"></a>匹配误区</h3><p>来看看下面一段代码:</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> aa &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;&#125;;</span><br><span class="line">    ($a: ident +) =&gt; &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    aa!(a);   <span class="comment">// Yes</span></span><br><span class="line">    aa!(a+);  <span class="comment">// No</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

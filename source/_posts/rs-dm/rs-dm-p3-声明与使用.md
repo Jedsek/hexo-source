@@ -434,7 +434,7 @@ fn main() {
 ```
 
 
-## 匹配误区/歧义限制
+## 匹配注意点
 在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制  
 即下面要讲的东西, 有时间的也可以去看看 [宏小册](https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md)
 ### 匹配误区

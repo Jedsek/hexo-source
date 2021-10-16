@@ -101,10 +101,10 @@ creative_commons:
 # External url should start with http:// or https://
 menu:
   home: / || fa fa-home
-  about: /about/ || fa fa-user
+  # about: /about/ || fa fa-user
   tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
-  archives: /archives/ || fa fa-archive
+  # archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
@@ -159,8 +159,11 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
+  QQ: tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com || iconfont icon-QQ
+  B站: https://space.bilibili.com/673774482 || iconfont icon-bilibili-fill
+  知乎: https://www.zhihu.com/people/zhu-xia-hun || iconfont icon-matuwang-zhihufangxingdianji
+  邮箱: mailto:jed-sek@outlook.com || iconfont icon-email-fill
   #GitHub: https://github.com/yourname || fab fa-github
-  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
@@ -169,7 +172,7 @@ social:
   #YouTube: https://youtube.com/yourname || fab fa-youtube
   #Instagram: https://instagram.com/yourname || fab fa-instagram
   #Skype: skype:yourname?call|chat || fab fa-skype
-  # RSS: /atom.xml || fas fa-rss
+  #RSS: /atom.xml || fas fa-rss
 
 social_icons:
   enable: true
@@ -185,6 +188,7 @@ links_settings:
 
 links:
   #Title: https://example.com
+
 
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
@@ -212,6 +216,8 @@ footer:
   # Specify the year when the site was setup. If not defined, current year will be used.
   #since: 2021
 
+  #统计
+  counter: true
   # Icon between year and copyright info.
   icon:
     # Icon name in Font Awesome. See: https://fontawesome.com/icons
@@ -256,7 +262,7 @@ post_meta:
   item_text: true
   created_at: true
   updated_at:
-    enable: true
+    enable: false
     another_day: true
   categories: true
 
@@ -323,7 +329,7 @@ post_navigation: left
 
 # TagCloud settings for tags page.
 tagcloud:
-  min: 12 # Minimum font size in px
+  min: 18 # Minimum font size in px
   max: 30 # Maximum font size in px
   amount: 200 # Total amount of tags
   orderby: name # Order of tags
@@ -438,7 +444,7 @@ font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: //fonts.lug.ustc.edu.cn
+  host: 
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -584,11 +590,11 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: disqus | disqusjs | changyan | livere | gitalk | utterances
-  active:
+  active: 
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
-  lazyload: false
+  lazyload: true
   # Modify texts or order for any naves, here are some examples.
   nav:
     #disqus:

@@ -19,7 +19,8 @@ categories: rust-async
 
 现在, 让我们开始吧!  
 - - -
-# 抢占式/协作式多任务的概念  
+# 两种多任务  
+## 介绍
 `抢占式多任务` 与 `协作式多任务`, 都属于 `多任务`         
 
 - 抢占式多任务:  
@@ -35,16 +36,14 @@ categories: rust-async
 这是自愿/协作的, Task们 `自愿放弃CPU的执行权`
 (上文中的 `任务` 与 `Task` 请区分一下, 前者比后者广泛, 后者在这, 用于Rust的举例)  
 
-- - -
-
-# 两种多任务的恢复/状态保存  
+## 状态的恢复/保存
 既然任务们能互相切换执行, 那么, 当再次轮到某任务执行时  
 该任务, 应当从先前暂停的地方开始, 继续执行  
 因此我们应当备份某任务的先前状态, 以便于之后的继续执行, 这就是 `状态保存`  
 
 对于 `抢占式` 与 `协作式`, 处理 `状态保存` 的思路是不一样的:
 
-## 抢占式:  
+- 抢占式:  
 因为是强迫切换执行的, 任务会在任意某个时刻被中断  
 任务此时运行到了哪里? 我们不知道啊!  
 那么, 就只好将任务的所有状态全部保存, 包括调用栈(call stack)    
@@ -52,7 +51,7 @@ categories: rust-async
 反正, 你只需明白, 操作系统强制切换任务, 为每个任务分配相对公平的执行时间  
 但是, 代价也有, 比如不得不为每个任务保存它的所有状态, 内存开销大  
 
-## 协作式:  
+- 协作式:  
 因为是自愿/协作地切换执行, 每个任务会在哪里放弃执行都是清楚的  
 这种放弃执行权的操作, 我们称为 `yield`    
 
@@ -68,6 +67,7 @@ categories: rust-async
 协作式 的好处在于便于掌握所有的 yield point  
 在暂停之前, 准确保存 `下次继续所需要的状态`, 内存/性能优势很大    
 但坏处也有, 因为这是自愿/协作的, 当某个任务出现Bug, 永不放弃执行权, 其他任务便无法执行  
+
 - - -
 # 状态机的概念  
 在Rust中的异步, 我们之前也说过, 属于 `协作式多任务`  
@@ -95,20 +95,26 @@ categories: rust-async
 async-std = {version = "1", features = ["attributes", "unstable"]}
 ```
 
-如下, 读取一个文件的行数  
-你可以使用 `cargo run -- ./src/main.rs` 运行  
-(也可以编译后, 通过 `target/debug` 下的二进制文件运行)
+如下代码, 读取一个文件的行数  
+你可以通过 `cargo run -- ./src/main.rs` 运行  
+(通过target目录下的可执行文件, 加上参数后运行, 也可以哦)
 ```rust
-use {
-	std::env::args,
-	async_std::prelude::*,
-	async_std::fs::File,
-	async_std::io::{self,BufReader},
+use std::{
+	env::args,
+	process,
+};
+use async_std::{
+	prelude::*,
+	fs::File,
+	io::{self,BufReader},
 };
 
 #[async_std::main]
 async fn main() -> io::Result<()> {              // Start
-	let path = args().nth(1).expect("Fuck you! No path for working"); 
+	let path = args().nth(1).unwrap_or_else(||{
+		eprintln!("Fuck you! No path for reading");
+		process::exit(1);
+	}); 
 	let file = File::open(path).await?;          // Yield point
 	let lines = BufReader::new(file).lines();
 	let count = lines.count().await;             // Yield point
@@ -152,7 +158,7 @@ Done状态下, 若进行 resume, 则可能得到 panic!
 
 - - - 
 # 自引用结构体  
-## 状态保存引用时
+## 保存引用
 当每一个状态存储数据时, 可能会导致发生 `自引用`, 比如:  
 ```rust
 async fn example() -> i32 {                            // Start
@@ -194,9 +200,10 @@ Yield1State {
 
 比如上面代码: 同一结构体下, 成员 element 指向了成员 arr  
 
-## 内存移动问题(导致悬垂引用产生)
-这就可能有问题发生, 如果 该struct实例 的 `内存地址发生改变`  
-比如使用 `std::mem`, 让 struct实例 的内存地址, 发生移动  
+## 内存移动问题
+如上所述, 这可能导致悬垂引用的产生:  
+若 该struct实例 的 `内存地址发生改变`  
+(比如使用 `std::mem`, 让 struct实例 的内存地址, 发生移动)  
 
 以上面的那段代码为例, 如下:  
 - arr:  
@@ -222,7 +229,4 @@ Yield1State {
 那又是一个值得探讨的话题了  
 欲知后事如何, 且听下回分解  
 
-~~(疯狂省略, 因为我累死了, 多么希望赶紧结束这一P啊 ! !)~~
-- - -
-感谢大家观看! 有建议/发现错误/想聊天  
-请在评论区留言, 或者加本人qq也阔以
+~~(疯狂省略, 因为我累死了, 多么希望赶紧结束这一P啊 ! !)~~  

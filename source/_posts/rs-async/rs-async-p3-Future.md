@@ -7,11 +7,8 @@ tags: rust
 categories: rust-async
 ---
 > Rust 中的 Future/async/.await 说明  
-<!-- more -->
-
-# Future/async/.await  
-- - - 
-## 开篇
+<!-- more -->  
+# 开篇
 大家好! 我们上一节已经知晓异步的基础概念   
 现在, 来看看Rust中的异步语法吧    
 
@@ -24,7 +21,8 @@ categories: rust-async
 
 开始旅途吧  
 - - -
-## What's Future  
+# Future
+## 概念
 `Future`, 一个标准/核心库中的trait  
 其完整路径为 `std/core::future::Future`   
 
@@ -74,8 +72,7 @@ categories: rust-async
 可理解为, 是组成 `一个Task (一个异步任务)` 的最小单位 
 
 了解到了那么一点点后, 现在来正式看看呗 ?  
-- - -
-## Future的定义  
+## 定义  
 
 让我们来看看它的定义:
 ```rust   
@@ -107,7 +104,7 @@ Runtime 会不断调用 poll函数 来推进 该异步计算 的完成
 
 别急, Rust 为我们提供了关键字 `async`, 接着往下看吧   
 - - -
-## What's async  
+# Async  
 `async`, 一个关键字  
 用来创建 `一个匿名结构体的实例, 该结构体实现了Future`  
 即, 它创建一个 `Future实例`  
@@ -157,7 +154,7 @@ fn hello_str_2() -> impl Future<Output = String> {
 hello_str_2() // 返回值为 `impl Future<Output = String>`  
 ```
 
-- - -
+
 注意, 异步函数的调用, 只是返回一个 Future实例  
 **但并没有开始执行, 它是惰性的**  
 **只有调用Future的poll方法, 才能推动它的执行**  
@@ -202,11 +199,10 @@ s; // Error: use of moved value
 创建一个Future实例, 想必大家已经了解一二  
 但是如何执行一个Future实例?  
 
-欲知后事如何, 请听下文揭晓 
-- - - 
-
-## Future的执行
-### 背景介绍  
+请接着往下看
+- - -
+# 执行
+## 背景介绍  
 Rust语言本身并不提供 `异步运行时 (async runtime)`, 以便于语言内核保持精小, 便于进化/迭代/维护  
 异步运行时 由社区提供, 围绕语言本身提供的定义 (比如 Future) 进行支持/扩充, 来运行异步程序  
 
@@ -228,10 +224,7 @@ async-std = { version = "1.9", features = ["attributes"] }
 以 `async-std` 这个比较主流, 对新人友好的 `异步运行时crate` 为例子   
 我们指定了版本, 并且启用了 `attributes` 这个特性  
 
-好了, 马上开始咯!  
-
-- - -
-### 通过运行时执行
+## Runtime执行
 
 我们先来创建一个 `打印 "hello world" 的Future` 吧  
 并且使用 `async-std` 这个异步运行时环境来执行它:   
@@ -261,7 +254,7 @@ async_std::task, 该模块, 为我们提供了大量api, 来执行/操控 这些
 `.await` 关键字出场了! 
 
 - - -
-### .await 关键字  
+# Await  
 `.await` 只能出现在 `async fn/block` 内部  
 在某个 Future实例 的后面, 增加 `.await`, 那么 `该Future实例` 则会执行  
 但是, 它只是表述这么个逻辑而已, 因为Rust语言本身没有异步运行时(无执行能力)  
@@ -313,7 +306,7 @@ Runtime 执行到 `xxx.await` 时, 先会执行一次 `xxx`
 
 - - -  
 
-### 补充
+# 补充
 - `#[async_std::main]`  
 这玩意无比常见, 是个属性宏, 要加在 main函数 头上  
 使得 main 前面能被 async 所修饰  
@@ -351,23 +344,5 @@ async fn main() {
     let two:i32 = handle.await;
 }
 ```
-- - -
 
-## 尾声  
-终于结束了, 这一篇其实是重写版, 写到这真的累死了  
 
-我们学到了一些东西 (不涉及原理, 之后专门抽几节讲......):      
-- `Future`   
-- `async fn/block`
-- `.await`  
-- `Async-Runtime's API`  
-
-只需要使用的, 看到这其实已经差不多了  
-普通异步程序也不怎么需要看 `Future` 定义中的 `poll` 方法  
-那里涉及到比较烦人的背后原理......  
-
-如果有问题的话, 可以在评论区留言
-或者加在下qq交流也行 : `2948804617`  
-
-呼, 真的累死, 看番去了!  
-一周后再更吧 ~~(鸽神是也)~~
