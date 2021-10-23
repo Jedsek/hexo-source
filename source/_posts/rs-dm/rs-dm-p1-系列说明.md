@@ -6,9 +6,9 @@ top: 9899
 tags: rust
 categories: rust-decl-macro
 ---
-> 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列教学  
+> 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列  
 <!-- more -->
-# 课程说明:  
+# 系列说明:  
 **注: 请注意是 声明宏**
 传送门如下:  
 - [博客 : Rust声明宏系列](https://jedsek.github.io/categories/rust-declarative-macro/) 
@@ -20,13 +20,14 @@ categories: rust-decl-macro
 此系列, 我们将学习Rust中的 `声明宏`  
 - - - 
 # 参考资料
-1. `书籍`
+1. 书籍
 - [宏小册](https://zjp-cn.github.io/tlborm/)  
 - [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/macro/macro.html)
 - [TRPL](https://kaisery.github.io/trpl-zh-cn/ch19-06-macros.html)
-2. `文章`  
+2. 文章  
 - [【译】Rust宏: 教程与示例 (一)](https://zhuanlan.zhihu.com/p/353421021)
 - [【译】Rust宏: 教程与示例 (二)](https://zhuanlan.zhihu.com/p/356427780)
+
 - - -
 # 欢迎骚扰  
 毕竟我也在学习, 有语法, 概念上的错误希望您能指出  

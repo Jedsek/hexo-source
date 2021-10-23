@@ -6,9 +6,9 @@ top: 9999
 tags: rust  
 categories: rust-async
 ---
-> 欢迎大家来到 Rust 的 异步 系列教学  
+> 欢迎大家来到 Rust 的 异步(async) 系列  
 <!-- more -->
-# 课程说明  
+# 系列说明  
 传送门如下:  
 - [博客 : Rust异步系列](https://jedsek.github.io/categories/rust-async/) 
 - [B站视频 : Rust编程语言-异步(Async)](https://www.bilibili.com/video/BV1uh41167Np)
@@ -24,10 +24,8 @@ categories: rust-async
 不需要太深, 基础便已足够  
 - - - 
 # 资料来源
-1. `官方书籍`  
-[官方异步书籍](https://rust-lang.github.io/async-book/**)
-
-2. `第三方书籍`
+1. 书籍  
+- [官方异步书籍](https://rust-lang.github.io/async-book/**)
 
 - [async_std](https://book.async.rs/overview/async-std)
 
@@ -35,12 +33,9 @@ categories: rust-async
 
 - [Futures Explained in 200 Lines of Rust](https://cfsamson.github.io/books-futures-explained/)
 
-3. `文章/博客`
+2. 博客
 
-- [Withoutboats's blogs](https://without.boats/blog/)
-
-
-
+- [Withoutboats's blogs](https://without.boats/blog/)  
 ______________ 
 
 # 欢迎骚扰  

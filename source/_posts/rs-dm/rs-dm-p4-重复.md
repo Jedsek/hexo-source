@@ -6,7 +6,7 @@ date: 2021-10-09 22:36:00
 tags: rust
 categories: rust-decl-macro
 ---
-> 宏中非常重要的语法: 重复 (Repetition)
+> 宏中非常重要的语法: 重复(repetition)
 <!-- more -->
 # 介绍
 `重复 (Repetition)` 是宏中无比重要的核心级语法, 想发挥宏的强大就必须用到它  
