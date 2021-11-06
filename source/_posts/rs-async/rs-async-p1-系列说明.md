@@ -5,6 +5,7 @@ date: 2021-09-12 11:43:19
 top: 9999
 tags: rust  
 categories: rust-async
+comments: false
 ---
 > 欢迎大家来到 Rust 的 异步(async) 系列  
 <!-- more -->
@@ -19,9 +20,8 @@ categories: rust-async
 此系列, 我们将学习Rust中的 `异步 (Async)`  
 当然也会介绍异步方面的相关概念咯
 
-但你至少得明白 `线程`, `std::thread::spawn`, `handle(句柄)`, `Rust基础语法` 等基本概念  
-
-不需要太深, 基础便已足够  
+不过介于本人能力有限, 更底层一些的东西可能理解的不是很到位, 为了不误导, 需要补一些知识  
+所以该系列花费时间可能会很久
 - - - 
 # 资料来源
 1. 书籍  

@@ -1,10 +1,11 @@
 ---
 title: rs-dm-p3-声明与使用
-abbrlink: rs-dm-p3
+abbrlink: rs-decl-macro-p3
 top: 9897
 date: 2021-09-20 20:06:15
 tags: rust
 categories: rust-decl-macro
+comments: false
 ---
 > 正式系统的关于 macro 的 声明与使用
 <!-- more -->  
@@ -471,3 +472,7 @@ expected expression, found end of macro arguments
 这里只需稍微看看, 留个印象, 实际使用时, 若在此方面报错, 则根据编译器的提示来改即可  
 ~~(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)~~  
 ~~(因为我也没有全部搞懂)~~  
+
+当然, 随着Rust声明宏的逐渐完善, 限制会逐渐减少(虽然也不多)  
+
+那么, 今天就到这了, 谢谢您的观看 :)

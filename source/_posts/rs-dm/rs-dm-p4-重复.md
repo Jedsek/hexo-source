@@ -1,10 +1,11 @@
 ---
 title: rs-dm-p4-重复
-abbrlink: rs-dm-p4
+abbrlink: rs-decl-macro-p4
 top: 9896
 date: 2021-10-09 22:36:00
 tags: rust
 categories: rust-decl-macro
+comments: false
 ---
 > 宏中非常重要的语法: 重复(repetition)
 <!-- more -->
@@ -78,3 +79,4 @@ RepOp 有三种可选项, 有点像正则:
 1. 当 RepOp 为 ? 时, 不可以添加 Sep (因为最多也就匹配到一次, 你怎么分割?)  
 2. Sep 是有限制的, [p3](https://jedsek.github.io/posts/rs-dm-p3#%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6) 提到过, 详情可见 [rust-reference](https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions)
 
+以后想到了再补充一些东西, 先到这里吧, 谢谢您的观看  

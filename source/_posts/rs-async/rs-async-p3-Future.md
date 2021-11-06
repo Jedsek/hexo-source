@@ -5,6 +5,7 @@ date: 2021-09-12 13:56:48
 top: 9997
 tags: rust
 categories: rust-async
+comments: false
 ---
 > Rust 中的 Future/async/.await 说明  
 <!-- more -->  
@@ -344,5 +345,4 @@ async fn main() {
     let two:i32 = handle.await;
 }
 ```
-
 
