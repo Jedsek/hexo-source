@@ -1,11 +1,12 @@
 ---
 title: rs-async-p1-系列说明
+comments: false
 abbrlink: rs-async-p1
 date: 2021-09-12 11:43:19
 top: 9999
 tags: rust  
 categories: rust-async
-comments: false
+keywords: [async, 异步, Rust]
 ---
 > 欢迎大家来到 Rust 的 异步(async) 系列  
 <!-- more -->
@@ -39,5 +40,8 @@ comments: false
 ______________ 
 
 # 欢迎骚扰  
-毕竟我也在学习, 有语法, 概念上的错误希望您能指出  
-可以通过博客网页的侧边栏, 联系到我哦  
+1. 发现错误的话, 请及时跟我联系, 毕竟我也在学习
+2. 可以通过博客侧边栏上的联系方式找到我  
+3. 欢迎在留言版中留言, 本人会定期查看  
+
+最后, 谢谢你的观看 :)

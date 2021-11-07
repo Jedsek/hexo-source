@@ -1,11 +1,12 @@
 ---
 title: rs-dm-p1-系列说明
+comments: false
 abbrlink: rs-decl-macro-p1
 date: 2021-09-19 21:51:27
 top: 9899
 tags: rust
 categories: rust-decl-macro
-comments: false
+keywords: [macro, 声明宏, Rust]
 ---
 > 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列  
 <!-- more -->
@@ -31,5 +32,8 @@ comments: false
 
 - - -
 # 欢迎骚扰  
-毕竟我也在学习, 有语法, 概念上的错误希望您能指出  
-可以通过博客网页的侧边栏, 联系到我哦  
+1. 发现错误的话, 请及时跟我联系  
+2. 可以通过博客侧边栏上的联系方式找到我  
+3. 欢迎在留言版中留言, 本人会定期查看  
+
+最后, 谢谢你的观看 :)

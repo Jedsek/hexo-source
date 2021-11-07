@@ -1,11 +1,12 @@
 ---
 title: rs-async-p2-异步简介
+comments: false
 abbrlink: rs-async-p2
+date: 2021-09-12 12:04:09
 top: 9998
 tags: rust
 categories: rust-async
-date: 2021-09-12 12:04:09
-comments: false
+keywords: [async, 异步, Rust]
 ---
 > 来简单介绍一下异步吧  
 <!-- more -->

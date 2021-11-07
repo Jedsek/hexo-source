@@ -6,7 +6,7 @@
 title: Jedsek's blog
 subtitle: '与其浊富 | 宁比清贫'
 description: '人类的伟大之处<br>正是在于能够直面自身的渺小'
-keywords:
+keywords: Rust, blog, 博客, 伽德斯克, 清贫, Jedsek
 author: Jedsek
 language: zh-CN
 timezone: 'Asia/Shanghai'
@@ -104,9 +104,10 @@ theme: next
 
 # Search
 search:
-  path: search.xml
+  path: search.json
   field: post
-  format: html
+  content: true
+  format: striptags
   limit: 100000
 
 # Deployment

@@ -1,11 +1,12 @@
 ---
 title: rs-async-p4-状态的保存/变换
+comments: false
 abbrlink: rs-async-p4
 date: 2021-09-12 14:50:14
 top: 9996
 tags: rust
 categories: rust-async
-comments: false
+keywords: [async, 异步, Rust]
 ---
 > 浅显的原理第一篇: 状态的保存/变换
 <!-- more -->
