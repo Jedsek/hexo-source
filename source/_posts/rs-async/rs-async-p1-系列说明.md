@@ -26,16 +26,12 @@ keywords: [async, 异步, Rust]
 - - - 
 # 资料来源
 1. 书籍  
-- [官方异步书籍](https://rust-lang.github.io/async-book/**)
-
-- [async_std](https://book.async.rs/overview/async-std)
-
-- [tokio](https://tokio.rs/tokio/tutorial)
-
+- [async-book](https://rust-lang.github.io/async-book/**)
+- [async_std/tutorials](https://book.async.rs/overview/async-std)
+- [tokio/tutorials](https://tokio.rs/tokio/tutorial)
 - [Futures Explained in 200 Lines of Rust](https://cfsamson.github.io/books-futures-explained/)
 
 2. 博客
-
 - [Withoutboats's blogs](https://without.boats/blog/)  
 ______________ 
 

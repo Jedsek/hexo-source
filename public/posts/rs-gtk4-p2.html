@@ -22,12 +22,12 @@
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#1E90FF","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
-<meta name="description" content="让我们从创建一个显示HelloWorld的GTK窗口">
+<meta name="description" content="让我们从创建一个 显示HelloWorld的GTK窗口 开始旅途吧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="rs-gtk4-p2-创建HelloWorld的窗口">
+<meta property="og:title" content="rs-gtk4-p2-创建HelloWorld窗口">
 <meta property="og:url" content="https://jedsek.github.io/posts/rs-gtk4-p2">
 <meta property="og:site_name" content="Jedsek&#39;s blog">
-<meta property="og:description" content="让我们从创建一个显示HelloWorld的GTK窗口">
+<meta property="og:description" content="让我们从创建一个 显示HelloWorld的GTK窗口 开始旅途吧">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-07T02:16:57.000Z">
 <meta property="article:modified_time" content="2021-11-07T02:16:57.000Z">
@@ -41,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://jedsek.github.io/posts/rs-gtk4-p2","path":"posts/rs-gtk4-p2.html","title":"rs-gtk4-p2-创建HelloWorld的窗口"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://jedsek.github.io/posts/rs-gtk4-p2","path":"posts/rs-gtk4-p2.html","title":"rs-gtk4-p2-创建HelloWorld窗口"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>rs-gtk4-p2-创建HelloWorld的窗口 | Jedsek's blog</title>
+<title>rs-gtk4-p2-创建HelloWorld窗口 | Jedsek's blog</title>
   
 
 
@@ -138,7 +138,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -151,6 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GTK%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">GTK是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gtk-rs"><span class="nav-number">1.2.</span> <span class="nav-text">gtk-rs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">项目配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">编写代码</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -243,7 +244,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          rs-gtk4-p2-创建HelloWorld的窗口
+          rs-gtk4-p2-创建HelloWorld窗口
         </h1>
 
         <div class="post-meta-container">
@@ -276,7 +277,36 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>让我们从创建一个显示HelloWorld的GTK窗口</p>
+        <blockquote>
+<p>让我们从创建一个 显示HelloWorld的GTK窗口 开始旅途吧</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h2 id="GTK是什么"><a href="#GTK是什么" class="headerlink" title="GTK是什么"></a>GTK是什么</h2><p>GTK, 是个很有名的, 用C编写的开源GUI库, 跨平台, 对Linux的支持最好   </p>
+<p>GTK的特点之一, 在于能够轻松创建语言绑定:<br>在gtk3后, 由于GI(<a target="_blank" rel="noopener" href="https://gi.readthedocs.io/en/latest/">GObject Introspection</a>) 的应用, 可以轻松地, 创建其他语言的绑定<br>基本上名气稍微大点的语言, 都有对应的GTK绑定  </p>
+<p>这是GTK的重要特性, 使你可以利用不同语言编写GUI<br>比如, 你能用vala/js/python/rust/nim, 甚至自创的编程语言<br>而不是用C去编写(用C会很繁杂, 不清晰)  </p>
+<p>本文发布时, 其最新大版本是gtk4  </p>
+<h2 id="gtk-rs"><a href="#gtk-rs" class="headerlink" title="gtk-rs"></a>gtk-rs</h2><p>目前有个项目, 叫做 <a target="_blank" rel="noopener" href="https://gtk-rs.org/">gtk-rs</a>, 负责GTK的Rust语言绑定<br>你在 crates.io 上搜索 gtk, 所看到的 <a target="_blank" rel="noopener" href="https://crates.io/crates/gtk">gtk</a> 与 <a target="_blank" rel="noopener" href="https://crates.io/crates/gtk4">gtk4</a>, 就属于gtk-rs项目</p>
+<p>前者对应gtk3, 六年前就在维护, 所以下载量比gtk4多好几倍<br>gtk4这个crate, 则是在不久前开始维护的 (毕竟gtk4也才出现)  </p>
+<p>对了, gtk4这个crate是Rust语言绑定, 而非gtk4本身(那个纯C写的)<br>所以进行接下来的步骤前, 请确保环境内, 已有gtk4本身的正确版本<br>不然crate会装不上  </p>
+<hr>
+<h1 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h1><p>首先, 你需要创建一个新项目, 并修改 Cargo.toml, 如下:  </p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">gtk</span> = &#123;version = <span class="string">&quot;0.3.1&quot;</span>, package = <span class="string">&quot;gtk4&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们从 crates.io 上下载gtk4这个crate, 并且重命名为gtk, 方便之后编写<br>因此, 之后代码中出现的gtk, 实际上指的是gtk4  </p>
+<p>随后, run一下, 安装依赖 (请确保安装了gtk4)<br>那么下面就是正式的编码环节了</p>
+<hr>
+<h1 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h1><p>我们要创建一个GTK4的程序, 因此需要用到 <code>gtk::Application</code><br>同时, 我们还需要 <code>use gtk::prelude::*</code>, 原因与 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/prelude/index.html">std::prelude</a> 或 std::io::prelude 一样<br>代码如下, 创建了一个啥也没有的GTK程序:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main.rs</span></span><br><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.github.jedsek.myapp&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>别急着运行! 先搞懂这段代码中的两个地方  </p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="http://chuxiuhong.com/chuxiuhong-rust-patterns-zh/patterns/builder.html">Builder Pattern</a>:<br>这个不需多言, 我们可以通过该设计模式进行链式构造, 清楚直观地表达构造的过程<br>在这里, 我们只调用了一次关联函数 -&gt; application_id(id: &amp;str)<br>比如 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fs/struct.OpenOptions.html">std::fs::OpenOptions</a> 就使用了构造者模式<br>在使用gtk绑定时, 我们会较高频次地用到该模式, 将一个多参数构造函数, 分解为链式单参构造</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://developer.gnome.org/documentation/tutorials/application-id.html">application_id</a>:<br>每个GTK应用, 都有一个应用标识符, 即 <code>application_id</code>, 必须是全世界唯一的<br>如果同时运行的应用们, 其id相同, 则会发生不期望的结果, 因此一般使用反序域名作为应用的id<br>示例: “org.gnome.gedit”, “io.github.jedsek.myapp”  </p>
+</li>
+</ul>
+<p>然后再run一下试试吧(阴笑), 如下:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run</span><br></pre></td></tr></table></figure>
+
 
     </div>
 

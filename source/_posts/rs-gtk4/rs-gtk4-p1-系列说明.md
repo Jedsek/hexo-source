@@ -11,22 +11,27 @@ keywords: [rust, gui, gtk4]
 > 欢迎大家来到 Rust 的 gkt-rs 系列
 <!-- more -->
 # 系列说明
-[Gtk](https://www.gtk.org/), 是一个著名的GUI库  
+[Gtk](https://www.gtk.org/), 是一个著名的GUI库, 是 GNOME 项目的关键组成  
 由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  
+
 Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.org/) (gtk官方网页所指定)  
 同时, 非常建议你使用Linux作为开发环境, 因为GTK专注于Linux版本  
 
-我也是 gtk-rs 的新手, 根据费曼学习法, 发表博客可以有效巩固所学  
-与此同时, 也能够帮助和我一样的新鸟们 (老鸟别嘲笑我啊, 本蒟蒻表示害怕极了)  
+我也是 gtk-rs 的新手, 依靠发表博客来巩固所学  
+顺便也能帮助和我一样的新鸟们 (老鸟别笑我啊喂!)  
+
 
 不定期更新, 毕竟我只有周末才能碰到电脑  
+~~(碰到了我也不一定来写博客, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)~~
 - - -
 # 参考资料
 资料正在持续更新ing. . .
 1. 书籍
-[GUI development with Rust and GTK 4](https://gtk-rs.org/gtk4-rs/stable/latest/book/)
-2. 博客
-[Rust Vs GUI](https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html)
+- [GUI development with Rust and GTK 4](https://gtk-rs.org/gtk4-rs/stable/latest/book/)
+2. 博客/文档
+- [Rust Vs GUI](https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html)
+- [GObject Introspection](https://gi.readthedocs.io/en/latest/#gobject-introspection)
+- [GNOME Developer Doc/Tutorials](https://developer.gnome.org/documentation/tutorials.html)
 - - -
 # 环境配置
 首先, 你得参照 [GTK官方页面](https://www.gtk.org/docs/installations/) 上的信息, 根据你的操作系统, 进行相应操作, 下载 GTK (版本是GTK4)  
@@ -39,9 +44,9 @@ sudo pacman -S gtk4
 ```
 
 其他系统, 请自己找下资料, 善用搜索引擎与官方文档  
-~~(gtk的安装一向让人头大, 配置方面可以卡死好多人, 尤其 Windows环境......)~~  
+~~(gtk的安装其实还是有点让人头大的)~~  
 
-本文发布在2021下半年, 希望当你看见本文时, gtk在这方面能有所长进  
+本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  
 
 - - -
 # 欢迎骚扰
