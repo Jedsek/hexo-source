@@ -103,5 +103,5 @@ fn on_activate(app: &Application) {
 ```
 
 请容许我对上面的东西来点小小的解释:  
-当一个gtk应用开始运行之后
+当一个gtk应用开始运行之后, 
 
