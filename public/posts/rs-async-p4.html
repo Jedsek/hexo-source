@@ -91,9 +91,9 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -280,99 +280,88 @@
 <p>浅显的原理第一篇: 状态的保存/变换</p>
 </blockquote>
 <span id="more"></span>
-<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p><strong>注: 参考了 《Writing an OS in Rust》中的async篇, 可以自己搜索下看看</strong><br>为了更好地理解 <code>Rust异步</code> 背后的原理, 我们先来了解下一些概念<br>当然, 不用太深入, 只是小补充而已:   </p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p><strong>注: 参考了《Writing an OS in Rust》中的async篇,可以自己搜索下看看</strong><br>为了更好地理解<code>Rust异步</code>背后的原理,我们先来了解下一些概念<br>当然,不用太深入,只是小补充而已:   </p>
 <ul>
 <li><code>抢占式/协作式多任务</code>  </li>
 <li><code>状态机</code>  </li>
 <li><code>自引用结构体</code>   </li>
 </ul>
-<p>现在, 让我们开始吧!  </p>
+<p>现在,让我们开始吧!  </p>
 <hr>
-<h1 id="两种多任务"><a href="#两种多任务" class="headerlink" title="两种多任务"></a>两种多任务</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><code>抢占式多任务</code> 与 <code>协作式多任务</code>, 都属于 <code>多任务</code>         </p>
+<h1 id="两种多任务"><a href="#两种多任务" class="headerlink" title="两种多任务"></a>两种多任务</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><code>抢占式多任务</code>与<code>协作式多任务</code>,都属于<code>多任务</code>  </p>
 <ul>
-<li><p>抢占式多任务:<br>操作系统决定CPU的运行权<br>比如, 操作系统先让 网易云音乐 运行一会, 再让 VSCode 运行一会<br>各个程序中的任务们, 运行时间很短, 但切换速度也很快, 造成一种 <code>任务们同时运行</code> 的感觉<br>这是强迫/抢占的     </p>
+<li><p>抢占式多任务:<br>操作系统决定CPU的运行权<br>比如,操作系统先让网易云音乐运行一会,再让VSCode运行一会<br>各个程序中的任务们,运行时间很短,但切换速度也很快,造成一种<code>任务们同时运行</code>的感觉<br>这是强迫/抢占的    </p>
 </li>
-<li><p>协作式多任务:<br>任务们本身进行协调, 决定CPU的运行权<br>比如Rust中, 运行时调用 某Task(top-level Future) 的 poll方法 阻塞时, 返回 Poll::Pending<br>自己放弃继续执行, 并通知运行时执行 其他Task<br>这是自愿/协作的, Task们 <code>自愿放弃CPU的执行权</code><br>(上文中的 <code>任务</code> 与 <code>Task</code> 请区分一下, 前者比后者广泛, 后者在这, 用于Rust的举例)  </p>
+<li><p>协作式多任务:<br>任务们本身进行协调,决定CPU的运行权<br>比如Rust中,运行时调用某Task(top-level Future)的poll方法阻塞时,返回Poll::Pending<br>自己放弃继续执行,并通知运行时执行其他Task<br>这是自愿/协作的,Task们<code>自愿放弃CPU的执行权</code><br>(上文中的<code>任务</code>与<code>Task</code>请区分一下,前者比后者广泛,后者在这用于Rust的举例)  </p>
 </li>
 </ul>
-<h2 id="状态的恢复-保存"><a href="#状态的恢复-保存" class="headerlink" title="状态的恢复/保存"></a>状态的恢复/保存</h2><p>既然任务们能互相切换执行, 那么, 当再次轮到某任务执行时<br>该任务, 应当从先前暂停的地方开始, 继续执行<br>因此我们应当备份某任务的先前状态, 以便于之后的继续执行, 这就是 <code>状态保存</code>  </p>
-<p>对于 <code>抢占式</code> 与 <code>协作式</code>, 处理 <code>状态保存</code> 的思路是不一样的:</p>
+<h2 id="状态的恢复-保存"><a href="#状态的恢复-保存" class="headerlink" title="状态的恢复/保存"></a>状态的恢复/保存</h2><p>既然任务们能互相切换执行,那么,当再次轮到某任务执行时<br>该任务,应当从先前暂停的地方开始,继续执行<br>因此我们应当备份某任务的先前状态,以便于之后的继续执行,这就是<code>状态保存</code>  </p>
+<p>对于<code>抢占式</code>与<code>协作式</code>,处理<code>状态保存</code>的思路是不一样的:</p>
 <ul>
-<li>抢占式:<br>因为是强迫切换执行的, 任务会在任意某个时刻被中断<br>任务此时运行到了哪里? 我们不知道啊!<br>那么, 就只好将任务的所有状态全部保存, 包括调用栈(call stack)    </li>
+<li>抢占式:<br>因为是强迫切换执行的,任务会在任意某个时刻被中断<br>任务此时运行到了哪里?我们不知道啊!<br>那么,就只好将任务的所有状态全部保存,包括调用栈(call stack)    </li>
 </ul>
-<p>反正, 你只需明白, 操作系统强制切换任务, 为每个任务分配相对公平的执行时间<br>但是, 代价也有, 比如不得不为每个任务保存它的所有状态, 内存开销大  </p>
+<p>反正,你只需明白,操作系统强制切换任务,为每个任务分配相对公平的执行时间<br>但是,代价也有,比如不得不为每个任务保存它的所有状态,内存开销大  </p>
 <ul>
-<li>协作式:<br>因为是自愿/协作地切换执行, 每个任务会在哪里放弃执行都是清楚的<br>这种放弃执行权的操作, 我们称为 <code>yield</code>    </li>
+<li>协作式:<br>因为是自愿/协作地切换执行,每个任务会在哪里放弃执行都是清楚的<br>这种放弃执行权的操作,我们称为<code>yield</code>    </li>
 </ul>
-<p>比如在Rust中, <code>xxx.await</code> 会执行一个Future<br>意味着当程序执行到这里时, 可能会 <code>yield</code> (poll 返回 Poll::Pending, 自愿放弃执行权)  </p>
-<p><code>xxx.await</code> 就是一个 <code>stop/yield point</code>, 代表执行到此处时, 可能会发生暂停并yield<br>瞧, 所有可能yield的地方你都知道, 这就方便了保存状态(你可以舍弃已经不需要的中间变量)<br>因此, 我们可以准确分配 Future 执行所需要的最大空间  </p>
-<p>其实, 每个 <code>.await (也就是yield point)</code>, 就代表着 <code>一种状态</code> (之后会讲)</p>
-<p>协作式 的好处在于便于掌握所有的 yield point<br>在暂停之前, 准确保存 <code>下次继续所需要的状态</code>, 内存/性能优势很大<br>但坏处也有, 因为这是自愿/协作的, 当某个任务出现Bug, 永不放弃执行权, 其他任务便无法执行  </p>
+<p>比如在Rust中,<code>xxx.await</code>会执行一个Future<br>意味着当程序执行到这里时,可能会<code>yield</code>(poll返回Poll::Pending,自愿放弃执行权)  </p>
+<p><code>xxx.await</code>就是一个<code>stop/yield point</code>,代表执行到此处时,可能会发生暂停并yield<br>瞧,所有可能yield的地方你都知道,这就方便了保存状态(你可以舍弃已经不需要的中间变量)<br>因此,我们可以准确分配Future执行所需要的最大空间  </p>
+<p>其实,每个<code>.await(也就是yield point)</code>,就代表着<code>一种状态</code>(之后会讲)</p>
+<p>协作式的好处在于:<br>能自己掌握所有<code>yield point</code>,从而精打细算地选择最优的策略, 而非让操作系统为你暗地里处理<br>毕竟机器定义的分配策略, 总是没有比不过我们特意设计的<br>在任务暂停并转让执行权前,准确保存<code>下次继续所需要的状态</code>,内存/性能优势很大<br>但坏处也有: 因为这是自愿/协作的,当某个任务出现Bug,永不放弃执行权,其他任务便无法执行  </p>
 <hr>
-<h1 id="状态机的概念"><a href="#状态机的概念" class="headerlink" title="状态机的概念"></a>状态机的概念</h1><p>在Rust中的异步, 我们之前也说过, 属于 <code>协作式多任务</code><br>而其 <code>状态保存</code> 的实现, 就是利用 <code>状态机(state machine)</code> 来实现  </p>
-<p><code>状态机 (state machine)</code> 一般指 <code>有限状态自动机</code>, 是一种 数学模型  </p>
+<h1 id="状态机的概念"><a href="#状态机的概念" class="headerlink" title="状态机的概念"></a>状态机的概念</h1><p>在Rust中的异步,我们之前也说过,属于<code>协作式多任务</code><br>而其<code>状态保存</code>的实现,就是利用<code>状态机(state machine)</code>来实现  </p>
+<p><code>状态机(state machine)</code>一般指<code>有限状态自动机</code>,是一种数学模型  </p>
 <ol>
-<li><p>状态 (state):<br>比如有一扇门, 它的状态就处于以下两种之一: Open or Closed    </p>
-</li>
-<li><p>事件 (event):<br>某事件 发生后, 会触发相应 动作, 可能改变状态, 比如: 用钥匙锁门(event) =&gt; 关门(action) =&gt; 门被锁住(state)   </p>
-</li>
-<li><p>动作 (action):<br>事件 发生后, 会触发 动作  </p>
-</li>
-<li><p>变换 (transition):<br><code>State_X =&gt; State_Y</code> 就叫 <code>变换</code>, 比如门的状态从 <code>Open =&gt; Closed</code>  </p>
-</li>
+<li>状态(state):<br>比如有一扇门,它的状态就处于以下两种之一: Open or Closed</li>
+<li>事件(event):<br>某事件发生后,会触发相应动作,可能改变状态<br>比如: 用钥匙锁门(event)=&gt;关门(action)=&gt;门被锁住(state)   </li>
+<li>动作 (action):<br>事件发生后,会触发动作  </li>
+<li>变换 (transition):<br><code>State_X=&gt;State_Y</code>就叫<code>变换</code>,比如门的状态从<code>Open=&gt;Closed</code>  </li>
 </ol>
-<p>稍微了解下 <code>状态机</code> 的概念即可  </p>
-<p>那么现在, 就要看具体代码了  </p>
-<p>如果你想亲自运行一下, 先确保你的 <code>Cargo.toml</code> 中的依赖如下:  </p>
+<p>稍微了解下<code>状态机</code>的概念即可  </p>
+<p>那么现在,就要看具体代码了  </p>
+<p>如果你想亲自运行一下,先确保你的<code>Cargo.toml</code>中的依赖如下:  </p>
 <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">async-std</span> = &#123;version = <span class="string">&quot;1&quot;</span>, features = [<span class="string">&quot;attributes&quot;</span>, <span class="string">&quot;unstable&quot;</span>]&#125;</span><br></pre></td></tr></table></figure>
 
-<p>如下代码, 读取一个文件的行数<br>你可以通过 <code>cargo run -- ./src/main.rs</code> 运行<br>(通过target目录下的可执行文件, 加上参数后运行, 也可以哦)</p>
+<p>如下代码,读取一个文件的行数<br>你可以通过 <code>cargo run -- ./src/main.rs</code> 运行<br>(通过target目录下的可执行文件,加上参数后运行,也可以哦)  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::&#123;</span><br><span class="line">    env::args,</span><br><span class="line">    process,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> async_std::&#123;</span><br><span class="line">    prelude::*,</span><br><span class="line">    fs::File,</span><br><span class="line">    io::&#123;<span class="keyword">self</span>,BufReader&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[async_std::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; io::<span class="built_in">Result</span>&lt;()&gt; &#123;              <span class="comment">// Start</span></span><br><span class="line">    <span class="keyword">let</span> path = args().nth(<span class="number">1</span>).unwrap_or_else(||&#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Fuck you! No path for reading&quot;</span>);</span><br><span class="line">        process::exit(<span class="number">1</span>);</span><br><span class="line">    &#125;); </span><br><span class="line">    <span class="keyword">let</span> file = File::open(path).<span class="keyword">await</span>?;          <span class="comment">// Yield point</span></span><br><span class="line">    <span class="keyword">let</span> lines = BufReader::new(file).lines();</span><br><span class="line">    <span class="keyword">let</span> count = lines.count().<span class="keyword">await</span>;             <span class="comment">// Yield point</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;This file contains &#123;&#125; lines&quot;</span>,count);</span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;                                                <span class="comment">// Done</span></span><br></pre></td></tr></table></figure>
-<p>mian() 产生一个新实例, 异步运行 <code>open(path)</code> 与 <code>count()</code><br>对于编译器, 每一个 <code>.await</code> 其实都代表一种状态  </p>
-<p>Future实例, 实际上是个 状态机<br>在这里共有四种状态/阶段 (其中包括两个 <code>.await point(yield point)</code>):  </p>
+
+
+<p>mian()产生一个新实例,异步运行<code>open(path)</code>与<code>count()</code><br>对于编译器,每一个<code>.await</code>其实都代表一种状态  </p>
+<p>Future实例,实际上是个状态机<br>在这里共有四种状态/阶段(其中包括两个<code>.await point(yield point)</code>):  </p>
 <ol>
 <li>Start: 此Future刚开始执行  </li>
 <li>Yield1: 第一个 yield point</li>
 <li>Yield2: 第二个 yield point</li>
 <li>Done: 此Future执行完毕</li>
 </ol>
-<p>这些状态的含义是: <code>表示当前Future执行到了哪一个阶段</code><br>执行器调用 当前Future 的 poll 推动进度时, 若在 <code>某一阶段</code> 返回了 <code>Poll::Pending</code>, 则放弃执行权<br>当再次调用 当前Future 的 poll 推动进度时, 则从上次暂停的状态 <code>恢复 (resume)</code>, 继续执行  </p>
-<p>官方目前似乎采用 <code>Generator (生成器)</code> 为异步语法生成状态机<br>每一个状态都会存储一些数据, 便于进入下一个状态  </p>
-<p><strong>Note 1</strong>:<br>Start状态, 会存储传入函数的参数 (如果有参数)</p>
-<p><strong>Note 2</strong>:<br>Done状态下, 若进行 resume, 则可能得到 panic!<br>恢复已结束的计算是不应该的  </p>
-<p><strong>Note 3</strong>:<br>怎么判断每个状态需要保存哪些变量? 很简单的一句话:<br><code>某个yield point之前定义, 且point之后还需要使用的变量</code><br>如上段代码中的 <code>file</code>, <code>count</code> 就需要被保存, 因为从暂停中恢复后还需要使用<br>其他的变量, 是一次性执行完的, 不会出现什么暂停一下, 等会继续的现象<br>所以不需要特殊的持久化操作</p>
+<p>这些状态的含义是: <code>表示当前Future执行到了哪一个阶段</code><br>执行器调用当前Future的poll推动进度时,若在<code>某一阶段</code>返回了<code>Poll::Pending</code>,则放弃执行权<br>当再次调用当前Future的poll推动进度时,则从上次暂停的状态<code>恢复(resume)</code>,继续执行  </p>
+<p>官方目前似乎采用<code>Generator(生成器)</code>为异步语法生成状态机<br>每一个状态都会存储一些数据, 便于进入下一个状态  </p>
+<p><strong>Note 1</strong>:<br>Start状态,会存储传入函数的参数(如果有参数)</p>
+<p><strong>Note 2</strong>:<br>Done状态下,若进行resume,则可能得到panic!<br>因为恢复已结束的计算是不可能, 也不应该的  </p>
+<p><strong>Note 3</strong>:<br>怎么判断每个状态需要保存哪些变量? 很简单的一句话:<br><code>某个yield point之前定义, 且point之后还需要使用的变量</code><br>如上段代码中的 <code>file</code> 与 <code>count</code>就需要被保存,因为从暂停中恢复后还需要使用<br>其他的变量,是一次性执行完的,不会出现什么暂停一下,等会继续的现象<br>所以不需要特殊的持久化操作</p>
 <hr>
-<h1 id="自引用结构体"><a href="#自引用结构体" class="headerlink" title="自引用结构体"></a>自引用结构体</h1><h2 id="保存引用"><a href="#保存引用" class="headerlink" title="保存引用"></a>保存引用</h2><p>当每一个状态存储数据时, 可能会导致发生 <code>自引用</code>, 比如:  </p>
+<h1 id="自引用结构体"><a href="#自引用结构体" class="headerlink" title="自引用结构体"></a>自引用结构体</h1><h2 id="保存引用"><a href="#保存引用" class="headerlink" title="保存引用"></a>保存引用</h2><p>当每个状态存储数据时,可能会导致发生<code>自引用</code>,比如:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">example</span></span>() -&gt; <span class="built_in">i32</span> &#123;                            <span class="comment">// Start</span></span><br><span class="line">    <span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">    <span class="keyword">let</span> element = &amp;arr[<span class="number">2</span>];</span><br><span class="line">    write_file(<span class="string">&quot;foo.txt&quot;</span>, element.to_string()).<span class="keyword">await</span>;  <span class="comment">// Yield1</span></span><br><span class="line">    *element                                           <span class="comment">// Done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里有三个状态: <code>Start</code>, <code>Yield1</code>, <code>Done</code><br>而在 <code>Yield1</code> 这个状态, 存储的数据如下:</p>
-<pre><code class="rust">// 状态的定义
-struct Yield1State &#123;
-    arr: [i32; 3],
-    element: *const i32, // 数组最后一个元素的地址
-&#125;
 
-// 状态的实例
-Yield1State &#123;
-    arr: [1,2,3],
-    element: &amp;arr[2] as *const i32,
-&#125;
-</code></pre>
-<p>等等, 你可能会对上面的代码有疑惑:<br>不是说, 状态 只需要保存 <code>在yield point之前定义, 并且该point之后还需要使用的变量</code> 吗<br>上面的代码, 只有 element 这个 引用 需要被保存吧?  </p>
-<p>这是因为, 它是 <code>引用</code> 嘛!<br>没了 <code>引用</code> 背后的实际数据, 那它还有啥用, 不就是 <code>悬垂引用</code> 了吗?  </p>
-<p>因此我们还得保存, <code>该引用</code> 指向的背后数据: <code>arr</code><br>并 <code>一起</code> 存储在同个 <code>struct (代表同一状态)</code>中  </p>
-<p>像这种 <code>结构体内部的指针, 指向结构体本身</code><br>就叫 <code>自引用结构</code>  </p>
-<p>比如上面代码: 同一结构体下, 成员 element 指向了成员 arr  </p>
-<h2 id="内存移动问题"><a href="#内存移动问题" class="headerlink" title="内存移动问题"></a>内存移动问题</h2><p>如上所述, 这可能导致悬垂引用的产生:<br>若 该struct实例 的 <code>内存地址发生改变</code><br>(比如使用 <code>std::mem</code>, 让 struct实例 的内存地址, 发生移动)  </p>
-<p>以上面的那段代码为例, 如下:  </p>
+<p>这里有三个状态: <code>Start</code>,<code>Yield1</code>,<code>Done</code><br>而在<code>Yield1</code>这个状态,存储的数据如下:  </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 状态的定义</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Yield1State</span></span> &#123;</span><br><span class="line">    arr: [<span class="built_in">i32</span>; <span class="number">3</span>],</span><br><span class="line">    element: *<span class="keyword">const</span> <span class="built_in">i32</span>, <span class="comment">// 数组最后一个元素的地址</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 状态的实例</span></span><br><span class="line">Yield1State &#123;</span><br><span class="line">    arr: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">    element: &amp;arr[<span class="number">2</span>] <span class="keyword">as</span> *<span class="keyword">const</span> <span class="built_in">i32</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>等等,你可能会对上面的代码有疑惑:<br>不是说,状态只需要保存 <code>在yield point之前定义, 并且该point之后还需要使用的变量</code> 吗<br>上面的代码,只有element这个引用需要被保存吧?  </p>
+<p>这是因为,它是<code>引用</code>嘛!<br>没了<code>引用</code>背后的实际数据,那它还有啥用,不就是<code>悬垂引用</code>了吗?  </p>
+<p>因此我们还得保存,<code>该引用</code>指向的背后数据: <code>arr</code><br>并<strong>一起</strong>存储在同个<code>struct(代表同一状态)</code>中  </p>
+<p>像这种 <code>结构体内部的指针,指向结构体本身</code><br>就叫 <code>自引用结构</code>  </p>
+<p>比如上面代码: 同一结构体下,成员element指向了成员arr  </p>
+<h2 id="内存移动问题"><a href="#内存移动问题" class="headerlink" title="内存移动问题"></a>内存移动问题</h2><p>如上所述, 这可能导致悬垂引用的产生:<br>若该struct实例的<code>内存地址发生改变</code><br>(比如使用<code>std::mem</code>,让struct实例的内存地址,发生移动)  </p>
+<p>以上面的那段代码为例,如下:  </p>
 <ul>
 <li><p>arr:<br>内存地址会跟着结构体实例而改变<br>但是, <code>值仍然是 [1,2,3]</code></p>
 </li>
-<li><p>element:<br>内存地址会跟着结构体实例而改变<br>但是, 值仍然是 <code>先前arr的地址</code><br><code>注意, 是先前的 ! 而不是后来arr的新地址</code></p>
+<li><p>element:<br>内存地址会跟着结构体实例而改变<br>但是,值仍然是<code>先前arr的地址</code><br><code>注意,是先前的 ! 而不是后来arr的新地址</code></p>
 </li>
 </ul>
-<p>这就产生了一个问题: 引用可能是失效/错误的 (悬垂引用)  </p>
-<p>官方提出了 <code>std::pin::Pin (trait)</code><br>来解决 自引用结构体 方面的 悬垂指针/引用问题 </p>
-<p>其实你听名字也很好理解:<br><code>Pin(中文意思是钉子)</code> 的作用是, 防止内存地址发生改变 (给爷钉死吧!)  </p>
+<p>这就产生了一个问题: 引用可能是失效/错误的(悬垂引用)  </p>
+<p>官方提出了<code>std::pin::Pin(trait)</code><br>来解决自引用结构体方面的悬垂指针/引用问题 </p>
+<p>其实你听名字也很好理解:<br><code>Pin(中文意思是钉子)</code>的作用是,防止内存地址发生改变(给爷钉死吧!)  </p>
 <p>但是它又是怎么pin住的呢?<br>下一节再慢慢讲吧  </p>
 <p>那又是一个值得探讨的话题了<br>欲知后事如何, 且听下回分解  </p>
 <p><del>(疯狂省略, 因为我累死了, 多么希望赶紧结束这一P啊 ! !)</del>  </p>
@@ -463,8 +452,8 @@ Yield1State &#123;
 <script>
 var options = {
   bottom: '64px',
-  right: '32px',
-  left: '1100px',
+  right: '64px',
+  left: '1200px',
   time: '0.02s',
   mixColor: 'transparent',
   backgroundColor: 'transparent',

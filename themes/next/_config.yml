@@ -49,8 +49,8 @@ darkmode: false
 darkmode_js:
   enable: true
   bottom: '64px' # default: '32px'
-  right: '32px' # default: '32px'
-  left: '1100px' # default: 'unset'
+  right: '64px' # default: '32px'
+  left: '1200px' # default: 'unset'
   time: '0.02s' # default: '0.3s'
   mixColor: 'transparent' # default: '#fff'
   backgroundColor: 'transparent' # default: '#fff'
@@ -102,9 +102,9 @@ creative_commons:
 menu:
   home: / || fa fa-home
   # about: /about/ || fa fa-user
-  guestbook: /guestbook/ || fa fa-comments
   tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th-list
+  guestbook: /guestbook/ || fa fa-comments
   # archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap

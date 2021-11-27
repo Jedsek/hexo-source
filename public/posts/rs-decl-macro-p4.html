@@ -91,9 +91,9 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -287,7 +287,7 @@
 <li>Transcriber: 将一段指定的模式, 重复地展开</li>
 </ul>
 <p><del>(废话, Rust的声明宏不就这两个主要部分嘛)</del>  </p>
-<p>假设你要设计一个宏, 模拟下面代码的传参时语法, 传入一些数字(不确定个数), 然后获取求和结果:  </p>
+<p>假设你要设计一个宏, 进行求和(参数个数不确定):  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Examples:</span></span><br><span class="line"><span class="built_in">assert_eq!</span>( <span class="number">0</span>,  sum!() );</span><br><span class="line"><span class="built_in">assert_eq!</span>( <span class="number">15</span>, sum!(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>) );</span><br></pre></td></tr></table></figure>
 <p>让我们来看看, 如何使用重复吧</p>
 <h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>关键在于参数的个数不确定, 因此我们应使用重复语法:  </p>
@@ -298,15 +298,15 @@
 
 <p>它可以被分为三个部分:  </p>
 <ol>
-<li>模式: 被包裹在 <code>$( )</code> 里面, 表面它被重复匹配捕获(在Matcher), 或重复展开(在Transcriber)  </li>
+<li>模式: 被包裹于<code>$( )</code>, 表明它被重复匹配捕获(在Matcher),或重复展开(在Transcriber)  </li>
 <li>分隔符(Separator): 用来分割重复模式  </li>
-<li>重复符号(Repetition Operator): 对可以匹配多少次模式, 进行说明与限制, 不符合就编译报错  </li>
+<li>重复符号(Repetition Operator): 对模式匹配的次数,进行说明与限制,不符合就编译报错  </li>
 </ol>
 <p>以 <code>sum!</code> 为例子, 它在第二个rule中用到了重复:  </p>
 <ul>
-<li><p>In matcher:<br>模式-&gt; <code>$a:expr</code> 是重复的模式, 表示重复地匹配与捕获expr<br>分割-&gt; 每个模式之间用逗号分割, 表示传参时要传入逗号进行匹配<br>次数-&gt; *号, 说明了重复模式的个数, 它被限制为&gt;=0  </p>
+<li><p>In matcher:<br>模式: <code>$a:expr</code> 是重复的模式, 表示重复地匹配与捕获expr<br>分割: 每个模式之间用逗号分割, 表示传参时要传入逗号进行匹配<br>次数: *号, 说明了重复模式的个数, 它被限制为&gt;=0  </p>
 </li>
-<li><p>In transcriber:<br>模式-&gt; <code>+ $a</code> 是重复模式, 比如传入 <code>1,2,3,4,5</code> 时, 会被展开为 <code>0+1+2+3+4+5</code><br>分割-&gt; 没添加分割符号, 表示展开时, 每个模式之间不会添加sep<br>次数-&gt; 同 Matcher  </p>
+<li><p>In transcriber:<br>模式: <code>+ $a</code> 是重复模式, 比如传入 <code>1,2,3,4,5</code> 时, 会被展开为 <code>0+1+2+3+4+5</code><br>分割: 没添加分割符号, 表示展开时, 每个模式之间不会添加sep<br>次数:     同 Matcher  </p>
 </li>
 </ul>
 <p><code>$()</code> 与 <code>RepOp</code> 是必填的, <code>Sep</code> 是可选的  </p>
@@ -409,8 +409,8 @@
 <script>
 var options = {
   bottom: '64px',
-  right: '32px',
-  left: '1100px',
+  right: '64px',
+  left: '1200px',
   time: '0.02s',
   mixColor: 'transparent',
   backgroundColor: 'transparent',

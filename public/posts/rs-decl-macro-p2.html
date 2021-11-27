@@ -91,9 +91,9 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -280,45 +280,45 @@
 <p>我们从熟悉的 println! 开始, 了解下声明宏的大致结构吧  </p>
 </blockquote>
 <span id="more"></span>
-<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>大家应该都用过一个宏<br>它就是 <code>println!</code>:  </p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>大家应该都用过一个宏<br>它就是<code>println!</code>:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="string">&quot;Rush B!!!!&quot;</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s);</span><br><span class="line">    <span class="built_in">println!</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>当你刚刚接触它的时候, 可能会感到些许疑惑:<br>为什么后面要跟个感叹号?<br>为什么括号里面的参数可以不一样?  </p>
-<p>亲爱的 TRPl 在教你写 <a target="_blank" rel="noopener" href="https://kaisery.github.io/trpl-zh-cn/ch01-02-hello-world.html#%E5%88%86%E6%9E%90%E8%BF%99%E4%B8%AA-rust-%E7%A8%8B%E5%BA%8F">Hello World!</a> 的时候, 告诉过你: 名字后加个感叹号, 就是个 <code>宏(macro)</code><br>注: macro 的读音: [ˈmækroʊ]</p>
-<p>可是 macro 到底是啥?<br><del>(算了算了, 反正只要会用就行了, 于是你点击了该网页的叉叉)</del>  </p>
+<p>亲爱的TRPl在教你写 <a target="_blank" rel="noopener" href="https://kaisery.github.io/trpl-zh-cn/ch01-02-hello-world.html#%E5%88%86%E6%9E%90%E8%BF%99%E4%B8%AA-rust-%E7%A8%8B%E5%BA%8F">Hello World!</a> 的时候<br>告诉过你: 名字后加个感叹号,就是个<code>宏(macro)</code><br>注: macro 的读音: [ˈmækroʊ]</p>
+<p>可是macro到底是啥?<br><del>(算了算了,反正只要会用就行了,于是你点击了该网页的叉叉)</del>  </p>
 <hr>
-<h1 id="查看定义"><a href="#查看定义" class="headerlink" title="查看定义"></a>查看定义</h1><p>让我们按住Ctrl, 鼠标左键 println!<br>(以 VSCode 为例)  </p>
+<h1 id="查看定义"><a href="#查看定义" class="headerlink" title="查看定义"></a>查看定义</h1><p>让我们按住Ctrl,鼠标左键点击println!<br>(以 VSCode 为例)  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    () =&gt; ($crate::<span class="built_in">print!</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line"></span><br><span class="line">    ($($arg:tt)*) =&gt; (&#123;</span><br><span class="line">        $crate::io::_print($crate::format_args_nl!($($arg)*));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 你可能会看到, 在 println! 的上面</span></span><br><span class="line"><span class="comment">// 有着类似下面的玩意:  </span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// #[macro_export]</span></span><br><span class="line"><span class="comment">// #[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]</span></span><br><span class="line"><span class="comment">// #[allow_internal_unstable(print_internals, format_args_nl)]</span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// 这些也属于宏, 不过是 `过程宏`</span></span><br><span class="line"><span class="comment">// 而该系列要讲的是 `声明宏`, 因此略过</span></span><br></pre></td></tr></table></figure>
 
-<p>你悲催地发现根本看不懂这一大堆鬼画符……<br>但看不懂根本没关系, 后面几节过后, 你肯定懂了<br>现在只需明白的, 是大致结构:  </p>
+<p>你悲催地发现根本看不懂这一大堆鬼画符……<br>但看不懂根本没关系,后面几节过后,你肯定懂了<br>现在只需明白的,是大致结构:  </p>
 <ol>
-<li><p>我们将 <code>macro_rules!</code> 放在 <code>println</code> 前面, 说明后者是个宏<br>(<code>macro_rules!</code> 当作特定语法即可)  </p>
+<li><p>我们将<code>macro_rules!</code>放在<code>println</code>前面,说明后者是个宏<br>(<code>macro_rules!</code>当作特定语法即可)  </p>
 </li>
-<li><p>之后用花括号包起来, 里面是该宏的具体定义  </p>
+<li><p>之后用花括号包起来,里面是该宏的具体定义  </p>
 </li>
 </ol>
-<p>问题来了, 关键是 <code>println</code> 的具体定义<br>花括号内, 到底在讲述着啥?  </p>
-<p>请容许我来帮你粗暴地类比一下 <code>match表达式 &amp;&amp; macro</code>:  </p>
+<p>问题来了,关键是<code>println</code>的具体定义<br>花括号内,到底在讲述着啥?  </p>
+<p>请容许我来帮你粗暴地类比一下<code>match表达式 &amp;&amp; macro</code>:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// match</span></span><br><span class="line"><span class="keyword">match</span> num &#123;</span><br><span class="line">    <span class="number">1</span> =&gt; <span class="string">&quot;1&quot;</span>.repeat(<span class="number">10</span>),</span><br><span class="line">    <span class="number">2</span> =&gt; &#123;</span><br><span class="line">        <span class="string">&quot;2&quot;</span>.repeat(<span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    _ =&gt; <span class="built_in">panic!</span>(<span class="string">&quot;Fuck you! I just want the  numer 1 or 2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// macro</span></span><br><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    () =&gt; ($crate::<span class="built_in">print!</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line"></span><br><span class="line">    ($($arg:tt)*) =&gt; (&#123;</span><br><span class="line">        $crate::io::_print($crate::format_args_nl!($($arg)*));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>macro 有点像是 match, 能根据不同参数, 展开不同的代码<br>在 macro 最外层的花括号中, 有许多匹配分支  </p>
-<p>match表达式, 称呼每个匹配分支为 <code>arm</code><br>逗号分割它们彼此, 或者不用逗号而用花括号包裹来分割<br>最后一个 arm 可省略逗号  </p>
-<p>macro, 则称呼每个匹配分支为 <code>rule</code> (明白为什么使用 <code>macro_rules!</code> 创建宏了吗)<br>必须使用花括号包裹, 使用分号分隔彼此<br>最后一个 rule 可省略分号  </p>
-<p>你并不需搞清所有细节, 现在先不用试图记忆具体语法, 有印象即可<br>现在再来看看 <code>println</code>, 是不是稍微有点感觉了 (看不懂的地方依然直接跳即可):  </p>
+<p>macro有点像是match,能根据不同参数,展开不同的代码<br>在macro最外层的花括号中,有许多匹配分支  </p>
+<p>match表达式,称呼每个匹配分支为<code>arm</code><br>逗号分割它们彼此,或者不用逗号而用花括号包裹来分割<br>最后一个arm可省略逗号  </p>
+<p>macro,则称呼每个匹配分支为<code>rule</code>(明白为什么使用<code>macro_rules!</code>创建宏了吗)<br>必须使用花括号包裹,使用分号分隔彼此<br>最后一个rule可省略分号  </p>
+<p>你并不需搞清所有细节,现在先不用试图记忆具体语法,有印象即可<br>现在再来看看 <code>println</code>,是不是稍微有点感觉了(看不懂的地方依然直接跳即可):  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义部分</span></span><br><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    <span class="comment">// 空参时, 只输出换行符</span></span><br><span class="line">    () =&gt; ($crate::<span class="built_in">print!</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 有参时, 输出参数, 并换行</span></span><br><span class="line">    ($($arg:tt)*) =&gt; (&#123;</span><br><span class="line">        $crate::io::_print($crate::format_args_nl!($($arg)*));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用部分</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="string">&quot;xxx&quot;</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s);</span><br><span class="line"><span class="built_in">println!</span>();</span><br></pre></td></tr></table></figure>
 <hr>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
-<li>创建 macro, 名字就叫 xxx, 花括号包裹具体定义:  </li>
+<li>创建一个假设叫xxx的macro,花括号包裹具体定义:  </li>
 </ol>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> xxx &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>创建两个匹配分支:<br>(匹配空参 =&gt; 不做任何事)<br>(匹配123 =&gt; 打印123)  </li>
+<li>然后创建两个匹配分支:<br>(匹配空参 =&gt; 不做任何事)<br>(匹配123 =&gt; 打印123)  </li>
 </ol>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> xxx &#123;</span><br><span class="line">    () =&gt; &#123;&#125;;</span><br><span class="line">    (<span class="number">123</span>) =&gt; &#123;<span class="built_in">println!</span>(<span class="string">&quot;123&quot;</span>)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>调用, 宏名+感叹号+传参:<br>(传入的参数, 若与任何 rule 都不匹配, 则报错)</li>
+<li>调用时, 要做到: 宏名+感叹号+传参:<br>(传入的参数,若与任何rule都不匹配,则报错)</li>
 </ol>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> xxx &#123;</span><br><span class="line">    () =&gt; &#123;&#125;;</span><br><span class="line">    (<span class="number">123</span>) =&gt; &#123;<span class="built_in">println!</span>(<span class="string">&quot;123&quot;</span>)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    xxx!();      <span class="comment">// Nothing</span></span><br><span class="line">    xxx!(<span class="number">123</span>);   <span class="comment">// println!(&quot;123&quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -410,8 +410,8 @@
 <script>
 var options = {
   bottom: '64px',
-  right: '32px',
-  left: '1100px',
+  right: '64px',
+  left: '1200px',
   time: '0.02s',
   mixColor: 'transparent',
   backgroundColor: 'transparent',
