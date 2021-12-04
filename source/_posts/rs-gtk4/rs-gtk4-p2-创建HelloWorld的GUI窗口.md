@@ -1,7 +1,7 @@
 ---
 title: rs-gtk4-p2-创建HelloWorld窗口
 comments: false
-abbrlink: rs-gtk4-p2
+abbrlink: posts/rs-gtk4-p2
 date: 2021-11-07 10:16:57
 top: 9798
 tags: [rust, gui]
@@ -36,6 +36,7 @@ gtk4这个crate, 则是在不久前开始维护的 (毕竟gtk4也才出现)
 # 配置
 首先, 你需要创建一个新项目  
 随后修改 Cargo.toml, 如下:  
+
 ```toml
 [dependencies]
 gtk = {version = "0.3.1", package = "gtk4"}

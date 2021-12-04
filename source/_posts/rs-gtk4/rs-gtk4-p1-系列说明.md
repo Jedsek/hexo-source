@@ -1,7 +1,7 @@
 ---
 title: rs-gtk4-p1-系列说明
 comments: false
-abbrlink: rs-gtk4-p1
+abbrlink: posts/rs-gtk4-p1
 date: 2021-10-23 20:18:17
 top: 9799
 tags: [rust, gui]
@@ -36,15 +36,18 @@ Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.
 # 环境配置
 首先, 你得参照 [GTK官方页面](https://www.gtk.org/docs/installations/) 上的信息, 根据你的操作系统, 进行相应操作, 下载 GTK (版本是GTK4)  
 
-本人的环境为 ArchLinux(WSL), 选择它是因为不需要过多的操心配置方面  
-比如gtk的安装, ArchLinux可以直接一行命令解决:  
+本人的操作系统为manjaro 选择它是因为不需过多操心配置方面  
+
+ubuntu系统, 听说2021版已经使用gnome作为桌面环境了(gnome用gtk写的)  
+
+windows系统建议使用archlinux版的wsl(亲测可以做gui, 虽然目前还有点问题)  
+比如wsl下安装gtk4, 只需一行:  
 
 ```bash
 sudo pacman -S gtk4
 ```
 
 其他系统, 请自己找下资料, 善用搜索引擎与官方文档  
-~~(gtk的安装其实还是有点让人头大的)~~  
 
 本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  
 

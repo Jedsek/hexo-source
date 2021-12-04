@@ -6,7 +6,7 @@
   <link href="https://jedsek.github.io/atom.xml" rel="self"/>
   
   <link href="https://jedsek.github.io/"/>
-  <updated>2021-11-07T02:16:57.000Z</updated>
+  <updated>2021-11-27T16:22:04.000Z</updated>
   <id>https://jedsek.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>渺小之虫</title>
+    <link href="https://jedsek.github.io/posts/novel-small-bugs"/>
+    <id>https://jedsek.github.io/posts/novel-small-bugs</id>
+    <published>2021-11-27T16:22:04.000Z</published>
+    <updated>2021-11-27T16:22:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>神, 亦或是那未知的伟大存在, 开启了这方世界的倒计时<br>本自认属于伟大文明的虫子们, 终是在夜幕将至时, 认清了自身的渺小  </p><p>渺小的虫子, 实在太过渺小, 生死也不过一瞬  </p><span id="more"></span><p>萨满们位于昏暗中跳神做法, 以低沉声调, 发出古怪音节, </p>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h1&gt;&lt;p&gt;神, 亦或是那未知的伟大存在, 开启了这方世界的倒计时&lt;br&gt;本自认属于伟大文明的虫子们, 终是在夜幕将至时, 认清了自身的渺小  &lt;/p&gt;
+&lt;p&gt;渺小的虫子, 实在太过渺小, 生死也不过一瞬  &lt;/p&gt;</summary>
+    
+    
+    
+    <category term="novels" scheme="https://jedsek.github.io/categories/novels/"/>
+    
+    
+    <category term="novel" scheme="https://jedsek.github.io/tags/novel/"/>
+    
+  </entry>
   
   <entry>
     <title>rs-gtk4-p2-创建HelloWorld窗口</title>
@@ -48,7 +70,7 @@
     <published>2021-10-23T12:18:17.000Z</published>
     <updated>2021-10-23T12:18:17.000Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>欢迎大家来到 Rust 的 gkt-rs 系列</p></blockquote><span id="more"></span><h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p><p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境, 因为GTK专注于Linux版本  </p><p>我也是 gtk-rs 的新手, 依靠发表博客来巩固所学<br>顺便也能帮助和我一样的新鸟们 (老鸟别笑我啊喂!)  </p><p>不定期更新, 毕竟我只有周末才能碰到电脑<br><del>(碰到了我也不一定来写博客, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)</del></p><hr><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>资料正在持续更新ing. . .</p><ol><li>书籍</li></ol><ul><li><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a></li></ul><ol start="2"><li>博客/文档</li></ol><ul><li><a href="https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html">Rust Vs GUI</a></li><li><a href="https://gi.readthedocs.io/en/latest/#gobject-introspection">GObject Introspection</a></li><li><a href="https://developer.gnome.org/documentation/tutorials.html">GNOME Developer Doc/Tutorials</a></li></ul><hr><h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>首先, 你得参照 <a href="https://www.gtk.org/docs/installations/">GTK官方页面</a> 上的信息, 根据你的操作系统, 进行相应操作, 下载 GTK (版本是GTK4)  </p><p>本人的环境为 ArchLinux(WSL), 选择它是因为不需要过多的操心配置方面<br>比如gtk的安装, ArchLinux可以直接一行命令解决:  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S gtk4</span><br></pre></td></tr></table></figure><p>其他系统, 请自己找下资料, 善用搜索引擎与官方文档<br><del>(gtk的安装其实还是有点让人头大的)</del>  </p><p>本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  </p><hr><h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><ol><li>发现错误的话, 请及时跟我联系  </li><li>可以通过博客侧边栏上的联系方式找到我  </li><li>欢迎在留言版中留言, 本人会定期查看  </li></ol><p>最后, 谢谢你的观看 :)</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>欢迎大家来到 Rust 的 gkt-rs 系列</p></blockquote><span id="more"></span><h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p><p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境, 因为GTK专注于Linux版本  </p><p>我也是 gtk-rs 的新手, 依靠发表博客来巩固所学<br>顺便也能帮助和我一样的新鸟们 (老鸟别笑我啊喂!)  </p><p>不定期更新, 毕竟我只有周末才能碰到电脑<br><del>(碰到了我也不一定来写博客, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)</del></p><hr><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>资料正在持续更新ing. . .</p><ol><li>书籍</li></ol><ul><li><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a></li></ul><ol start="2"><li>博客/文档</li></ol><ul><li><a href="https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html">Rust Vs GUI</a></li><li><a href="https://gi.readthedocs.io/en/latest/#gobject-introspection">GObject Introspection</a></li><li><a href="https://developer.gnome.org/documentation/tutorials.html">GNOME Developer Doc/Tutorials</a></li></ul><hr><h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>首先, 你得参照 <a href="https://www.gtk.org/docs/installations/">GTK官方页面</a> 上的信息, 根据你的操作系统, 进行相应操作, 下载 GTK (版本是GTK4)  </p><p>本人的操作系统为manjaro 选择它是因为不需过多操心配置方面  </p><p>ubuntu系统, 听说2021版已经使用gnome作为桌面环境了(gnome用gtk写的)  </p><p>windows系统建议使用archlinux版的wsl(亲测可以做gui, 虽然目前还有点问题)<br>比如wsl下安装gtk4, 只需一行:  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S gtk4</span><br></pre></td></tr></table></figure><p>其他系统, 请自己找下资料, 善用搜索引擎与官方文档  </p><p>本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  </p><hr><h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><ol><li>发现错误的话, 请及时跟我联系  </li><li>可以通过博客侧边栏上的联系方式找到我  </li><li>欢迎在留言版中留言, 本人会定期查看  </li></ol><p>最后, 谢谢你的观看 :)</p>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -182,7 +204,7 @@
   </entry>
   
   <entry>
-    <title>rs-async-p4-状态的保存/变换</title>
+    <title>rs-async-p4-状态的保存与变换</title>
     <link href="https://jedsek.github.io/posts/rs-async-p4"/>
     <id>https://jedsek.github.io/posts/rs-async-p4</id>
     <published>2021-09-12T06:50:14.000Z</published>

@@ -1,7 +1,7 @@
 ---
 title: rs-async-p2-异步简介
 comments: false
-abbrlink: rs-async-p2
+abbrlink: posts/rs-async-p2
 date: 2021-09-12 12:04:09
 top: 9998
 tags: rust

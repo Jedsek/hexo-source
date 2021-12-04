@@ -1,7 +1,7 @@
 ---
 title: rs-dm-p3-声明与使用
 comments: false
-abbrlink: rs-decl-macro-p3
+abbrlink: posts/rs-decl-macro-p3
 date: 2021-09-20 20:06:15
 top: 9897
 tags: rust

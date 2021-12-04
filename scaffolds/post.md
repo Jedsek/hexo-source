@@ -1,10 +1,11 @@
 ---
 title: {{ title }}
 comments: false
-abbrlink: 
+abbrlink: posts/
 top: 
 date: {{ date }}
 tags: 
 categories: 
 keywords: 
+hidden: false
 ---
