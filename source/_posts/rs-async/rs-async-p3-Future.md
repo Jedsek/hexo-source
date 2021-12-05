@@ -5,7 +5,6 @@ abbrlink: posts/rs-async-p3
 date: 2021-09-12 13:56:48
 top: 9997
 tags: rust
-categories: rust-async
 keywords: [async, 异步, Rust]
 ---
 > Rust 中的 Future/async/.await 说明  

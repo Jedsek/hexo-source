@@ -2,10 +2,9 @@
 title: 渺小之虫
 comments: false
 date: 2021-11-28 00:22:04
-abbrlink: posts/novel-small-bugs
+abbrlink: posts/novel-small-bug
 top: 
 tags: novel
-categories: novels
 keywords: novel
 ---
 

@@ -5,7 +5,6 @@ abbrlink: posts/rs-decl-macro-p3
 date: 2021-09-20 20:06:15
 top: 9897
 tags: rust
-categories: rust-decl-macro
 keywords: [macro, 声明宏, Rust]
 ---
 > 正式系统的关于 macro 的 声明与使用

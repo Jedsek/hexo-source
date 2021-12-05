@@ -301,11 +301,11 @@ follow_me:
 # Related popular posts
 # Dependencies: https://github.com/tea3/hexo-related-popular-posts
 related_posts:
-  enable: false
-  title: # Custom header, leave empty to use the default one
+  enable: true
+  title: 推荐文章 # Custom header, leave empty to use the default one
   display_in_home: false
   params:
-    maxCount: 5
+    maxCount: 4
     #PPMixingRate: 0.0
     #isDate: false
     #isImage: false
@@ -901,6 +901,8 @@ vendors:
   # Available values: local | jsdelivr | unpkg | cdnjs
   # Dependencies for `plugins: local`: https://github.com/next-theme/plugins
   plugins: jsdelivr
+  fancybox: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js
+  fancybox_css: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css
 
 # Assets
 # Accelerate delivery of static files using a CDN
@@ -949,3 +951,5 @@ hide_posts:
   # 为隐藏的文章添加 noindex meta 标签，阻止搜索引擎收录
   noindex: true
 
+# 图片灯箱
+fancybox3: true

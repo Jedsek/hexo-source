@@ -5,7 +5,6 @@ abbrlink: posts/rs-gtk4-p1
 date: 2021-10-23 20:18:17
 top: 9799
 tags: [rust, gui]
-categories: rust-gtk4
 keywords: [rust, gui, gtk4]
 ---
 > 欢迎大家来到 Rust 的 gkt-rs 系列

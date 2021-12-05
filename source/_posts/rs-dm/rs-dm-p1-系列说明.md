@@ -5,7 +5,6 @@ abbrlink: posts/rs-decl-macro-p1
 date: 2021-09-19 21:51:27
 top: 9899
 tags: rust
-categories: rust-decl-macro
 keywords: [macro, 声明宏, Rust]
 ---
 > 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列  

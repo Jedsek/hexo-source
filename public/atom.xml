@@ -18,8 +18,8 @@
   
   <entry>
     <title>渺小之虫</title>
-    <link href="https://jedsek.github.io/posts/novel-small-bugs"/>
-    <id>https://jedsek.github.io/posts/novel-small-bugs</id>
+    <link href="https://jedsek.github.io/posts/novel-small-bug"/>
+    <id>https://jedsek.github.io/posts/novel-small-bug</id>
     <published>2021-11-27T16:22:04.000Z</published>
     <updated>2021-11-27T16:22:04.000Z</updated>
     
@@ -30,8 +30,6 @@
 &lt;p&gt;渺小的虫子, 实在太过渺小, 生死也不过一瞬  &lt;/p&gt;</summary>
     
     
-    
-    <category term="novels" scheme="https://jedsek.github.io/categories/novels/"/>
     
     
     <category term="novel" scheme="https://jedsek.github.io/tags/novel/"/>
@@ -53,8 +51,6 @@
 &lt;/blockquote&gt;</summary>
     
     
-    
-    <category term="rust-gtk4" scheme="https://jedsek.github.io/categories/rust-gtk4/"/>
     
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
@@ -79,8 +75,6 @@
     
     
     
-    <category term="rust-gtk4" scheme="https://jedsek.github.io/categories/rust-gtk4/"/>
-    
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
     
@@ -104,8 +98,6 @@
     
     
     
-    <category term="rust-decl-macro" scheme="https://jedsek.github.io/categories/rust-decl-macro/"/>
-    
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
     
@@ -126,8 +118,6 @@
 &lt;/blockquote&gt;</summary>
     
     
-    
-    <category term="rust-decl-macro" scheme="https://jedsek.github.io/categories/rust-decl-macro/"/>
     
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
@@ -150,8 +140,6 @@
     
     
     
-    <category term="rust-decl-macro" scheme="https://jedsek.github.io/categories/rust-decl-macro/"/>
-    
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
     
@@ -172,8 +160,6 @@
 &lt;/blockquote&gt;</summary>
     
     
-    
-    <category term="rust-decl-macro" scheme="https://jedsek.github.io/categories/rust-decl-macro/"/>
     
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
@@ -196,8 +182,6 @@
     
     
     
-    <category term="rust-decl-macro" scheme="https://jedsek.github.io/categories/rust-decl-macro/"/>
-    
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
     
@@ -218,8 +202,6 @@
 &lt;/blockquote&gt;</summary>
     
     
-    
-    <category term="rust-async" scheme="https://jedsek.github.io/categories/rust-async/"/>
     
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
@@ -242,8 +224,6 @@
     
     
     
-    <category term="rust-async" scheme="https://jedsek.github.io/categories/rust-async/"/>
-    
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
     
@@ -265,8 +245,6 @@
     
     
     
-    <category term="rust-async" scheme="https://jedsek.github.io/categories/rust-async/"/>
-    
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>
     
@@ -287,8 +265,6 @@
 &lt;/blockquote&gt;</summary>
     
     
-    
-    <category term="rust-async" scheme="https://jedsek.github.io/categories/rust-async/"/>
     
     
     <category term="rust" scheme="https://jedsek.github.io/tags/rust/"/>

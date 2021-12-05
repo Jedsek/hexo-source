@@ -104,10 +104,10 @@ theme: next
 
 # Search
 search:
-  path: search.json
+  path: search.xml
   field: post
   content: true
-  format: striptags
+  format: html
   limit: 100000
 
 # Deployment

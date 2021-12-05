@@ -5,7 +5,6 @@ abbrlink: posts/
 top: 
 date: {{ date }}
 tags: 
-categories: 
 keywords: 
 hidden: false
 ---

@@ -5,7 +5,6 @@ abbrlink: posts/rs-async-p1
 date: 2021-09-12 11:43:19
 top: 9999
 tags: rust  
-categories: rust-async
 keywords: [async, 异步, Rust]
 ---
 > 欢迎大家来到 Rust 的 异步(async) 系列  
