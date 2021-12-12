@@ -9,6 +9,9 @@ keywords: [macro, 声明宏, Rust]
 ---
 > 宏中非常重要的语法: 重复(repetition)
 <!-- more -->
+
+同系列传送门: [rust-decl-macro系列](https://jedsek.github.io/categories/rust-decl-macro)
+
 # 介绍
 `重复 (Repetition)` 是宏中无比重要的核心级语法, 想发挥宏的强大就必须用到它  
 
@@ -50,18 +53,24 @@ $(   模式   )  分隔符  重复符号
 ```
 
 它可以被分为三个部分:  
-1. 模式: 被包裹于`$( )`, 表明它被重复匹配捕获(在Matcher),或重复展开(在Transcriber)  
-2. 分隔符(Separator): 用来分割重复模式  
-3. 重复符号(Repetition Operator): 对模式匹配的次数,进行说明与限制,不符合就编译报错  
+- 模式(Pattern): 
+被包裹于 `$( )`, 用于匹配捕获(在Matcher), 或重复展开(在Transcriber)  
+
+- 分隔符(Separator): 
+用来分割重复的模式, 比如 `vec![1,2,3]` 中的逗号  
+
+- 重复符号(Repetition Operator): 
+对模式匹配次数, 进行说明限制, 不符合就编译报错  
 
 
-以 `sum!` 为例子, 它在第二个rule中用到了重复:  
-- In matcher: 
+以 `sum!` 为例子  
+它在第二个rule中用到了重复:  
+- In Matcher: 
 模式: `$a:expr` 是重复的模式, 表示重复地匹配与捕获expr  
 分割: 每个模式之间用逗号分割, 表示传参时要传入逗号进行匹配  
 次数: *号, 说明了重复模式的个数, 它被限制为>=0  
 
-- In transcriber: 
+- In Transcriber: 
 模式: `+ $a` 是重复模式, 比如传入 `1,2,3,4,5` 时, 会被展开为 `0+1+2+3+4+5`  
 分割: 没添加分割符号, 表示展开时, 每个模式之间不会添加sep
 次数:	 同 Matcher  
@@ -77,7 +86,7 @@ RepOp 有三种可选项, 有点像正则:
 记忆法-> 问号表示疑问, 代表 有 or 没有  
 
 有一些注意点:  
-1. 当 RepOp 为 ? 时, 不可以添加 Sep (因为最多也就匹配到一次, 你怎么分割?)  
+1. 当 RepOp 为 ? 时, 不可以添加 Sep(因为最多也就匹配到一次, 你怎么分割?)  
 2. Sep 是有限制的, [p3](https://jedsek.github.io/posts/rs-dm-p3#%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6) 提到过, 详情可见 [rust-reference](https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions)
 
 以后想到了再补充一些东西, 先到这里吧, 谢谢您的观看  

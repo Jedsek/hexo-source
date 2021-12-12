@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -264,6 +264,8 @@
 <p>本节将介绍宏的 卫生性(hygienic)</p>
 </blockquote>
 <span id="more"></span>
+
+<p>同系列传送门: <a href="https://jedsek.github.io/categories/rust-decl-macro">rust-decl-macro系列</a></p>
 <h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>什么是 卫生性(Hygienic) 呢?<br>简单来说,就是标识符(ident)在宏的处理与展开时,是无歧义的,不被同名标识符污染<br>如果你是第一次接触此概念, 我不信你不会懵逼<br>不过实际上, 这个概念理解起来不算困难  </p>
 <p>让我们先来讨论一个问题, 请看下面的代码:</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> create_var &#123;</span><br><span class="line">    () =&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    create_var!();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -274,23 +276,6 @@
     
     
     
-      
-  <div class="popular-posts-header">推荐文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p1.html" rel="bookmark">rs-async-p1-系列说明</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p2.html" rel="bookmark">rs-async-p2-异步简介</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p3.html" rel="bookmark">rs-async-p3-Future</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p4.html" rel="bookmark">rs-async-p4-状态的保存与变换</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="post-tags">

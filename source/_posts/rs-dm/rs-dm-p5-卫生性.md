@@ -9,6 +9,9 @@ keywords: [macro, 声明宏, Rust]
 ---
 > 本节将介绍宏的 卫生性(hygienic)
 <!-- more -->
+
+同系列传送门: [rust-decl-macro系列](https://jedsek.github.io/categories/rust-decl-macro)
+
 # 开篇
 什么是 卫生性(Hygienic) 呢?
 简单来说,就是标识符(ident)在宏的处理与展开时,是无歧义的,不被同名标识符污染  

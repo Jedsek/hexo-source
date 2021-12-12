@@ -11,7 +11,7 @@ keywords: [async, 异步, Rust]
 <!-- more -->
 # 系列说明  
 传送门如下:  
-- [博客: Rust异步系列](https://jedsek.github.io/categories/rust-async/) 
+- [博客: Rust异步系列](https://jedsek.github.io/categories/rust-async) 
 - [B站视频: Rust编程语言-异步(Async)](https://www.bilibili.com/video/BV1uh41167Np)
 
 `博客`的更新速度,快于`视频`  

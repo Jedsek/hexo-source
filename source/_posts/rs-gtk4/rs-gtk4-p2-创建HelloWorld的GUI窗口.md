@@ -9,6 +9,9 @@ keywords: [rust, gui, gtk4]
 ---
 > 让我们从创建一个 显示HelloWorld的GTK窗口 开始旅途吧
 <!-- more -->
+
+同系列传送门: [rust-gtk4系列](https://jedsek.github.io/categories/rust-gtk4)
+
 # 背景  
 ## GTK是什么
 GTK, 简单来说是个有名的GUI库, 开源免费, 用C编写  
@@ -48,7 +51,8 @@ gtk = {version = "0.3.1", package = "gtk4"}
 - - -
 # 编写
 一个GTK4应用的创建, 需要用到 `gtk::Application`  
-同时, 我们还需 `use gtk::prelude::*`, 原因与 [std::prelude](https://doc.rust-lang.org/std/prelude/index.html) 或 std::io::prelude 一样  
+同时, 我们还需 `use gtk::prelude::*`  
+原因与 [std::prelude](https://doc.rust-lang.org/std/prelude/index.html) 或 std::io::prelude 一样  
 
 先创建一个应用, 它目前连窗口也没有:  
 
@@ -73,7 +77,8 @@ fn main() {
 
 - [application_id](https://developer.gnome.org/documentation/tutorials/application-id.html):  
 每个GTK应用, 都带有一个id, 即 `application_id`, 它必须是全世界唯一的  
-一般使用反域名, 作为id, 示例有: “org.gnome.gedit” , "io.github.jedsek.myapp"  
+一般使用反域名, 作为id  
+比如 “org.gnome.gedit” , "io.github.jedsek.myapp"  
 
 但当你跃跃欲试, cargo run之后, 会看到:  
 
@@ -83,8 +88,8 @@ and has no handlers connected to the 'activate' signal.
 It should do one of these.
 ```
 
-我们实际上还要添加一个名为 activate 的信号量(Signal), 信号量的概念之后会再讲  
-现在只需明白, 你得像下面这样写:  
+我们实际上还要添加一个名为 activate 的信号量(Signal)  
+信号量的概念之后会再讲，现在只需明白, 你得像下面这样写:  
 
 ```rust
 use gtk::prelude::*;

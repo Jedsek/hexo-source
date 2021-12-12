@@ -9,6 +9,9 @@ keywords: [async, 异步, Rust]
 ---
 > 浅显的原理第一篇: 状态的保存/变换
 <!-- more -->
+
+同系列传送门: [rust-async系列](https://jedsek.github.io/categories/rust-async)
+
 # 开篇
 **注: 参考了《Writing an OS in Rust》中的async篇,可以自己搜索下看看**  
 为了更好地理解`Rust异步`背后的原理,我们先来了解下一些概念  

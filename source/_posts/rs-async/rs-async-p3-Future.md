@@ -9,6 +9,9 @@ keywords: [async, 异步, Rust]
 ---
 > Rust 中的 Future/async/.await 说明  
 <!-- more -->  
+
+同系列传送门: [rust-async系列](https://jedsek.github.io/categories/rust-async)
+
 # 开篇
 大家好! 我们上一节已经知晓异步的基础概念   
 现在,来看看Rust中的异步语法吧    

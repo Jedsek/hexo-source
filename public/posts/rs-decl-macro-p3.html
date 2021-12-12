@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -264,6 +264,8 @@
 <p>正式系统的关于 macro 的 声明与使用</p>
 </blockquote>
 <span id="more"></span>  
+
+<p>同系列传送门: <a href="https://jedsek.github.io/categories/rust-decl-macro">rust-decl-macro系列</a></p>
 <h1 id="框架建立"><a href="#框架建立" class="headerlink" title="框架建立"></a>框架建立</h1><p>前一节,我们大概清楚了macro的结构<br>现在让我们再来简单复习一遍:  </p>
 <ol>
 <li><code>macro_rules!(这是特点语法)</code>来创建一个macro</li>
@@ -272,24 +274,31 @@
 </ol>
 <p>现在稍微深入一点:<br>一个 <code>rule</code> 可以被这样抽象地表示: (matcher)=&gt;(transcriber)<br>它由三个重要的部分组成:</p>
 <ul>
-<li><code>matcher (匹配器)</code>: 用来匹配传入的参数  </li>
-<li><code>metavariable/literal (元变量/字面量)</code>: 绑定传入的代码片段,出现于 <code>matcher</code></li>
-<li><code>transcriber (转录器)</code>: 用来在宏匹配成功后,进行代码替换</li>
+<li><p><code>matcher (匹配器)</code>:<br>用来匹配传入的参数  </p>
+</li>
+<li><p><code>metavariable/literal (元变量/字面量)</code>:<br>绑定传入的代码片段,出现于 <code>matcher</code></p>
+</li>
+<li><p><code>transcriber (转录器)</code>:<br>用来在宏匹配成功后,进行代码替换</p>
+</li>
 </ul>
 <p>以<code>println!</code>为例子,我们向其传入了一些参数,它给我们打印到标准输出上<br>因为原本的<code>println!</code>涉及到<code>卫生性</code>,<code>重复语法</code>,<code>路径作用域</code>等,不适合新鸟阅读,所以我抽象了它:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    (<span class="comment">/* 空参匹配 */</span>) =&gt; (<span class="comment">/* `换行` 的代码 */</span>);</span><br><span class="line">    (<span class="comment">/* 有参匹配 */</span>) =&gt; (<span class="comment">/* `打印参数 + 换行` 的代码 */</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>println</code>由两个<code>rule</code>组成,每个的形式都是: <code>matcher=&gt;transcriber</code><br>从上往下,每个rule的<code>matcher</code>会与传入参数尝试匹配<br>匹配时, 括号具有多样性, 请看下面  </p>
-<p>匹配规则:  </p>
+<ol>
+<li>匹配规则:  </li>
+</ol>
 <ul>
 <li>匹配到: 就替换为<code>transcriber</code>里面的代码  </li>
 <li>匹配不到: 所有<code>matcher</code>都无法与<code>传入参数</code>进行匹配,则编译报错  </li>
 </ul>
-<p>括号多样性: </p>
+<ol start="2">
+<li>括号多样性: </li>
+</ol>
 <ul>
 <li>概念: <code>matcher</code>与<code>transcriber</code>的括号,可以是(),[],{}三种之一  </li>
-<li>定义宏时: 一个rule可以写成 <code>(pattern)=&gt;(expansion)</code> 或 <code>[pattern]=&gt;&#123;expansion&#125;</code>  </li>
-<li>调用宏时: 包裹参数的括号,也遵从该规则,<code>vec![0, 1,2,3]</code>与<code>pritnln!(&quot;xx&quot;)</code></li>
+<li>定义时: 比如, rule可写成 <code>[pattern]=&gt;&#123;expansion&#125;</code>  </li>
+<li>调用时: 一样遵从该规则, 比如 <code>vec![0, 1,2,3]</code> 与 <code>pritnln!(&quot;xx&quot;)</code></li>
 </ul>
 <p>而<code>metavariable/literal</code>则出现在<code>matcher</code>中,用于匹配并捕获代码片段<br>在对应的<code>transcriber</code>中,则可以操控这些<code>元值</code>,即操控捕获到的代码片段  </p>
 <p>稍微有点蒙? 我也没让你背哟, 多看多用就会了  </p>
@@ -298,15 +307,15 @@
 <h2 id="元变量"><a href="#元变量" class="headerlink" title="元变量"></a>元变量</h2><p>元变量, 即Metavariable<br>让我们来看个例子:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> my_macro &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;</span><br><span class="line">        $a</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ($a: expr, $b: expr) =&gt; &#123;</span><br><span class="line">        $a + $b</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    my_macro!(<span class="number">1</span>);</span><br><span class="line">    my_macro!(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宏全部展开后, 可以理解为下面: </span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    1;</span></span><br><span class="line"><span class="comment">    1 + 2;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 
-<p>你会注意到,每个rule之间的参数,其声明都有点奇怪:<br>比如: <code>$a:expr</code> -&gt; <code>$+参数标识符+类型</code>  </p>
+<p>你会注意到,每个rule之间的参数, 其声明都有点奇怪:<br>比如: <code>$a:expr</code> -&gt; <code>$+参数标识符+类型</code>  </p>
 <ol>
-<li><p><code>$</code> 这个前缀是干嘛的?<br>这显式说明,它是<code>metavariable</code>,可以匹配并捕获相应类型的代码片段,这里会捕获表达式<br>至于为何要特意加$前缀来说明,像函数参数那样直接用不行吗?<br>本节下面就要讲到啦,别着急~  </p>
+<li><p><code>$</code> 这个前缀是干嘛的?<br>这显式说明, 它是 <code>metavariable</code>, 可以匹配并捕获代码片段, 这里会捕获表达式<br>至于为何要特意加$前缀来说明, 像函数参数那样直接用不行吗?<br>下面就要讲到啦, 别着急~  </p>
 </li>
-<li><p>先看看 <code>expr</code> 类型:<br><code>expr</code>,全称为<code>expression(表达式)</code><br>在第一次宏调用,我们传入了<code>1(一个字面量)</code>,这当然是个expr,会与第一个rule成功匹配<br>这时,<code>my_macro!(1)</code>这个部分,就会被替换为<code>相应的展开代码</code><br>(matcher(匹配器),metavariable(元变量),transcriber(转录器)都用到了呢)  </p>
+<li><p>先看看 <code>expr</code> 类型:<br><code>expr</code>, 全称为 <code>expression(表达式)</code><br>第一次宏调用时, 传入了 <code>1(一个字面量)</code>, 这当然是个expr, 与第一个rule成功匹配<br>这时, <code>my_macro!(1)</code> 这个部分, 就会被替换为相应的展开代码`<br>(matcher(匹配器),metavariable(元变量),transcriber(转录器)都用到了呢)  </p>
 </li>
 </ol>
-<p>简单来讲,macro的本质,就是匹配捕获传入参数,将调用部分替换/展开为相应代码<br>macro不就是个code generator,一段用来生成code的code吗  </p>
-<p>注意: macro实际上,是将传入部分解析为一个AST节点,然后替换/展开调用部分,变成一个AST节点<br>在本节下面, 会更详细地讲讲</p>
+<p>简单来讲, macro的本质, 就是匹配捕获传入参数, 将调用部分替换/展开为相应代码<br>macro就像个code generator: 一段用来生成code的code  </p>
+<p>注意:<br>macro实际上, 是将传入部分解析为一个AST节点<br>然后将调用部分, 替换为一个新的AST节点<br>在本节下面, 会更详细地讲讲</p>
 <h2 id="元字面量"><a href="#元字面量" class="headerlink" title="元字面量"></a>元字面量</h2><p>元字面量, 即Metaliteral<br>为了加深印象与引出 <code>metaliteral</code> , 我们来玩个对应游戏:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">($a: expr) =&gt; &#123;$a&#125;;                     <span class="comment">// the first rule</span></span><br><span class="line">  |             |  </span><br><span class="line">  |         	|</span><br><span class="line">( <span class="number">1</span>      )      <span class="number">1</span>                       <span class="comment">// pass &amp;&amp; expand </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">($a: expr, $b: expr) =&gt; &#123; $a + $b&#125;;    <span class="comment">// the second rule</span></span><br><span class="line">  |      |  |              |    |</span><br><span class="line">  |      |  |              |    |</span><br><span class="line">( <span class="number">1</span>      ,  <span class="number">2</span>      ) =&gt;    <span class="number">1</span> +  <span class="number">2</span>      <span class="comment">// pass &amp;&amp; expand</span></span><br></pre></td></tr></table></figure>
 
@@ -315,9 +324,9 @@
 <p>假若 rule 中的参数没有 $前缀 进行区分:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> fuck &#123;</span><br><span class="line">    (a:expr) =&gt; &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    fuck!(<span class="number">1</span>);       <span class="comment">// No</span></span><br><span class="line">    fuck!(a:expr);  <span class="comment">// Yes ~~(Oh~)~~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>对于定义中的 “a:expr” 只能传入固定形式的 “a:expr” 才可匹配 (即它是 <code>MetaLiteral</code>)</p>
-<p>切记:<br><code>当你想绑定一段代码片段,参数名前,必须加上$进行前缀修饰</code>    </p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>假设有这么个宏<code>map!</code>(想一下<code>vec!</code>)<br>它能根据<code>=&gt;</code>判断出<code>Key/Value</code>,然后生成一个<code>HashMap</code><br>如下:  </p>
+<p>对于定义中的 “a:expr”(它是 <code>MetaLiteral</code>)<br>传入固定形式的 “a:expr” 时才可发生匹配  </p>
+<p>切记:<br>当你想绑定一段代码片段,参数名前,必须加上$进行前缀修饰  </p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>假设有这么个宏 <code>map!</code>(联想一下<code>vec!</code>)<br>它能根据 <code>=&gt;</code> 判断出 <code>Key/Value</code>, 然后生成一个 <code>HashMap</code><br>如下:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map![</span><br><span class="line">        <span class="string">&quot;吉良吉影&quot;</span> =&gt; <span class="number">33</span>,</span><br><span class="line">        <span class="string">&quot;空条承太郎&quot;</span> =&gt; <span class="number">41</span>,</span><br><span class="line">    ]</span><br><span class="line">    <span class="comment">// `m` 的类型为: std::collections::HashMap&lt;&amp;str, i32&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我们来写一个这样的宏吧!<br>不过我们还未学习 <code>重复语法</code>, 无法写出接收可变参数的 <code>map!</code>, 所以现在只讨论简陋版:  </p>
@@ -329,9 +338,9 @@
 <li><p><code>Metaliteral </code>: 限定了匹配, 传入的代码片段, 必须以 =&gt; 分割, 才能成功匹配<br>若改成 <code>map!(&quot;普通上班族&quot;, 33)</code>, 则每个rule的 <code>Matcher</code> 都无法匹配上<br>(这里只有一个rule, 空匹配的懒得放里面了)  </p>
 </li>
 </ul>
-<p>其实说了这么多, 简单讲就是一个对应游戏, 对应上的话, 就会替换为一些代码<br>考虑的事: 匹配的语法美不美观, 简不简单, 然后将复杂的代码隐藏, 就这样而已<br>之后会讲几个小例子: 比如我在B站上已经录过的递推序列生成器(宏小册上看到的, 稍微改进了下)<br>(博客的话, 我周六放学回来慢慢更吧……)<br><del>(潜台词是随时会鸽子)</del></p>
+<p>其实说了这么多, 简单讲就是一个对应游戏, 对应上的话, 就会替换为一些代码<br>考虑的事: 匹配的语法美不美观, 简不简单, 然后将复杂的代码隐藏, 就这样而已<br>之后会考虑讲几个小例子: 比如我在B站上已经录过的递推序列生成器教程, 源自宏小册<br>(博客的话, 我周六放学回来慢慢更吧……)<br><del>(潜台词是随时会鸽子)</del></p>
 <hr>
-<h1 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h1><p>macro的本质, 是生成一个AST节点<br>可以配套看看我在B站上宏视频, 视频讲得很浅  </p>
+<h1 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h1><p>macro的本质, 是生成一个AST节点<br>可以配套看看我在B站上宏视频, 视频讲得很浅, 容易理解  </p>
 <p>假若由你来设计一个Rust编译器<br>首先, 不同的人写代码的风格不同, 那么你如何分析不同源码, 并生成目标码?  </p>
 <p>若我们将每遍扫描并做点事情的过程, 称为<code>pass</code><br>pass一次就生成了, 对于很大的源码来说, 这不现实吧  </p>
 <p>那我们就pass多次, 将 <code>从源码编译为目标码</code> 这个大问题, 分解为一大堆小问题<br>每一次pass都解决一个小问题, 那不就Ok了吗</p>
@@ -339,16 +348,16 @@
 <p>我们可以先把源码抽象为AST(抽象语法树, Abstract Syntax Tree)<br>那是一种代码被抽象后的树状结构<br>比如我们用Rust的enum表示一下:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该枚举: 一个AST节点可以是Int表达式或二元运算表达式  </span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ASTNode</span></span> &#123;</span><br><span class="line">    Int(<span class="built_in">i32</span>), </span><br><span class="line">    BinaryExpr &#123;</span><br><span class="line">        op: Op,</span><br><span class="line">        lhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">        rhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二元运算的符号: 这里只抽象了加法</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Op</span></span> &#123;</span><br><span class="line">    Plus, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>你只需明白AST是对源码的一层抽象产物就可以了  </p>
+<p>你只需明白AST是对源码封装的一层抽象产物就可以了  </p>
 <p>对于很少的源码, 已经可以直接转换为目标码了, 毕竟这时候AST也小<br>但是, 如果源码很大呢? AST已经很复杂了<br>那就再抽象一层吧, 向目标语言逐渐靠拢, 比如向汇编靠拢, 提高性能  </p>
 <p>基于AST, 我们可以再来一些<code>IR</code>, 层层递进, 以达目的<br>注意,是一些,而不是一个,这很好理解,因为一层可能还是不够嘛  </p>
-<p><code>AST</code>很重要, 是生成目标码的关键, 是代码的骨架<br>而另外的IR, 也是有必要的, 这也增强了可维护性<br>编译器在AST的基础上, 最终生成了目标码<br>(像Lisp之类的比较特殊, 源码就已经形如AST, 可能很多人写的第一个编译器就是Lisp了……)  </p>
-<p>生成AST需要点啥? 或者说, 它由什么组成?<br>由 expr(表达式), stmt(语句), ;(标点符号) 等组成<br>这些都叫做 <code>token</code>  </p>
+<p><code>AST</code>很重要, 是生成目标码的关键, 是代码的骨架<br>而另外的IR, 也是有必要的, 这也增强了可维护性<br>编译器在AST的基础上, 最终生成了目标码    </p>
+<p>问: 生成AST需要点啥? 或者说, 它由什么组成?<br>答: 由 expr(表达式), stmt(语句), ;(标点符号) 等组成, 这些都叫做 <code>token</code>  </p>
 <p>在这些小玩意的基础上, 组成一个更加庞大复杂的整体结构<br>它将token们联系起来, 表达了代码的骨架<br>这个庞然大物便是 AST 了  </p>
 <hr>
-<h1 id="回到Macro"><a href="#回到Macro" class="headerlink" title="回到Macro"></a>回到Macro</h1><h2 id="Token类型表"><a href="#Token类型表" class="headerlink" title="Token类型表"></a>Token类型表</h2><p>生成AST需要Token协助  </p>
-<p>macro 中, 其参数的类型, 便是token类型  </p>
-<p>既然macro是要操控这些传入的token (或AST节点, 等会讲), 我们总得知道token类型吧?<br>只有规定宏参数的类型, 才能保证macro达到我们想要的目的 (这里指 <code>Metavariable</code>)  </p>
+<h1 id="回到Macro"><a href="#回到Macro" class="headerlink" title="回到Macro"></a>回到Macro</h1><h2 id="Token类型表"><a href="#Token类型表" class="headerlink" title="Token类型表"></a>Token类型表</h2><p>生成AST需要Token协助<br>macro 中, 其参数的类型, 便是token类型  </p>
+<p>macro要操控传入的token (或AST节点, 等会讲)<br>那么我们总得知道token类型吧, 不然怎知咋操控?  </p>
+<p>只有规定宏参数的类型, 才能保证macro达到我们想要的目的 (这里指 <code>Metavariable</code>)  </p>
 <p>所以, 辛苦你将下面的记一下<br>稍微记下, 有印象即可, 多用几下保证你熟悉得不行:  </p>
 <ul>
 <li><code>ident</code> -&gt; 标识符,如函数名字,变量名字,关键字  </li>
@@ -378,13 +387,13 @@
 <li>&lt;&lt;+&gt;&gt;</li>
 <li>&lt;&lt;(3 + 4)&gt;&gt;</li>
 </ol>
-<p>对于前面4个, 都是Single Token, 也就是只有根节点自己的Tree<br>对于第5个, 因为有()包裹, &lt;&lt;(…)&gt;&gt; 作为根节点, 它还有三个子节点 (这里正好处于同层)  </p>
+<p>对于前面4个, 都是Single Token, 也就是只有根节点自己的Tree<br>对于第5个, 因为有()包裹, &lt;&lt;(…)&gt;&gt; 作为根节点, 它还有三个子节点(这里正好同层)  </p>
 <p>有没有对 <code>Token后面跟着Tree</code> 更加理解?  </p>
-<h2 id="AST节点"><a href="#AST节点" class="headerlink" title="AST节点"></a>AST节点</h2><p>macro 会将传入的token, 解析为对应类型的AST节点 (除了少量token类型, 等下会讲到)<br>比如 <code>map!</code> 中, <code>$key:value</code> 与 <code>$val:expr</code>, 都会被解析为expr类型的AST节点:  </p>
+<h2 id="AST节点"><a href="#AST节点" class="headerlink" title="AST节点"></a>AST节点</h2><p>macro 会将传入的token, 解析为对应类型的AST节点(除了少量token类型, 等下会讲)<br>比如 <code>map!</code> 中, <code>$key:value</code> 与 <code>$val:expr</code>, 都会被解析为expr类型的AST节点:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> map &#123;</span><br><span class="line">    ($key:expr =&gt; $val:expr) =&gt; &#123;&#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> m = std::collections::HashMap::&lt;_,_&gt;::new();</span><br><span class="line">        m.insert($key, $val);</span><br><span class="line">        m</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map!(<span class="string">&quot;普通上班族&quot;</span> =&gt; <span class="number">33</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>,m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 展开后, 可以看作是:</span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    let m = &#123;</span></span><br><span class="line"><span class="comment">        let mut m = std::collections::HashMap::&lt;_,_&gt;::new();</span></span><br><span class="line"><span class="comment">        m.insert(&quot;普通上班族&quot;, 33);</span></span><br><span class="line"><span class="comment">        m</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    println!(&quot;&#123;:?&#125;&quot;,m);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 
 <p>我们通过使用 macro , 站在了更抽象的视角上<br>操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码)    </p>
-<p>这可以大量简化手写代码量, 如std中, 向宏传入类型, 自动生成为这些类型实现trait的代码</p>
+<p>这可以大量简化手写量, 如std中向宏传入特定类型, 自动生成为它们实现trait的代码  </p>
 <p>值得注意的是, 宏将传入参数给AST节点化时, 有时意味着会产生不期望的结果<br>我直接用 <a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a> 上面的代码了:  </p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> capture_then_match_tokens &#123;</span><br><span class="line">    ($e:expr) =&gt; &#123;match_tokens!($e)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">macro_rules!</span> match_tokens &#123;</span><br><span class="line">    ($a:tt + $b:tt) =&gt; &#123;<span class="string">&quot;got an addition&quot;</span>&#125;;</span><br><span class="line">    (($i:ident)) =&gt; &#123;<span class="string">&quot;got an identifier&quot;</span>&#125;;</span><br><span class="line">    ($($other:tt)*) =&gt; &#123;<span class="string">&quot;got something else&quot;</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;\n&quot;</span>,</span><br><span class="line">        match_tokens!((caravan)),</span><br><span class="line">        match_tokens!(<span class="number">3</span> + <span class="number">6</span>),</span><br><span class="line">        match_tokens!(<span class="number">5</span>)</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;&quot;</span>,</span><br><span class="line">        capture_then_match_tokens!((caravan)),</span><br><span class="line">        capture_then_match_tokens!(<span class="number">3</span> + <span class="number">6</span>),</span><br><span class="line">        capture_then_match_tokens!(<span class="number">5</span>)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -392,11 +401,11 @@
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">got an identifier</span><br><span class="line">got an addition</span><br><span class="line">got something <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">got something <span class="keyword">else</span></span><br><span class="line">got something <span class="keyword">else</span></span><br><span class="line">got something <span class="keyword">else</span></span><br></pre></td></tr></table></figure>
 
 <p>比如这里, <code>match_tokens</code> 捕获token, 然后将参数解析为一个expr类型的AST节点<br>它不再是token, 而是个AST节点了!  </p>
-<p>比如 <code>5 + 7</code>, 原本是可以与 <code>$a:tt + $b:tt</code> 相匹配, 也可以与 <code>$a: expr</code> 匹配<br>但是经过二次传入(向 <code>capture_then_match_tokens</code> 传入的参数又传给 <code>match_tokens</code>) 后<br><code>5 + 7</code> 变成AST表达式节点, 只能与 <code>$a: expr</code> 匹配, 而不能与 <code>$a:tt + $b:tt</code> 匹配  </p>
+<p>比如 <code>5 + 7</code>, 原本是可以与 <code>$a:tt + $b:tt</code> 相匹配, 也可以与 <code>$a: expr</code> 匹配<br>但经二次传入后(向 <code>capture_then_match_tokens</code>传入的参数又传给 <code>match_tokens</code>)<br><code>5 + 7</code> 变成AST表达式节点, 只能与 <code>$a: expr</code>, 而不能与 <code>$a:tt + $b:tt</code> 匹配  </p>
 <p>只有 <code>tt</code>, <code>ident</code>, <code>lifetime</code> 能免遭 AST节点化, 可以好好理解下这块  </p>
-<p>总结:<br>宏将一些捕获的token所AST节点化, 随后又展开为一个新AST节点, 来替换宏调用部分的AST节点  </p>
+<p>总结:<br>宏将一些捕获的token给AST节点化, 随后又展开为一个新AST节点<br>这个新的AST节点, 会用来替换宏调用部分的AST节点, 因此你可以在很多地方调用宏<br>(只要宏展开的AST节点正确即可 :D)</p>
 <p>宏展开的结果是个某类型的AST节点, 这相比于C语言的 <code>#define</code> 宏, 有什么好处?<br>最直接的好处, 如下 <del>(相当于自动给你加上了括号)</del>:</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C语言, 基于简单的文本替换</span></span><br><span class="line">#define SUM(a,b) a+b</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    SUM(<span class="number">2</span>, <span class="number">2</span>);     <span class="comment">// 2 * 2</span></span><br><span class="line">    <span class="number">5</span> * SUM(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 5 * 2 + 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Rust语言, 根据上下文推测出宏调用的AST节点应该被展开/替换为一个表达式类型的AST节点</span></span><br><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    ($a:expr,$b:expr) =&gt; &#123;$a + $b&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!(<span class="number">2</span>,<span class="number">2</span>);     <span class="comment">// 2 + 2</span></span><br><span class="line">    <span class="number">5</span> * sum!(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">// 5 * (2 + 2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C语言: 简单的文本替换</span></span><br><span class="line">#define SUM(a,b) a+b</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    SUM(<span class="number">2</span>, <span class="number">2</span>);     <span class="comment">// 2 * 2</span></span><br><span class="line">    <span class="number">5</span> * SUM(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 5 * 2 + 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Rust语言: 根据上下文推测宏调用的AST节点应被展开为expr类型的AST节点</span></span><br><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    ($a:expr,$b:expr) =&gt; &#123;$a + $b&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!(<span class="number">2</span>,<span class="number">2</span>);     <span class="comment">// 2 + 2</span></span><br><span class="line">    <span class="number">5</span> * sum!(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">// 5 * (2 + 2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="匹配注意点"><a href="#匹配注意点" class="headerlink" title="匹配注意点"></a>匹配注意点</h2><p>在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制<br>即下面要讲的东西, 有时间的也可以去看看 <a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a></p>
@@ -418,23 +427,6 @@
     
     
     
-      
-  <div class="popular-posts-header">推荐文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p1.html" rel="bookmark">rs-async-p1-系列说明</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p2.html" rel="bookmark">rs-async-p2-异步简介</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p3.html" rel="bookmark">rs-async-p3-Future</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/posts/rs-async-p4.html" rel="bookmark">rs-async-p4-状态的保存与变换</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="post-tags">

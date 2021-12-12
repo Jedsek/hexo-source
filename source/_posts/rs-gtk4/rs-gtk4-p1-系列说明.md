@@ -21,7 +21,10 @@ Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.
 
 
 不定期更新, 毕竟我只有周末才能碰到电脑  
-~~(碰到了我也不一定来写博客, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)~~
+~~(而且, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)~~
+
+同系列传送门: [rust-gtk4系列](https://jedsek.github.io/categories/rust-gtk4)
+
 - - -
 # 参考资料
 资料正在持续更新ing. . .
@@ -33,7 +36,7 @@ Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.
 - [GNOME Developer Doc/Tutorials](https://developer.gnome.org/documentation/tutorials.html)
 - - -
 # 环境配置
-首先, 你得参照 [GTK官方页面](https://www.gtk.org/docs/installations/) 上的信息, 根据你的操作系统, 进行相应操作, 下载 GTK (版本是GTK4)  
+首先请参照 [GTK官方页面](https://www.gtk.org/docs/installations/) , 根据相应操作系统, 下载 GTK(版本是GTK4)  
 
 本人的操作系统为manjaro 选择它是因为不需过多操心配置方面  
 

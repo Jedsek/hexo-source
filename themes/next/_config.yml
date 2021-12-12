@@ -301,7 +301,7 @@ follow_me:
 # Related popular posts
 # Dependencies: https://github.com/tea3/hexo-related-popular-posts
 related_posts:
-  enable: true
+  enable: false
   title: 推荐文章 # Custom header, leave empty to use the default one
   display_in_home: false
   params:

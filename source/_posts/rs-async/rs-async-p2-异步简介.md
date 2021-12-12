@@ -10,6 +10,8 @@ keywords: [async, 异步, Rust]
 > 来简单介绍一下异步吧  
 <!-- more -->
 
+同系列传送门: [rust-async系列](https://jedsek.github.io/categories/rust-async)
+
 # 开篇
 
 **异步编程** (Asynchronous programming)  

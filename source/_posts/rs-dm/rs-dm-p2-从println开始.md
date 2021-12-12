@@ -9,6 +9,9 @@ keywords: [macro, 声明宏, Rust]
 ---
 > 我们从熟悉的 println! 开始, 了解下声明宏的大致结构吧  
 <!-- more -->
+
+同系列传送门: [rust-decl-macro系列](https://jedsek.github.io/categories/rust-decl-macro)
+
 # 开篇  
 大家应该都用过一个宏  
 它就是`println!`:  
