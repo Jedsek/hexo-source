@@ -7,7 +7,7 @@
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 16px;
+  font-size: 28px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,6 +16,7 @@
 .icon-bilibili-fill:before {
   content: "\e75c";
 }
+
 
 .icon-email-fill:before {
   content: "\e77e";
