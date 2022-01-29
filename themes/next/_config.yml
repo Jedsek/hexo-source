@@ -48,9 +48,9 @@ darkmode: false
 # For more information: https://github.com/rqh656418510/hexo-next-darkmode, https://github.com/sandoche/Darkmode.js
 darkmode_js:
   enable: true
-  bottom: '64px' # default: '32px'
-  right: '64px' # default: '32px'
-  left: '1500px' # default: 'unset'
+  bottom: '1px' # default: '32px'
+  right: '256px' # default: '32px'
+  left: '200000px' # default: 'unset'
   time: '0.02s' # default: '0.3s'
   mixColor: 'transparent' # default: '#fff'
   backgroundColor: 'transparent' # default: '#fff'
@@ -101,7 +101,7 @@ creative_commons:
 # External url should start with http:// or https://
 menu:
   home: / || fa fa-home
-  # about: /about/ || fa fa-user
+  about: /about/ || fa fa-user
   # tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th-list
   guestbook: /guestbook/ || fa fa-comments
@@ -639,7 +639,7 @@ livere_uid: # <your_uid>
 gitalk:
   enable: true
   github_id: Jedsek # GitHub repo owner
-  repo: hexo_source # Repository name to store issues
+  repo: blog_comments # Repository name to store issues
   client_id: 8adb5d1e73feaa9f565f # GitHub Application Client ID
   client_secret: 50355f97de3dcda03b5236aeef07f254ffed14a9  # GitHub Application Client Secret
   admin_user: Jedsek # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
