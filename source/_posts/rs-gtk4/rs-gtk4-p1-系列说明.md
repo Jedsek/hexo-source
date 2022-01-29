@@ -28,7 +28,7 @@ Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.
 - - -
 # 参考资料
 资料正在持续更新ing. . .
-1. 书籍
+1. 书籍(官方圣经, 质量杠杆的)
 - [GUI development with Rust and GTK 4](https://gtk-rs.org/gtk4-rs/stable/latest/book/)
 2. 博客/文档
 - [Rust Vs GUI](https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html)
@@ -43,7 +43,7 @@ Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.
 ubuntu系统, 听说2021版已经使用gnome作为桌面环境了(gnome用gtk写的)  
 
 windows系统建议使用archlinux版的wsl(亲测可以做gui, 虽然目前还有点问题)  
-比如wsl下安装gtk4, 只需一行:  
+比如wsl下安装gtk4, 能够跟manjaro/arch一样方便 ~~(废话)~~, 只需一行:  
 
 ```bash
 sudo pacman -S gtk4
