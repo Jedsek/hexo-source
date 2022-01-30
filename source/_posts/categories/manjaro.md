@@ -9,3 +9,4 @@ tags:
 categories:
 keywords:
 ---
+- [p1: 安装](https://jedsek.github.io/posts/manjaro-p1)

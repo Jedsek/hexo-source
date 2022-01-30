@@ -139,7 +139,7 @@ sidebar:
   display: post
 
   # Sidebar padding in pixels.
-  padding: 18
+  padding: 30
   # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).
   offset: 12
 

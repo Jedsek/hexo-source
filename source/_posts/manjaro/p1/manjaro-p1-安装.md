@@ -1,5 +1,5 @@
 ---
-title: manjaro-p1-双系统安装
+title: manjaro-p1-安装
 comments: false
 abbrlink: posts/manjaro-p1
 hidden: false
@@ -8,7 +8,7 @@ top: 9699
 tags: manjaro
 keywords: manjaro
 ---
-> 来看看如何基于Windows系统, 安装第二个操作系统: Manjaro
+> 来看看如何安装操作系统: Manjaro (包括Linux/Windows)
 <!-- more -->
 
 同系列传送门: [manjaro系列](https://jedsek.github.io/categories/manjaro)

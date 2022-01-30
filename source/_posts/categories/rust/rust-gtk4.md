@@ -11,4 +11,5 @@ keywords:
 ---
 
 - [p1: 系列说明](https://jedsek.github.io/posts/rs-gtk4-p1)
-- [p2: 创建HelloWorld窗口](https://jedsek.github.io/posts/rs-gtk4-p2)
+- [p2: 创建窗口](https://jedsek.github.io/posts/rs-gtk4-p2)
+- [p3: GObject-内存管理](https://jedsek.github.io/posts/rs-gtk4-p3)

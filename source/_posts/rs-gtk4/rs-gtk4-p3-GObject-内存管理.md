@@ -10,6 +10,7 @@ keywords: [rust, gui, gtk4]
 ---
 > 来看看什么是Widget(部件), 由此出发, 去探讨内存管理(Memory Management)
 <!-- more -->
+同系列传送门: [rust-gtk4系列](https://jedsek.github.io/categories/rust-gtk4)
 # Widget
 ## 概念
 一个Gtk应用, 由许多组件组成, 这些组件, 就叫Widget(部件)  
