@@ -14,7 +14,7 @@ cache:
   enable: true
 
 # Remove unnecessary files after hexo generate.
-minify: false
+minify: true
 
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
@@ -384,8 +384,8 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: vs2015
-    dark: vs2015
+    light: nord
+    dark: nord
   prism:
     light: prism
     dark: prism-dark
@@ -445,7 +445,7 @@ font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: 
+  host: http://fonts.lug.ustc.edu.cn/
 
   # Font options:
   # `external: true` will load this font family from `host` above.
