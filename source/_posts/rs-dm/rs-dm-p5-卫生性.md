@@ -1,6 +1,5 @@
 ---
 title: rs-dm-p5-卫生性
-comments: false
 abbrlink: posts/rs-decl-macro-p5
 date: 2021-10-16 14:04:12
 top: 9895

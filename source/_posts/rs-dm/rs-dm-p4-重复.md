@@ -1,6 +1,5 @@
 ---
 title: rs-dm-p4-重复
-comments: false
 abbrlink: posts/rs-decl-macro-p4
 date: 2021-10-09 22:36:00
 top: 9896

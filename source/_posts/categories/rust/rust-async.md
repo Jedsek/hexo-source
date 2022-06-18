@@ -1,6 +1,5 @@
 ---
 title: rust-async
-comments: false
 abbrlink: categories/rust-async
 hidden: true
 date: 2021-12-04 21:23:28

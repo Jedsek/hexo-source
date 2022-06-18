@@ -1,6 +1,5 @@
 ---
 title: rs-gtk4-p1-系列说明
-comments: false
 abbrlink: posts/rs-gtk4-p1
 date: 2021-10-23 20:18:17
 top: 9799

@@ -1,6 +1,5 @@
 ---
 title: rs-gtk4-p2-创建窗口
-comments: false
 abbrlink: posts/rs-gtk4-p2
 date: 2021-11-07 10:16:57
 top: 9798

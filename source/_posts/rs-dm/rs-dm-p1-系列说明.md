@@ -1,6 +1,5 @@
 ---
 title: rs-dm-p1-系列说明
-comments: false
 abbrlink: posts/rs-decl-macro-p1
 date: 2021-09-19 21:51:27
 top: 9899

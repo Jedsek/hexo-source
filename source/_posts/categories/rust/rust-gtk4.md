@@ -1,6 +1,5 @@
 ---
 title: rust-gtk4
-comments: false
 abbrlink: categories/rust-gtk4
 hidden: true
 date: 2021-12-04 22:34:41

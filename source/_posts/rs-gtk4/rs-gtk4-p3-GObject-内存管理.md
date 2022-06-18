@@ -1,6 +1,5 @@
 ---
 title: rs-gtk4-p3-GObject-内存管理
-comments: false
 abbrlink: posts/rs-gtk4-p3
 hidden: false
 date: 2022-01-30 12:01:22

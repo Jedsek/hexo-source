@@ -1,6 +1,5 @@
 ---
 title: rust-decl-macro
-comments: false
 abbrlink: categories/rust-decl-macro
 hidden: true
 date: 2021-12-04 22:30:59

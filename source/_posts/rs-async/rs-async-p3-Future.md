@@ -1,6 +1,5 @@
 ---
 title: rs-async-p3-Future
-comments: false
 abbrlink: posts/rs-async-p3
 date: 2021-09-12 13:56:48
 top: 9997

@@ -1,6 +1,5 @@
 ---
 title: rs-dm-p2-从println开始
-comments: false
 abbrlink: posts/rs-decl-macro-p2
 date: 2021-09-19 22:50:27
 top: 9898
