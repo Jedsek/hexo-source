@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>rs-async-p1-系列说明</title>
+    <url>/posts/rs-async-p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>欢迎大家来到 Rust 的 异步(async) 系列  </p>
+</blockquote>
+<span id="more"></span>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>传送门如下:  </p>
+<ul>
+<li><a href="/categories/rust-async">博客: Rust异步系列</a> </li>
+<li><a href="https://www.bilibili.com/video/BV1uh41167Np">B站视频: Rust编程语言-异步(Async)</a></li>
+</ul>
+<p><code>博客</code>的更新速度,快于<code>视频</code><br><code>博客</code>若经过重写,则会抽时间更新<code>视频</code>     </p>
+<p>此系列,我们将学习Rust中的 <code>异步 (Async)</code><br>当然也会介绍异步方面的相关概念咯</p>
+<p>不过介于本人能力有限,更底层一些的东西可能理解的不是很到位,为不误导,需要补些知识<br>因此该系列花费时间可能会很久</p>
+<hr>
+<h1 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h1><ol>
+<li>书籍  </li>
+</ol>
+<ul>
+<li><a href="https://rust-lang.github.io/async-book/**">async-book</a></li>
+<li><a href="https://book.async.rs/overview/async-std">async_std/tutorials</a></li>
+<li><a href="https://tokio.rs/tokio/tutorial">tokio/tutorials</a></li>
+<li><a href="https://cfsamson.github.io/books-futures-explained/">Futures Explained in 200 Lines of Rust</a></li>
+</ul>
+<ol start="2">
+<li>博客</li>
+</ol>
+<ul>
+<li><a href="https://without.boats/blog/">Withoutboats’s blogs</a>  </li>
+</ul>
+<hr>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><ol>
+<li>发现错误的话,请及时跟我联系,毕竟我也在学习</li>
+<li>可以通过博客侧边栏上的联系方式找到我  </li>
+<li>欢迎在留言版中留言,本人会定期查看  </li>
+</ol>
+<p>最后,谢谢你的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-async-p2-异步简介</title>
+    <url>/posts/rs-async-p2.html</url>
+    <content><![CDATA[<blockquote>
+<p>来简单介绍一下异步吧  </p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-async">rust-async系列</a></p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p><strong>异步编程</strong> (Asynchronous programming)<br>是一种<strong>并发编程模型</strong> </p>
+<p>特点是通过少量<code>OS_thread(系统线程)</code><br>即可运行大量<code>并发任务</code><br>在某些场景下,可以疯狂压榨cpu的性能<br><del>(好吧,有点废话……)</del></p>
+<hr>
+<h1 id="模型对比"><a href="#模型对比" class="headerlink" title="模型对比"></a>模型对比</h1><p>为何选择异步,它的优势有哪些?  </p>
+<p>对于这个问题,我们将对比<strong>异步</strong>与其他<strong>并发模型</strong><br>以此来告诉大家,为什么选择异步:  </p>
+<p>1.<code>OS Thread (系统线程)</code><br>由操作系统提供线程,进行并发,如std::thread<br>Good_1:<br>简单易使用,建模能力强,足够传统<br>Good_2:<br>操作系统就是运行时,与C语言交互方便<br>Bad_1:<br>数据同步困难,易发生数据竞争<br>Bad_2:<br>小型任务数量巨大时,若分别开一个线程,所需内存与创建线程开销巨大,性价比极低</p>
+<p>2.<code>Green Thread (绿色线程)</code><br>它几乎与系统线程一样,不过<code>Runtime(运行时,jvm/.net听说过吗?)</code>从操作系统变为了程序本身<br>绿色线程只是由程序本身模拟出来的,类似系统线程的小型线程<br>Good:<br>这意味着,程序本身对绿色线程有绝对的管理权<br>所以内存分配等方面的粒度更细,根据任务大小调度内存<br>因此堆栈大小,能够随时间推移而增长<br>并且创建/销毁/切换线程的代价又低又快,轻松创建成千上万个绿色线程,来处理任务<br>Bad_1:<br>它是程序本身实现模拟出来的线程,Runtime较巨大<br>运行时会一直存在,即使你不用该特性,导致拖累全局程序性能<br>并且难以与C库交互<br>这也是Rust在1.0版本前删去绿色线程的主要原因,贯彻了零成本抽象<br>它无法在语言层面被Rust支持<br>Bad_2:<br>绿色线程在不同平台上,其实现可能不同<br>对多平台的支持/维护/改进得靠实现者保证  </p>
+<p><code>OS Thread</code>与<code>Green Thread</code>与Rust关系比较大:<br>一个是Rust支持的传统并发,一个是Rust在1.0之后便舍弃的  </p>
+<hr>
+<h1 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h1><p>我们终于要介绍异步()了 ! 乌拉乌拉乌拉 ! ! !<br> <del>(没把你憋坏吧伙计?)</del>  </p>
+<p>我们以IO操作为例子,毕竟这也是异步大放光彩的地方之一<br>假设我们正在单线程下,读取文件,并进行一个计算:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义文件</span></span><br><span class="line"><span class="keyword">let</span> file = <span class="comment">/*  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件, 获取数据 </span></span><br><span class="line"><span class="keyword">let</span> data = read(file);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进行一个计算</span></span><br><span class="line">compute()</span><br></pre></td></tr></table></figure>
+<p>以上面代码为例子,我们会读取 <code>file</code> 获取 <code>data</code><br>期间,我们的程序,做不了任何其他事情<br>只有等待<code>IO操作(Input/Output, 输入/输出)</code>完毕,我们才能进行接下来的 <code>compute</code>  </p>
+<p><code>读取文件</code>,属于<code>IO操作</code><br>众所周知,IO操作很耗时,等待它完成的时间可能会很长  </p>
+<p>有没有什么办法加快速度?<br>没错,系统线程yyds:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义文件</span></span><br><span class="line"><span class="keyword">let</span> file = <span class="comment">/*  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 为每个读取任务新建线程, 并获取句柄</span></span><br><span class="line"><span class="keyword">let</span> handle_a = thread::spawan(|| read(file) );</span><br><span class="line"><span class="keyword">let</span> handle_b = thread::spawan(|| compute() );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用join阻塞调用线程, 确保句柄线程执行结束</span></span><br><span class="line"><span class="keyword">let</span> data = handle_a.join().unwrap();</span><br><span class="line">handle_b.join().unwrap();</span><br></pre></td></tr></table></figure>
+
+<p>因为两个任务<code>read</code>与<code>compute</code>是独立的,无依赖性<br>所以我们<code>spawn</code>了两个线程<br>第一个: 用于读取文件,获取数据<br>第二个: 用于在读取文件的同时,执行着 <code>compute</code><br>虽然速度上来了,但是代价也有,那就是额外创建两个线程的开销<br>而异步,就是只依靠单线程,也能够完成上面的操作  </p>
+<p>单线程中的异步(伪)代码如下:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义文件</span></span><br><span class="line"><span class="keyword">let</span> file = <span class="comment">/*  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件, 获取数据 </span></span><br><span class="line"><span class="keyword">let</span> data = read_async(file);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进行一个计算</span></span><br><span class="line">compute_async()</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到:<br><code>read</code> -&gt; <code>read_async</code><br><code>compute</code> -&gt; <code>compute_async</code>  </p>
+<p>我用伪代码表示,这两个操作变成了异步操作<br>你无需关注这是如何变成异步版本的,这里只是为了说明异步的概念<br>如下:    </p>
+<ul>
+<li><code>read</code>:<br>它会阻塞调用线程,等待该操作完毕后<br>才继续往下执行<code>compute</code>  </li>
+</ul>
+<p>阻塞期间是几乎不需要cpu参与运行的<br>程序此时傻乎乎地等待阻塞结束<br>无疑是对性能的浪费,对cpu的不尊重  </p>
+<ul>
+<li><code>read_async</code>:<br>它处于阻塞时,会运行<code>compute_async</code><br>线程由<code>read_async</code>接管变为由<code>compute_async</code>接管<br>当阻塞时间结束,则程序继续变为运行<code>read_async</code></li>
+</ul>
+<p><code>read_async</code>阻塞时,程序是不会傻傻等待的:  </p>
+<p>若检测到它处于阻塞,无法取得进展<br>则会运行其他异步任务,由其他异步任务接管线程  </p>
+<p>总而言之,异步操作,其实就是:<br>若当前异步操作处于阻塞,则可能运行其他异步操作(如果有其他非阻塞的异步操作)<br>使得cpu一直处于运算,性能被极限压榨  </p>
+<p>异步操作,就像是可以随意<code>start/stop</code>一般<br>调度程序能够对它们进行调度,决定当前要运算哪个操作<br>确保不会因为阻塞而傻傻等待</p>
+<p>只需单线程,就可以做到同时运行多个 <code>Task(异步任务)</code><br>异步当然也不排斥多线程:<br>一个线程就能压榨出高性能,多个线程被压榨出来的性能岂不是更高?</p>
+<hr>
+<h1 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h1><p>Q:<br>阻塞时期还能同时进行其他操作? IO操作不会占用cpu吗?<br>A:<br>现代电脑发展出了一些分担IO操作压力的高科技<br>所以cpu对IO操作的压力较小/没有, IO时能进行其他运算<br>只需要最后接收数据时, 出个场就行了  </p>
+<p>所以我们的程序不需要在等待输入输出时就那样等着<br>给它们找事情, 让它们闲不下来吧!  </p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-async-p3-Future</title>
+    <url>/posts/rs-async-p3.html</url>
+    <content><![CDATA[<blockquote>
+<p>Rust 中的 Future/async/.await 说明  </p>
+</blockquote>
+<span id="more"></span>  
+
+<p>同系列传送门: <a href="/categories/rust-async">rust-async系列</a></p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>大家好! 我们上一节已经知晓异步的基础概念<br>现在,来看看Rust中的异步语法吧    </p>
+<p>在本节,我们会知晓以下三个概念的大致含义:<br>(暂时不涉及背后原理,原理之后专门出好几节来讲)   </p>
+<ul>
+<li>Future (trait)  </li>
+<li>async (keyword)</li>
+<li>.await (keyword)</li>
+</ul>
+<p>开始旅途吧  </p>
+<hr>
+<h1 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><code>Future</code>,一个标准/核心库中的trait<br>其完整路径为<code>std/core::future::Future</code>   </p>
+<p>此节我只会讲它的大致含义,原理则放到后面几节专门来讲 <del>(原理太难, 一节根本不够)</del>  </p>
+<p>在Rust中,一个实现了Future(trait)的类型<br>该类型的实例(有时候直接被简称为 <code>一个Future实例</code>)便代表 <code>一次异步计算</code><br>可以将其交给<code>Runtime(运行时)</code>,从而异步执行   </p>
+<p><code>异步执行</code>, 也就是指:<br>当其他异步任务阻塞时,当前异步任务有机会执行<br>或当前异步任务阻塞时,其他异步任务有机会执行<br>总而言之,阻塞时期执行其他任务,不给cpu空闲的机会</p>
+<p><strong>注意两个名词的区别:</strong>  </p>
+<ul>
+<li><code>异步 计算</code>  </li>
+<li><code>异步 任务</code></li>
+</ul>
+<p>两者有着区别,举个例子你就明白了:  </p>
+<p>假设有这么个父计算, 由两个子计算组成:   </p>
+<ol>
+<li>Open: 先异步打开一个文件(async open)  </li>
+<li>Read: 再异步读取该文件(async read)   </li>
+</ol>
+<p>我们可以看出,一次计算, 是可以由多个子计算组成的<br>同时, 若Open陷入阻塞,Runtime不能调度Read填充这段阻塞时期<br>因为<code>子计算们可能存在依赖关系</code> (在这里的例子中也确实存在) </p>
+<p>因此,当某个子计算阻塞时,它所属的最顶层的父计算也应阻塞,避免Runtime调度非法计算<br>(我们将<code>最顶层的父计算(top-level Future, 即最顶层的Future实例)</code>称为<code>Task(任务)</code>)  </p>
+<p><code>当前Task</code>阻塞时,接管执行权的,不能是当前Task中的<code>其他子计算</code><br>只能是<code>其他Task中的子计算</code>  </p>
+<p>来点总结吧:  </p>
+<ul>
+<li><p>Task是一个顶层Future实例 (即一次顶层异步计算) </p>
+</li>
+<li><p>一个Future可以由多个Future组成,即一个Future里可以执行多个Future</p>
+</li>
+<li><p>Task_A阻塞时,接管执行的是其他Task中的子计算,不能是Task_A中的子计算</p>
+</li>
+<li><p>Task可以只是一次单独计算</p>
+</li>
+</ul>
+<p><code>一个Future (一次异步计算)</code><br>可理解为,是组成<code>一个Task (一个异步任务)</code>的最小单位 </p>
+<p>了解到了那么一点点后,现在来正式看看呗 ?  </p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>让我们来看看它的定义:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Future</span></span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, cx: &amp;<span class="keyword">mut</span> Context&lt;<span class="symbol">&#x27;_</span>&gt;) -&gt; Poll&lt;Self::Output&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面简单了解一下:  </p>
+<ul>
+<li><p>Future:<br>代表一次异步计算  </p>
+</li>
+<li><p>Output:<br>代表该Future,异步执行完毕后,产出的值的类型   </p>
+</li>
+<li><p>poll:<br>所有执行操作都会放在该函数中<br>Runtime 会不断调用<code>poll函数</code>来推进<code>该异步计算</code>的完成<br>每次poll的返回值是一个枚举变体,代表是否完成</p>
+</li>
+<li><p>Poll<T>:<br>枚举类型,作为poll函数的返回值类型,其变体有:<br><code>Poll::Pending</code>:<br>指明该计算处于阻塞,调度程序在该计算阻塞完毕后,继续调用poll(因为之后可能还会阻塞)<br><code>Poll::Ready(T)</code>:<br>指明该计算执行完毕,并产出一个类型为T的值   </p>
+</li>
+</ul>
+<p>若只是普通使用者,并不需了解<code>Future的定义</code>背后之原理<br>但若不了解它,又如何为某类型实现 Future 呢?  </p>
+<p>别急,Rust为我们提供了关键字<code>async</code>,接着往下看吧   </p>
+<hr>
+<h1 id="Async"><a href="#Async" class="headerlink" title="Async"></a>Async</h1><p><code>async</code>: 一个关键字<br>用来创建<code>一个匿名结构体的实例, 该结构体实现了Future</code><br>即,它用来创建一个 <code>Future实例</code>  </p>
+<p>来个例子,看看async的好处:   </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1 </span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_str_1</span></span>() -&gt; <span class="built_in">String</span> &#123; </span><br><span class="line">    <span class="built_in">String</span>::from(<span class="string">&quot;Hello! World!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 </span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HelloStr</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Future <span class="keyword">for</span> HelloStr &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span> = <span class="built_in">String</span>;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, _cx: &amp;<span class="keyword">mut</span> Context&lt;<span class="symbol">&#x27;_</span>&gt;) -&gt; Poll&lt;Self::Output&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="built_in">str</span> = <span class="built_in">String</span>::from(<span class="string">&quot;Hello! World!&quot;</span>);</span><br><span class="line">        Poll::Ready(<span class="built_in">str</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">hello_str_2</span></span>() -&gt; <span class="keyword">impl</span> Future&lt;Output = <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    HelloStr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以观察到,使用 async 进行了符合直觉的简化<br>这两种函数,实际上是等价的  </p>
+<p>看看它们两的返回值,如下:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_str_1</span></span>() -&gt; <span class="built_in">String</span> &#123; </span><br><span class="line">    <span class="built_in">String</span>::from(<span class="string">&quot;Hello! World!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">hello_str_1() <span class="comment">// 返回值为 `impl Future&lt;Output = String&gt;`</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">hello_str_2</span></span>() -&gt; <span class="keyword">impl</span> Future&lt;Output = <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    HelloStr <span class="comment">// Future&lt;Output = String&gt; 的实例</span></span><br><span class="line">&#125;</span><br><span class="line">hello_str_2() <span class="comment">// 返回值为 `impl Future&lt;Output = String&gt;`  </span></span><br></pre></td></tr></table></figure>
+
+
+<p>注意,异步函数的调用,只是返回一个 Future实例<br><strong>但并没有开始执行, 它是惰性的</strong><br><strong>只有调用Future的poll方法, 才能推动它的执行</strong><br><strong>而调用poll方法的工作, 则交给了运行时(执行器)</strong>  </p>
+<p>这样的好处就在于:<br>将一个异步计算看作一个变量,方便了传参等工作  </p>
+<p>比如,你想舍弃某次异步任务,只需将对应的Future实例给drop掉, 使其所有权丢失即可</p>
+<p>async的作用就是创建一个Future实例:  </p>
+<ul>
+<li><code>async fn</code>: 异步函数, 要求返回一个 Future实例   </li>
+<li><code>async block</code>: 异步代码块, 创建一个 Future实例  </li>
+<li><code>async closure</code>: 异步闭包, (目前是不稳定特性) 创建一个 Future实例  </li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 返回值为 `impl Future&lt;Output = String&gt;`</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello</span></span>() -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="built_in">String</span>::from(<span class="string">&quot;Hello&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 该代码块创建了类型为 `impl Future&lt;Output = i32&gt;` 的实例</span></span><br><span class="line"><span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1_i32</span>;</span><br><span class="line">    a</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// `async block` 也可以使用move  </span></span><br><span class="line"><span class="comment">// 获得其中使用的变量的所有权  </span></span><br><span class="line"><span class="keyword">let</span> s = <span class="built_in">String</span>::new();</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">move</span> &#123;</span><br><span class="line">    &amp;s </span><br><span class="line">&#125;</span><br><span class="line">s; <span class="comment">// Error: use of moved value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 闭包因为不稳定, 我也懒得讲了......</span></span><br></pre></td></tr></table></figure>
+
+<p>创建一个Future实例, 想必大家已经了解一二<br>但是如何执行一个Future实例?  </p>
+<p>请接着往下看</p>
+<hr>
+<h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>Rust本身并不提供 <code>异步运行时 (async runtime)</code>, 以便语言内核精小, 便于进化/迭代/维护<br>异步运行时 由社区提供, 围绕语言本身提供的定义 (如 Future) 进行扩充, 来支持异步程序  </p>
+<p>可以仔细看看 Future 的完整路径: std::future/core::Future<br>注意到没有, 它也存在于核心库中 (核心库中对异步的支持, 并不只有 Future) </p>
+<p>这意味着只要你能使用Rust, 语言本身就会提供 Future 等定义<br>再加上异步运行时是可选的, 凭借 <code>cartes.io</code> 上提供的异步运行时相关的carte<br>在嵌入式环境下, 也能够轻松运行异步程序   </p>
+<p>在正式开始之前<br>请确保你已经在 <code>Cargo.toml</code> 中添加了如下代码:   </p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">async-std</span> = &#123; version = <span class="string">&quot;1.9&quot;</span>, features = [<span class="string">&quot;attributes&quot;</span>] &#125;</span><br></pre></td></tr></table></figure>
+
+<p>以 <code>async-std</code> 这个比较主流, 对新人友好的 <code>异步运行时crate</code> 为例子<br>我们指定了版本, 并且启用了 <code>attributes</code> 这个特性  </p>
+<h2 id="Runtime执行"><a href="#Runtime执行" class="headerlink" title="Runtime执行"></a>Runtime执行</h2><p>我们先来创建一个 <code>打印 &quot;hello world&quot; 的Future</code> 吧<br>并且使用 <code>async-std</code> 这个异步运行时环境来执行它:   </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> async_std::task;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_world</span></span>() &#123; </span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello wrold!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123; </span><br><span class="line">    <span class="keyword">let</span> fut = hello_world();</span><br><span class="line">    task::block_on(fut);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还记得我们在本节开始不久,就提到过的<code>异步任务 (Top-level Future, 即顶层的异步计算)</code> 吗?<br>async_std::task,该模块,为我们提供了大量api,来执行/操控 这些 <code>Task</code>  </p>
+<p>比如这里出现的<code>task::block_on</code>:<br>传入一个Future实例,Runtime会执行它(调用poll方法),并阻塞调用线程<br>该任务执行完毕后产出的值,会作为<code>block_on</code>的返回值  </p>
+<p>我们执行了一个Task,并且这个Task是单个的Future<br>但若我们想执行由多个子Future所组成的Task,又该怎么办?  </p>
+<p><code>.await</code> 关键字出场了! </p>
+<hr>
+<h1 id="Await"><a href="#Await" class="headerlink" title="Await"></a>Await</h1><p><code>.await</code> 只能出现在 <code>async fn/block</code> 内部<br>在某个Future实例的后面,增加<code>.await</code>,那么<code>该Future实例</code>则会执行<br>但是,它只是表述这么个逻辑而已,因为Rust语言本身没有异步运行时(无执行能力)<br>真正执行的话,得将Future实例交给运行时,带动着执行里面的子Future   </p>
+<p>来看看它的使用:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> async_std::task;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello</span></span>() &#123;  </span><br><span class="line">    <span class="built_in">print!</span>(<span class="string">&quot;Hello &quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">world</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;world!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">hello_world</span></span>() &#123; </span><br><span class="line">    hello().<span class="keyword">await</span>;</span><br><span class="line">    world().<span class="keyword">await</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123; </span><br><span class="line">    <span class="keyword">let</span> fut = hello_world();</span><br><span class="line">    task::block_on(fut);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>.await</code>是一个标记点,可以理解为是一个<code>yield point</code><br>Runtime执行到<code>xxx.await</code>时,先会执行一次<code>xxx</code>  </p>
+<p>一开始,会调用一次poll函数,推动执行进度<br>通过它的返回值,<code>Poll&lt;T&gt;枚举的变体</code>,即<code>Pending</code>或<code>Ready(T)</code><br>来决定: </p>
+<ol>
+<li>让其他Task接管执行权(yield)  </li>
+<li>该Future执行完毕,继续执行当前Task  </li>
+</ol>
+<p>若为<code>Ready</code>: 则选 <code>2</code>,继续往下执行(一个Task可能是由多个Future所组成)<br>若为<code>Pending</code>: 则选 <code>1</code>,让其他任务接管执行权(比如IO操作的阻塞期间,让其他任务执行)  </p>
+<p>稍微有点涉及原理部分,可能有点难理解,来个简单粗暴理解版:  </p>
+<p><code>.await</code>会指明<code>执行某个Future</code> 这一逻辑<br>当<code>xxx.await</code>所在的Task交给Runtime执行,并执行到<code>xxx.await</code> 时<br><code>xxx</code> 这个Future实例会执行  </p>
+<p>若它阻塞(这意味着该Future所在的Task也阻塞)<br>所以调度程序安排其他Task,在该空档期执行<br>若不阻塞,就继续往下执行(可能还有碰见<code>.await</code>哟), 直到该Task结束   </p>
+<hr>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><ul>
+<li><code>#[async_std::main]</code><br>这玩意无比常见,是个属性宏,要加在main函数头上<br>使得main前面能被async所修饰<br>程序运行时,main函数返回的Future,会自动交给Runtime开始运行,如下:  </li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[async_std::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    hello_world().<span class="keyword">await</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于:</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    async_std::task::block_on( <span class="keyword">async</span> &#123;</span><br><span class="line">        hello_world().<span class="keyword">await</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><code>async_std::task::spawn</code><br>因为这玩意也很常见,所以就讲一讲:<br>向其传入Future,Runtime会开始运行它,并返回 async_std::task::JoinHandle 的实例<br>它实现了Future,与标准库中的<code>JoinHandle</code>无比相似<br>不过那个运行Thread,而这个运行Task,<code>join</code>相应地变成<code>.await</code><br>想让该handle代表的Task运行完毕,应该在该handle前放上<code>.await</code>,如下:  </li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> async_std::task;</span><br><span class="line"><span class="meta">#[async_std::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123; </span><br><span class="line">    <span class="keyword">let</span> handle = task::spawn(<span class="keyword">async</span> &#123;</span><br><span class="line">        <span class="number">1</span> + <span class="number">1</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">let</span> two:<span class="built_in">i32</span> = handle.<span class="keyword">await</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-async-p4-状态的保存与变换</title>
+    <url>/posts/rs-async-p4.html</url>
+    <content><![CDATA[<blockquote>
+<p>浅显的原理第一篇: 状态的保存/变换</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-async">rust-async系列</a></p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p><strong>注: 参考了《Writing an OS in Rust》中的async篇,可以自己搜索下看看</strong><br>为了更好地理解<code>Rust异步</code>背后的原理,我们先来了解下一些概念<br>当然,不用太深入,只是小补充而已:   </p>
+<ul>
+<li><code>抢占式/协作式多任务</code>  </li>
+<li><code>状态机</code>  </li>
+<li><code>自引用结构体</code>   </li>
+</ul>
+<p>现在,让我们开始吧!  </p>
+<hr>
+<h1 id="两种多任务"><a href="#两种多任务" class="headerlink" title="两种多任务"></a>两种多任务</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><code>抢占式多任务</code>与<code>协作式多任务</code>,都属于<code>多任务</code>  </p>
+<ul>
+<li><p>抢占式多任务:<br>操作系统决定CPU的运行权<br>比如,操作系统先让网易云音乐运行一会,再让VSCode运行一会<br>各个程序中的任务们,运行时间很短,但切换速度也很快,造成一种<code>任务们同时运行</code>的感觉<br>这是强迫/抢占的    </p>
+</li>
+<li><p>协作式多任务:<br>任务们本身进行协调,决定CPU的运行权<br>比如Rust中,运行时调用某Task(top-level Future)的poll方法阻塞时,返回Poll::Pending<br>自己放弃继续执行,并通知运行时执行其他Task<br>这是自愿/协作的,Task们<code>自愿放弃CPU的执行权</code><br>(上文中的<code>任务</code>与<code>Task</code>请区分一下,前者比后者广泛,后者在这用于Rust的举例)  </p>
+</li>
+</ul>
+<h2 id="状态的恢复-保存"><a href="#状态的恢复-保存" class="headerlink" title="状态的恢复/保存"></a>状态的恢复/保存</h2><p>既然任务们能互相切换执行,那么,当再次轮到某任务执行时<br>该任务,应当从先前暂停的地方开始,继续执行<br>因此我们应当备份某任务的先前状态,以便于之后的继续执行,这就是<code>状态保存</code>  </p>
+<p>对于<code>抢占式</code>与<code>协作式</code>,处理<code>状态保存</code>的思路是不一样的:</p>
+<ul>
+<li>抢占式:<br>因为是强迫切换执行的,任务会在任意某个时刻被中断<br>任务此时运行到了哪里?我们不知道啊!<br>那么,就只好将任务的所有状态全部保存,包括调用栈(call stack)    </li>
+</ul>
+<p>反正,你只需明白,操作系统强制切换任务,为每个任务分配相对公平的执行时间<br>但是,代价也有,比如不得不为每个任务保存它的所有状态,内存开销大  </p>
+<ul>
+<li>协作式:<br>因为是自愿/协作地切换执行,每个任务会在哪里放弃执行都是清楚的<br>这种放弃执行权的操作,我们称为<code>yield</code>    </li>
+</ul>
+<p>比如在Rust中,<code>xxx.await</code>会执行一个Future<br>意味着当程序执行到这里时,可能会<code>yield</code>(poll返回Poll::Pending,自愿放弃执行权)  </p>
+<p><code>xxx.await</code>就是一个<code>stop/yield point</code>,代表执行到此处时,可能会发生暂停并yield<br>瞧,所有可能yield的地方你都知道,这就方便了保存状态(你可以舍弃已经不需要的中间变量)<br>因此,我们可以准确分配Future执行所需要的最大空间  </p>
+<p>其实,每个<code>.await(也就是yield point)</code>,就代表着<code>一种状态</code>(之后会讲)</p>
+<p>协作式的好处在于:<br>能自己掌握所有<code>yield point</code>,从而精打细算地选择最优的策略, 而非让操作系统为你暗地里处理<br>毕竟机器定义的分配策略, 总是没有比不过我们特意设计的<br>在任务暂停并转让执行权前,准确保存<code>下次继续所需要的状态</code>,内存/性能优势很大<br>但坏处也有: 因为这是自愿/协作的,当某个任务出现Bug,永不放弃执行权,其他任务便无法执行  </p>
+<hr>
+<h1 id="状态机的概念"><a href="#状态机的概念" class="headerlink" title="状态机的概念"></a>状态机的概念</h1><p>在Rust中的异步,我们之前也说过,属于<code>协作式多任务</code><br>而其<code>状态保存</code>的实现,就是利用<code>状态机(state machine)</code>来实现  </p>
+<p><code>状态机(state machine)</code>一般指<code>有限状态自动机</code>,是一种数学模型  </p>
+<ol>
+<li>状态(state):<br>比如有一扇门,它的状态就处于以下两种之一: Open or Closed</li>
+<li>事件(event):<br>某事件发生后,会触发相应动作,可能改变状态<br>比如: 用钥匙锁门(event)=&gt;关门(action)=&gt;门被锁住(state)   </li>
+<li>动作 (action):<br>事件发生后,会触发动作  </li>
+<li>变换 (transition):<br><code>State_X=&gt;State_Y</code>就叫<code>变换</code>,比如门的状态从<code>Open=&gt;Closed</code>  </li>
+</ol>
+<p>稍微了解下<code>状态机</code>的概念即可  </p>
+<p>那么现在,就要看具体代码了  </p>
+<p>如果你想亲自运行一下,先确保你的<code>Cargo.toml</code>中的依赖如下:  </p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">async-std</span> = &#123;version = <span class="string">&quot;1&quot;</span>, features = [<span class="string">&quot;attributes&quot;</span>, <span class="string">&quot;unstable&quot;</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如下代码,读取一个文件的行数<br>你可以通过 <code>cargo run -- ./src/main.rs</code> 运行<br>(通过target目录下的可执行文件,加上参数后运行,也可以哦)  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::&#123;</span><br><span class="line">    env::args,</span><br><span class="line">    process,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> async_std::&#123;</span><br><span class="line">    prelude::*,</span><br><span class="line">    fs::File,</span><br><span class="line">    io::&#123;<span class="keyword">self</span>,BufReader&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[async_std::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; io::<span class="built_in">Result</span>&lt;()&gt; &#123;              <span class="comment">// Start</span></span><br><span class="line">    <span class="keyword">let</span> path = args().nth(<span class="number">1</span>).unwrap_or_else(||&#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Fuck you! No path for reading&quot;</span>);</span><br><span class="line">        process::exit(<span class="number">1</span>);</span><br><span class="line">    &#125;); </span><br><span class="line">    <span class="keyword">let</span> file = File::open(path).<span class="keyword">await</span>?;          <span class="comment">// Yield point</span></span><br><span class="line">    <span class="keyword">let</span> lines = BufReader::new(file).lines();</span><br><span class="line">    <span class="keyword">let</span> count = lines.count().<span class="keyword">await</span>;             <span class="comment">// Yield point</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;This file contains &#123;&#125; lines&quot;</span>,count);</span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;                                                <span class="comment">// Done</span></span><br></pre></td></tr></table></figure>
+
+
+<p>mian()产生一个新实例,异步运行<code>open(path)</code>与<code>count()</code><br>对于编译器,每一个<code>.await</code>其实都代表一种状态  </p>
+<p>Future实例,实际上是个状态机<br>在这里共有四种状态/阶段(其中包括两个<code>.await point(yield point)</code>):  </p>
+<ol>
+<li>Start: 此Future刚开始执行  </li>
+<li>Yield1: 第一个 yield point</li>
+<li>Yield2: 第二个 yield point</li>
+<li>Done: 此Future执行完毕</li>
+</ol>
+<p>这些状态的含义是: <code>表示当前Future执行到了哪一个阶段</code><br>执行器调用当前Future的poll推动进度时,若在<code>某一阶段</code>返回了<code>Poll::Pending</code>,则放弃执行权<br>当再次调用当前Future的poll推动进度时,则从上次暂停的状态<code>恢复(resume)</code>,继续执行  </p>
+<p>官方目前似乎采用<code>Generator(生成器)</code>为异步语法生成状态机<br>每一个状态都会存储一些数据, 便于进入下一个状态  </p>
+<p><strong>Note 1</strong>:<br>Start状态,会存储传入函数的参数(如果有参数)</p>
+<p><strong>Note 2</strong>:<br>Done状态下,若进行resume,则可能得到panic!<br>因为恢复已结束的计算是不可能, 也不应该的  </p>
+<p><strong>Note 3</strong>:<br>怎么判断每个状态需要保存哪些变量? 很简单的一句话:<br><code>某个yield point之前定义, 且point之后还需要使用的变量</code><br>如上段代码中的 <code>file</code> 与 <code>count</code>就需要被保存,因为从暂停中恢复后还需要使用<br>其他的变量,是一次性执行完的,不会出现什么暂停一下,等会继续的现象<br>所以不需要特殊的持久化操作</p>
+<hr>
+<h1 id="自引用结构体"><a href="#自引用结构体" class="headerlink" title="自引用结构体"></a>自引用结构体</h1><h2 id="保存引用"><a href="#保存引用" class="headerlink" title="保存引用"></a>保存引用</h2><p>当每个状态存储数据时,可能会导致发生<code>自引用</code>,比如:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">example</span></span>() -&gt; <span class="built_in">i32</span> &#123;                            <span class="comment">// Start</span></span><br><span class="line">    <span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">    <span class="keyword">let</span> element = &amp;arr[<span class="number">2</span>];</span><br><span class="line">    write_file(<span class="string">&quot;foo.txt&quot;</span>, element.to_string()).<span class="keyword">await</span>;  <span class="comment">// Yield1</span></span><br><span class="line">    *element                                           <span class="comment">// Done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有三个状态: <code>Start</code>,<code>Yield1</code>,<code>Done</code><br>而在<code>Yield1</code>这个状态,存储的数据如下:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 状态的定义</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Yield1State</span></span> &#123;</span><br><span class="line">    arr: [<span class="built_in">i32</span>; <span class="number">3</span>],</span><br><span class="line">    element: *<span class="keyword">const</span> <span class="built_in">i32</span>, <span class="comment">// 数组最后一个元素的地址</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 状态的实例</span></span><br><span class="line">Yield1State &#123;</span><br><span class="line">    arr: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">    element: &amp;arr[<span class="number">2</span>] <span class="keyword">as</span> *<span class="keyword">const</span> <span class="built_in">i32</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>等等,你可能会对上面的代码有疑惑:<br>不是说,状态只需要保存 <code>在yield point之前定义, 并且该point之后还需要使用的变量</code> 吗<br>上面的代码,只有element这个引用需要被保存吧?  </p>
+<p>这是因为,它是<code>引用</code>嘛!<br>没了<code>引用</code>背后的实际数据,那它还有啥用,不就是<code>悬垂引用</code>了吗?  </p>
+<p>因此我们还得保存,<code>该引用</code>指向的背后数据: <code>arr</code><br>并<strong>一起</strong>存储在同个<code>struct(代表同一状态)</code>中  </p>
+<p>像这种 <code>结构体内部的指针,指向结构体本身</code><br>就叫 <code>自引用结构</code>  </p>
+<p>比如上面代码: 同一结构体下,成员element指向了成员arr  </p>
+<h2 id="内存移动问题"><a href="#内存移动问题" class="headerlink" title="内存移动问题"></a>内存移动问题</h2><p>如上所述, 这可能导致悬垂引用的产生:<br>若该struct实例的<code>内存地址发生改变</code><br>(比如使用<code>std::mem</code>,让struct实例的内存地址,发生移动)  </p>
+<p>以上面的那段代码为例,如下:  </p>
+<ul>
+<li><p>arr:<br>内存地址会跟着结构体实例而改变<br>但是, <code>值仍然是 [1,2,3]</code></p>
+</li>
+<li><p>element:<br>内存地址会跟着结构体实例而改变<br>但是,值仍然是<code>先前arr的地址</code><br><code>注意,是先前的 ! 而不是后来arr的新地址</code></p>
+</li>
+</ul>
+<p>这就产生了一个问题: 引用可能是失效/错误的(悬垂引用)  </p>
+<p>官方提出了<code>std::pin::Pin(trait)</code><br>来解决自引用结构体方面的悬垂指针/引用问题 </p>
+<p>其实你听名字也很好理解:<br><code>Pin(中文意思是钉子)</code>的作用是,防止内存地址发生改变(给爷钉死吧!)  </p>
+<p>但是它又是怎么pin住的呢?<br>下一节再慢慢讲吧  </p>
+<p>那又是一个值得探讨的话题了<br>欲知后事如何, 且听下回分解  </p>
+<p><del>(疯狂省略, 因为我累死了, 多么希望赶紧结束这一P啊 ! !)</del>  </p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-dm-p1-系列说明</title>
+    <url>/posts/rs-decl-macro-p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列  </p>
+</blockquote>
+<span id="more"></span>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明:"></a>系列说明:</h1><p><strong>注: 请注意是声明宏</strong><br>传送门如下:  </p>
+<ul>
+<li><a href="/categories/rust-decl-macro">博客: Rust声明宏系列</a> </li>
+<li><a href="https://www.bilibili.com/video/BV1Wv411W7FH?p=1">B站视频: Rust编程语言-声明宏</a></li>
+</ul>
+<p><code>博客</code>的更新速度,快于<code>视频</code><br><code>博客</code>若经过重写,则会抽时间更新<code>视频</code>  </p>
+<p>此系列,我们将学习Rust中的<code>声明宏</code>  </p>
+<hr>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>书籍</li>
+</ol>
+<ul>
+<li><a href="https://zjp-cn.github.io/tlborm/">宏小册</a>  </li>
+<li><a href="https://rustcc.gitbooks.io/rustprimer/content/macro/macro.html">RustPrimer</a></li>
+<li><a href="https://kaisery.github.io/trpl-zh-cn/ch19-06-macros.html">TRPL</a></li>
+</ul>
+<ol start="2">
+<li>文章  </li>
+</ol>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/353421021">【译】Rust宏: 教程与示例 (一)</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/356427780">【译】Rust宏: 教程与示例 (二)</a></li>
+</ul>
+<hr>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><ol>
+<li>发现错误的话, 请及时跟我联系  </li>
+<li>可以通过博客侧边栏上的联系方式找到我  </li>
+<li>欢迎在留言版中留言, 本人会定期查看  </li>
+</ol>
+<p>最后, 谢谢你的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-dm-p2-从println开始</title>
+    <url>/posts/rs-decl-macro-p2.html</url>
+    <content><![CDATA[<blockquote>
+<p>我们从熟悉的 println! 开始, 了解下声明宏的大致结构吧  </p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-decl-macro">rust-decl-macro系列</a></p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>大家应该都用过一个宏<br>它就是<code>println!</code>:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="string">&quot;Rush B!!!!&quot;</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s);</span><br><span class="line">    <span class="built_in">println!</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当你刚刚接触它的时候, 可能会感到些许疑惑:<br>为什么后面要跟个感叹号?<br>为什么括号里面的参数可以不一样?  </p>
+<p>亲爱的TRPl在教你写 <a href="https://kaisery.github.io/trpl-zh-cn/ch01-02-hello-world.html#%E5%88%86%E6%9E%90%E8%BF%99%E4%B8%AA-rust-%E7%A8%8B%E5%BA%8F">Hello World!</a> 的时候<br>告诉过你: 名字后加个感叹号,就是个<code>宏(macro)</code><br>注: macro 的读音: [ˈmækroʊ]</p>
+<p>可是macro到底是啥?<br><del>(算了算了,反正只要会用就行了,于是你点击了该网页的叉叉)</del>  </p>
+<hr>
+<h1 id="查看定义"><a href="#查看定义" class="headerlink" title="查看定义"></a>查看定义</h1><p>让我们按住Ctrl,鼠标左键点击println!<br>(以 VSCode 为例)  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    () =&gt; ($crate::<span class="built_in">print!</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line"></span><br><span class="line">    ($($arg:tt)*) =&gt; (&#123;</span><br><span class="line">        $crate::io::_print($crate::format_args_nl!($($arg)*));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 你可能会看到, 在 println! 的上面</span></span><br><span class="line"><span class="comment">// 有着类似下面的玩意:  </span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// #[macro_export]</span></span><br><span class="line"><span class="comment">// #[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]</span></span><br><span class="line"><span class="comment">// #[allow_internal_unstable(print_internals, format_args_nl)]</span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// 这些也属于宏, 不过是 `过程宏`</span></span><br><span class="line"><span class="comment">// 而该系列要讲的是 `声明宏`, 因此略过</span></span><br></pre></td></tr></table></figure>
+
+<p>你悲催地发现根本看不懂这一大堆鬼画符……<br>但看不懂根本没关系,后面几节过后,你肯定懂了<br>现在只需明白的,是大致结构:  </p>
+<ol>
+<li><p>我们将<code>macro_rules!</code>放在<code>println</code>前面,说明后者是个宏<br>(<code>macro_rules!</code>当作特定语法即可)  </p>
+</li>
+<li><p>之后用花括号包起来,里面是该宏的具体定义  </p>
+</li>
+</ol>
+<p>问题来了,关键是<code>println</code>的具体定义<br>花括号内,到底在讲述着啥?  </p>
+<p>请容许我来帮你粗暴地类比一下<code>match表达式 &amp;&amp; macro</code>:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// match</span></span><br><span class="line"><span class="keyword">match</span> num &#123;</span><br><span class="line">    <span class="number">1</span> =&gt; <span class="string">&quot;1&quot;</span>.repeat(<span class="number">10</span>),</span><br><span class="line">    <span class="number">2</span> =&gt; &#123;</span><br><span class="line">        <span class="string">&quot;2&quot;</span>.repeat(<span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    _ =&gt; <span class="built_in">panic!</span>(<span class="string">&quot;Fuck you! I just want the  numer 1 or 2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// macro</span></span><br><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    () =&gt; ($crate::<span class="built_in">print!</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line"></span><br><span class="line">    ($($arg:tt)*) =&gt; (&#123;</span><br><span class="line">        $crate::io::_print($crate::format_args_nl!($($arg)*));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>macro有点像是match,能根据不同参数,展开不同的代码<br>在macro最外层的花括号中,有许多匹配分支  </p>
+<p>match表达式,称呼每个匹配分支为<code>arm</code><br>逗号分割它们彼此,或者不用逗号而用花括号包裹来分割<br>最后一个arm可省略逗号  </p>
+<p>macro,则称呼每个匹配分支为<code>rule</code>(明白为什么使用<code>macro_rules!</code>创建宏了吗)<br>必须使用花括号包裹,使用分号分隔彼此<br>最后一个rule可省略分号  </p>
+<p>你并不需搞清所有细节,现在先不用试图记忆具体语法,有印象即可<br>现在再来看看 <code>println</code>,是不是稍微有点感觉了(看不懂的地方依然直接跳即可):  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义部分</span></span><br><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    <span class="comment">// 空参时, 只输出换行符</span></span><br><span class="line">    () =&gt; ($crate::<span class="built_in">print!</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 有参时, 输出参数, 并换行</span></span><br><span class="line">    ($($arg:tt)*) =&gt; (&#123;</span><br><span class="line">        $crate::io::_print($crate::format_args_nl!($($arg)*));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用部分</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="string">&quot;xxx&quot;</span>;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s);</span><br><span class="line"><span class="built_in">println!</span>();</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>创建一个假设叫xxx的macro,花括号包裹具体定义:  </li>
+</ol>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> xxx &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>然后创建两个匹配分支:<br>(匹配空参 =&gt; 不做任何事)<br>(匹配123 =&gt; 打印123)  </li>
+</ol>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> xxx &#123;</span><br><span class="line">    () =&gt; &#123;&#125;;</span><br><span class="line">    (<span class="number">123</span>) =&gt; &#123;<span class="built_in">println!</span>(<span class="string">&quot;123&quot;</span>)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>调用时, 要做到: 宏名+感叹号+传参:<br>(传入的参数,若与任何rule都不匹配,则报错)</li>
+</ol>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> xxx &#123;</span><br><span class="line">    () =&gt; &#123;&#125;;</span><br><span class="line">    (<span class="number">123</span>) =&gt; &#123;<span class="built_in">println!</span>(<span class="string">&quot;123&quot;</span>)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    xxx!();      <span class="comment">// Nothing</span></span><br><span class="line">    xxx!(<span class="number">123</span>);   <span class="comment">// println!(&quot;123&quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本节只是为了留个大致印象, 建立一个整体结构的认知<br>相信你肯定还有一些疑惑, 后面会比较系统地讲解<br>咱们下期见  </p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-dm-p3-声明与使用</title>
+    <url>/posts/rs-decl-macro-p3.html</url>
+    <content><![CDATA[<blockquote>
+<p>正式系统的关于 macro 的 声明与使用</p>
+</blockquote>
+<span id="more"></span>  
+
+<p>同系列传送门: <a href="/categories/rust-decl-macro">rust-decl-macro系列</a></p>
+<h1 id="框架建立"><a href="#框架建立" class="headerlink" title="框架建立"></a>框架建立</h1><p>前一节,我们大概清楚了macro的结构<br>现在让我们再来简单复习一遍:  </p>
+<ol>
+<li><code>macro_rules!(这是特点语法)</code>来创建一个macro</li>
+<li><code>rule(s)(匹配分支,以 &quot;参数=&gt;展开代码&quot; 的形式)</code>放在最外层的花括号内  </li>
+<li>调用宏时,宏名+感叹号+括号内传参,比如: <code>println!(some_str)</code>  </li>
+</ol>
+<p>现在稍微深入一点:<br>一个 <code>rule</code> 可以被这样抽象地表示: (matcher)=&gt;(transcriber)<br>它由三个重要的部分组成:</p>
+<ul>
+<li><p><code>matcher (匹配器)</code>:<br>用来匹配传入的参数  </p>
+</li>
+<li><p><code>metavariable/literal (元变量/字面量)</code>:<br>绑定传入的代码片段,出现于 <code>matcher</code></p>
+</li>
+<li><p><code>transcriber (转录器)</code>:<br>用来在宏匹配成功后,进行代码替换</p>
+</li>
+</ul>
+<p>以<code>println!</code>为例子,我们向其传入了一些参数,它给我们打印到标准输出上<br>因为原本的<code>println!</code>涉及到<code>卫生性</code>,<code>重复语法</code>,<code>路径作用域</code>等,不适合新鸟阅读,所以我抽象了它:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> println &#123;</span><br><span class="line">    (<span class="comment">/* 空参匹配 */</span>) =&gt; (<span class="comment">/* `换行` 的代码 */</span>);</span><br><span class="line">    (<span class="comment">/* 有参匹配 */</span>) =&gt; (<span class="comment">/* `打印参数 + 换行` 的代码 */</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>println</code>由两个<code>rule</code>组成,每个的形式都是: <code>matcher=&gt;transcriber</code><br>从上往下,每个rule的<code>matcher</code>会与传入参数尝试匹配<br>匹配时, 括号具有多样性, 请看下面  </p>
+<ol>
+<li>匹配规则:  </li>
+</ol>
+<ul>
+<li>匹配到: 就替换为<code>transcriber</code>里面的代码  </li>
+<li>匹配不到: 所有<code>matcher</code>都无法与<code>传入参数</code>进行匹配,则编译报错  </li>
+</ul>
+<ol start="2">
+<li>括号多样性: </li>
+</ol>
+<ul>
+<li>概念: <code>matcher</code>与<code>transcriber</code>的括号,可以是(),[],{}三种之一  </li>
+<li>定义时: 比如, rule可写成 <code>[pattern]=&gt;&#123;expansion&#125;</code>  </li>
+<li>调用时: 一样遵从该规则, 比如 <code>vec![0, 1,2,3]</code> 与 <code>pritnln!(&quot;xx&quot;)</code></li>
+</ul>
+<p>而<code>metavariable/literal</code>则出现在<code>matcher</code>中,用于匹配并捕获代码片段<br>在对应的<code>transcriber</code>中,则可以操控这些<code>元值</code>,即操控捕获到的代码片段  </p>
+<p>稍微有点蒙? 我也没让你背哟, 多看多用就会了  </p>
+<hr>
+<h1 id="两种宏参数"><a href="#两种宏参数" class="headerlink" title="两种宏参数"></a>两种宏参数</h1><p>是时候引入一些新的东西了, 顺便加深下你的印象  </p>
+<h2 id="元变量"><a href="#元变量" class="headerlink" title="元变量"></a>元变量</h2><p>元变量, 即Metavariable<br>让我们来看个例子:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> my_macro &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;</span><br><span class="line">        $a</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ($a: expr, $b: expr) =&gt; &#123;</span><br><span class="line">        $a + $b</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    my_macro!(<span class="number">1</span>);</span><br><span class="line">    my_macro!(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宏全部展开后, 可以理解为下面: </span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    1;</span></span><br><span class="line"><span class="comment">    1 + 2;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>你会注意到,每个rule之间的参数, 其声明都有点奇怪:<br>比如: <code>$a:expr</code> -&gt; <code>$+参数标识符+类型</code>  </p>
+<ol>
+<li><p><code>$</code> 这个前缀是干嘛的?<br>这显式说明, 它是 <code>metavariable</code>, 可以匹配并捕获代码片段, 这里会捕获表达式<br>至于为何要特意加$前缀来说明, 像函数参数那样直接用不行吗?<br>下面就要讲到啦, 别着急~  </p>
+</li>
+<li><p>先看看 <code>expr</code> 类型:<br><code>expr</code>, 全称为 <code>expression(表达式)</code><br>第一次宏调用时, 传入了 <code>1(一个字面量)</code>, 这当然是个expr, 与第一个rule成功匹配<br>这时, <code>my_macro!(1)</code> 这个部分, 就会被替换为相应的展开代码`<br>(matcher(匹配器),metavariable(元变量),transcriber(转录器)都用到了呢)  </p>
+</li>
+</ol>
+<p>简单来讲, macro的本质, 就是匹配捕获传入参数, 将调用部分替换/展开为相应代码<br>macro就像个code generator: 一段用来生成code的code  </p>
+<p>注意:<br>macro实际上, 是将传入部分解析为一个AST节点<br>然后将调用部分, 替换为一个新的AST节点<br>在本节下面, 会更详细地讲讲</p>
+<h2 id="元字面量"><a href="#元字面量" class="headerlink" title="元字面量"></a>元字面量</h2><p>元字面量, 即Metaliteral<br>为了加深印象与引出 <code>metaliteral</code> , 我们来玩个对应游戏:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">($a: expr) =&gt; &#123;$a&#125;;                     <span class="comment">// the first rule</span></span><br><span class="line">  |             |  </span><br><span class="line">  |         	|</span><br><span class="line">( <span class="number">1</span>      )      <span class="number">1</span>                       <span class="comment">// pass &amp;&amp; expand </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">($a: expr, $b: expr) =&gt; &#123; $a + $b&#125;;    <span class="comment">// the second rule</span></span><br><span class="line">  |      |  |              |    |</span><br><span class="line">  |      |  |              |    |</span><br><span class="line">( <span class="number">1</span>      ,  <span class="number">2</span>      ) =&gt;    <span class="number">1</span> +  <span class="number">2</span>      <span class="comment">// pass &amp;&amp; expand</span></span><br></pre></td></tr></table></figure>
+
+<p>我使用 <code>|</code> 来联系 <code>形参 -- 实参</code><br>你会惊讶的发现, 传参时的对应关系们, 除了 <code>$a -- 1</code> 与 <code>$b -- 2</code>, 还有个 <code>, -- ,</code>  </p>
+<p>对于第二个rule, 它的定义中, 分割两个expr的逗号本身, 也是形参<br>这种固定的参数, 如同token中的字面量一样<br>我姑且称它为 <code>Literal Token(字面量标记)</code>, 或者 <code>Metaliteral (元字面量)</code><br>(因为我也不知道有什么对应术语, 所以用了 “姑且”, 知道的麻烦告诉我)  </p>
+<p>假若 rule 中的参数没有 $前缀 进行区分:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> fuck &#123;</span><br><span class="line">    (a:expr) =&gt; &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    fuck!(<span class="number">1</span>);       <span class="comment">// No</span></span><br><span class="line">    fuck!(a:expr);  <span class="comment">// Yes ~~(Oh~)~~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于定义中的 “a:expr”(它是 <code>MetaLiteral</code>)<br>传入固定形式的 “a:expr” 时才可发生匹配  </p>
+<p>切记:<br>当你想绑定一段代码片段,参数名前,必须加上$进行前缀修饰  </p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>假设有这么个宏 <code>map!</code>(联想一下<code>vec!</code>)<br>它能根据 <code>=&gt;</code> 判断出 <code>Key/Value</code>, 然后生成一个 <code>HashMap</code><br>如下:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map![</span><br><span class="line">        <span class="string">&quot;吉良吉影&quot;</span> =&gt; <span class="number">33</span>,</span><br><span class="line">        <span class="string">&quot;空条承太郎&quot;</span> =&gt; <span class="number">41</span>,</span><br><span class="line">    ]</span><br><span class="line">    <span class="comment">// `m` 的类型为: std::collections::HashMap&lt;&amp;str, i32&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们来写一个这样的宏吧!<br>不过我们还未学习 <code>重复语法</code>, 无法写出接收可变参数的 <code>map!</code>, 所以现在只讨论简陋版:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> map &#123;</span><br><span class="line">    ($key:expr =&gt; $val:expr) =&gt; &#123;&#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> m = std::collections::HashMap::&lt;_,_&gt;::new();</span><br><span class="line">        m.insert($key, $val);</span><br><span class="line">        m</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map!(<span class="string">&quot;普通上班族&quot;</span> =&gt; <span class="number">33</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>,m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 展开后, 可以看作是:</span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    let m = &#123;</span></span><br><span class="line"><span class="comment">        let mut m = std::collections::HashMap::&lt;_,_&gt;::new();</span></span><br><span class="line"><span class="comment">        m.insert(&quot;普通上班族&quot;, 33);</span></span><br><span class="line"><span class="comment">        m</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    println!(&quot;&#123;:?&#125;&quot;,m);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>这就是一个简陋的DSL, 你定义了创建HashMap的新语法: <code>Key=&gt;Value</code><br>来看看两种宏参数在宏中, 发挥着怎样的作用:  </p>
+<ul>
+<li><p><code>Metavariable</code>: 将捕获的传入的代码片段绑定到自身<br>并在 <code>Transcriber</code> 中被使用, 最后展开为新代码  </p>
+</li>
+<li><p><code>Metaliteral </code>: 限定了匹配, 传入的代码片段, 必须以 =&gt; 分割, 才能成功匹配<br>若改成 <code>map!(&quot;普通上班族&quot;, 33)</code>, 则每个rule的 <code>Matcher</code> 都无法匹配上<br>(这里只有一个rule, 空匹配的懒得放里面了)  </p>
+</li>
+</ul>
+<p>其实说了这么多, 简单讲就是一个对应游戏, 对应上的话, 就会替换为一些代码<br>考虑的事: 匹配的语法美不美观, 简不简单, 然后将复杂的代码隐藏, 就这样而已<br>之后会考虑讲几个小例子: 比如我在B站上已经录过的递推序列生成器教程, 源自宏小册<br>(博客的话, 我周六放学回来慢慢更吧……)<br><del>(潜台词是随时会鸽子)</del></p>
+<hr>
+<h1 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h1><p>macro的本质, 是生成一个AST节点<br>可以配套看看我在B站上宏视频, 视频讲得很浅, 容易理解  </p>
+<p>假若由你来设计一个Rust编译器<br>首先, 不同的人写代码的风格不同, 那么你如何分析不同源码, 并生成目标码?  </p>
+<p>若我们将每遍扫描并做点事情的过程, 称为<code>pass</code><br>pass一次就生成了, 对于很大的源码来说, 这不现实吧  </p>
+<p>那我们就pass多次, 将 <code>从源码编译为目标码</code> 这个大问题, 分解为一大堆小问题<br>每一次pass都解决一个小问题, 那不就Ok了吗</p>
+<p>这种 <code>中间表示</code>, 就称为 <code>IR (Intermediate Representation )</code>  </p>
+<p>我们可以先把源码抽象为AST(抽象语法树, Abstract Syntax Tree)<br>那是一种代码被抽象后的树状结构<br>比如我们用Rust的enum表示一下:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 该枚举: 一个AST节点可以是Int表达式或二元运算表达式  </span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ASTNode</span></span> &#123;</span><br><span class="line">    Int(<span class="built_in">i32</span>), </span><br><span class="line">    BinaryExpr &#123;</span><br><span class="line">        op: Op,</span><br><span class="line">        lhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">        rhs: <span class="built_in">Box</span>&lt;ASTNode&gt;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二元运算的符号: 这里只抽象了加法</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Op</span></span> &#123;</span><br><span class="line">    Plus, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你只需明白AST是对源码封装的一层抽象产物就可以了  </p>
+<p>对于很少的源码, 已经可以直接转换为目标码了, 毕竟这时候AST也小<br>但是, 如果源码很大呢? AST已经很复杂了<br>那就再抽象一层吧, 向目标语言逐渐靠拢, 比如向汇编靠拢, 提高性能  </p>
+<p>基于AST, 我们可以再来一些<code>IR</code>, 层层递进, 以达目的<br>注意,是一些,而不是一个,这很好理解,因为一层可能还是不够嘛  </p>
+<p><code>AST</code>很重要, 是生成目标码的关键, 是代码的骨架<br>而另外的IR, 也是有必要的, 这也增强了可维护性<br>编译器在AST的基础上, 最终生成了目标码    </p>
+<p>问: 生成AST需要点啥? 或者说, 它由什么组成?<br>答: 由 expr(表达式), stmt(语句), ;(标点符号) 等组成, 这些都叫做 <code>token</code>  </p>
+<p>在这些小玩意的基础上, 组成一个更加庞大复杂的整体结构<br>它将token们联系起来, 表达了代码的骨架<br>这个庞然大物便是 AST 了  </p>
+<hr>
+<h1 id="回到Macro"><a href="#回到Macro" class="headerlink" title="回到Macro"></a>回到Macro</h1><h2 id="Token类型表"><a href="#Token类型表" class="headerlink" title="Token类型表"></a>Token类型表</h2><p>生成AST需要Token协助<br>macro 中, 其参数的类型, 便是token类型  </p>
+<p>macro要操控传入的token (或AST节点, 等会讲)<br>那么我们总得知道token类型吧, 不然怎知咋操控?  </p>
+<p>只有规定宏参数的类型, 才能保证macro达到我们想要的目的 (这里指 <code>Metavariable</code>)  </p>
+<p>所以, 辛苦你将下面的记一下<br>稍微记下, 有印象即可, 多用几下保证你熟悉得不行:  </p>
+<ul>
+<li><code>ident</code> -&gt; 标识符,如函数名字,变量名字,关键字  </li>
+<li><code>stmt</code> -&gt; statemen,语句</li>
+<li><code>expr</code> -&gt; expression,表达式,如<code>x</code>与<code>1_i32</code></li>
+<li><code>literal</code> -&gt; literal expression,字面量表达式,expr的子集</li>
+<li><code>block</code> -&gt; 代码块  </li>
+<li><code>pat</code> -&gt; pattern, 比如在match表达式下的 (pattern) =&gt; todo!(),</li>
+<li><code>path</code> -&gt; 路径, 注意这里不指文件路径, 而是类似 std::io::stdin 的路径</li>
+<li><code>ty</code> -&gt; type, 如i32,u32,String,Option<T>等  </li>
+<li><code>tt</code> -&gt; token tree, 之后我会单独再讲解下它的  </li>
+<li><code>item</code> -&gt; 条目/项, 例如函数定义  </li>
+<li><code>meta</code> -&gt; 元条目/项, 比如#[allow(unsued)], meta就对应allow(unused)</li>
+<li><code>lifetime</code> -&gt; 生命周期  </li>
+<li><code>vis</code> -&gt; visibility, 可见性, 比如pub等, 也可能为空  </li>
+</ul>
+<h2 id="TT"><a href="#TT" class="headerlink" title="TT"></a>TT</h2><p>这里有个比较特殊的类型 <code>tt (Token Tree)</code><br>从字面上的意思来讲, 就是由Token组成的树(数据结构上的树)呗<del>(废话)</del>  </p>
+<p><code>tt</code>,可以捕获<code>Single Token</code>,或由(),[],{}及括号包裹起来的东西<br>作为 Token Tree 的根节点, 先让我们来点例子:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> aa &#123;</span><br><span class="line">    ($a:tt) =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="built_in">stringify!</span>($a));</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Single Token</span></span><br><span class="line">    aa!(<span class="number">123</span>);          <span class="comment">// Yes: 123</span></span><br><span class="line">    aa!(FuckYou);      <span class="comment">// Yes: FuckYou</span></span><br><span class="line">    <span class="comment">// aa!(Fuck You);     // No</span></span><br><span class="line">    <span class="comment">// aa!(123 + 11);     // No</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// (), [], &#123;&#125;</span></span><br><span class="line">    aa!([<span class="number">123</span>]);        <span class="comment">// Yes: [123]</span></span><br><span class="line">    aa!(&#123;<span class="number">123</span> + <span class="number">123</span>&#125;);  <span class="comment">// Yes: &#123; 123 + 123 &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码, 展示了 <code>tt</code> 可以匹配捕获哪些东西<br>再来看看下面的内容, 理解理解它:<br>(我们以<code>&lt;&lt;xxx&gt;&gt;</code>, 来表示xxx是一颗 Token Tree)  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 你的眼中:</span></span><br><span class="line"><span class="number">1</span> + <span class="number">2</span> + (<span class="number">3</span> + <span class="number">4</span>)</span><br><span class="line"><span class="comment">// tt的眼中:</span></span><br><span class="line">&lt;&lt;<span class="number">1</span>&gt;&gt; &lt;&lt;+&gt;&gt; &lt;&lt;<span class="number">2</span>&gt;&gt; &lt;&lt;+&gt;&gt; &lt;&lt;( )&gt;&gt;</span><br><span class="line">                           |</span><br><span class="line">                           |</span><br><span class="line">                   &lt;&lt;<span class="number">3</span>&gt;&gt; &lt;&lt;+&gt;&gt; &lt;&lt;<span class="number">4</span>&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>这段代码的Token Tree共有5个:  </p>
+<ol>
+<li>&lt;&lt;1&gt;&gt;</li>
+<li>&lt;&lt;+&gt;&gt;</li>
+<li>&lt;&lt;2&gt;&gt;</li>
+<li>&lt;&lt;+&gt;&gt;</li>
+<li>&lt;&lt;(3 + 4)&gt;&gt;</li>
+</ol>
+<p>对于前面4个, 都是Single Token, 也就是只有根节点自己的Tree<br>对于第5个, 因为有()包裹, &lt;&lt;(…)&gt;&gt; 作为根节点, 它还有三个子节点(这里正好同层)  </p>
+<p>有没有对 <code>Token后面跟着Tree</code> 更加理解?  </p>
+<h2 id="AST节点"><a href="#AST节点" class="headerlink" title="AST节点"></a>AST节点</h2><p>macro 会将传入的token, 解析为对应类型的AST节点(除了少量token类型, 等下会讲)<br>比如 <code>map!</code> 中, <code>$key:value</code> 与 <code>$val:expr</code>, 都会被解析为expr类型的AST节点:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> map &#123;</span><br><span class="line">    ($key:expr =&gt; $val:expr) =&gt; &#123;&#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> m = std::collections::HashMap::&lt;_,_&gt;::new();</span><br><span class="line">        m.insert($key, $val);</span><br><span class="line">        m</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> m = map!(<span class="string">&quot;普通上班族&quot;</span> =&gt; <span class="number">33</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>,m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 展开后, 可以看作是:</span></span><br><span class="line"><span class="comment">fn main() &#123;</span></span><br><span class="line"><span class="comment">    let m = &#123;</span></span><br><span class="line"><span class="comment">        let mut m = std::collections::HashMap::&lt;_,_&gt;::new();</span></span><br><span class="line"><span class="comment">        m.insert(&quot;普通上班族&quot;, 33);</span></span><br><span class="line"><span class="comment">        m</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    println!(&quot;&#123;:?&#125;&quot;,m);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>我们通过使用 macro , 站在了更抽象的视角上<br>操控传入的token(或解析token后形成的AST节点), 组成新AST节点(生成新代码)    </p>
+<p>这可以大量简化手写量, 如std中向宏传入特定类型, 自动生成为它们实现trait的代码  </p>
+<p>值得注意的是, 宏将传入参数给AST节点化时, 有时意味着会产生不期望的结果<br>我直接用 <a href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a> 上面的代码了:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> capture_then_match_tokens &#123;</span><br><span class="line">    ($e:expr) =&gt; &#123;match_tokens!($e)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">macro_rules!</span> match_tokens &#123;</span><br><span class="line">    ($a:tt + $b:tt) =&gt; &#123;<span class="string">&quot;got an addition&quot;</span>&#125;;</span><br><span class="line">    (($i:ident)) =&gt; &#123;<span class="string">&quot;got an identifier&quot;</span>&#125;;</span><br><span class="line">    ($($other:tt)*) =&gt; &#123;<span class="string">&quot;got something else&quot;</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;\n&quot;</span>,</span><br><span class="line">        match_tokens!((caravan)),</span><br><span class="line">        match_tokens!(<span class="number">3</span> + <span class="number">6</span>),</span><br><span class="line">        match_tokens!(<span class="number">5</span>)</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;&quot;</span>,</span><br><span class="line">        capture_then_match_tokens!((caravan)),</span><br><span class="line">        capture_then_match_tokens!(<span class="number">3</span> + <span class="number">6</span>),</span><br><span class="line">        capture_then_match_tokens!(<span class="number">5</span>)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果会是:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">got an identifier</span><br><span class="line">got an addition</span><br><span class="line">got something <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">got something <span class="keyword">else</span></span><br><span class="line">got something <span class="keyword">else</span></span><br><span class="line">got something <span class="keyword">else</span></span><br></pre></td></tr></table></figure>
+
+<p>比如这里, <code>match_tokens</code> 捕获token, 然后将参数解析为一个expr类型的AST节点<br>它不再是token, 而是个AST节点了!  </p>
+<p>比如 <code>5 + 7</code>, 原本是可以与 <code>$a:tt + $b:tt</code> 相匹配, 也可以与 <code>$a: expr</code> 匹配<br>但经二次传入后(向 <code>capture_then_match_tokens</code>传入的参数又传给 <code>match_tokens</code>)<br><code>5 + 7</code> 变成AST表达式节点, 只能与 <code>$a: expr</code>, 而不能与 <code>$a:tt + $b:tt</code> 匹配  </p>
+<p>只有 <code>tt</code>, <code>ident</code>, <code>lifetime</code> 能免遭 AST节点化, 可以好好理解下这块  </p>
+<p>总结:<br>宏将一些捕获的token给AST节点化, 随后又展开为一个新AST节点<br>这个新的AST节点, 会用来替换宏调用部分的AST节点, 因此你可以在很多地方调用宏<br>(只要宏展开的AST节点正确即可 :D)</p>
+<p>宏展开的结果是个某类型的AST节点, 这相比于C语言的 <code>#define</code> 宏, 有什么好处?<br>最直接的好处, 如下 <del>(相当于自动给你加上了括号)</del>:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// C语言: 简单的文本替换</span></span><br><span class="line">#define SUM(a,b) a+b</span><br><span class="line">int main(void) &#123;</span><br><span class="line">    SUM(<span class="number">2</span>, <span class="number">2</span>);     <span class="comment">// 2 * 2</span></span><br><span class="line">    <span class="number">5</span> * SUM(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 5 * 2 + 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Rust语言: 根据上下文推测宏调用的AST节点应被展开为expr类型的AST节点</span></span><br><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    ($a:expr,$b:expr) =&gt; &#123;$a + $b&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!(<span class="number">2</span>,<span class="number">2</span>);     <span class="comment">// 2 + 2</span></span><br><span class="line">    <span class="number">5</span> * sum!(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">// 5 * (2 + 2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="匹配注意点"><a href="#匹配注意点" class="headerlink" title="匹配注意点"></a>匹配注意点</h2><p>在我们传参时, 有个很常见的误解, 与为了以后宏的发展而有的限制<br>即下面要讲的东西, 有时间的也可以去看看 <a href="https://www.bookstack.cn/read/DaseinPhaos-tlborm-chinese/mbe-min-captures-and-expansion-redux.md">宏小册</a></p>
+<h3 id="匹配误区"><a href="#匹配误区" class="headerlink" title="匹配误区"></a>匹配误区</h3><p>来看看下面一段代码:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> aa &#123;</span><br><span class="line">    ($a: expr) =&gt; &#123;&#125;;</span><br><span class="line">    ($a: ident +) =&gt; &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    aa!(a);   <span class="comment">// Yes</span></span><br><span class="line">    aa!(a+);  <span class="comment">// No</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>按照你的直觉, <code>aa!(a+)</code> 应该会与第二个 rule 相匹配<br>但是实际上会报这么一个错误:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">expected expression, found end of <span class="keyword">macro</span> arguments</span><br><span class="line"><span class="comment">// 期望表达式, 却发现宏参数结束了</span></span><br></pre></td></tr></table></figure>
+
+<p>你会发现实际上都是在与第一个rule尝试着进行匹配:  </p>
+<p><code>a (lhs, left hand side)</code> 能被第一个rule匹配<br>而 <code>+ (二元加)</code> 因为可以尾随表达式, 也可以被第一个rule匹配<br>但由于缺少 <code>rhs</code>, 此时会直接报错, 而不是去尝试匹配下一个rule  </p>
+<p>这避免了某些情况下, 发生不期望的匹配, 但你却不知, 因此rule的顺序很重要  </p>
+<h3 id="歧义限制"><a href="#歧义限制" class="headerlink" title="歧义限制"></a>歧义限制</h3><p>由于一些歧义, 为了向后兼容性与不破坏代码<br>当前对 <code>Metavariable</code> 后面可以跟的内容有所限制, 详情可见 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">Rust-Reference: 限制</a><br>这里只需稍微看看, 留个印象, 实际使用时, 若在此方面报错, 则根据编译器的提示来改即可<br><del>(别问我为什么 xxx 类型后面, 加 yyy 这个符号不允许)</del><br><del>(因为我也没有全部搞懂)</del>  </p>
+<p>当然, 随着Rust声明宏的逐渐完善, 限制会逐渐减少(虽然也不多)  </p>
+<p>那么, 今天就到这了, 谢谢您的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-dm-p4-重复</title>
+    <url>/posts/rs-decl-macro-p4.html</url>
+    <content><![CDATA[<blockquote>
+<p>宏中非常重要的语法: 重复(repetition)</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-decl-macro">rust-decl-macro系列</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><code>重复 (Repetition)</code> 是宏中无比重要的核心级语法, 想发挥宏的强大就必须用到它  </p>
+<p>该语法, 可以重复一段模式(一些Token), 出现在以下两个地方:  </p>
+<ul>
+<li>Matcher: 将一段指定的模式, 重复地匹配与捕获</li>
+<li>Transcriber: 将一段指定的模式, 重复地展开</li>
+</ul>
+<p><del>(废话, Rust的声明宏不就这两个主要部分嘛)</del>  </p>
+<p>假设你要设计一个宏, 进行求和(参数个数不确定):  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Examples:</span></span><br><span class="line"><span class="built_in">assert_eq!</span>( <span class="number">0</span>,  sum!() );</span><br><span class="line"><span class="built_in">assert_eq!</span>( <span class="number">15</span>, sum!(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>) );</span><br></pre></td></tr></table></figure>
+<p>让我们来看看, 如何使用重复吧</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>关键在于参数的个数不确定, 因此我们应使用重复语法:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> sum &#123;</span><br><span class="line">    ($($a:expr),*) =&gt; &#123;</span><br><span class="line">        <span class="number">0</span> $(+ $a)*</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    sum!();          <span class="comment">// 0</span></span><br><span class="line">    sum!(<span class="number">5</span>);         <span class="comment">// 5</span></span><br><span class="line">    sum!(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>); <span class="comment">// 15</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>伪代码表示:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">$( Pattern )   Sep    RepOp</span><br><span class="line">$(   模式   )  分隔符  重复符号</span><br></pre></td></tr></table></figure>
+
+<p>它可以被分为三个部分:  </p>
+<ul>
+<li><p>模式(Pattern):<br>被包裹于 <code>$( )</code>, 用于匹配捕获(在Matcher), 或重复展开(在Transcriber)  </p>
+</li>
+<li><p>分隔符(Separator):<br>用来分割重复的模式, 比如 <code>vec![1,2,3]</code> 中的逗号  </p>
+</li>
+<li><p>重复符号(Repetition Operator):<br>对模式匹配次数, 进行说明限制, 不符合就编译报错  </p>
+</li>
+</ul>
+<p>以 <code>sum!</code> 为例子<br>它在第二个rule中用到了重复:  </p>
+<ul>
+<li><p>In Matcher:<br>模式: <code>$a:expr</code> 是重复的模式, 表示重复地匹配与捕获expr<br>分割: 每个模式之间用逗号分割, 表示传参时要传入逗号进行匹配<br>次数: *号, 说明了重复模式的个数, 它被限制为&gt;=0  </p>
+</li>
+<li><p>In Transcriber:<br>模式: <code>+ $a</code> 是重复模式, 比如传入 <code>1,2,3,4,5</code> 时, 会被展开为 <code>0+1+2+3+4+5</code><br>分割: 没添加分割符号, 表示展开时, 每个模式之间不会添加sep<br>次数:     同 Matcher  </p>
+</li>
+</ul>
+<p><code>$()</code> 与 <code>RepOp</code> 是必填的, <code>Sep</code> 是可选的  </p>
+<p>RepOp 有三种可选项, 有点像正则:</p>
+<ul>
+<li><code>*</code> 表示 模式匹配的次数 &gt;= 0<br>记忆法-&gt; 该符号看上去像是一个点, 联想为0</li>
+<li><code>+</code> 表示 模式匹配的次数 &gt;= 1<br>记忆法-&gt; 联想为正数, 那就&gt;=1</li>
+<li><code>?</code> 表示 模式匹配的次数 = 0 or 1<br>记忆法-&gt; 问号表示疑问, 代表 有 or 没有  </li>
+</ul>
+<p>有一些注意点:  </p>
+<ol>
+<li>当 RepOp 为 ? 时, 不可以添加 Sep(因为最多也就匹配到一次, 你怎么分割?)  </li>
+<li>Sep 是有限制的, <a href="/posts/rs-decl-macro-p3#%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6">p3</a> 提到过, 详情可见 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">rust-reference</a></li>
+</ol>
+<p>以后想到了再补充一些东西, 先到这里吧, 谢谢您的观看  </p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-dm-p5-卫生性</title>
+    <url>/posts/rs-decl-macro-p5.html</url>
+    <content><![CDATA[<blockquote>
+<p>本节将介绍宏的 卫生性(hygienic)</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-decl-macro">rust-decl-macro系列</a></p>
+<h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>什么是 卫生性(Hygienic) 呢?<br>简单来说,就是标识符(ident)在宏的处理与展开时,是无歧义的,不被同名标识符污染<br>如果你是第一次接触此概念, 我不信你不会懵逼<br>不过实际上, 这个概念理解起来不算困难  </p>
+<p>让我们先来讨论一个问题, 请看下面的代码:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">macro_rules!</span> create_var &#123;</span><br><span class="line">    () =&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    create_var!();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以复制该段代码, 然后运行, 将得到一个编译错误, 提示找不到a  </p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-gtk4-p1-系列说明</title>
+    <url>/posts/rs-gtk4-p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>欢迎大家来到 Rust 的 gkt-rs 系列</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p>
+<p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境, 因为GTK专注于Linux版本  </p>
+<p>我也是 gtk-rs 的新手, 依靠发表博客来巩固所学<br>顺便也能帮助和我一样的新鸟们 (老鸟别笑我啊喂!)  </p>
+<p>不定期更新, 毕竟我只有周末才能碰到电脑<br><del>(而且, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)</del></p>
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4系列</a></p>
+<hr>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>资料正在持续更新ing. . .</p>
+<ol>
+<li>书籍(官方圣经, 质量杠杆的)</li>
+</ol>
+<ul>
+<li><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a></li>
+</ul>
+<ol start="2">
+<li>博客/文档</li>
+</ol>
+<ul>
+<li><a href="https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html">Rust Vs GUI</a></li>
+<li><a href="https://gi.readthedocs.io/en/latest/#gobject-introspection">GObject Introspection</a></li>
+<li><a href="https://developer.gnome.org/documentation/tutorials.html">GNOME Developer Doc/Tutorials</a></li>
+</ul>
+<hr>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>首先请参照 <a href="https://www.gtk.org/docs/installations/">GTK官方页面</a> , 根据相应操作系统, 下载 GTK(版本是GTK4)  </p>
+<p>本人的操作系统为manjaro 选择它是因为不需过多操心配置方面  </p>
+<p>ubuntu系统, 听说2021版已经使用gnome作为桌面环境了(gnome用gtk写的)  </p>
+<p>windows系统建议使用archlinux版的wsl(亲测可以做gui, 虽然目前还有点问题)<br>比如wsl下安装gtk4, 能够跟manjaro/arch一样方便 <del>(废话)</del>, 只需一行:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S gtk4</span><br></pre></td></tr></table></figure>
+
+<p>其他系统, 请自己找下资料, 善用搜索引擎与官方文档  </p>
+<p>本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  </p>
+<hr>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><ol>
+<li>发现错误的话, 请及时跟我联系  </li>
+<li>可以通过博客侧边栏上的联系方式找到我  </li>
+<li>欢迎在留言版中留言, 本人会定期查看  </li>
+</ol>
+<p>最后, 谢谢你的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+        <tag>gui</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-gtk4-p2-创建窗口</title>
+    <url>/posts/rs-gtk4-p2.html</url>
+    <content><![CDATA[<blockquote>
+<p>让我们创建一个GTK窗口, 开始旅途吧</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4系列</a></p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="GTK是什么"><a href="#GTK是什么" class="headerlink" title="GTK是什么"></a>GTK是什么</h2><p>GTK, 简单来说是个有名的GUI库, 开源免费, 用C编写  </p>
+<p>其特点之一, 是能轻松地创建绑定:<br>在gtk3后, 由于GI(<a href="https://gi.readthedocs.io/en/latest/">GObject Introspection</a>) 的应用, 可以轻松地, 创建其他语言的绑定  </p>
+<p>这使你能利用不同语言编写GUI<br>比如, 你能用vala/js/python/rust/nim, 甚至自创的编程语言<br>而不是用C去编写(用C会很繁杂, 不清晰)  </p>
+<p>基本上名气稍微大点的语言, 都有对应的GTK绑定    </p>
+<h2 id="gtk-rs"><a href="#gtk-rs" class="headerlink" title="gtk-rs"></a>gtk-rs</h2><p>目前有个项目, 叫做 <a href="https://gtk-rs.org/">gtk-rs</a>, 负责GTK的Rust语言绑定<br>你在 crates.io 上搜索 gtk, 所看到的 <a href="https://crates.io/crates/gtk">gtk</a> 与 <a href="https://crates.io/crates/gtk4">gtk4</a>, 就属于gtk-rs项目</p>
+<p>前者对应gtk3, 六年前就在维护, 所以下载量比gtk4多好几倍<br>gtk4这个crate, 则是在不久前开始维护的 (毕竟gtk4也才出现)  </p>
+<p>对了, gtk4这个crate是Rust语言绑定, 而非gtk4本身(那个纯C写的)<br>所以进行接下来的步骤前, 请确保环境内, 已有gtk4本身的正确版本<br>不然crate会装不上  </p>
+<hr>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>首先, 你需要创建一个新项目<br>随后修改 Cargo.toml, 如下:  </p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">gtk</span> = &#123;version = <span class="string">&quot;0.3.1&quot;</span>, package = <span class="string">&quot;gtk4&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们将 gtk4(crate), 重命名为 gtk, 方便之后编写 (这是个惯例)<br>随后, 请run一下, 安装依赖 (请确保安装了gtk4)  </p>
+<p>下面就是正式的编码环节了</p>
+<hr>
+<h1 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h1><p>一个GTK4应用的创建, 需要用到 <code>gtk::Application</code><br>同时, 我们还需 <code>use gtk::prelude::*</code><br>原因与 <a href="https://doc.rust-lang.org/std/prelude/index.html">std::prelude</a> 或 std::io::prelude 一样  </p>
+<p>先创建一个应用, 它目前连窗口也没有:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.myapp&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很简单吧? 但别急着运行, 先看看下面两处:  </p>
+<ul>
+<li><p><a href="http://chuxiuhong.com/chuxiuhong-rust-patterns-zh/patterns/builder.html">Builder Pattern (一种Rust中常见的设计模式)</a>:<br>这个无需多言, 我们可以利用它, 进行链式构造, 让构造的过程更加清晰<br>在这里, 我们只调用了一次链式函数: application_id(id: &amp;str)<br>比如 <a href="https://doc.rust-lang.org/std/fs/struct.OpenOptions.html">std::fs::OpenOptions</a> 就使用了构造者模式<br>在学习gtk4时, 它将被较高频次地使用, 最后调用的 build 会生成对应的struct</p>
+</li>
+<li><p><a href="https://developer.gnome.org/documentation/tutorials/application-id.html">application_id</a>:<br>每个GTK应用, 都带有一个id, 即 <code>application_id</code>, 它必须是全世界唯一的<br>一般使用反域名, 作为id, 比如 “org.gnome.gedit”<br>app_id作为App的唯一标识符, 用于App之间的通信与识别<br>更改一个大型App的app_id会导致很多麻烦, 因此要慎重考虑!  </p>
+</li>
+</ul>
+<p>当你跃跃欲试, cargo run之后, 会看到:  </p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GLib-GIO-<span class="builtin-name">WARNING</span> : Your application does <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has <span class="literal">no</span> handlers connected <span class="keyword">to</span> the <span class="string">&#x27;activate&#x27;</span> signal.  </span><br><span class="line">It should <span class="keyword">do</span> one of these.</span><br></pre></td></tr></table></figure>
+
+<p>我们实际上还要添加一个名为 activate 的信号量(Signal)<br>你得像下面这样写:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然, 还无法执行, 因为我想逐步地讲解一下<br>请容许我对上面的东西来点小小的解释  </p>
+<p>Gtk应用的理念是: App只关心在特定的时候需要做什么事<br>什么时候做 ? Gtk已经帮我们安排好了<br>至于 <code>事情的内容</code>, 则交由开发者自己决定  </p>
+<p>接口方面, Gtk已经帮我们分类好一些虚函数, 它们也被称为 <code>信号(Signal)</code><br>我们只需要实现这些虚函数即可<br>(顾名思义, 虚函数是还不真正的函数, 你可以理解为它们的函数体是空的)<br>(不过库的作者已经帮我们安排好了它们的调用顺序, 等待我们实现函数体而已)  </p>
+<p>下面是四个待响应的信号, 也就是待实现的虚函数:  </p>
+<ul>
+<li>startup:<br>在App第一次启动时被调用, 用于与UI显示无关的初始化任务  </li>
+<li>shutdown:<br>在App结束时调用, 清理资源, 进行善后, 不过这好像对Rust没啥用? Drop能自动清理, 但毕竟源码是C</li>
+<li>activate:<br>GtkApp总得有至少一个窗口, 该函数决定第一个窗口如何显示  </li>
+<li>open<br>当App需要打开某个文件时被执行, 文件会在新窗口显示, 比如浏览器打开了pdf文件  </li>
+</ul>
+<p>注:<br>正如上面第三个信号所说, 一个GtkApp至少得有一个窗口<br>当单实例App试图打开第二个窗口, Gtk全局系统会发送Signal(activate/open)给第一个窗口  </p>
+<p>注:<br>所有的初始化工作都应在startup中完成<br>哪怕是第二个窗口相关的初始化  </p>
+<p>这些只是Gtk给我们的虚函数中最为常见的几个, 实际上还有很多信号, 帮你自定义设计App  </p>
+<p>回到之前的代码, 如下:<br>(我粘贴了一份上面的代码, 方便你看)</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">Your <span class="built_in">application</span> <span class="keyword">does</span> <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has no handlers connected <span class="keyword">to</span> <span class="keyword">the</span> &#x27;<span class="built_in">activate</span>&#x27; signal. </span><br></pre></td></tr></table></figure>
+
+<p>我们得创建一个函数, 并将其作为参数, 传给 <code>connect_activate</code><br>现在你应该明白, 为什么之前会报出一个警告, 要求连接activate这个信号了吧?<br>(<code>connect_xxxx</code> 相关的方法, 代表着连接信号/实现虚函数)  </p>
+<p>我们创建的这个函数, 名为 <code>build_ui</code>, 正是为了消除这个警告, 真正显示窗口<br>毕竟如果一个GUI应用没有任何显示, 这. . .啧, 不太聪明的感觉?  </p>
+<p>直接上 <code>build_ui</code> 的代码(注意use一下):  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;Application, ApplicationWindow&#125;;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    <span class="keyword">let</span> window = ApplicationWindow::builder()</span><br><span class="line">        .application(app)</span><br><span class="line">        .title(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    window.present();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>咋们用builder模式指定了窗口对应的App是谁, 窗口标题是啥, 并显示它<br>gtk4之后都是默认的暗色主题了, 因此你会看见一个暗调窗口  </p>
+<p>在App启动之后的某一时刻, <code>activate</code> 信号对应的虚函数被调用<br>不过我们已经将它覆盖成自己的 <code>build_ui</code> 了  </p>
+<p>你会发现, 写代码的事情其实并不多, 重点在于理解背后的原理  </p>
+<p>至此, 本小节结束~<br>又要愉快地鸽鸽鸽了呢 :)  </p>
+]]></content>
+      <tags>
+        <tag>rust</tag>
+        <tag>gui</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs-gtk4-p3-GObject-内存管理</title>
+    <url>/posts/rs-gtk4-p3.html</url>
+    <content><![CDATA[<blockquote>
+<p>来看看什么是Widget(部件), 由此出发, 去探讨内存管理(Memory Management)</p>
+</blockquote>
+<span id="more"></span>
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4系列</a></p>
+<h1 id="Widget"><a href="#Widget" class="headerlink" title="Widget"></a>Widget</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>一个Gtk应用, 由许多组件组成, 这些组件, 就叫Widget(部件)<br>Gtk提供了许多Widget, 比如我们上一节的 <code>ApplicationWindow</code> 就是一个Widget<br>比如, Button(按钮), Container(容器)都属于Widget<br><a href="https://docs.gtk.org/gtk4/visual_index.html">Widget Gallery</a> 是Gtk提供的网站, 帮助我们选择Widget  </p>
+<p>你甚至可以定义自己的Widget, 通过继承 (因为Gtk是面向对象的框架)<br>比如 <code>Button</code>, 它的继承树如下:  </p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">GObject</span><br><span class="line">└── Widget</span><br><span class="line">    └── <span class="selector-tag">Button</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>rust</tag>
+        <tag>gui</tag>
+      </tags>
+  </entry>
+</search>
