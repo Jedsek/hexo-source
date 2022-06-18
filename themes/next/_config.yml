@@ -102,13 +102,13 @@ creative_commons:
 menu:
   home: / || fa fa-home
   about: /about/ || fa fa-user
-  # tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th-list
   guestbook: /guestbook/ || fa fa-comments
+  # tags: /tags/ || fa fa-tags
   # archives: /archives/ || fa fa-archive
-  #schedule: /schedule/ || fa fa-calendar
-  #sitemap: /sitemap.xml || fa fa-sitemap
-  #commonweal: /404/ || fa fa-heartbeat
+  # schedule: /schedule/ || fa fa-calendar
+  # sitemap: /sitemap.xml || fa fa-sitemap
+  # commonweal: /404/ || fa fa-heartbeat
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
@@ -229,7 +229,7 @@ footer:
     color: "#ff0000"
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
-  copyright: false
+  copyright: Jedsek
 
   # Powered by Hexo & NexT
   powered: false
@@ -598,11 +598,11 @@ comments:
   lazyload: true
   # Modify texts or order for any naves, here are some examples.
   nav:
+    gitalk:
+      order: -1
     #disqus:
     #  text: Load Disqus
     #  order: -1
-    #gitalk:
-    #  order: -2
 
 # Disqus
 # For more information: https://disqus.com
@@ -639,9 +639,11 @@ livere_uid: # <your_uid>
 gitalk:
   enable: true
   github_id: Jedsek # GitHub repo owner
-  repo: blog_comments # Repository name to store issues
+  repo: blog-comments # Repository name to store issues
   client_id: 8adb5d1e73feaa9f565f # GitHub Application Client ID
+  # client_id: b14af410e47c637e3f67 # GitHub Application Client ID
   client_secret: 50355f97de3dcda03b5236aeef07f254ffed14a9  # GitHub Application Client Secret
+  # client_secret: 5806af1f864b9206fd9cd5a795d55b8f50292ac5  # GitHub Application Client Secret
   admin_user: Jedsek # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # When the official proxy is not available, you can change it to your own proxy address
@@ -649,7 +651,7 @@ gitalk:
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
-  language:
+  language: zh-CN
 
 # Utterances
 # For more information: https://utteranc.es
