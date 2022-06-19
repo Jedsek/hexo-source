@@ -3,11 +3,11 @@
   <title>Jedsek&#39;s blog</title>
   
   <subtitle>与其浊富 | 宁比清贫</subtitle>
-  <link href="https://jedsek.github.io/atom.xml" rel="self"/>
+  <link href="https://jedsek.xyz/atom.xml" rel="self"/>
   
-  <link href="https://jedsek.github.io/"/>
+  <link href="https://jedsek.xyz/"/>
   <updated>2022-06-19T04:59:50.000Z</updated>
-  <id>https://jedsek.github.io/</id>
+  <id>https://jedsek.xyz/</id>
   
   <author>
     <name>Jedsek</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>rs-tui-p1-系列说明</title>
-    <link href="https://jedsek.github.io/posts/rust-tui/p1"/>
-    <id>https://jedsek.github.io/posts/rust-tui/p1</id>
+    <link href="https://jedsek.xyz/posts/rust-tui/p1"/>
+    <id>https://jedsek.xyz/posts/rust-tui/p1</id>
     <published>2022-06-19T04:59:50.000Z</published>
     <updated>2022-06-19T04:59:50.000Z</updated>
     
@@ -33,16 +33,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="TUI" scheme="https://jedsek.github.io/tags/TUI/"/>
+    <category term="TUI" scheme="https://jedsek.xyz/tags/TUI/"/>
     
   </entry>
   
   <entry>
     <title>rs-gtk4-p3-GObject-内存管理</title>
-    <link href="https://jedsek.github.io/posts/rust-gtk4/p3"/>
-    <id>https://jedsek.github.io/posts/rust-gtk4/p3</id>
+    <link href="https://jedsek.xyz/posts/rust-gtk4/p3"/>
+    <id>https://jedsek.xyz/posts/rust-gtk4/p3</id>
     <published>2022-01-30T04:01:22.000Z</published>
     <updated>2022-01-30T04:01:22.000Z</updated>
     
@@ -56,16 +56,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="GUI" scheme="https://jedsek.github.io/tags/GUI/"/>
+    <category term="GUI" scheme="https://jedsek.xyz/tags/GUI/"/>
     
   </entry>
   
   <entry>
     <title>rs-gtk4-p2-创建窗口</title>
-    <link href="https://jedsek.github.io/posts/rust-gtk4/p2"/>
-    <id>https://jedsek.github.io/posts/rust-gtk4/p2</id>
+    <link href="https://jedsek.xyz/posts/rust-gtk4/p2"/>
+    <id>https://jedsek.xyz/posts/rust-gtk4/p2</id>
     <published>2021-11-07T02:16:57.000Z</published>
     <updated>2021-11-07T02:16:57.000Z</updated>
     
@@ -79,16 +79,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="GUI" scheme="https://jedsek.github.io/tags/GUI/"/>
+    <category term="GUI" scheme="https://jedsek.xyz/tags/GUI/"/>
     
   </entry>
   
   <entry>
     <title>rs-gtk4-p1-系列说明</title>
-    <link href="https://jedsek.github.io/posts/rust-gtk4/p1"/>
-    <id>https://jedsek.github.io/posts/rust-gtk4/p1</id>
+    <link href="https://jedsek.xyz/posts/rust-gtk4/p1"/>
+    <id>https://jedsek.xyz/posts/rust-gtk4/p1</id>
     <published>2021-10-23T12:18:17.000Z</published>
     <updated>2021-10-23T12:18:17.000Z</updated>
     
@@ -102,16 +102,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="GUI" scheme="https://jedsek.github.io/tags/GUI/"/>
+    <category term="GUI" scheme="https://jedsek.xyz/tags/GUI/"/>
     
   </entry>
   
   <entry>
     <title>rs-dm-p5-卫生性</title>
-    <link href="https://jedsek.github.io/posts/rust-decl-macro/p5"/>
-    <id>https://jedsek.github.io/posts/rust-decl-macro/p5</id>
+    <link href="https://jedsek.xyz/posts/rust-decl-macro/p5"/>
+    <id>https://jedsek.xyz/posts/rust-decl-macro/p5</id>
     <published>2021-10-16T06:04:12.000Z</published>
     <updated>2021-10-16T06:04:12.000Z</updated>
     
@@ -125,16 +125,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Macro" scheme="https://jedsek.github.io/tags/Macro/"/>
+    <category term="Macro" scheme="https://jedsek.xyz/tags/Macro/"/>
     
   </entry>
   
   <entry>
     <title>rs-dm-p4-重复</title>
-    <link href="https://jedsek.github.io/posts/rust-decl-macro/p4"/>
-    <id>https://jedsek.github.io/posts/rust-decl-macro/p4</id>
+    <link href="https://jedsek.xyz/posts/rust-decl-macro/p4"/>
+    <id>https://jedsek.xyz/posts/rust-decl-macro/p4</id>
     <published>2021-10-09T14:36:00.000Z</published>
     <updated>2021-10-09T14:36:00.000Z</updated>
     
@@ -148,16 +148,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Macro" scheme="https://jedsek.github.io/tags/Macro/"/>
+    <category term="Macro" scheme="https://jedsek.xyz/tags/Macro/"/>
     
   </entry>
   
   <entry>
     <title>rs-dm-p3-声明与使用</title>
-    <link href="https://jedsek.github.io/posts/rust-decl-macro/p3"/>
-    <id>https://jedsek.github.io/posts/rust-decl-macro/p3</id>
+    <link href="https://jedsek.xyz/posts/rust-decl-macro/p3"/>
+    <id>https://jedsek.xyz/posts/rust-decl-macro/p3</id>
     <published>2021-09-20T12:06:15.000Z</published>
     <updated>2021-09-20T12:06:15.000Z</updated>
     
@@ -171,16 +171,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Macro" scheme="https://jedsek.github.io/tags/Macro/"/>
+    <category term="Macro" scheme="https://jedsek.xyz/tags/Macro/"/>
     
   </entry>
   
   <entry>
     <title>rs-dm-p2-从println开始</title>
-    <link href="https://jedsek.github.io/posts/rust-decl-macro/p2"/>
-    <id>https://jedsek.github.io/posts/rust-decl-macro/p2</id>
+    <link href="https://jedsek.xyz/posts/rust-decl-macro/p2"/>
+    <id>https://jedsek.xyz/posts/rust-decl-macro/p2</id>
     <published>2021-09-19T14:50:27.000Z</published>
     <updated>2021-09-19T14:50:27.000Z</updated>
     
@@ -194,16 +194,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Macro" scheme="https://jedsek.github.io/tags/Macro/"/>
+    <category term="Macro" scheme="https://jedsek.xyz/tags/Macro/"/>
     
   </entry>
   
   <entry>
     <title>rs-dm-p1-系列说明</title>
-    <link href="https://jedsek.github.io/posts/rust-decl-macro/p1"/>
-    <id>https://jedsek.github.io/posts/rust-decl-macro/p1</id>
+    <link href="https://jedsek.xyz/posts/rust-decl-macro/p1"/>
+    <id>https://jedsek.xyz/posts/rust-decl-macro/p1</id>
     <published>2021-09-19T13:51:27.000Z</published>
     <updated>2021-09-19T13:51:27.000Z</updated>
     
@@ -217,16 +217,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Macro" scheme="https://jedsek.github.io/tags/Macro/"/>
+    <category term="Macro" scheme="https://jedsek.xyz/tags/Macro/"/>
     
   </entry>
   
   <entry>
     <title>rs-async-p4-状态的保存与变换</title>
-    <link href="https://jedsek.github.io/posts/rust-async/p4"/>
-    <id>https://jedsek.github.io/posts/rust-async/p4</id>
+    <link href="https://jedsek.xyz/posts/rust-async/p4"/>
+    <id>https://jedsek.xyz/posts/rust-async/p4</id>
     <published>2021-09-12T06:50:14.000Z</published>
     <updated>2021-09-12T06:50:14.000Z</updated>
     
@@ -240,16 +240,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Async" scheme="https://jedsek.github.io/tags/Async/"/>
+    <category term="Async" scheme="https://jedsek.xyz/tags/Async/"/>
     
   </entry>
   
   <entry>
     <title>rs-async-p3-Future</title>
-    <link href="https://jedsek.github.io/posts/rust-async/p3"/>
-    <id>https://jedsek.github.io/posts/rust-async/p3</id>
+    <link href="https://jedsek.xyz/posts/rust-async/p3"/>
+    <id>https://jedsek.xyz/posts/rust-async/p3</id>
     <published>2021-09-12T05:56:48.000Z</published>
     <updated>2021-09-12T05:56:48.000Z</updated>
     
@@ -263,16 +263,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Async" scheme="https://jedsek.github.io/tags/Async/"/>
+    <category term="Async" scheme="https://jedsek.xyz/tags/Async/"/>
     
   </entry>
   
   <entry>
     <title>rs-async-p2-异步简介</title>
-    <link href="https://jedsek.github.io/posts/rust-async/p2"/>
-    <id>https://jedsek.github.io/posts/rust-async/p2</id>
+    <link href="https://jedsek.xyz/posts/rust-async/p2"/>
+    <id>https://jedsek.xyz/posts/rust-async/p2</id>
     <published>2021-09-12T04:04:09.000Z</published>
     <updated>2021-09-12T04:04:09.000Z</updated>
     
@@ -286,16 +286,16 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Async" scheme="https://jedsek.github.io/tags/Async/"/>
+    <category term="Async" scheme="https://jedsek.xyz/tags/Async/"/>
     
   </entry>
   
   <entry>
     <title>rs-async-p1-系列说明</title>
-    <link href="https://jedsek.github.io/posts/rust-async/p1"/>
-    <id>https://jedsek.github.io/posts/rust-async/p1</id>
+    <link href="https://jedsek.xyz/posts/rust-async/p1"/>
+    <id>https://jedsek.xyz/posts/rust-async/p1</id>
     <published>2021-09-12T03:43:19.000Z</published>
     <updated>2021-09-12T03:43:19.000Z</updated>
     
@@ -309,9 +309,9 @@
     
     
     
-    <category term="Rust" scheme="https://jedsek.github.io/tags/Rust/"/>
+    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
     
-    <category term="Async" scheme="https://jedsek.github.io/tags/Async/"/>
+    <category term="Async" scheme="https://jedsek.xyz/tags/Async/"/>
     
   </entry>
   

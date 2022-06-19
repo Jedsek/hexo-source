@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-tui/p1</loc>
+    <loc>https://jedsek.xyz/posts/rust-tui/p1</loc>
     
     <lastmod>2022-06-19</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-gtk4/p3</loc>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p3</loc>
     
     <lastmod>2022-01-30</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/about/</loc>
+    <loc>https://jedsek.xyz/about/</loc>
     
     <lastmod>2022-01-29</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-gtk4/p2</loc>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p2</loc>
     
     <lastmod>2021-11-07</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-gtk4/p1</loc>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p1</loc>
     
     <lastmod>2021-10-23</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-decl-macro/p5</loc>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p5</loc>
     
     <lastmod>2021-10-16</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-decl-macro/p4</loc>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p4</loc>
     
     <lastmod>2021-10-09</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-decl-macro/p3</loc>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p3</loc>
     
     <lastmod>2021-09-20</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-decl-macro/p2</loc>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p2</loc>
     
     <lastmod>2021-09-19</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-decl-macro/p1</loc>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p1</loc>
     
     <lastmod>2021-09-19</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-async/p4</loc>
+    <loc>https://jedsek.xyz/posts/rust-async/p4</loc>
     
     <lastmod>2021-09-12</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-async/p3</loc>
+    <loc>https://jedsek.xyz/posts/rust-async/p3</loc>
     
     <lastmod>2021-09-12</lastmod>
     
@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-async/p2</loc>
+    <loc>https://jedsek.xyz/posts/rust-async/p2</loc>
     
     <lastmod>2021-09-12</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/posts/rust-async/p1</loc>
+    <loc>https://jedsek.xyz/posts/rust-async/p1</loc>
     
     <lastmod>2021-09-12</lastmod>
     
@@ -129,7 +129,7 @@
   
 
   <url>
-    <loc>https://jedsek.github.io/</loc>
+    <loc>https://jedsek.xyz/</loc>
     <lastmod>2022-06-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -137,35 +137,35 @@
 
   
   <url>
-    <loc>https://jedsek.github.io/tags/Rust/</loc>
+    <loc>https://jedsek.xyz/tags/Rust/</loc>
     <lastmod>2022-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/tags/Macro/</loc>
+    <loc>https://jedsek.xyz/tags/Async/</loc>
     <lastmod>2022-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/tags/Async/</loc>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/tags/TUI/</loc>
+    <loc>https://jedsek.xyz/tags/GUI/</loc>
     <lastmod>2022-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.github.io/tags/GUI/</loc>
+    <loc>https://jedsek.xyz/tags/TUI/</loc>
     <lastmod>2022-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
