@@ -1,0 +1,10 @@
+**
+!_config.yml
+
+!themes/
+!themes/next/
+!themes/next/_config.yaml
+
+!source/
+!source/**
+source/CNAME
