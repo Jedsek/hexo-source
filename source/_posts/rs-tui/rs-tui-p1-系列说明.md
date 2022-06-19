@@ -3,14 +3,14 @@ title: rs-tui-p1-系列说明
 abbrlink: posts/rust-tui/p1
 hidden: false
 date: 2022-06-19 12:59:50
-top: 9699
+top: 9799
 tags: [Rust, TUI]
 keywords: [Terminal, 终端, TUI, Rust]
 ---
 > 欢迎大家来到 Rust 的 TUI 系列
 <!-- more -->
 # 系列说明
-传送门: [rust-tui系列](/categories/rust-tui)
+传送门: [rust-tui](/categories/rust-tui)
 
 本系列会介绍一下什么是 `TUI(Text-based User Interface)`  
 当然, 还会介绍Rust中的两个crate: `tui` && `crossterm`  

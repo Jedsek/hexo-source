@@ -1,9 +1,8 @@
 ---
 title: rs-gtk4-p3-GObject-内存管理
 abbrlink: posts/rust-gtk4/p3
-hidden: false
 date: 2022-01-30 12:01:22
-top: 9797
+top: 9697
 tags: [Rust, GUI]
 keywords: [Rust, GUI, Gtk4]
 ---

@@ -11,7 +11,7 @@ keywords: [Macro, 声明宏, Rust]
 # 系列说明:  
 **注: 请注意是声明宏**
 传送门如下:  
-- [博客: Rust声明宏系列](/categories/rust-decl-macro) 
+- [博客: rust-decl-macro](/categories/rust-decl-macro) 
 - [B站视频: Rust编程语言-声明宏](https://www.bilibili.com/video/BV1Wv411W7FH?p=1)
 
 `博客`的更新速度,快于`视频`  

@@ -2,27 +2,24 @@
 title: rs-gtk4-p1-系列说明
 abbrlink: posts/rust-gtk4/p1
 date: 2021-10-23 20:18:17
-top: 9799
+top: 9699
 tags: [Rust, GUI]
 keywords: [Rust, GUI, Gtk4]
 ---
 > 欢迎大家来到 Rust 的 gkt-rs 系列
 <!-- more -->
 # 系列说明
+
+同系列传送门: [rust-gtk4](/categories/rust-gtk4)
+
 [Gtk](https://www.gtk.org/), 是一个著名的GUI库, 是 GNOME 项目的关键组成  
 由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  
 
 Rust语言自是其中之一, 具有相关的绑定库: [gtk-rs](https://gtk-rs.org/) (gtk官方网页所指定)  
-同时, 非常建议你使用Linux作为开发环境, 因为GTK专注于Linux版本  
-
-我也是 gtk-rs 的新手, 依靠发表博客来巩固所学  
-顺便也能帮助和我一样的新鸟们 (老鸟别笑我啊喂!)  
-
+同时, 非常建议你使用Linux作为开发环境  
 
 不定期更新, 毕竟我只有周末才能碰到电脑  
 ~~(而且, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)~~
-
-同系列传送门: [rust-gtk4系列](/categories/rust-gtk4)
 
 - - -
 # 参考资料

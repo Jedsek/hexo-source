@@ -2,7 +2,7 @@
 title: rs-gtk4-p2-创建窗口
 abbrlink: posts/rust-gtk4/p2
 date: 2021-11-07 10:16:57
-top: 9798
+top: 9698
 tags: [Rust, GUI]
 keywords: [Rust, GUI, Gtk4]
 ---
