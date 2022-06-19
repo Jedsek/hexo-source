@@ -9,7 +9,7 @@
 <span id="more"></span>
 <h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>传送门如下:  </p>
 <ul>
-<li><a href="/categories/rust-async">博客: Rust异步系列</a> </li>
+<li><a href="/categories/rust-async">博客: rust-async</a> </li>
 <li><a href="https://www.bilibili.com/video/BV1uh41167Np">B站视频: Rust编程语言-异步(Async)</a></li>
 </ul>
 <p><code>博客</code>的更新速度,快于<code>视频</code><br><code>博客</code>若经过重写,则会抽时间更新<code>视频</code>     </p>
@@ -336,7 +336,7 @@
 <span id="more"></span>
 <h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明:"></a>系列说明:</h1><p><strong>注: 请注意是声明宏</strong><br>传送门如下:  </p>
 <ul>
-<li><a href="/categories/rust-decl-macro">博客: Rust声明宏系列</a> </li>
+<li><a href="/categories/rust-decl-macro">博客: rust-decl-macro</a> </li>
 <li><a href="https://www.bilibili.com/video/BV1Wv411W7FH?p=1">B站视频: Rust编程语言-声明宏</a></li>
 </ul>
 <p><code>博客</code>的更新速度,快于<code>视频</code><br><code>博客</code>若经过重写,则会抽时间更新<code>视频</code>  </p>
@@ -674,17 +674,49 @@
       </tags>
   </entry>
   <entry>
+    <title>rs-tui-p1-系列说明</title>
+    <url>/posts/rust-tui/p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>欢迎大家来到 Rust 的 TUI 系列</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>传送门: <a href="/categories/rust-tui">rust-tui</a></p>
+<p>本系列会介绍一下什么是 <code>TUI(Text-based User Interface)</code><br>当然, 还会介绍Rust中的两个crate: <code>tui</code> &amp;&amp; <code>crossterm</code>  </p>
+<hr>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>博客:</li>
+</ol>
+<ul>
+<li><a href="https://monkeypatch.io/blog/2021/2021-05-31-rust-tui/">Playing with tui-rs</a></li>
+<li><a href="https://blog.logrocket.com/rust-and-tui-building-a-command-line-interface-in-rust/">Building a command-line interface in Rust</a></li>
+</ul>
+<ol start="2">
+<li>文档:</li>
+</ol>
+<ul>
+<li><a href="https://docs.rs/tui/latest/tui/">tui-rs</a></li>
+<li><a href="https://docs.rs/crossterm/latest/crossterm/">crossterm</a></li>
+</ul>
+<hr>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
+<p>最后, 谢谢你的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>TUI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>rs-gtk4-p1-系列说明</title>
     <url>/posts/rust-gtk4/p1.html</url>
     <content><![CDATA[<blockquote>
 <p>欢迎大家来到 Rust 的 gkt-rs 系列</p>
 </blockquote>
 <span id="more"></span>
-<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p>
-<p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境, 因为GTK专注于Linux版本  </p>
-<p>我也是 gtk-rs 的新手, 依靠发表博客来巩固所学<br>顺便也能帮助和我一样的新鸟们 (老鸟别笑我啊喂!)  </p>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
+<p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p>
+<p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境  </p>
 <p>不定期更新, 毕竟我只有周末才能碰到电脑<br><del>(而且, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)</del></p>
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4系列</a></p>
 <hr>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>资料正在持续更新ing. . .</p>
 <ol>
@@ -805,39 +837,6 @@
       <tags>
         <tag>Rust</tag>
         <tag>GUI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>rs-tui-p1-系列说明</title>
-    <url>/posts/rust-tui/p1.html</url>
-    <content><![CDATA[<blockquote>
-<p>欢迎大家来到 Rust 的 TUI 系列</p>
-</blockquote>
-<span id="more"></span>
-<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>传送门: <a href="/categories/rust-tui">rust-tui系列</a></p>
-<p>本系列会介绍一下什么是 <code>TUI(Text-based User Interface)</code><br>当然, 还会介绍Rust中的两个crate: <code>tui</code> &amp;&amp; <code>crossterm</code>  </p>
-<hr>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
-<li>博客:</li>
-</ol>
-<ul>
-<li><a href="https://monkeypatch.io/blog/2021/2021-05-31-rust-tui/">Playing with tui-rs</a></li>
-<li><a href="https://blog.logrocket.com/rust-and-tui-building-a-command-line-interface-in-rust/">Building a command-line interface in Rust</a></li>
-</ul>
-<ol start="2">
-<li>文档:</li>
-</ol>
-<ul>
-<li><a href="https://docs.rs/tui/latest/tui/">tui-rs</a></li>
-<li><a href="https://docs.rs/crossterm/latest/crossterm/">crossterm</a></li>
-</ul>
-<hr>
-<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
-<p>最后, 谢谢你的观看 :)</p>
-]]></content>
-      <tags>
-        <tag>Rust</tag>
-        <tag>TUI</tag>
       </tags>
   </entry>
 </search>
