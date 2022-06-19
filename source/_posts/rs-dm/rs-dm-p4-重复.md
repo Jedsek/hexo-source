@@ -1,10 +1,10 @@
 ---
 title: rs-dm-p4-重复
-abbrlink: posts/rs-decl-macro-p4
+abbrlink: posts/rust-decl-macro/p4
 date: 2021-10-09 22:36:00
 top: 9896
-tags: rust
-keywords: [macro, 声明宏, Rust]
+tags: [Rust, Macro]
+keywords: [Macro, 声明宏, Rust]
 ---
 > 宏中非常重要的语法: 重复(repetition)
 <!-- more -->

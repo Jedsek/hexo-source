@@ -1,10 +1,10 @@
 ---
 title: rs-async-p4-状态的保存与变换
-abbrlink: posts/rs-async-p4
+abbrlink: posts/rust-async/p4
 date: 2021-09-12 14:50:14
 top: 9996
-tags: rust
-keywords: [async, 异步, Rust]
+tags: [Rust, Async]
+keywords: [Async, 异步, Rust]
 ---
 > 浅显的原理第一篇: 状态的保存/变换
 <!-- more -->

@@ -8,8 +8,8 @@ tags:
 categories:
 keywords:
 ---
-- [p1: 系列说明](/posts/rs-decl-macro-p1)
-- [p2: 从println!开始](/posts/rs-decl-macro-p2)
-- [p3: 声明与使用](/posts/rs-decl-macro-p3)
-- [p4: 重复](/posts/rs-decl-macro-p4)
-- [p5: 卫生性](/posts/rs-decl-macro-p5)
+- [p1: 系列说明](/posts/rust-decl-macro/p1)
+- [p2: 从println!开始](/posts/rust-decl-macro/p2)
+- [p3: 声明与使用](/posts/rust-decl-macro/p3)
+- [p4: 重复](/posts/rust-decl-macro/p4)
+- [p5: 卫生性](/posts/rust-decl-macro/p5)

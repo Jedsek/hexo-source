@@ -1,10 +1,10 @@
 ---
 title: rs-dm-p2-从println开始
-abbrlink: posts/rs-decl-macro-p2
+abbrlink: posts/rust-decl-macro/p2
 date: 2021-09-19 22:50:27
 top: 9898
-tags: rust
-keywords: [macro, 声明宏, Rust]
+tags: [Rust, Macro]
+keywords: [Macro, 声明宏, Rust]
 ---
 > 我们从熟悉的 println! 开始, 了解下声明宏的大致结构吧  
 <!-- more -->

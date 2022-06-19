@@ -1,11 +1,11 @@
 ---
-title: rust-async
-abbrlink: categories/rust-async
+abbrlink: categories/rust-tui
 hidden: true
-date: 2021-12-05 05:23:28
+date: 2022-06-19 13:05:06
+title: rust-tui 
 top:
 tags:
 categories:
 keywords:
 ---
-- [rust-]
+- [p1-系列说明](/posts/rust-tui/p1)

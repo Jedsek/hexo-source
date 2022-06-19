@@ -9,7 +9,7 @@ categories:
 keywords:
 ---
 
-- [p1: 系列说明](/posts/rs-async-p1)
-- [p2: 异步简介](/posts/rs-async-p2)
-- [p3: Future](/posts/rs-async-p3)
-- [p4: 状态的保存与变换](/posts/rs-async-p4)
+- [p1: 系列说明](/posts/rust-async/p1)
+- [p2: 异步简介](/posts/rust-async/p2)
+- [p3: Future](/posts/rust-async/p3)
+- [p4: 状态的保存与变换](/posts/rust-async/p4)

@@ -1,10 +1,10 @@
 ---
 title: rs-async-p1-系列说明
-abbrlink: posts/rs-async-p1
+abbrlink: posts/rust-async/p1
 date: 2021-09-12 11:43:19
 top: 9999
-tags: rust  
-keywords: [async, 异步, Rust]
+tags: [Rust, Async]
+keywords: [Async, 异步, Rust]
 ---
 > 欢迎大家来到 Rust 的 异步(async) 系列  
 <!-- more -->

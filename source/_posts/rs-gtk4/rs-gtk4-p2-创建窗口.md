@@ -1,10 +1,10 @@
 ---
 title: rs-gtk4-p2-创建窗口
-abbrlink: posts/rs-gtk4-p2
+abbrlink: posts/rust-gtk4/p2
 date: 2021-11-07 10:16:57
 top: 9798
-tags: [rust, gui]
-keywords: [rust, gui, gtk4]
+tags: [Rust, GUI]
+keywords: [Rust, GUI, Gtk4]
 ---
 > 让我们创建一个GTK窗口, 开始旅途吧
 <!-- more -->

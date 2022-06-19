@@ -1,10 +1,10 @@
 ---
 title: rs-async-p3-Future
-abbrlink: posts/rs-async-p3
+abbrlink: posts/rust-async/p3
 date: 2021-09-12 13:56:48
 top: 9997
-tags: rust
-keywords: [async, 异步, Rust]
+tags: [Rust, Async]
+keywords: [Async, 异步, Rust]
 ---
 > Rust 中的 Future/async/.await 说明  
 <!-- more -->  

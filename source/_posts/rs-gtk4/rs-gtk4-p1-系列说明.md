@@ -1,10 +1,10 @@
 ---
 title: rs-gtk4-p1-系列说明
-abbrlink: posts/rs-gtk4-p1
+abbrlink: posts/rust-gtk4/p1
 date: 2021-10-23 20:18:17
 top: 9799
-tags: [rust, gui]
-keywords: [rust, gui, gtk4]
+tags: [Rust, GUI]
+keywords: [Rust, GUI, Gtk4]
 ---
 > 欢迎大家来到 Rust 的 gkt-rs 系列
 <!-- more -->

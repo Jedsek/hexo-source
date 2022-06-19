@@ -1,10 +1,10 @@
 ---
 title: rs-dm-p5-卫生性
-abbrlink: posts/rs-decl-macro-p5
+abbrlink: posts/rust-decl-macro/p5
 date: 2021-10-16 14:04:12
 top: 9895
-tags: rust
-keywords: [macro, 声明宏, Rust]
+tags: [Rust, Macro]
+keywords: [Macro, 声明宏, Rust]
 ---
 > 本节将介绍宏的 卫生性(hygienic)
 <!-- more -->

@@ -1,10 +1,10 @@
 ---
 title: rs-dm-p1-系列说明
-abbrlink: posts/rs-decl-macro-p1
+abbrlink: posts/rust-decl-macro/p1
 date: 2021-09-19 21:51:27
 top: 9899
-tags: rust
-keywords: [macro, 声明宏, Rust]
+tags: [Rust, Macro]
+keywords: [Macro, 声明宏, Rust]
 ---
 > 欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列  
 <!-- more -->

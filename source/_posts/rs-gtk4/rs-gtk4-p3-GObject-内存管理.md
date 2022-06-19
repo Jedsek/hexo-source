@@ -1,11 +1,11 @@
 ---
 title: rs-gtk4-p3-GObject-内存管理
-abbrlink: posts/rs-gtk4-p3
+abbrlink: posts/rust-gtk4/p3
 hidden: false
 date: 2022-01-30 12:01:22
 top: 9797
-tags: [rust, gui]
-keywords: [rust, gui, gtk4]
+tags: [Rust, GUI]
+keywords: [Rust, GUI, Gtk4]
 ---
 > 来看看什么是Widget(部件), 由此出发, 去探讨内存管理(Memory Management)
 <!-- more -->
