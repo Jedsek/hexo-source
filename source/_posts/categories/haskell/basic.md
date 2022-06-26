@@ -11,3 +11,4 @@ keywords:
 ---
 - [p1: 系列说明](/posts/haskell-basic/p1)
 - [p2: 介绍 && 安装](/posts/haskell-basic/p2)
+- [p3: 函数式](/posts/haskell-basic/p3)
