@@ -1,15 +1,1 @@
-module.exports = function(config, injects) {
-  var className = 'likely';
-  if (config.look !== 'normal') {
-    className += 'likely-' + config.look;
-  }
-  injects.head.raw('likely', `<link rel="stylesheet" href="${config.cdn.css}">`);
-  injects.postBodyEnd.raw('likely', `<div class="post-widgets">
-    <div class="${className}">
-      {%- for key, value in config.likely.networks %}
-        <div class="{{ key }}">{{ value }}</div>
-      {%- endfor %}
-    </div>
-  </div>
-  <script src="${config.cdn.js}"></script>`);
-};
+module.exports=function(l,e){var s="likely";"normal"!==l.look&&(s+="likely-"+l.look),e.head.raw("likely",`<link rel="stylesheet" href="${l.cdn.css}">`),e.postBodyEnd.raw("likely",`<div class="post-widgets">\n    <div class="${s}">\n      {%- for key, value in config.likely.networks %}\n        <div class="{{ key }}">{{ value }}</div>\n      {%- endfor %}\n    </div>\n  </div>\n  <script src="${l.cdn.js}"><\/script>`)};

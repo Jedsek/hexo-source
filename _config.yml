@@ -23,6 +23,29 @@ pretty_urls:
   trailing_index: false # Set to false to remove trailing 'index.html' from permalinks
   trailing_html: false # Set to false to remove trailing '.html' from permalinks
 
+# Markdown-it config
+## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
+    quotes: '“”‘’'
+  plugins:
+    - markdown-it-abbr
+    - markdown-it-footnote
+    - markdown-it-ins
+    - markdown-it-sub
+    - markdown-it-sup
+  anchors:
+    level: 2
+    collisionSuffix: 'v'
+    permalink: true
+    permalinkClass: header-anchor
+    permalinkSymbol: ¶
+    
 # Directory
 source_dir: source
 public_dir: public
@@ -67,6 +90,16 @@ index_generator:
   path: ''
   per_page: 8
   order_by: -date
+
+symbols_count_time:
+  symbols: true
+  time: false
+  total_symbols: true
+  total_time: false
+  exclude_codeblock: false
+  awl: 2
+  wpm: 275
+  suffix: "mins."
 
 # Category & Tag
 default_category: uncategorized
