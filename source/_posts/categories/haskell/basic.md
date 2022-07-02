@@ -4,6 +4,7 @@ hidden: true
 date: 2022-06-25 21:12:38
 title: haskell-basic
 layout: page
+quicklink: true
 top:
 tags:
 categories:

@@ -3,6 +3,7 @@ title: 分类
 abbrlink: categories
 hidden: true
 date: 2021-09-12 14:59:09
+quicklink: true
 ---
 这个博客的更新将会十分缓慢...
 虽然很慢, 但我会尽力保持更新的 :)
