@@ -25,12 +25,12 @@
   {%- if config.symbols_count_time.total_symbols %}
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
-      <i class="fa fa-chart-line"></i>
+      <i class="fa fa-square"></i>
     </span>
     {%- if theme.symbols_count_time.item_text_total %}
       <span>{{ __('symbols_count_time.count_total') + __('symbol.colon') }}</span>
     {%- endif %}
-    <span title="{{ __('symbols_count_time.count_total') }}">{{ symbolsCountTotal(site) }}</span>
+    <span class="post-count">全站共 {{ totalcount(site) }} 字</span>
   </span>
   {%- endif %}
 
@@ -88,11 +88,3 @@
 {%- endif %}
 
 {{- next_inject('footer') }}
-
-
-
-
-
-<div class="theme-info">
-  <span class="post-count">全站共 {{ totalcount(site) }} 字</span>
-</div>
