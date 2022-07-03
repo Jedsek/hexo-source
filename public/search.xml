@@ -65,8 +65,8 @@
 <li>Nvim/Vim</li>
 <li>Vscode</li>
 </ul>
-<p>如果你使用的是Vscode, 直接下载对应的Haskell插件<br>如果你使用的是Vim/Helix, 要下载对应的Lsp: <code>haskell-language-server</code>  </p>
-<p>比如, 我现在用的是Fedora-Linux, 可以这样下载Lsp:  </p>
+<p>如果你使用的是Vscode, 直接下载对应的Haskell插件<br>如果你使用的是Vim/Helix, 要下载对应的LSP: <code>haskell-language-server</code>  </p>
+<p>比如, 我现在用的是Fedora-Linux, 可以这样下载LSP:  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dnf copr <span class="built_in">enable</span> -y petersen/haskell-language-server</span><br><span class="line">sudo dnf install -y haskell-language-server</span><br></pre></td></tr></table></figure>
 
 <p>如果你使用的是 <a href="https://helix-editor.com/">Helix</a>, LSP将会直接启用  </p>
@@ -84,7 +84,7 @@
       </tags>
   </entry>
   <entry>
-    <title>haskell-basic-p3-函数式编程介绍</title>
+    <title>haskell-basic-p3-函数式介绍</title>
     <url>/posts/haskell-basic/p3.html</url>
     <content><![CDATA[<blockquote>
 <p>何为函数式编程(FP|即Functional Programming) ?</p>
