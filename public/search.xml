@@ -1,161 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>haskell-basic-p1-系列说明</title>
-    <url>/posts/haskell-basic/p1.html</url>
-    <content><![CDATA[<blockquote>
-<p>欢迎大家来到 Haskell 的语法学习系列</p>
-</blockquote>
-<span id="more"></span>
-
-<p>同系列传送门: <a href="/categories/haskell-basic">haskell-basic</a></p>
-<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>本系列会介绍下Haskell, 同时学习它的语法与思想<br>这将会是个漫长的过程, 预计更新会很慢, 务必做好心理准备 :)<br><del>(毕竟是Haskell)</del></p>
-<hr>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
-<li>书籍</li>
-</ol>
-<ul>
-<li><a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good! (趣学指南)</a></li>
-</ul>
-<ol start="2">
-<li>论坛</li>
-</ol>
-<ul>
-<li><a href="https://discourse.haskell.org/">Haskell Discourse</a></li>
-</ul>
-<ol start="3">
-<li>博客</li>
-</ol>
-<ul>
-<li><a href="http://cgnail.github.io/tags/#lambda%E6%BC%94%E7%AE%97">Lambda Calculus (Lambda演算)</a>  </li>
-<li><a href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Functors In Pictures (图解函子)</a></li>
-</ul>
-<hr>
-<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话,请及时跟我联系,毕竟我也在学习中<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
-<p>最后,谢谢你的观看 :)</p>
-]]></content>
-      <tags>
-        <tag>Haskell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>haskell-basic-p2-环境搭建</title>
-    <url>/posts/haskell-basic/p2.html</url>
-    <content><![CDATA[<blockquote>
-<p>首先, 我们得搭建好 Haskell 的环境</p>
-</blockquote>
-<span id="more"></span>
-
-<p>同系列传送门: <a href="/categories/haskell-basic">haskell-basic</a></p>
-<h1 id="编译器-amp-amp-包管理"><a href="#编译器-amp-amp-包管理" class="headerlink" title="编译器 &amp;&amp; 包管理"></a>编译器 &amp;&amp; 包管理</h1><p>本文假设你使用的是Linux系统  </p>
-<p>通过Linux发行版自带的包管理器, 下载 <code>haskell-platform</code> 来直接配置环境<br>随后, 你会获得 <code>ghc</code>, <code>ghci</code>, <code>cabal</code>  </p>
-<ul>
-<li><code>ghc</code>: Haskell 的编译器  </li>
-<li><code>ghci</code>: 一个REPL, 即用于新手学习的交互式解释器  </li>
-<li><code>cabal</code>: Hsakell的包管理器  </li>
-</ul>
-<p>(注, 你也可以选择下载另一个叫 <code>stack</code> 的包管理器, 不过我选择了 <code>cabal</code>, 仅此而已)  </p>
-<p>请确保都能正确显示版本:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ghc -V</span><br><span class="line">ghci -V</span><br><span class="line">cabal -V</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="代码编辑"><a href="#代码编辑" class="headerlink" title="代码编辑"></a>代码编辑</h1><p>推荐的代码编辑器:</p>
-<ul>
-<li>Helix (强推)</li>
-<li>Nvim/Vim</li>
-<li>Vscode</li>
-</ul>
-<p>如果你使用的是Vscode, 直接下载对应的Haskell插件<br>如果你使用的是Vim/Helix, 要下载对应的LSP: <code>haskell-language-server</code>  </p>
-<p>比如, 我现在用的是Fedora-Linux, 可以这样下载LSP:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dnf copr <span class="built_in">enable</span> -y petersen/haskell-language-server</span><br><span class="line">sudo dnf install -y haskell-language-server</span><br></pre></td></tr></table></figure>
-
-<p>如果你使用的是 <a href="https://helix-editor.com/">Helix</a>, LSP将会直接启用  </p>
-<p>当然, 你也完全可以使用其他代码编辑器, 最好能支持LSP  </p>
-<hr>
-<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>Haskell的包都放在 <a href="https://hackage.haskell.org/">hackage</a>, 下载依赖时, 速度可能极慢<br>这时, 我们应该进行将其换成镜像源  </p>
-<p>若你使用cabal, 可以按照下面的做:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cabal user-config init</span><br><span class="line">sed -i <span class="string">&#x27;s/repository hackage.haskell.org/repository mirrors.ustc.edu.cn/g&#x27;</span> ~/.cabal/config</span><br><span class="line">sed -i <span class="string">&#x27;s/http:\/\/hackage.haskell.org\//http:\/\/mirrors.ustc.edu.cn\/hackage\//g&#x27;</span> ~/.cabal/config</span><br><span class="line">sed -i <span class="string">&#x27;s/-- secure: True/secure: True/g&#x27;</span> ~/.cabal/config</span><br><span class="line">cabal update</span><br></pre></td></tr></table></figure>
-
-<p>这会生成cabal的配置文件, 并且将url替换为中科大的源  </p>
-<p>至此, 环境准备工作已全部完成<br>下一节, 我们将正式开始学习 Haskell  </p>
-]]></content>
-      <tags>
-        <tag>Haskell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>haskell-basic-p3-函数式介绍</title>
-    <url>/posts/haskell-basic/p3.html</url>
-    <content><![CDATA[<blockquote>
-<p>何为函数式编程(FP|即Functional Programming) ?</p>
-</blockquote>
-<span id="more"></span>
-
-<h1 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h1><p>本节我们将介绍下函数式编程的概念, 基本不涉及代码<br>那么, 开始吧!  </p>
-<hr>
-<h1 id="编程范式"><a href="#编程范式" class="headerlink" title="编程范式"></a>编程范式</h1><h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>FP, 是一种名叫函数式的, 强大的编程范式, 因此, 我想先讲一讲什么是编程范式  </p>
-<p>编程范式是一种思考方式, 技术, 语言范式, 编程模型<br>在世界上, 有许多编程范式, 最主要的有:  </p>
-<table>
-<thead>
-<tr>
-<th>简称</th>
-<th>中文名</th>
-<th>英文名</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FP</td>
-<td>函数式编程</td>
-<td>Functional Programming</td>
-</tr>
-<tr>
-<td>OOP</td>
-<td>面向对象编程</td>
-<td>Object-Oriented Programming</td>
-</tr>
-<tr>
-<td>POP</td>
-<td>面向过程编程</td>
-<td>Procedure-Oriented Programming</td>
-</tr>
-<tr>
-<td>LP</td>
-<td>逻辑式编程</td>
-<td>Logic Programming</td>
-</tr>
-<tr>
-<td>DP</td>
-<td>声明式编程</td>
-<td>Declarative Programming</td>
-</tr>
-<tr>
-<td>IP</td>
-<td>命令式编程</td>
-<td>Imperative Programming</td>
-</tr>
-</tbody></table>
-<p>注: 记住FP与OOP这两个缩写即可, 这两个是最常被提及的, 其他的无需记忆  </p>
-<p>编程范式实在太多, 但别紧张, 这些都是些顾名思义的东西, 而且下面会细讲  </p>
-<h2 id="主要范式"><a href="#主要范式" class="headerlink" title="主要范式"></a>主要范式</h2><p>编程范式, 它就像是国家的意识形态一样, 具有指导意义, 对如何编程求解问题的思考方法有巨大影响<br>我们将以 <code>面向过程编程</code> 为起点, 逐步扩展到其他范式, 并进行相关探讨<br>现在, 让我们暂时无视范式啥的, 代入到一个情景之中:<br><br>===============<br>我们是著名的养猪大户, 某年爆发了猪瘟疫, 由于我们的先进管理制度, 避免了较大的损失, 降低了猪死亡率<br>同时, 全国的猪肉供求关系变化, 百姓对猪肉的需求提升, 猪肉价格上涨  </p>
-<p>而你, 比忒帕克, 通过蛛丝马迹, 洞察出这场猪疫是一次有组织有纪律, 蓄意通过猪疫爆发, 引起第四次世界大战, 野心勃勃的行动!!!<br>为了拯救世界, 你, 英勇的比忒帕克, 站在了四维的视角俯瞰着三维, 在脑中不断地模拟, 用不同方式思考着如何粉碎这场惊天阴谋<br>===============<br></p>
-<p>在以上的场景中:</p>
-<ul>
-<li>问题提出: 如何粉碎隐藏在猪疫背后的阴谋</li>
-<li>范式选择: 比忒帕克拥有情景模拟的能力, 在脑中不断模拟现实进行尝试时, 可以选取不同的方式</li>
-</ul>
-<h3 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程:"></a>面向过程:</h3><p>顾名思义, 强调的是 <code>求解问题时的的过程</code>  </p>
-<p>当你在脑中模拟, 进行猪肉保卫战时, 思考的是繁琐的过程:  </p>
-<ol>
-<li>坐飞机, 前往疯狂科学家们研制猪肉病毒的基地</li>
-<li>突破重重防守, 敌人的编号从1到1000, 考虑如何挥拳, 如何躲闪</li>
-<li>找到疯狂科学家们的藏身之处, 把他们抓起来  </li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Haskell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>rust-async-p1-系列说明</title>
     <url>/posts/rust-async/p1.html</url>
     <content><![CDATA[<blockquote>
@@ -475,6 +320,177 @@
       <tags>
         <tag>Rust</tag>
         <tag>Async</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-tui-p1-系列说明</title>
+    <url>/posts/rust-tui/p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>欢迎大家来到 Rust 的 TUI 系列</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-tui">rust-tui</a></p>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>本系列会介绍一下什么是 <code>TUI(Text-based User Interface)</code><br>当然, 还会介绍Rust中的两个crate: <code>tui</code> &amp;&amp; <code>crossterm</code>  </p>
+<hr>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>博客:</li>
+</ol>
+<ul>
+<li><a href="https://monkeypatch.io/blog/2021/2021-05-31-rust-tui/">Playing with tui-rs</a></li>
+<li><a href="https://blog.logrocket.com/rust-and-tui-building-a-command-line-interface-in-rust/">Building a command-line interface in Rust</a></li>
+</ul>
+<ol start="2">
+<li>文档:</li>
+</ol>
+<ul>
+<li><a href="https://docs.rs/tui/latest/tui/">tui-rs</a></li>
+<li><a href="https://docs.rs/crossterm/latest/crossterm/">crossterm</a></li>
+</ul>
+<hr>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
+<p>最后, 谢谢你的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>TUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-gtk4-p1-系列说明</title>
+    <url>/posts/rust-gtk4/p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>欢迎大家来到 Rust 的 gkt-rs 系列</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p>
+<p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境  </p>
+<p>不定期更新, 毕竟我只有周末才能碰到电脑<br><del>(而且, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)</del></p>
+<hr>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>资料正在持续更新ing. . .</p>
+<ol>
+<li>书籍(官方圣经, 质量杠杆的)</li>
+</ol>
+<ul>
+<li><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a></li>
+</ul>
+<ol start="2">
+<li>博客/文档</li>
+</ol>
+<ul>
+<li><a href="https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html">Rust Vs GUI</a></li>
+<li><a href="https://gi.readthedocs.io/en/latest/#gobject-introspection">GObject Introspection</a></li>
+<li><a href="https://developer.gnome.org/documentation/tutorials.html">GNOME Developer Doc/Tutorials</a></li>
+</ul>
+<hr>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>首先请参照 <a href="https://www.gtk.org/docs/installations/">GTK官方页面</a> , 根据相应操作系统, 下载 GTK(版本是GTK4)  </p>
+<p>像Ubuntu系统, 听说2021版已经使用gnome作为桌面环境了(gnome用gtk写的)  </p>
+<p>windows系统建议使用wsl2(亲测可以做gui, 虽然目前还有警告 <del>但无视即可</del>)<br>比如wsl2是arch-linux时, 安装gtk4的开发包很方便:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S gtk4-devel</span><br></pre></td></tr></table></figure>
+
+<p>请自己查找资料, 善用搜索引擎与官方文档, 配置Gtk  </p>
+<p>本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  </p>
+<hr>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系, 毕竟我也在学习中<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
+<p>最后, 谢谢你的观看 :)</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-gtk4-p2-创建窗口</title>
+    <url>/posts/rust-gtk4/p2.html</url>
+    <content><![CDATA[<blockquote>
+<p>让我们创建一个GTK窗口, 开始旅途吧</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="GTK是什么"><a href="#GTK是什么" class="headerlink" title="GTK是什么"></a>GTK是什么</h2><p>GTK, 简单来说是个有名的GUI库, 开源免费, 用C编写  </p>
+<p>其特点之一, 是能轻松地创建绑定:<br>在gtk3后, 由于GI(<a href="https://gi.readthedocs.io/en/latest/">GObject Introspection</a>) 的应用, 可以轻松地, 创建其他语言的绑定  </p>
+<p>这使你能利用不同语言编写GUI<br>比如, 你能用vala/js/python/rust/nim, 甚至自创的编程语言<br>而不是用C去编写(用C会很繁杂, 不清晰)  </p>
+<p>基本上名气稍微大点的语言, 都有对应的GTK绑定    </p>
+<h2 id="gtk-rs"><a href="#gtk-rs" class="headerlink" title="gtk-rs"></a>gtk-rs</h2><p>目前有个项目, 叫做 <a href="https://gtk-rs.org/">gtk-rs</a>, 负责GTK的Rust语言绑定<br>你在 crates.io 上搜索 gtk, 所看到的 <a href="https://crates.io/crates/gtk">gtk</a> 与 <a href="https://crates.io/crates/gtk4">gtk4</a>, 就属于gtk-rs项目</p>
+<p>前者对应gtk3, 六年前就在维护, 所以下载量比gtk4多好几倍<br>gtk4这个crate, 则是在不久前开始维护的 (毕竟gtk4也才出现)  </p>
+<p>对了, gtk4这个crate是Rust语言绑定, 而非gtk4本身(那个纯C写的)<br>所以进行接下来的步骤前, 请确保环境内, 已有gtk4本身的正确版本<br>不然crate会装不上  </p>
+<hr>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>首先, 你需要创建一个新项目<br>随后修改 Cargo.toml, 如下:  </p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">gtk</span> = &#123;version = <span class="string">&quot;0.3.1&quot;</span>, package = <span class="string">&quot;gtk4&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们将 gtk4(crate), 重命名为 gtk, 方便之后编写 (这是个惯例)<br>随后, 请run一下, 安装依赖 (请确保安装了gtk4)  </p>
+<p>下面就是正式的编码环节了</p>
+<hr>
+<h1 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h1><p>一个GTK4应用的创建, 需要用到 <code>gtk::Application</code><br>同时, 我们还需 <code>use gtk::prelude::*</code><br>原因与 <a href="https://doc.rust-lang.org/std/prelude/index.html">std::prelude</a> 或 std::io::prelude 一样  </p>
+<p>先创建一个应用, 它目前连窗口也没有:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.myapp&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很简单吧? 但别急着运行, 先看看下面两处:  </p>
+<ul>
+<li><p><a href="http://chuxiuhong.com/chuxiuhong-rust-patterns-zh/patterns/builder.html">Builder Pattern (一种Rust中常见的设计模式)</a>:<br>这个无需多言, 我们可以利用它, 进行链式构造, 让构造的过程更加清晰<br>在这里, 我们只调用了一次链式函数: application_id(id: &amp;str)<br>比如 <a href="https://doc.rust-lang.org/std/fs/struct.OpenOptions.html">std::fs::OpenOptions</a> 就使用了构造者模式<br>在学习gtk4时, 它将被较高频次地使用, 最后调用的 build 会生成对应的struct</p>
+</li>
+<li><p><a href="https://developer.gnome.org/documentation/tutorials/application-id.html">application_id</a>:<br>每个GTK应用, 都带有一个id, 即 <code>application_id</code>, 它必须是全世界唯一的<br>一般使用反域名, 作为id, 比如 “org.gnome.gedit”<br>app_id作为App的唯一标识符, 用于App之间的通信与识别<br>更改一个大型App的app_id会导致很多麻烦, 因此要慎重考虑!  </p>
+</li>
+</ul>
+<p>当你跃跃欲试, cargo run之后, 会看到:  </p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GLib-GIO-<span class="builtin-name">WARNING</span> : Your application does <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has <span class="literal">no</span> handlers connected <span class="keyword">to</span> the <span class="string">&#x27;activate&#x27;</span> signal.  </span><br><span class="line">It should <span class="keyword">do</span> one of these.</span><br></pre></td></tr></table></figure>
+
+<p>我们实际上还要添加一个名为 activate 的信号量(Signal)<br>你得像下面这样写:  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然, 还无法执行, 因为我想逐步地讲解一下<br>请容许我对上面的东西来点小小的解释  </p>
+<p>Gtk应用的理念是: App只关心在特定的时候需要做什么事<br>什么时候做 ? Gtk已经帮我们安排好了<br>至于 <code>事情的内容</code>, 则交由开发者自己决定  </p>
+<p>接口方面, Gtk已经帮我们分类好一些虚函数, 它们也被称为 <code>信号(Signal)</code><br>我们只需要实现这些虚函数即可<br>(顾名思义, 虚函数是还不真正的函数, 你可以理解为它们的函数体是空的)<br>(不过库的作者已经帮我们安排好了它们的调用顺序, 等待我们实现函数体而已)  </p>
+<p>下面是四个待响应的信号, 也就是待实现的虚函数:  </p>
+<ul>
+<li>startup:<br>在App第一次启动时被调用, 用于与UI显示无关的初始化任务  </li>
+<li>shutdown:<br>在App结束时调用, 清理资源, 进行善后, 不过这好像对Rust没啥用? Drop能自动清理, 但毕竟源码是C</li>
+<li>activate:<br>GtkApp总得有至少一个窗口, 该函数决定第一个窗口如何显示  </li>
+<li>open<br>当App需要打开某个文件时被执行, 文件会在新窗口显示, 比如浏览器打开了pdf文件  </li>
+</ul>
+<p>注:<br>正如上面第三个信号所说, 一个GtkApp至少得有一个窗口<br>当单实例App试图打开第二个窗口, Gtk全局系统会发送Signal(activate/open)给第一个窗口  </p>
+<p>注:<br>所有的初始化工作都应在startup中完成<br>哪怕是第二个窗口相关的初始化  </p>
+<p>这些只是Gtk给我们的虚函数中最为常见的几个, 实际上还有很多信号, 帮你自定义设计App  </p>
+<p>回到之前的代码, 如下:<br>(我粘贴了一份上面的代码, 方便你看)</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">Your <span class="built_in">application</span> <span class="keyword">does</span> <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has no handlers connected <span class="keyword">to</span> <span class="keyword">the</span> &#x27;<span class="built_in">activate</span>&#x27; signal. </span><br></pre></td></tr></table></figure>
+
+<p>我们得创建一个函数, 并将其作为参数, 传给 <code>connect_activate</code><br>现在你应该明白, 为什么之前会报出一个警告, 要求连接activate这个信号了吧?<br>(<code>connect_xxxx</code> 相关的方法, 代表着连接信号/实现虚函数)  </p>
+<p>我们创建的这个函数, 名为 <code>build_ui</code>, 正是为了消除这个警告, 真正显示窗口<br>毕竟如果一个GUI应用没有任何显示, 这. . .啧, 不太聪明的感觉?  </p>
+<p>直接上 <code>build_ui</code> 的代码(注意use一下):  </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;Application, ApplicationWindow&#125;;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    <span class="keyword">let</span> window = ApplicationWindow::builder()</span><br><span class="line">        .application(app)</span><br><span class="line">        .title(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    window.present();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>咋们用builder模式指定了窗口对应的App是谁, 窗口标题是啥, 并显示它<br>如果你处于GNOME-DE, 并启用了暗主题/调色盘, 将会看见一个暗色窗口  </p>
+<p>在App启动之后的某一时刻, <code>activate</code> 信号对应的虚函数被调用<br>不过我们已经将它覆盖成自己的 <code>build_ui</code> 了  </p>
+<p>你会发现, 写代码的事情其实并不多, 重点在于理解背后的原理  </p>
+<p>至此, 本小节结束~<br>又要愉快地鸽鸽鸽了呢 :)  </p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-gtk4-p3-GObject-内存管理</title>
+    <url>/posts/rust-gtk4/p3.html</url>
+    <content><![CDATA[<blockquote>
+<p>来看看什么是Widget(部件), 由此出发, 去探讨内存管理(Memory Management)</p>
+</blockquote>
+<span id="more"></span>
+
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
+<h1 id="Widget"><a href="#Widget" class="headerlink" title="Widget"></a>Widget</h1><p>任何Gtk应用, 都由许多组件组成, 而这些组件, 就叫Widget(部件)  </p>
+<p>Gtk提供了许多Widget, 比如我们上一节的 <code>ApplicationWindow</code> 就是一个Widget<br>比如, Button(按钮), Container(容器)都属于Widget  </p>
+<p><a href="https://docs.gtk.org/gtk4/visual_index.html">Widget Gallery</a> 是Gtk提供的网站, 帮助我们选择Widget  </p>
+<p>你甚至可以定义自己的Widget, 通过继承 (因为Gtk是面向对象的框架)<br>比如 <code>Button</code>, 它的继承树如下:  </p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">GObject</span><br><span class="line">└── Widget</span><br><span class="line">    └── <span class="selector-tag">Button</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>
@@ -885,174 +901,158 @@
       </tags>
   </entry>
   <entry>
-    <title>rust-tui-p1-系列说明</title>
-    <url>/posts/rust-tui/p1.html</url>
+    <title>haskell-basic-p1-系列说明</title>
+    <url>/posts/haskell-basic/p1.html</url>
     <content><![CDATA[<blockquote>
-<p>欢迎大家来到 Rust 的 TUI 系列</p>
+<p>欢迎大家来到 Haskell 的语法学习系列</p>
 </blockquote>
 <span id="more"></span>
 
-<p>同系列传送门: <a href="/categories/rust-tui">rust-tui</a></p>
-<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>本系列会介绍一下什么是 <code>TUI(Text-based User Interface)</code><br>当然, 还会介绍Rust中的两个crate: <code>tui</code> &amp;&amp; <code>crossterm</code>  </p>
+<p>同系列传送门: <a href="/categories/haskell-basic">haskell-basic</a></p>
+<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p>本系列会介绍下Haskell, 同时学习它的语法与思想<br>这将会是个漫长的过程, 预计更新会很慢, 务必做好心理准备 :)<br><del>(毕竟是Haskell)</del></p>
 <hr>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
-<li>博客:</li>
+<li>书籍</li>
 </ol>
 <ul>
-<li><a href="https://monkeypatch.io/blog/2021/2021-05-31-rust-tui/">Playing with tui-rs</a></li>
-<li><a href="https://blog.logrocket.com/rust-and-tui-building-a-command-line-interface-in-rust/">Building a command-line interface in Rust</a></li>
+<li><a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good! (趣学指南)</a></li>
 </ul>
 <ol start="2">
-<li>文档:</li>
+<li>论坛</li>
 </ol>
 <ul>
-<li><a href="https://docs.rs/tui/latest/tui/">tui-rs</a></li>
-<li><a href="https://docs.rs/crossterm/latest/crossterm/">crossterm</a></li>
+<li><a href="https://discourse.haskell.org/">Haskell Discourse</a></li>
+</ul>
+<ol start="3">
+<li>博客</li>
+</ol>
+<ul>
+<li><a href="http://cgnail.github.io/tags/#lambda%E6%BC%94%E7%AE%97">Lambda Calculus (Lambda演算)</a>  </li>
+<li><a href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Functors In Pictures (图解函子)</a></li>
 </ul>
 <hr>
-<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
-<p>最后, 谢谢你的观看 :)</p>
+<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话,请及时跟我联系,毕竟我也在学习中<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
+<p>最后,谢谢你的观看 :)</p>
 ]]></content>
       <tags>
-        <tag>Rust</tag>
-        <tag>TUI</tag>
+        <tag>Haskell</tag>
       </tags>
   </entry>
   <entry>
-    <title>rust-gtk4-p1-系列说明</title>
-    <url>/posts/rust-gtk4/p1.html</url>
+    <title>haskell-basic-p2-环境搭建</title>
+    <url>/posts/haskell-basic/p2.html</url>
     <content><![CDATA[<blockquote>
-<p>欢迎大家来到 Rust 的 gkt-rs 系列</p>
+<p>首先, 我们得搭建好 Haskell 的环境</p>
 </blockquote>
 <span id="more"></span>
 
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
-<h1 id="系列说明"><a href="#系列说明" class="headerlink" title="系列说明"></a>系列说明</h1><p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成<br>由于其语言绑定的特色, 可以让各类语言使用它, 来进行开发  </p>
-<p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>同时, 非常建议你使用Linux作为开发环境  </p>
-<p>不定期更新, 毕竟我只有周末才能碰到电脑<br><del>(而且, 空洞骑士, CSGO, 老滚5, 巫师3, 人类一败涂地它们不香吗?)</del></p>
+<p>同系列传送门: <a href="/categories/haskell-basic">haskell-basic</a></p>
+<h1 id="编译器-amp-amp-包管理"><a href="#编译器-amp-amp-包管理" class="headerlink" title="编译器 &amp;&amp; 包管理"></a>编译器 &amp;&amp; 包管理</h1><p>本文假设你使用的是Linux系统  </p>
+<p>通过Linux发行版自带的包管理器, 下载 <code>haskell-platform</code> 来直接配置环境<br>随后, 你会获得 <code>ghc</code>, <code>ghci</code>, <code>cabal</code>  </p>
+<ul>
+<li><code>ghc</code>: Haskell 的编译器  </li>
+<li><code>ghci</code>: 一个REPL, 即用于新手学习的交互式解释器  </li>
+<li><code>cabal</code>: Hsakell的包管理器  </li>
+</ul>
+<p>(注, 你也可以选择下载另一个叫 <code>stack</code> 的包管理器, 不过我选择了 <code>cabal</code>, 仅此而已)  </p>
+<p>请确保都能正确显示版本:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ghc -V</span><br><span class="line">ghci -V</span><br><span class="line">cabal -V</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>资料正在持续更新ing. . .</p>
+<h1 id="代码编辑"><a href="#代码编辑" class="headerlink" title="代码编辑"></a>代码编辑</h1><p>推荐的代码编辑器:</p>
+<ul>
+<li>Helix (强推)</li>
+<li>Nvim/Vim</li>
+<li>Vscode</li>
+</ul>
+<p>如果你使用的是Vscode, 直接下载对应的Haskell插件<br>如果你使用的是Vim/Helix, 要下载对应的LSP: <code>haskell-language-server</code>  </p>
+<p>比如, 我现在用的是Fedora-Linux, 可以这样下载LSP:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dnf copr <span class="built_in">enable</span> -y petersen/haskell-language-server</span><br><span class="line">sudo dnf install -y haskell-language-server</span><br></pre></td></tr></table></figure>
+
+<p>如果你使用的是 <a href="https://helix-editor.com/">Helix</a>, LSP将会直接启用  </p>
+<p>当然, 你也完全可以使用其他代码编辑器, 最好能支持LSP  </p>
+<hr>
+<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>Haskell的包都放在 <a href="https://hackage.haskell.org/">hackage</a>, 下载依赖时, 速度可能极慢<br>这时, 我们应该进行将其换成镜像源  </p>
+<p>若你使用cabal, 可以按照下面的做:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cabal user-config init</span><br><span class="line">sed -i <span class="string">&#x27;s/repository hackage.haskell.org/repository mirrors.ustc.edu.cn/g&#x27;</span> ~/.cabal/config</span><br><span class="line">sed -i <span class="string">&#x27;s/http:\/\/hackage.haskell.org\//http:\/\/mirrors.ustc.edu.cn\/hackage\//g&#x27;</span> ~/.cabal/config</span><br><span class="line">sed -i <span class="string">&#x27;s/-- secure: True/secure: True/g&#x27;</span> ~/.cabal/config</span><br><span class="line">cabal update</span><br></pre></td></tr></table></figure>
+
+<p>这会生成cabal的配置文件, 并且将url替换为中科大的源  </p>
+<p>至此, 环境准备工作已全部完成<br>下一节, 我们将正式开始学习 Haskell  </p>
+]]></content>
+      <tags>
+        <tag>Haskell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>haskell-basic-p3-函数式编程介绍</title>
+    <url>/posts/haskell-basic/p3.html</url>
+    <content><![CDATA[<blockquote>
+<p>何为函数式编程(FP|即Functional Programming) ?</p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h1><p>本节我们将介绍下函数式编程的概念, 基本不涉及代码<br>那么, 开始吧!  </p>
+<hr>
+<h1 id="编程范式"><a href="#编程范式" class="headerlink" title="编程范式"></a>编程范式</h1><h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>FP, 是一种名叫函数式的, 强大的编程范式, 因此, 我想先讲一讲什么是编程范式  </p>
+<p>编程范式是一种思考方式, 技术, 语言范式, 编程模型<br>在世界上, 有许多编程范式, 最主要的有:  </p>
+<table>
+<thead>
+<tr>
+<th>简称</th>
+<th>中文名</th>
+<th>英文名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FP</td>
+<td>函数式编程</td>
+<td>Functional Programming</td>
+</tr>
+<tr>
+<td>OOP</td>
+<td>面向对象编程</td>
+<td>Object-Oriented Programming</td>
+</tr>
+<tr>
+<td>POP</td>
+<td>面向过程编程</td>
+<td>Procedure-Oriented Programming</td>
+</tr>
+<tr>
+<td>LP</td>
+<td>逻辑式编程</td>
+<td>Logic Programming</td>
+</tr>
+<tr>
+<td>DP</td>
+<td>声明式编程</td>
+<td>Declarative Programming</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>命令式编程</td>
+<td>Imperative Programming</td>
+</tr>
+</tbody></table>
+<p>注: 记住FP与OOP这两个缩写即可, 这两个是最常被提及的, 其他的无需记忆  </p>
+<p>编程范式实在太多, 但别紧张, 这些都是些顾名思义的东西, 而且下面会细讲  </p>
+<h2 id="主要范式"><a href="#主要范式" class="headerlink" title="主要范式"></a>主要范式</h2><p>编程范式, 它就像是国家的意识形态一样, 具有指导意义, 对如何编程求解问题的思考方法有巨大影响<br>我们将以 <code>面向过程编程</code> 为起点, 逐步扩展到其他范式, 并进行相关探讨<br>现在, 让我们暂时无视范式啥的, 代入到一个情景之中:<br><br>===============<br>我们是著名的养猪大户, 某年爆发了猪瘟疫, 由于我们的先进管理制度, 避免了较大的损失, 降低了猪死亡率<br>同时, 全国的猪肉供求关系变化, 百姓对猪肉的需求提升, 猪肉价格上涨  </p>
+<p>而你, 比忒帕克, 通过蛛丝马迹, 洞察出这场猪疫是一次有组织有纪律, 蓄意通过猪疫爆发, 引起第四次世界大战, 野心勃勃的行动!!!<br>为了拯救世界, 你, 英勇的比忒帕克, 站在了四维的视角俯瞰着三维, 在脑中不断地模拟, 用不同方式思考着如何粉碎这场惊天阴谋<br>===============<br></p>
+<p>在以上的场景中:</p>
+<ul>
+<li>问题提出: 如何粉碎隐藏在猪疫背后的阴谋</li>
+<li>范式选择: 比忒帕克拥有情景模拟的能力, 在脑中不断模拟现实进行尝试时, 可以选取不同的方式</li>
+</ul>
+<h3 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程:"></a>面向过程:</h3><p>顾名思义, 强调的是 <code>求解问题时的的过程</code>  </p>
+<p>当你在脑中模拟, 进行猪肉保卫战时, 思考的是繁琐的过程:  </p>
 <ol>
-<li>书籍(官方圣经, 质量杠杆的)</li>
+<li>坐飞机, 前往疯狂科学家们研制猪肉病毒的基地</li>
+<li>突破重重防守, 敌人的编号从1到1000, 考虑如何挥拳, 如何躲闪</li>
+<li>找到疯狂科学家们的藏身之处, 把他们抓起来  </li>
 </ol>
-<ul>
-<li><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a></li>
-</ul>
-<ol start="2">
-<li>博客/文档</li>
-</ol>
-<ul>
-<li><a href="https://turbomack.github.io/posts/2019-07-28-rust-vs-gui.html">Rust Vs GUI</a></li>
-<li><a href="https://gi.readthedocs.io/en/latest/#gobject-introspection">GObject Introspection</a></li>
-<li><a href="https://developer.gnome.org/documentation/tutorials.html">GNOME Developer Doc/Tutorials</a></li>
-</ul>
-<hr>
-<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>首先请参照 <a href="https://www.gtk.org/docs/installations/">GTK官方页面</a> , 根据相应操作系统, 下载 GTK(版本是GTK4)  </p>
-<p>像Ubuntu系统, 听说2021版已经使用gnome作为桌面环境了(gnome用gtk写的)  </p>
-<p>windows系统建议使用wsl2(亲测可以做gui, 虽然目前还有警告 <del>但无视即可</del>)<br>比如wsl2是arch-linux时, 安装gtk4的开发包很方便:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S gtk4-devel</span><br></pre></td></tr></table></figure>
-
-<p>请自己查找资料, 善用搜索引擎与官方文档, 配置Gtk  </p>
-<p>本文发布在2021的下半年, 希望当你看见本文时, gtk在这方面能有所长进  </p>
-<hr>
-<h1 id="欢迎骚扰"><a href="#欢迎骚扰" class="headerlink" title="欢迎骚扰"></a>欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系, 毕竟我也在学习中<br>你可以通过博客侧边栏上的联系方式找到我~~  </p>
-<p>最后, 谢谢你的观看 :)</p>
 ]]></content>
       <tags>
-        <tag>Rust</tag>
-        <tag>GUI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>rust-gtk4-p2-创建窗口</title>
-    <url>/posts/rust-gtk4/p2.html</url>
-    <content><![CDATA[<blockquote>
-<p>让我们创建一个GTK窗口, 开始旅途吧</p>
-</blockquote>
-<span id="more"></span>
-
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="GTK是什么"><a href="#GTK是什么" class="headerlink" title="GTK是什么"></a>GTK是什么</h2><p>GTK, 简单来说是个有名的GUI库, 开源免费, 用C编写  </p>
-<p>其特点之一, 是能轻松地创建绑定:<br>在gtk3后, 由于GI(<a href="https://gi.readthedocs.io/en/latest/">GObject Introspection</a>) 的应用, 可以轻松地, 创建其他语言的绑定  </p>
-<p>这使你能利用不同语言编写GUI<br>比如, 你能用vala/js/python/rust/nim, 甚至自创的编程语言<br>而不是用C去编写(用C会很繁杂, 不清晰)  </p>
-<p>基本上名气稍微大点的语言, 都有对应的GTK绑定    </p>
-<h2 id="gtk-rs"><a href="#gtk-rs" class="headerlink" title="gtk-rs"></a>gtk-rs</h2><p>目前有个项目, 叫做 <a href="https://gtk-rs.org/">gtk-rs</a>, 负责GTK的Rust语言绑定<br>你在 crates.io 上搜索 gtk, 所看到的 <a href="https://crates.io/crates/gtk">gtk</a> 与 <a href="https://crates.io/crates/gtk4">gtk4</a>, 就属于gtk-rs项目</p>
-<p>前者对应gtk3, 六年前就在维护, 所以下载量比gtk4多好几倍<br>gtk4这个crate, 则是在不久前开始维护的 (毕竟gtk4也才出现)  </p>
-<p>对了, gtk4这个crate是Rust语言绑定, 而非gtk4本身(那个纯C写的)<br>所以进行接下来的步骤前, 请确保环境内, 已有gtk4本身的正确版本<br>不然crate会装不上  </p>
-<hr>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>首先, 你需要创建一个新项目<br>随后修改 Cargo.toml, 如下:  </p>
-<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">gtk</span> = &#123;version = <span class="string">&quot;0.3.1&quot;</span>, package = <span class="string">&quot;gtk4&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们将 gtk4(crate), 重命名为 gtk, 方便之后编写 (这是个惯例)<br>随后, 请run一下, 安装依赖 (请确保安装了gtk4)  </p>
-<p>下面就是正式的编码环节了</p>
-<hr>
-<h1 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h1><p>一个GTK4应用的创建, 需要用到 <code>gtk::Application</code><br>同时, 我们还需 <code>use gtk::prelude::*</code><br>原因与 <a href="https://doc.rust-lang.org/std/prelude/index.html">std::prelude</a> 或 std::io::prelude 一样  </p>
-<p>先创建一个应用, 它目前连窗口也没有:  </p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.myapp&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>很简单吧? 但别急着运行, 先看看下面两处:  </p>
-<ul>
-<li><p><a href="http://chuxiuhong.com/chuxiuhong-rust-patterns-zh/patterns/builder.html">Builder Pattern (一种Rust中常见的设计模式)</a>:<br>这个无需多言, 我们可以利用它, 进行链式构造, 让构造的过程更加清晰<br>在这里, 我们只调用了一次链式函数: application_id(id: &amp;str)<br>比如 <a href="https://doc.rust-lang.org/std/fs/struct.OpenOptions.html">std::fs::OpenOptions</a> 就使用了构造者模式<br>在学习gtk4时, 它将被较高频次地使用, 最后调用的 build 会生成对应的struct</p>
-</li>
-<li><p><a href="https://developer.gnome.org/documentation/tutorials/application-id.html">application_id</a>:<br>每个GTK应用, 都带有一个id, 即 <code>application_id</code>, 它必须是全世界唯一的<br>一般使用反域名, 作为id, 比如 “org.gnome.gedit”<br>app_id作为App的唯一标识符, 用于App之间的通信与识别<br>更改一个大型App的app_id会导致很多麻烦, 因此要慎重考虑!  </p>
-</li>
-</ul>
-<p>当你跃跃欲试, cargo run之后, 会看到:  </p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GLib-GIO-<span class="builtin-name">WARNING</span> : Your application does <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has <span class="literal">no</span> handlers connected <span class="keyword">to</span> the <span class="string">&#x27;activate&#x27;</span> signal.  </span><br><span class="line">It should <span class="keyword">do</span> one of these.</span><br></pre></td></tr></table></figure>
-
-<p>我们实际上还要添加一个名为 activate 的信号量(Signal)<br>你得像下面这样写:  </p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当然, 还无法执行, 因为我想逐步地讲解一下<br>请容许我对上面的东西来点小小的解释  </p>
-<p>Gtk应用的理念是: App只关心在特定的时候需要做什么事<br>什么时候做 ? Gtk已经帮我们安排好了<br>至于 <code>事情的内容</code>, 则交由开发者自己决定  </p>
-<p>接口方面, Gtk已经帮我们分类好一些虚函数, 它们也被称为 <code>信号(Signal)</code><br>我们只需要实现这些虚函数即可<br>(顾名思义, 虚函数是还不真正的函数, 你可以理解为它们的函数体是空的)<br>(不过库的作者已经帮我们安排好了它们的调用顺序, 等待我们实现函数体而已)  </p>
-<p>下面是四个待响应的信号, 也就是待实现的虚函数:  </p>
-<ul>
-<li>startup:<br>在App第一次启动时被调用, 用于与UI显示无关的初始化任务  </li>
-<li>shutdown:<br>在App结束时调用, 清理资源, 进行善后, 不过这好像对Rust没啥用? Drop能自动清理, 但毕竟源码是C</li>
-<li>activate:<br>GtkApp总得有至少一个窗口, 该函数决定第一个窗口如何显示  </li>
-<li>open<br>当App需要打开某个文件时被执行, 文件会在新窗口显示, 比如浏览器打开了pdf文件  </li>
-</ul>
-<p>注:<br>正如上面第三个信号所说, 一个GtkApp至少得有一个窗口<br>当单实例App试图打开第二个窗口, Gtk全局系统会发送Signal(activate/open)给第一个窗口  </p>
-<p>注:<br>所有的初始化工作都应在startup中完成<br>哪怕是第二个窗口相关的初始化  </p>
-<p>这些只是Gtk给我们的虚函数中最为常见的几个, 实际上还有很多信号, 帮你自定义设计App  </p>
-<p>回到之前的代码, 如下:<br>(我粘贴了一份上面的代码, 方便你看)</p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">Your <span class="built_in">application</span> <span class="keyword">does</span> <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has no handlers connected <span class="keyword">to</span> <span class="keyword">the</span> &#x27;<span class="built_in">activate</span>&#x27; signal. </span><br></pre></td></tr></table></figure>
-
-<p>我们得创建一个函数, 并将其作为参数, 传给 <code>connect_activate</code><br>现在你应该明白, 为什么之前会报出一个警告, 要求连接activate这个信号了吧?<br>(<code>connect_xxxx</code> 相关的方法, 代表着连接信号/实现虚函数)  </p>
-<p>我们创建的这个函数, 名为 <code>build_ui</code>, 正是为了消除这个警告, 真正显示窗口<br>毕竟如果一个GUI应用没有任何显示, 这. . .啧, 不太聪明的感觉?  </p>
-<p>直接上 <code>build_ui</code> 的代码(注意use一下):  </p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;Application, ApplicationWindow&#125;;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    <span class="keyword">let</span> window = ApplicationWindow::builder()</span><br><span class="line">        .application(app)</span><br><span class="line">        .title(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    window.present();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>咋们用builder模式指定了窗口对应的App是谁, 窗口标题是啥, 并显示它<br>如果你处于GNOME-DE, 并启用了暗主题/调色盘, 将会看见一个暗色窗口  </p>
-<p>在App启动之后的某一时刻, <code>activate</code> 信号对应的虚函数被调用<br>不过我们已经将它覆盖成自己的 <code>build_ui</code> 了  </p>
-<p>你会发现, 写代码的事情其实并不多, 重点在于理解背后的原理  </p>
-<p>至此, 本小节结束~<br>又要愉快地鸽鸽鸽了呢 :)  </p>
-]]></content>
-      <tags>
-        <tag>Rust</tag>
-        <tag>GUI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>rust-gtk4-p3-GObject-内存管理</title>
-    <url>/posts/rust-gtk4/p3.html</url>
-    <content><![CDATA[<blockquote>
-<p>来看看什么是Widget(部件), 由此出发, 去探讨内存管理(Memory Management)</p>
-</blockquote>
-<span id="more"></span>
-
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
-<h1 id="Widget"><a href="#Widget" class="headerlink" title="Widget"></a>Widget</h1><p>任何Gtk应用, 都由许多组件组成, 而这些组件, 就叫Widget(部件)  </p>
-<p>Gtk提供了许多Widget, 比如我们上一节的 <code>ApplicationWindow</code> 就是一个Widget<br>比如, Button(按钮), Container(容器)都属于Widget  </p>
-<p><a href="https://docs.gtk.org/gtk4/visual_index.html">Widget Gallery</a> 是Gtk提供的网站, 帮助我们选择Widget  </p>
-<p>你甚至可以定义自己的Widget, 通过继承 (因为Gtk是面向对象的框架)<br>比如 <code>Button</code>, 它的继承树如下:  </p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">GObject</span><br><span class="line">└── Widget</span><br><span class="line">    └── <span class="selector-tag">Button</span></span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Rust</tag>
-        <tag>GUI</tag>
+        <tag>Haskell</tag>
       </tags>
   </entry>
 </search>
