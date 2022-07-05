@@ -25,27 +25,17 @@ pretty_urls:
 
 # Markdown-it config
 ## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki
-markdown:
-  render:
+markdown_it_plus:
+    highlight: true
     html: true
-    xhtmlOut: false
+    xhtmlOut: true
     breaks: true
+    langPrefix:
     linkify: true
-    typographer: true
-    quotes: '“”‘’'
-  plugins:
-    - markdown-it-abbr
-    - markdown-it-footnote
-    - markdown-it-ins
-    - markdown-it-sub
-    - markdown-it-sup
-  anchors:
-    level: 2
-    collisionSuffix: 'v'
-    permalink: true
-    permalinkClass: header-anchor
-    permalinkSymbol: ¶
-    
+    typographer:
+    quotes: “”‘’
+    pre_class: highlight    
+  
 # Directory
 source_dir: source
 public_dir: public
