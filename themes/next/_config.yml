@@ -100,9 +100,9 @@ creative_commons:
 # Value before `||` delimiter is the target link, value after `||` delimiter is the name of Font Awesome icon.
 # External url should start with http:// or https://
 menu:
-  home: / || fa fa-home
-  about: /about/ || fa fa-user
-  categories: /categories/ || fa fa-th-list
+  home: /  || iconfont icon-home
+  about: /about/ || iconfont icon-about
+  categories: /categories/ || iconfont icon-Z-fenleidaohang
   # guestbook: /guestbook/ || fa fa-comments
   # tags: /tags/ || fa fa-tags
   # archives: /archives/ || fa fa-archive
@@ -162,7 +162,7 @@ site_state: true
 social:
   QQ: tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com || iconfont icon-QQ
   B站: https://space.bilibili.com/673774482 || iconfont icon-bilibili-fill
-  知乎: https://www.zhihu.com/people/zhu-xia-hun || iconfont icon-matuwang-zhihufangxingdianji
+  知乎: https://www.zhihu.com/people/zhu-xia-hun || iconfont icon-zhihu-square-fill
   邮箱: mailto:jedsek@qq.com || iconfont icon-email-fill
   #GitHub: https://github.com/yourname || fab fa-github
   #Weibo: https://weibo.com/yourname || fab fa-weibo
@@ -357,7 +357,7 @@ calendar:
 
 # Preconnect CDN for fonts and plugins.
 # For more information: https://www.w3.org/TR/resource-hints/#preconnect
-preconnect: true
+preconnect: false
 
 # Set the text alignment in posts / pages.
 text_align:
@@ -445,7 +445,7 @@ font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: 
+  host: https://fonts.geekzu.org/
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -545,7 +545,7 @@ pjax: true
 
 # FancyBox is a tool that offers a nice and elegant way to add zooming functionality for images.
 # For more information: https://fancyapps.com/fancybox/
-fancybox: false
+fancybox: true
 
 # A JavaScript library for zooming images like Medium.
 # Warning: Do not enable both `fancybox` and `mediumzoom`.
@@ -900,10 +900,11 @@ vendors:
   # The default CDN provider of third-party plugins.
   # Available values: local | jsdelivr | unpkg | cdnjs
   # Dependencies for `plugins: local`: https://github.com/next-theme/plugins
-  quicklink: //cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js
   plugins: jsdelivr
+  quicklink: //cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js
   fancybox: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js
   fancybox_css: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css
+  
 
 # Assets
 # Accelerate delivery of static files using a CDN
@@ -953,4 +954,4 @@ hide_posts:
   noindex: true
 
 # 图片灯箱
-fancybox3: true
+# fancybox3: true
