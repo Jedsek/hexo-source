@@ -17,9 +17,9 @@ https://jedsek.xyz/posts/rust-async/p3
 https://jedsek.xyz/posts/rust-async/p2
 https://jedsek.xyz/posts/rust-async/p1
 https://jedsek.xyz/
+https://jedsek.xyz/tags/Haskell/
 https://jedsek.xyz/tags/Rust/
+https://jedsek.xyz/tags/GUI/
 https://jedsek.xyz/tags/Macro/
 https://jedsek.xyz/tags/TUI/
-https://jedsek.xyz/tags/Haskell/
-https://jedsek.xyz/tags/GUI/
 https://jedsek.xyz/tags/Async/
