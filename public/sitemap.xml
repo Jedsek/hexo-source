@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/haskell-basic/p4</loc>
+    
+    <lastmod>2022-07-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/haskell-basic/p3</loc>
+    
+    <lastmod>2022-06-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/haskell-basic/p2</loc>
+    
+    <lastmod>2022-06-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/haskell-basic/p1</loc>
+    
+    <lastmod>2022-06-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-tui/p1</loc>
+    
+    <lastmod>2022-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p3</loc>
+    
+    <lastmod>2022-01-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/about/</loc>
+    
+    <lastmod>2022-01-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p2</loc>
+    
+    <lastmod>2021-11-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p1</loc>
+    
+    <lastmod>2021-10-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p5</loc>
+    
+    <lastmod>2021-10-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p4</loc>
+    
+    <lastmod>2021-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p3</loc>
+    
+    <lastmod>2021-09-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p2</loc>
+    
+    <lastmod>2021-09-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-decl-macro/p1</loc>
+    
+    <lastmod>2021-09-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-async/p4</loc>
+    
+    <lastmod>2021-09-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-async/p3</loc>
+    
+    <lastmod>2021-09-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-async/p2</loc>
+    
+    <lastmod>2021-09-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-async/p1</loc>
+    
+    <lastmod>2021-09-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>https://jedsek.xyz/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Haskell/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Rust/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Async/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/TUI/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/GUI/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
+    <lastmod>2022-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+</urlset>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jedsek.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":30,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#1E90FF","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":{"gitalk":{"order":-1}}},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="让我们创建一个GTK窗口, 开始旅途吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rust-gtk4-p2-创建窗口">
+<meta property="og:url" content="https://jedsek.xyz/posts/rust-gtk4/p2">
+<meta property="og:site_name" content="Jedsek&#39;s blog">
+<meta property="og:description" content="让我们创建一个GTK窗口, 开始旅途吧">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-07T02:16:57.000Z">
+<meta property="article:modified_time" content="2021-11-07T02:16:57.000Z">
+<meta property="article:author" content="Jedsek">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="GUI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://jedsek.xyz/posts/rust-gtk4/p2.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jedsek.xyz/posts/rust-gtk4/p2","path":"posts/rust-gtk4/p2.html","title":"rust-gtk4-p2-创建窗口"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>rust-gtk4-p2-创建窗口 | Jedsek's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Jedsek's blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Jedsek's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与其浊富 | 宁比清贫</p>
+      <img class="custom-logo-image" src="/images/avatar.jpg" alt="Jedsek's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="iconfont icon-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="iconfont icon-about fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="iconfont icon-Z-fenleidaohang fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text"> 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gtk%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text"> GTK是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gtk-rs"><span class="nav-number">1.2.</span> <span class="nav-text"> gtk-rs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text"> 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E5%86%99"><span class="nav-number">3.</span> <span class="nav-text"> 编写</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+
+    
+
+    
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;2948804617&amp;website&#x3D;www.oicqzone.com" rel="noopener" target="_blank"><i class="iconfont icon-QQ fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/673774482" title="B站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;673774482" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-fill fa-fw"></i>B站</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/zhu-xia-hun" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;zhu-xia-hun" rel="noopener" target="_blank"><i class="iconfont icon-zhihu-square-fill fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jedsek@qq.com" title="邮箱 → mailto:jedsek@qq.com" rel="noopener" target="_blank"><i class="iconfont icon-email-fill fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jedsek.xyz/posts/rust-gtk4/p2">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Jedsek">
+      <meta itemprop="description" content="人类的伟大之处<br>正是在于能够直面自身的渺小">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jedsek's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rust-gtk4-p2-创建窗口
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-07 10:16:57" itemprop="dateCreated datePublished" datetime="2021-11-07T10:16:57+08:00">2021-11-07</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.4k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>让我们创建一个GTK窗口, 开始旅途吧</p>
+</blockquote>
+<span id="more"></span>
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a></p>
+<h1 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h1>
+<h2 id="gtk是什么"><a class="markdownIt-Anchor" href="#gtk是什么"></a> GTK是什么</h2>
+<p>GTK, 简单来说是个有名的GUI库, 开源免费, 用C编写</p>
+<p>其特点之一, 是能轻松地创建绑定:<br />
+在gtk3后, 由于GI(<a target="_blank" rel="noopener" href="https://gi.readthedocs.io/en/latest/">GObject Introspection</a>) 的应用, 可以轻松地, 创建其他语言的绑定</p>
+<p>这使你能利用不同语言编写GUI<br />
+比如, 你能用vala/js/python/rust/nim, 甚至自创的编程语言<br />
+而不是用C去编写(用C会很繁杂, 不清晰)</p>
+<p>基本上名气稍微大点的语言, 都有对应的GTK绑定</p>
+<h2 id="gtk-rs"><a class="markdownIt-Anchor" href="#gtk-rs"></a> gtk-rs</h2>
+<p>目前有个项目, 叫做 <a target="_blank" rel="noopener" href="https://gtk-rs.org/">gtk-rs</a>, 负责GTK的Rust语言绑定<br />
+你在 <a target="_blank" rel="noopener" href="http://crates.io">crates.io</a> 上搜索 gtk, 所看到的 <a target="_blank" rel="noopener" href="https://crates.io/crates/gtk">gtk</a> 与 <a target="_blank" rel="noopener" href="https://crates.io/crates/gtk4">gtk4</a>, 就属于gtk-rs项目</p>
+<p>前者对应gtk3, 六年前就在维护, 所以下载量比gtk4多好几倍<br />
+gtk4这个crate, 则是在不久前开始维护的 (毕竟gtk4也才出现)</p>
+<p>对了, gtk4这个crate是Rust语言绑定, 而非gtk4本身(那个纯C写的)<br />
+所以进行接下来的步骤前, 请确保环境内, 已有gtk4本身的正确版本<br />
+不然crate会装不上</p>
+<hr />
+<h1 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h1>
+<p>首先, 你需要创建一个新项目<br />
+随后修改 Cargo.toml, 如下:</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">gtk</span> = &#123;version = <span class="string">&quot;0.3.1&quot;</span>, package = <span class="string">&quot;gtk4&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将 gtk4(crate), 重命名为 gtk, 方便之后编写 (这是个惯例)<br />
+随后, 请run一下, 安装依赖 (请确保安装了gtk4)</p>
+<p>下面就是正式的编码环节了</p>
+<hr />
+<h1 id="编写"><a class="markdownIt-Anchor" href="#编写"></a> 编写</h1>
+<p>一个GTK4应用的创建, 需要用到 <code>gtk::Application</code><br />
+同时, 我们还需 <code>use gtk::prelude::*</code><br />
+原因与 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/prelude/index.html">std::prelude</a> 或 std::io::prelude 一样</p>
+<p>先创建一个应用, 它目前连窗口也没有:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.myapp&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很简单吧? 但别急着运行, 先看看下面两处:</p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="http://chuxiuhong.com/chuxiuhong-rust-patterns-zh/patterns/builder.html">Builder Pattern (一种Rust中常见的设计模式)</a>:<br />
+这个无需多言, 我们可以利用它, 进行链式构造, 让构造的过程更加清晰<br />
+在这里, 我们只调用了一次链式函数: application_id(id: &amp;str)<br />
+比如 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fs/struct.OpenOptions.html">std::fs::OpenOptions</a> 就使用了构造者模式<br />
+在学习gtk4时, 它将被较高频次地使用, 最后调用的 build 会生成对应的struct</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://developer.gnome.org/documentation/tutorials/application-id.html">application_id</a>:<br />
+每个GTK应用, 都带有一个id, 即 <code>application_id</code>, 它必须是全世界唯一的<br />
+一般使用反域名, 作为id, 比如 “org.gnome.gedit”<br />
+app_id作为App的唯一标识符, 用于App之间的通信与识别<br />
+更改一个大型App的app_id会导致很多麻烦, 因此要慎重考虑!</p>
+</li>
+</ul>
+<p>当你跃跃欲试, cargo run之后, 会看到:</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GLib-GIO-<span class="builtin-name">WARNING</span> : Your application does <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has <span class="literal">no</span> handlers connected <span class="keyword">to</span> the <span class="string">&#x27;activate&#x27;</span> signal.  </span><br><span class="line">It should <span class="keyword">do</span> one of these.</span><br></pre></td></tr></table></figure>
+<p>我们实际上还要添加一个名为 activate 的信号量(Signal)<br />
+你得像下面这样写:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然, 还无法执行, 因为我想逐步地讲解一下<br />
+请容许我对上面的东西来点小小的解释</p>
+<p>Gtk应用的理念是: App只关心在特定的时候需要做什么事<br />
+什么时候做 ? Gtk已经帮我们安排好了<br />
+至于 <code>事情的内容</code>, 则交由开发者自己决定</p>
+<p>接口方面, Gtk已经帮我们分类好一些虚函数, 它们也被称为 <code>信号(Signal)</code><br />
+我们只需要实现这些虚函数即可<br />
+(顾名思义, 虚函数是还不真正的函数, 你可以理解为它们的函数体是空的)<br />
+(不过库的作者已经帮我们安排好了它们的调用顺序, 等待我们实现函数体而已)</p>
+<p>下面是四个待响应的信号, 也就是待实现的虚函数:</p>
+<ul>
+<li>startup:<br />
+在App第一次启动时被调用, 用于与UI显示无关的初始化任务</li>
+<li>shutdown:<br />
+在App结束时调用, 清理资源, 进行善后, 不过这好像对Rust没啥用? Drop能自动清理, 但毕竟源码是C</li>
+<li>activate:<br />
+GtkApp总得有至少一个窗口, 该函数决定第一个窗口如何显示</li>
+<li>open<br />
+当App需要打开某个文件时被执行, 文件会在新窗口显示, 比如浏览器打开了pdf文件</li>
+</ul>
+<p>注:<br />
+正如上面第三个信号所说, 一个GtkApp至少得有一个窗口<br />
+当单实例App试图打开第二个窗口, Gtk全局系统会发送Signal(activate/open)给第一个窗口</p>
+<p>注:<br />
+所有的初始化工作都应在startup中完成<br />
+哪怕是第二个窗口相关的初始化</p>
+<p>这些只是Gtk给我们的虚函数中最为常见的几个, 实际上还有很多信号, 帮你自定义设计App</p>
+<p>回到之前的代码, 如下:<br />
+(我粘贴了一份上面的代码, 方便你看)</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">Your <span class="built_in">application</span> <span class="keyword">does</span> <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has no handlers connected <span class="keyword">to</span> <span class="keyword">the</span> &#x27;<span class="built_in">activate</span>&#x27; signal. </span><br></pre></td></tr></table></figure>
+<p>我们得创建一个函数, 并将其作为参数, 传给 <code>connect_activate</code><br />
+现在你应该明白, 为什么之前会报出一个警告, 要求连接activate这个信号了吧?<br />
+(<code>connect_xxxx</code> 相关的方法, 代表着连接信号/实现虚函数)</p>
+<p>我们创建的这个函数, 名为 <code>build_ui</code>, 正是为了消除这个警告, 真正显示窗口<br />
+毕竟如果一个GUI应用没有任何显示, 这. . .啧, 不太聪明的感觉?</p>
+<p>直接上 <code>build_ui</code> 的代码(注意use一下):</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;Application, ApplicationWindow&#125;;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder()</span><br><span class="line">        .application_id(<span class="string">&quot;io.gitee.jedsek.demo&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    <span class="keyword">let</span> window = ApplicationWindow::builder()</span><br><span class="line">        .application(app)</span><br><span class="line">        .title(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    window.present();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>咋们用builder模式指定了窗口对应的App是谁, 窗口标题是啥, 并显示它<br />
+如果你处于GNOME-DE, 并启用了暗主题/调色盘, 将会看见一个暗色窗口</p>
+<p>在App启动之后的某一时刻, <code>activate</code> 信号对应的虚函数被调用<br />
+不过我们已经将它覆盖成自己的 <code>build_ui</code> 了</p>
+<p>你会发现, 写代码的事情其实并不多, 重点在于理解背后的原理</p>
+<p>至此, 本小节结束~<br />
+又要愉快地鸽鸽鸽了呢 😃</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Rust/" rel="tag"><i class="fa fa-tag"></i> Rust</a>
+              <a href="/tags/GUI/" rel="tag"><i class="fa fa-tag"></i> GUI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/rust-gtk4/p1" rel="prev" title="rust-gtk4-p1-系列说明">
+                  <i class="fa fa-chevron-left"></i> rust-gtk4-p1-系列说明
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/rust-gtk4/p3" rel="next" title="rust-gtk4-p3-GObject-内存管理">
+                  rust-gtk4-p3-GObject-内存管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  <span class="with-love">
+    <i class="iconfont icon-aixin"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jedsek</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="iconfont icon-dantupailie"></i>
+    </span>
+    <span class="post-count">全站共 37k 字</span>
+  </span>
+</div>
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.2/dist/mermaid.min.js","integrity":"sha256-UIQPVkGifpwMvDH5yGgORJ9sSTDq38zz6BGU6dNaKhM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://jedsek.xyz/posts/rust-gtk4/p2.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '1px',
+  right: '256px',
+  left: '200000px',
+  time: '0.02s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: false,
+  label: '',
+  autoMatchOsTheme: false
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+if (window.darkmode && !window.darkmode.isActivated()) {
+  window.darkmode.toggle();
+  var toggleButtons = document.getElementsByClassName("darkmode-toggle");
+  for (i = 0; i < toggleButtons.length; i++) {
+    toggleButtons[i].classList.add("darkmode-toggle--white");
+  }
+}
+</script>
+
+</body>
+</html>
