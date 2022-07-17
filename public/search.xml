@@ -337,7 +337,7 @@ f(2) = (2+1)<sup>2</sup> = (3)<sup>2</sup> = 9</p>
     <title>haskell-basic-p4-基础语法</title>
     <url>/posts/haskell-basic/p4.html</url>
     <content><![CDATA[<blockquote>
-<p>关于 Haskell 的基础类型, 函数定义, 常用函数等</p>
+<p>关于 Haskell 的数字, Bool, List, If语句</p>
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/haskell-basic">haskell-basic</a></p>
@@ -429,9 +429,8 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 听着挺懵的, 来个例子吧, 以下表达式将创建一个无限级List, 元素是2的倍数</p>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">[x | x &lt;- [<span class="number">1.</span>.], mod x <span class="number">2</span> == <span class="number">0</span>]  <span class="comment">-- [2,4,6,8,10,12,14,16,18, 20..]</span></span><br></pre></td></tr></table></figure>
 <p>你会发现, 上面表示这样一个List的方法, 和高一学的集合的表示法非常相近 <s>(因为就是这样抄来的啊)</s><br />
-希望你还没忘 😃, 表示集合的其中一种方法:</p>
-<p>列举法: {x | n ∈ Z, x = 2n}</p>
-<p>Haskell 中的 <code>List Comprehension</code> 也十分类似:</p>
+希望你还没忘记高一学习的, 表示集合的方法之一, 列举法: <code>&#123;x | n ∈ Z, x = 2n&#125;</code> , 表示了偶数集</p>
+<p>Haskell 中的 <code>List Comprehension</code> 也有这么个杠:</p>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">[ x | x &lt;- xs, bool_expr1, bool_expr2 ]   </span><br></pre></td></tr></table></figure>
 <ul>
 <li>用 <code>|</code> 分割组成的表达式, 与后面的推导</li>
@@ -440,13 +439,54 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 </ul>
 <p>可能你还是有点懵? 没事, 多看点例子, 直觉上明白就可以了</p>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">[x + y | x &lt;- [<span class="number">1.</span><span class="number">.3</span>], y &lt;- [<span class="number">1.</span><span class="number">.3</span>]]                   <span class="comment">-- [2,3,4,3,4,5,4,5,6]</span></span><br><span class="line">[x | x &lt;- [<span class="number">1.</span><span class="number">.100</span>], x `mod` <span class="number">2</span> == <span class="number">0</span>, x `mod` <span class="number">3</span> == <span class="number">0</span>]  <span class="comment">-- [6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96]</span></span><br></pre></td></tr></table></figure>
+<p>其实, 就相当于 <code>多重for循环</code> + <code>最后一重for循环中的零个或多个if语句</code><br />
+随后利用满足条件的值, 创建新的表达式, 放进新的集合并返回:</p>
+<ul>
+<li>第一个式子 <code>[x + y | x &lt;- [1..3], y &lt;- [1..3]]</code>, 相当于:</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> new_array</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">1</span>..<span class="number">3</span>]</span><br><span class="line">  <span class="keyword">for</span> y <span class="keyword">in</span> [<span class="number">1</span>..<span class="number">3</span>]</span><br><span class="line">    (x + y) -&gt; new_array</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第二个式子 <code>[x | x &lt;- [1..100], x </code>mod<code>2 == 0, x</code>mod<code> 3 == 0]</code>, 相当于:</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> new_array</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">1</span>..<span class="number">100</span>]</span><br><span class="line">  <span class="keyword">if</span> x `<span class="keyword">mod</span>` <span class="number">2</span> == <span class="number">0</span> &amp;&amp; x `<span class="keyword">mod</span>` <span class="number">3</span> == <span class="number">0</span></span><br><span class="line">    (x) -&gt; new_array</span><br></pre></td></tr></table></figure>
+<p>因此, 你可以对比下下面两种式子:</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">[ x * y | x &lt;- [<span class="number">1.</span><span class="number">.10</span>], y &lt;- [<span class="number">1.</span>.x]  ]</span><br><span class="line">[ x * y | x &lt;- [<span class="number">1.</span>.y],  y &lt;- [<span class="number">1.</span><span class="number">.10</span>] ]</span><br></pre></td></tr></table></figure>
+<p>第一种合法, 但第二种不合法, 把它们理解为for循环, 你就知道原因了, 此处跳过</p>
+<p>好了, 关于List, 暂时先到这吧<br />
+其实后面还有很多关于List的, 毕竟它太重要了</p>
 <hr />
 <h1 id="if语句"><a class="markdownIt-Anchor" href="#if语句"></a> If语句</h1>
 <p>先前说道, If语句仅仅是个语法糖, 但我们还是有必要学下这个语法的<br />
-顺便, 稍微正式些地学习将代码写进一个文件</p>
-<ul>
-<li>单if语句</li>
-</ul>
+顺便找个机会, 教下如何将代码写进文件并编译, 脱离 ghci</p>
+<p>毕竟 Haskell 比较特殊, 为了函数的 <a href="/posts/haskell-basic/p3/#%E7%BA%AF%E5%87%BD%E6%95%B0">纯度</a> , 特意搞了一堆东西<br />
+再不讲恐怕之后都讲不了呢, 所以我打算强硬点穿插着讲 (捂嘴笑)</p>
+<p>开始吧!</p>
+<h2 id="单if"><a class="markdownIt-Anchor" href="#单if"></a> 单if</h2>
+<p>首先, 让我们新建一个文件, 命名为 <code>demo.hs</code></p>
+<p>BMI, Body Mass Index (身体质量指数)<br />
+它与体内脂肪总量密切相关，常用来衡量人体胖瘦程度、是否健康</p>
+<p>让我们来编写一个程序, 根据输入的bmi判断胖与瘦吧</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>  bmi &gt; <span class="number">25</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">  <span class="keyword">else</span> putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
+<p>先别在意那个 <code>do</code> 与 <code>&lt;-</code> 是啥, 无视即可, 反正这段代码你应该也看得懂:<br />
+程序会读取输入, 作为 <code>bmi</code> 的值, 随后根据大小, 判断是胖是瘦</p>
+<p>当然, 如果你使用LSP, 代码格式化之后, 你可以得到下面这一段:</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> bmi &gt; <span class="number">25</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">    <span class="keyword">else</span> putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
+<p>也蛮美观的, 但我更喜欢压行 😃</p>
+<p>你可以在 <code>demo.hs</code> 的目录下, 输入 <code>runghc demo.hs</code> 运行这个程序, 不会留下目标文件<br />
+也可以输入 <code>ghc demo.hs</code>, 留下目标文件, 随后执行 <code>./demo</code> 来运行程序</p>
+<h2 id="多if"><a class="markdownIt-Anchor" href="#多if"></a> 多If</h2>
+<p>其实在 Haskell 中根本不存在多重If这种玩意儿, 你往下看就会懂…</p>
+<p>先前的 单If 实在不够, 没有区分输入不对劲的情况<br />
+而且只是简单地判断了胖瘦, 让我们再加一个判断是否健康的情况吧</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> bmi &lt; <span class="number">0</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;What?&quot;</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> bmi &gt; <span class="number">25</span> </span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> bmi &lt;= <span class="number">25</span> &amp;&amp; bmi &lt;= <span class="number">18.5</span> </span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Healthy!!!&quot;</span></span><br><span class="line">  <span class="keyword">else</span> </span><br><span class="line">    putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
+<p>哇, 看着好美, 好熟悉!<br />
+所以你为什么说没有多重If呢?</p>
+<p>别急, 格式化之后:</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line">  <span class="keyword">if</span> bmi &lt; <span class="number">0</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;What?&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">if</span> bmi &gt; <span class="number">25</span></span><br><span class="line">        <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          <span class="keyword">if</span> bmi &lt;= <span class="number">25</span> &amp;&amp; bmi &lt; <span class="number">18.5</span></span><br><span class="line">            <span class="keyword">then</span> putStrLn <span class="string">&quot;12&quot;</span></span><br><span class="line">            <span class="keyword">else</span> putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
+<p>懂了吧? 它只是 else 中再套一个 if-else 而已<br />
+而且就连 if-else, 我们都可以用自己定义的函数取代掉 (之后会讲)<br />
+就算我们不取代 if-else, 它的使用率也很低, 模式匹配更加美观, 也更强大 (Guard也是之后会讲)</p>
+<p>这节就到这, 看辉夜3的最后一集去了~~</p>
 ]]></content>
       <tags>
         <tag>Haskell</tag>
