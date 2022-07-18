@@ -298,19 +298,6 @@ follow_me:
   #WeChat: /images/wechat_channel.jpg || fab fa-weixin
   #RSS: /atom.xml || fa fa-rss
 
-# Related popular posts
-# Dependencies: https://github.com/tea3/hexo-related-popular-posts
-related_posts:
-  enable: false
-  title: 推荐文章 # Custom header, leave empty to use the default one
-  display_in_home: false
-  params:
-    maxCount: 4
-    #PPMixingRate: 0.0
-    #isDate: false
-    #isImage: false
-    #isExcerpt: false
-
 # Post edit
 # Easily browse and edit blog source code online.
 post_edit:
@@ -953,5 +940,3 @@ hide_posts:
   # 为隐藏的文章添加 noindex meta 标签，阻止搜索引擎收录
   noindex: true
 
-# 图片灯箱
-# fancybox3: true

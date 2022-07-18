@@ -6,7 +6,7 @@
   <link href="https://jedsek.xyz/atom.xml" rel="self"/>
   
   <link href="https://jedsek.xyz/"/>
-  <updated>2022-07-12T13:46:05.000Z</updated>
+  <updated>2022-07-18T08:24:44.000Z</updated>
   <id>https://jedsek.xyz/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>haskell-basic-p5-类型与类型类</title>
+    <link href="https://jedsek.xyz/posts/haskell-basic/p5"/>
+    <id>https://jedsek.xyz/posts/haskell-basic/p5</id>
+    <published>2022-07-18T08:24:44.000Z</published>
+    <updated>2022-07-18T08:24:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>关于 Haskell 中的类型(Type), 与类型类(Typeclass)</p></blockquote><span id="more"></span><p>同系列传送门: <a href="/categories/haskell-basic">haskell-basic</a></p><h1 id="开篇"><a class="markdownIt-Anchor" href="#开篇"></a> 开篇</h1>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;关于 Haskell 中的类型(Type), 与类型类(Typeclass)&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="Haskell" scheme="https://jedsek.xyz/tags/Haskell/"/>
+    
+  </entry>
   
   <entry>
     <title>haskell-basic-p4-基础语法</title>
