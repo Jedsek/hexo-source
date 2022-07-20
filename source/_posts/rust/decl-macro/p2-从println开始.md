@@ -1,8 +1,8 @@
 ---
-title: rust-dm-p2-从println开始
+title: "rust-dm-p2: 从println开始"
 abbrlink: posts/rust-decl-macro/p2
 date: 2021-09-19 22:50:27
-top: 9898
+top: 9998
 tags: [Rust, Macro]
 keywords: [Macro, 声明宏, Rust]
 ---

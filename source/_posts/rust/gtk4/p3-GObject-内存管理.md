@@ -1,5 +1,5 @@
 ---
-title: rust-gtk4-p3-GObject-内存管理
+title: "rust-gtk4-p3: GObject-内存管理"
 abbrlink: posts/rust-gtk4/p3
 date: 2022-01-30 12:01:22
 top: 9697

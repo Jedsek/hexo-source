@@ -1,8 +1,8 @@
 ---
-title: rust-async-p3-Future
+title: "rust-async-p3: Future"
 abbrlink: posts/rust-async/p3
 date: 2021-09-12 13:56:48
-top: 9997
+top: 9897
 tags: [Rust, Async]
 keywords: [Async, 异步, Rust]
 ---
