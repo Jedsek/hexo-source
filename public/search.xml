@@ -199,8 +199,11 @@
 <p>编程范式实在太多, 但不用刻意去记忆, 这些都是些顾名思义的东西<br>
 记住FP与OOP这两个缩写即可, 这两个是最常被提及的, 其他的无需记忆</p>
 <p>编程范式, 它就像是国家的意识形态一样, 具有指导意义, 对如何编程求解问题的思考方法有巨大影响<br>
-比如:<br>
-(如果你已经了解过以下范式, 直接跳到 <a href="#%E6%80%BB%E7%BB%93"><strong>总结</strong></a> 吧)</p>
+下面是一些编程范式的例子:</p>
+<div class="tips">
+<p><strong>提示</strong><br>
+如果你已经了解过以下范式, 直接跳到 <a href="#zong-jie"><strong>总结</strong></a> 吧</p>
+</div>
 <ul class="lvl-0">
 <li class="lvl-2">
 <p>面向过程:<br>
@@ -473,7 +476,7 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">a</span> = <span class="number">100</span>::<span class="type">Integer</span>      <span class="comment">-- 100</span></span><br><span class="line"><span class="title">a</span> + <span class="number">1</span>                 <span class="comment">-- 101</span></span><br><span class="line"><span class="title">a</span> + <span class="number">1</span>::<span class="type">Int</span>            <span class="comment">-- error</span></span><br></pre></td></tr></table></figure>
 <p>我们先声明了a, 分别与整数字面量, Int类型数字相加<br>
 对于第一个加法, 1是个字面量, 是Num, 编译器可以自动推导出1应该也是Integer类型的<br>
-根据 <a href="#%E6%95%B0%E5%AD%97">(+)函数</a> 的定义, 同时也因为Integer是Num这个Typeclass的成员</p>
+根据 <a href="#shu-zi">(+)函数</a> 的定义, 同时也因为Integer是Num这个Typeclass的成员</p>
 <p>回到先前的 <code>[1..]</code>, 1是Num, 当 List 产生的数字超越 Int 的最大值时, 不会溢出, 而是转成 Integer 以满足需求</p>
 <h2 id="she-zhi-bu-chang" id="设置步长">设置步长</h2>
 <p>先前我们讲到, 你除了傻乎乎地去一个个地填写List的元素, 还可以省略右端点<br>
@@ -528,7 +531,7 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 <h1 id="if-yu-ju">If语句</h1>
 <p>先前说道, If语句仅仅是个语法糖, 但我们还是有必要学下这个语法的<br>
 顺便找个机会, 教下如何将代码写进文件并编译, 脱离 ghci</p>
-<p>毕竟 Haskell 比较特殊, 为了函数的 <a href="/posts/haskell-basic/p3/#%E7%BA%AF%E5%87%BD%E6%95%B0">纯度</a> , 特意搞了一堆东西<br>
+<p>毕竟 Haskell 比较特殊, 为了函数的 <a href="/posts/haskell-basic/p3/#chun-han-shu">纯度</a> , 特意搞了一堆东西<br>
 再不讲恐怕之后都讲不了呢, 所以我打算强硬点穿插着讲 (捂嘴笑)</p>
 <p>开始吧!</p>
 <h2 id="dan-if" id="单if">单if</h2>
@@ -536,14 +539,19 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 <p>BMI, Body Mass Index (身体质量指数)<br>
 它与体内脂肪总量密切相关，常用来衡量人体胖瘦程度、是否健康</p>
 <p>让我们来编写一个程序, 根据输入的bmi判断胖与瘦吧</p>
+<div class="tips">
+<p><strong>你可以这样运行以 .hs 结尾的文件:</strong></p>
+<ol>
+<li class="lvl-3">在 <code>demo.hs</code> 所在的目录下, 输入 <code>runghc demo.hs</code>, 不会留下目标文件</li>
+<li class="lvl-3">输入 <code>ghc demo.hs</code>, 留下目标文件 <code>./demo</code></li>
+</ol>
+</div>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>  bmi &gt; <span class="number">25</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">  <span class="keyword">else</span> putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
 <p>先别在意那个 <code>do</code> 与 <code>&lt;-</code> 是啥, 无视即可, 反正这段代码你应该也看得懂:<br>
 程序会读取输入, 作为 <code>bmi</code> 的值, 随后根据大小, 判断是胖是瘦</p>
 <p>当然, 如果你使用LSP, 代码格式化之后, 你可以得到下面这一段:</p>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> bmi &gt; <span class="number">25</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">    <span class="keyword">else</span> putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
 <p>也蛮美观的, 但我更喜欢压行 😃</p>
-<p>你可以在 <code>demo.hs</code> 的目录下, 输入 <code>runghc demo.hs</code> 运行这个程序, 不会留下目标文件<br>
-也可以输入 <code>ghc demo.hs</code>, 留下目标文件, 随后执行 <code>./demo</code> 来运行程序</p>
 <h2 id="duo-if" id="多If">多If</h2>
 <p>其实在 Haskell 中根本不存在多重If这种玩意儿, 你往下看就会懂…</p>
 <p>先前的 单If 实在不够, 没有区分输入不对劲的情况<br>
@@ -577,12 +585,52 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
       </tags>
   </entry>
   <entry>
-    <title>GNOME-p1: 系列说明</title>
-    <url>/posts/GNOME/p1.html</url>
+    <title>GNOME 入坑指南</title>
+    <url>/posts/GNOME.html</url>
     <content><![CDATA[<blockquote>
-<p>这是关于 GNOME 的入坑指南</p>
+<p>关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境</p>
 </blockquote>
-<span id="more"></span>]]></content>
+<span id="more"></span>
+<div class="tips">
+<p><strong>提示</strong><br>
+本篇文章的配置皆在简洁, 高效, 美观, 想要平铺式/炫酷效果/更多功能的, 请自行配置</p>
+<p>在看完本篇后, <s>(不看也没事)</s> 可以跳转至 []<br>
+若你使用 Nixos, 可以再看完本篇后 <s>(不看也没事)</s> 跳转至 <a href="#dui-yu-nixos">对于Nixos</a><br>
+若</p>
+<p>请注意GNOME版本是否相符, 该篇文章时, GNOME 版本为: <strong>42</strong></p>
+</div>
+<h1 id="cheng-pin-zhan-shi">成品展示</h1>
+<p>以下是成品展示, 我个人认为较为简洁且美观, 但你可以自行配置<br>
+<img data-src="/images/GNOME/overview.png" alt="按下Super后的概览"><br>
+<img data-src="/images/GNOME/workspaces-indicator.png" alt="用键盘跳转工作区后的指示"></p>
+<hr>
+<h2 id="dui-yu-nixos" id="对于Nixos">对于Nixos</h2>
+<p>如果你使用 Nixos, 请先确保已经安装了 <a href="https://github.com/nix-community/home-manager">HomeManager</a><br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad<br>
+asdada<br>
+asdad</p>
+]]></content>
       <tags>
         <tag>GNOME</tag>
       </tags>
@@ -1166,7 +1214,7 @@ macro 中, 其参数的类型, 便是token类型</p>
 <p>当 RepOp 为 ? 时, 不可以添加 Sep(因为最多也就匹配到一次, 你怎么分割?)</p>
 </li>
 <li class="lvl-3">
-<p>Sep 是有限制的, <a href="/posts/rs-decl-macro-p3#%E6%AD%A7%E4%B9%89%E9%99%90%E5%88%B6">p3</a> 提到过, 详情可见 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">rust-reference</a></p>
+<p>Sep 是有限制的, <a href="/posts/rust-decl-macro/p3#qi-yi-xian-zhi">p3#歧义限制</a> 提到过, 详情可见 <a href="https://doc.rust-lang.org/stable/reference/macros-by-example.html#follow-set-ambiguity-restrictions">rust-reference</a></p>
 </li>
 </ol>
 <p>以后想到了再补充一些东西, 先到这里吧, 谢谢您的观看</p>
