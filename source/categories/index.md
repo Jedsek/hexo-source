@@ -12,11 +12,7 @@ quicklink: true
 
 - - -
 
-# 系列
-
-点击链接, 前往对应导航页, 随后打开相应文章
-
-## Rust
+# Rust
 Rust 是一门高性能, 工具链极其友善, 类型系统丰富的编程语言
 
 - [异步](/categories/rust-async)
@@ -25,36 +21,14 @@ Rust 是一门高性能, 工具链极其友善, 类型系统丰富的编程语�
 - [GTK4](/categories/rust-gtk4)
 
 
-## Haskell
+# Haskell
 Haskell 是一门静态强类型, 默认惰性, 高并发, 纯函数式的编程语言
 
 - [基础](/categories/haskell-basic)
 
 - - -
 
-# 单篇
-
-点击链接, 前往相应文章
-
-## GNOME
+# GNOME
 GNOME 是一个简介, 绚丽, 优雅的桌面环境  
 
-- [传送门](/posts/GNOME)
-
-## 1
-ad  
-asdad  
-asdad  
-asdad  
-ad  
-asdad  
-asdad  
-asdad  
-ad  
-asdad  
-asdad  
-asdad  
-ad  
-asdad  
-asdad  
-asdad  
+- [入坑指南](/posts/GNOME)
