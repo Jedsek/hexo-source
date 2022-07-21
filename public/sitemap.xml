@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jedsek.xyz/posts/GNOME</loc>
+    <loc>https://jedsek.xyz/posts/gnome/guide</loc>
     
     <lastmod>2022-07-20</lastmod>
     
@@ -226,14 +226,14 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/GUI/</loc>
+    <loc>https://jedsek.xyz/tags/TUI/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/TUI/</loc>
+    <loc>https://jedsek.xyz/tags/GUI/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -1,5 +1,5 @@
 ---
-abbrlink: categories/GNOME
+abbrlink: categories/gnome
 hidden: true
 layout: page
 quicklink: true
@@ -12,4 +12,4 @@ keywords:
 ---
 先占个位子, 日后再说~~
 
-- [p1: 系列说明](/posts/GNOME/p1)
+- [GNOME 入坑指南](/posts/gnome/guide)

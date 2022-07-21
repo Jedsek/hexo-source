@@ -31,4 +31,4 @@ Haskell 是一门静态强类型, 默认惰性, 高并发, 纯函数式的编程
 # GNOME
 GNOME 是一个简介, 绚丽, 优雅的桌面环境  
 
-- [入坑指南](/posts/GNOME)
+- [入坑指南](/posts/gnome/guide)
