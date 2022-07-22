@@ -448,7 +448,7 @@ gsettings set org.gnome.shell favorite-apps "[]"
 **注意**
 以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 `Just-perfection` 扩展  
 此扩展得到官方支持, 可以将桌面 `化简`, 包括Dash  
-如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[自定义快捷键/禁用](#jin-yong-kuai-jie-jian)  
+如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[禁用快捷键](#jin-yong-kuai-jie-jian)  
 :::
 
 - 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: `space-bar` 或 `workspace-bar`)  
