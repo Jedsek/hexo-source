@@ -593,8 +593,8 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 <span id="more"></span>
 <div class="tips">
 <p><strong>提示</strong><br>
-本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式/炫酷效果/更多功能的, 请自行配置<br>
-请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章是最新版本<br>
+本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置<br>
+请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章<br>
 目前, 该篇文章的GNOME 版本为: <strong>42</strong></p>
 </div>
 <h1 id="cheng-pin-zhan-shi">成品展示</h1>
@@ -661,7 +661,7 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 </ul>
 <hr>
 <h1 id="an-zhuang-kuo-zhan">安装扩展</h1>
-<p>GNOME 的扩展(Extensions)是其重要的组成部分, 赋予了随意且自由组合的强大<br>
+<p>GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的自由与强大, 说是一半的灵魂, 也不为过之<br>
 我将先介绍如何安装/使用它们, 因为后面需要用到扩展</p>
 <p>有两种安装方法, 一种从命令行安装, 一种从浏览器安装<br>
 我更倾向于前者, 因为不需要下载对应的东西, 适合快速部署, 但两者我都会介绍</p>
@@ -933,10 +933,127 @@ GNOME版的 <code>kdeconnect</code>, 用于电脑与手机互连 (一个网下),
 </ul>
 <hr>
 <h1 id="mei-hua">美化</h1>
+<p>以下美化工作涉及暗模式, 背景, 头像, 主题, 字体, Dash等<br>
+还有很多扩展有帮助, 上面 <a href="#tui-jian-de-kuo-zhan">推荐的扩展</a> 里有提到, 比如那个更改css的, 这里不说了</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>启动暗模式:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface color-scheme <span class="string">&quot;prefer-dark&quot;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>背景壁纸: 暗模式下的背景与普通模式可以不一样, 因此也要注意设置下</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.background picture-uri <span class="string">&#x27;file:///usr/share/backgrounds/aaa.png&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.background picture-uri-dark <span class="string">&#x27;file:///usr/share/backgrounds/aaa.png&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>头像: 假设用户名是 <code>Xyz</code>, 则需要将图片命名为 <code>Xyz</code>, 随后放到 <code>/var/lib/AccountsService/icons/</code> 下</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mv ./Xyz /var/lib/AccountsService/icons/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或将图片命名为.face, 放到家目录</span></span><br><span class="line"><span class="comment"># mv ./Xyz ~/.face  </span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>主题: 单用户的放 <code>~/.themes/</code> , 多用户的放 <code>/usr/share/themes/</code>, 可前往 <a href="https://www.gnome-look.org/">gnome-look</a> 挑选主题</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以 Nordic 为例子</span></span><br><span class="line">mkdir ~/.themes/ &amp;&amp; <span class="built_in">cd</span> ~/.themes/</span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/mirror_jedsek/Nordic.git</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface gtk-theme <span class="string">&#x27;Nordic&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.preferences theme <span class="string">&#x27;Nordic&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 你也可以使用 `user-theme` 这个扩展进行设置:  </span></span><br><span class="line">mkdir ~/.themes/ &amp;&amp; <span class="built_in">cd</span> ~/.themes/</span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/mirror_jedsek/Nordic.gi</span><br><span class="line">gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>字体: 将顶栏字体换成 <code>Fira Code</code>, 顺便调整下大小</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface font-name <span class="string">&#x27;Fira Code 11.8&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>隐藏 <code>Dash</code> 栏: 对我个人来讲, Dash 毫无用处还占地方, 快捷键+Overview的搜索, 可以应付一切工作了</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell favorite-apps <span class="string">&quot;[]&quot;</span></span><br></pre></td></tr></table></figure>
+<div class="tips">
+<p><strong>注意</strong><br>
+以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 <code>Just-perfection</code> 扩展<br>
+此扩展得到官方支持, 可以将桌面 <code>化简</code>, 包括Dash<br>
+如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的<a href="#jin-yong-kuai-jie-jian">自定义快捷键/禁用</a></p>
+</div>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>去掉左上角的 <code>Activities</code>: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: <code>space-bar</code> 或 <code>workspace-bar</code>)</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义工作区的名称, 不然就是默认的数字</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.preferences workspace-names <span class="string">&quot;[&#x27;Browser&#x27;, &#x27;Terminal&#x27;, &#x27;Game&#x27;, &#x27;Box&#x27;, &#x27;Other&#x27;]&quot;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>隐藏顶栏: 安装 <code>just-perfection</code> &amp;&amp; <code>blur-my-shell</code>, 配置后就是本文 <a href="#cheng-pin-zhan-shi">成品展示</a> 中的了, 处于 <code>Overview</code> 中才显示顶栏</p>
+</li>
+</ul>
 <hr>
-<h1 id="zi-ding-yi-kuai-jie-jian">自定义快捷键</h1>
-<hr>
-<h1 id="wen-jian-guan-li-qi">文件管理器</h1>
+<h1 id="kuai-jie-jian">快捷键</h1>
+<p>这也是个很影响体验的地方, 如果你对自带的快捷键不满意, 完全可以自己更改</p>
+<p>我个人就不喜欢 <code>Alt+Fn数字</code>, 因为太远了, 而且记不清, 干脆换些简单易记的, 像 <code>I3/Sway</code> 那样<br>
+当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash</p>
+<div class="tips">
+<p><strong>注意</strong><br>
+快捷键之间有冲突的话, 可能无法生效, 请通过 <code>gnome-control-center keyboard</code> 查看快捷键冲突</p>
+</div>
+<h2 id="cha-zhao-kuai-jie-jian" id="查找快捷键">查找快捷键</h2>
+<p>首先, 我们得明白如何查找对应的快捷键</p>
+<p>下面的命令会列出极大部分的快捷键:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings list-recursively | grep -E <span class="string">&quot;Super|Alt|Ctrl|Shift|F[0-9]|Page|Up|Down|Right|Left&quot;</span> | cat</span><br></pre></td></tr></table></figure>
+<p>你可以在后面通过 pipeline, 追加一个 grep, 搜索 theme, font, workspace, switch, move 等词语<br>
+如果实在找不到, 一点点看过去也行 😃</p>
+<h2 id="jin-yong-kuai-jie-jian" id="禁用快捷键">禁用快捷键</h2>
+<p>某命令的快捷键, 一般可以有多个, 即某命令的快捷键是一个数组<br>
+想要禁用该快捷键, 将对应的数组设置为空就行了</p>
+<p>举个例子, 禁用Dash的快捷键 (见上文的置空 <code>favorite-apps</code>):</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Default: Super+&quot;1..9&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 9)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    gsettings <span class="built_in">set</span> org.gnome.shell.keybindings switch-to-application-<span class="variable">$i</span> <span class="string">&quot;[]&quot;</span>  </span><br><span class="line"><span class="keyword">done</span>    </span><br></pre></td></tr></table></figure>
+<p>禁用快捷键还可以让你避免冲突, 比如:<br>
+某个操作绑定了快捷键A, 另一个操作也绑定了快捷键A, 可能键A就失效了, 我遇到过好几次<br>
+这时就要借助 GUI 的力量了: 输入 <code>gnome-control-center keyboard</code>, 然后进入自定义那栏, 会显示冲突的键</p>
+<p>举个例子, 我想修改 <code>Super+Esc</code> 变成锁屏, 我就要这样做:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.settings-daemon.plugins.media-keys screensaver <span class="string">&quot;[&#x27;&lt;Super&gt;Escape&#x27;]&quot;</span> <span class="comment">#Default: Sup+L</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.wayland.keybindings restore-shortcuts <span class="string">&quot;[]&quot;</span> <span class="comment"># Default: Sup+Esc</span></span><br></pre></td></tr></table></figure>
+<h2 id="xiu-gai-kuai-jie-jian" id="修改快捷键">修改快捷键</h2>
+<p>修改, 也就是覆写默认的快捷键, 与下文要讲的 <a href="#tian-jia-kuai-jie-jian">添加快捷键</a> 不是一个概念<br>
+单纯的改改改而已, 下面是我个人修改的一套快捷键, 供大家参考</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>Vim 式的案件, 改变窗口布局, 替代原有的 <code>Super+方向键</code>:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 其实还有更丧心病狂的, 可以绑定快捷键, 将窗口放左上角, 右上角, 中间左边, 中间右边的......</span></span><br><span class="line"></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.keybindings      toggle-tiled-left  <span class="string">&quot;[&#x27;&lt;Super&gt;h&#x27;]&quot;</span> <span class="comment"># 放左边</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings  maximize           <span class="string">&quot;[&#x27;&lt;Super&gt;j&#x27;]&quot;</span> <span class="comment"># 最大化</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings  unmaximize         <span class="string">&quot;[&#x27;&lt;Super&gt;k&#x27;]&quot;</span> <span class="comment"># 最小化</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.keybindings      toggle-tiled-right <span class="string">&quot;[&#x27;&lt;Super&gt;l&#x27;]&quot;</span> <span class="comment"># 放右边</span></span><br></pre></td></tr></table></figure>
+<p>对了, 如果你追求平铺式的话, 扩展可以满足一部分要求, 但肯定比不上专业的窗管…</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>move, resize, kill 一个窗口:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Move</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-move   <span class="string">&quot;[&#x27;&lt;Super&gt;x&#x27;]&quot;</span>        <span class="comment">#Default: Alt+F7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Resize</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-resize <span class="string">&quot;[&#x27;&lt;Super&gt;r&#x27;]&quot;</span>        <span class="comment">#Default: Alt+F8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Kill</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings close        <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;q&#x27;]&quot;</span> <span class="comment">#Default: Alt+F4</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>toggle-max, max, min, toggle-fullscreen, show-desktop:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Toggle max</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-maximized  <span class="string">&quot;[&#x27;&lt;Super&gt;m&#x27;]&quot;</span>     <span class="comment">#Default: Alt+F10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Max/Min</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings maximize          <span class="string">&quot;[&#x27;&lt;Super&gt;j&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings unmaximize        <span class="string">&quot;[&#x27;&lt;Super&gt;k&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings minimize          <span class="string">&quot;[&#x27;&lt;Super&gt;comma&#x27;]&quot;</span> <span class="comment">#Default: Super+H</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Toggle fullscreen</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-fullscreen <span class="string">&quot;[&#x27;&lt;Super&gt;f&#x27;]&quot;</span>     <span class="comment">#Default: None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Show desktop</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings show-desktop      <span class="string">&quot;[&#x27;&lt;Super&gt;d&#x27;]&quot;</span>     <span class="comment">#Default: None</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>还有套很重要的快捷键, 就是切换工作区了, 搭配消除过渡动画/增加特效的扩展, 流畅感Max:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 9)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-<span class="variable">$i</span> <span class="string">&quot;[&#x27;&lt;Super&gt;<span class="variable">$i</span>&#x27;]&quot;</span></span><br><span class="line">  gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings move-to-workspace-<span class="variable">$i</span>   <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;<span class="variable">$i</span>&#x27;]&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-10   <span class="string">&quot;[&#x27;&lt;Super&gt;0&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings move-to-workspace-10     <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;0&#x27;]&quot;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>再比如, 覆写 <code>run-dialog</code> 的快捷键 (默认是按Alt-F2, 但太远了…):</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings panel-run-dialog <span class="string">&quot;[&#x27;&lt;Super&gt;c&#x27;]&quot;</span> <span class="comment">#Default: Alt+F2</span></span><br></pre></td></tr></table></figure>
+<h2 id="tian-jia-kuai-jie-jian" id="添加快捷键">添加快捷键</h2>
+<p>此处指的是真正的, 添加自己的快捷键. 不是简单的覆写<br>
+比如 <code>Super+Return</code> 打开一个终端, <code>Super+B</code> 打开浏览器, <code>Super+E</code> 打开文件管理器…</p>
+<p>废话不多说, 你按下面照猫画虎, 就阔以了:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gp0=<span class="string">&quot;/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings&quot;</span></span><br><span class="line">gp1=<span class="string">&quot;org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:\</span></span><br><span class="line"><span class="string">/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Custom Keys</span></span><br><span class="line"><span class="comment"># 注意!!!!!!!</span></span><br><span class="line"><span class="comment"># 不要在最后添加逗号</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.settings-daemon.plugins.media-keys custom-keybindings <span class="string">&quot;[     \</span></span><br><span class="line"><span class="string">    &#x27;<span class="variable">$gp0</span>/custom0/&#x27;, &#x27;<span class="variable">$gp0</span>/custom1/&#x27;, &#x27;<span class="variable">$gp0</span>/custom2/&#x27;, &#x27;<span class="variable">$gp0</span>/custom3/&#x27;               \</span></span><br><span class="line"><span class="string">]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Terminal</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ name     <span class="string">&#x27;Terminal&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ <span class="built_in">command</span>  <span class="string">&#x27;alacritty&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ binding  <span class="string">&#x27;&lt;Super&gt;Return&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Files</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ name     <span class="string">&#x27;Files&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ <span class="built_in">command</span>  <span class="string">&#x27;nautilus&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ binding  <span class="string">&#x27;&lt;Super&gt;e&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Browser</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ name     <span class="string">&#x27;Browser&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ <span class="built_in">command</span>  <span class="string">&#x27;microsoft-edge-beta&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ binding  <span class="string">&#x27;&lt;Super&gt;b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Fcitx5 Reload</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ name     <span class="string">&#x27;Fcitx5_Reload&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ <span class="built_in">command</span>  <span class="string">&#x27;fcitx5 -r&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ binding  <span class="string">&#x27;&lt;Alt&gt;space&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>我相信你不会将时间浪费在掉在坑里面了<br>
+上面的一切已经非常非常全了</p>
 <hr>
 <h1 id="jia-zai-pei-zhi">加载配置</h1>
 <p>我们可以通过 dconf 这个工具, 导入或导出记载着 GNOME 数据的配置文件<br>
@@ -984,7 +1101,7 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 </li>
 </ul>
 <figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">home.file.<span class="string">&quot;.face&quot;</span>.<span class="attr">source</span> = ./.face;</span><br></pre></td></tr></table></figure>
-<p>大功告成!</p>
+<p>大功告成!  我相信这是最最最最最全的一份 GNOME 入坑指南了</p>
 ]]></content>
       <tags>
         <tag>GNOME</tag>

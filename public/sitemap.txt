@@ -23,6 +23,6 @@ https://jedsek.xyz/tags/GNOME/
 https://jedsek.xyz/tags/Haskell/
 https://jedsek.xyz/tags/Rust/
 https://jedsek.xyz/tags/Async/
-https://jedsek.xyz/tags/Macro/
-https://jedsek.xyz/tags/TUI/
 https://jedsek.xyz/tags/GUI/
+https://jedsek.xyz/tags/TUI/
+https://jedsek.xyz/tags/Macro/

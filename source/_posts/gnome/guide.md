@@ -12,8 +12,8 @@ keywords: [GNOME, 桌面环境, DE]
 
 ::: tips
 **提示**
-本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式/炫酷效果/更多功能的, 请自行配置  
-请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章是最新版本  
+本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置  
+请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章  
 目前, 该篇文章的GNOME 版本为: **42**  
 :::
 
@@ -75,7 +75,7 @@ gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
 - - -
 
 # 安装扩展
-GNOME 的扩展(Extensions)是其重要的组成部分, 赋予了随意且自由组合的强大  
+GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的自由与强大, 说是一半的灵魂, 也不为过之  
 我将先介绍如何安装/使用它们, 因为后面需要用到扩展  
 
 有两种安装方法, 一种从命令行安装, 一种从浏览器安装  
@@ -392,17 +392,234 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 - - -
 
 # 美化
+以下美化工作涉及暗模式, 背景, 头像, 主题, 字体, Dash等  
+还有很多扩展有帮助, 上面 [推荐的扩展](#tui-jian-de-kuo-zhan) 里有提到, 比如那个更改css的, 这里不说了  
+
+- 启动暗模式:  
+
+```bash
+gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+```
+
+- 背景壁纸: 暗模式下的背景与普通模式可以不一样, 因此也要注意设置下  
+
+```bash
+gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/aaa.png'
+gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/aaa.png'
+```
+
+- 头像: 假设用户名是 `Xyz`, 则需要将图片命名为 `Xyz`, 随后放到 `/var/lib/AccountsService/icons/` 下
+
+```bash
+sudo mv ./Xyz /var/lib/AccountsService/icons/
+
+# 或将图片命名为.face, 放到家目录
+# mv ./Xyz ~/.face  
+```
+
+- 主题: 单用户的放 `~/.themes/` , 多用户的放 `/usr/share/themes/`, 可前往 [gnome-look](https://www.gnome-look.org/) 挑选主题  
+
+```bash
+# 以 Nordic 为例子
+mkdir ~/.themes/ && cd ~/.themes/
+git clone https://gitee.com/mirror_jedsek/Nordic.git
+gsettings set org.gnome.desktop.interface gtk-theme 'Nordic'
+gsettings set org.gnome.desktop.wm.preferences theme 'Nordic'
+
+# 你也可以使用 `user-theme` 这个扩展进行设置:  
+mkdir ~/.themes/ && cd ~/.themes/
+git clone https://gitee.com/mirror_jedsek/Nordic.gi
+gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com
+```
+
+- 字体: 将顶栏字体换成 `Fira Code`, 顺便调整下大小  
+
+```bash
+gsettings set org.gnome.desktop.interface font-name 'Fira Code 11.8'
+```
+
+- 隐藏 `Dash` 栏: 对我个人来讲, Dash 毫无用处还占地方, 快捷键+Overview的搜索, 可以应付一切工作了  
+
+```bash
+gsettings set org.gnome.shell favorite-apps "[]"
+```
+
+::: tips
+**注意**
+以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 `Just-perfection` 扩展  
+此扩展得到官方支持, 可以将桌面 `化简`, 包括Dash  
+如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[自定义快捷键/禁用](#jin-yong-kuai-jie-jian)  
+:::
+
+- 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: `space-bar` 或 `workspace-bar`)  
+
+```bash
+# 自定义工作区的名称, 不然就是默认的数字
+gsettings set org.gnome.desktop.wm.preferences workspace-names "['Browser', 'Terminal', 'Game', 'Box', 'Other']"
+```
+- 隐藏顶栏: 安装 `just-perfection` && `blur-my-shell`, 配置后就是本文 [成品展示](#cheng-pin-zhan-shi) 中的了, 处于 `Overview` 中才显示顶栏  
 
 - - -
 
-# 自定义快捷键
+# 快捷键
+这也是个很影响体验的地方, 如果你对自带的快捷键不满意, 完全可以自己更改  
+
+我个人就不喜欢 `Alt+Fn数字`, 因为太远了, 而且记不清, 干脆换些简单易记的, 像 `I3/Sway` 那样  
+当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash  
+
+::: tips
+**注意**  
+快捷键之间有冲突的话, 可能无法生效, 请通过 `gnome-control-center keyboard` 查看快捷键冲突  
+:::
+
+
+## 查找快捷键
+首先, 我们得明白如何查找对应的快捷键  
+
+下面的命令会列出极大部分的快捷键:  
+
+```bash
+gsettings list-recursively | grep -E "Super|Alt|Ctrl|Shift|F[0-9]|Page|Up|Down|Right|Left" | cat
+```
+
+你可以在后面通过 pipeline, 追加一个 grep, 搜索 theme, font, workspace, switch, move 等词语  
+如果实在找不到, 一点点看过去也行 :)  
+
+
+## 禁用快捷键
+某命令的快捷键, 一般可以有多个, 即某命令的快捷键是一个数组  
+想要禁用该快捷键, 将对应的数组设置为空就行了  
+
+举个例子, 禁用Dash的快捷键 (见上文的置空 `favorite-apps`):  
+
+```bash
+# Default: Super+"1..9"
+for i in $(seq 9)
+do
+    gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]"  
+done    
+```
+
+禁用快捷键还可以让你避免冲突, 比如:  
+某个操作绑定了快捷键A, 另一个操作也绑定了快捷键A, 可能键A就失效了, 我遇到过好几次  
+这时就要借助 GUI 的力量了: 输入 `gnome-control-center keyboard`, 然后进入自定义那栏, 会显示冲突的键  
+
+举个例子, 我想修改 `Super+Esc` 变成锁屏, 我就要这样做:  
+
+```bash
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>Escape']" #Default: Sup+L
+gsettings set org.gnome.mutter.wayland.keybindings restore-shortcuts "[]" # Default: Sup+Esc
+```
+
+## 修改快捷键
+修改, 也就是覆写默认的快捷键, 与下文要讲的 [添加快捷键](#tian-jia-kuai-jie-jian) 不是一个概念  
+单纯的改改改而已, 下面是我个人修改的一套快捷键, 供大家参考  
+
+- Vim 式的案件, 改变窗口布局, 替代原有的 `Super+方向键`:  
+
+```bash
+# 其实还有更丧心病狂的, 可以绑定快捷键, 将窗口放左上角, 右上角, 中间左边, 中间右边的......
+
+gsettings set org.gnome.mutter.keybindings      toggle-tiled-left  "['<Super>h']" # 放左边
+gsettings set org.gnome.desktop.wm.keybindings  maximize           "['<Super>j']" # 最大化
+gsettings set org.gnome.desktop.wm.keybindings  unmaximize         "['<Super>k']" # 最小化
+gsettings set org.gnome.mutter.keybindings      toggle-tiled-right "['<Super>l']" # 放右边
+```
+
+对了, 如果你追求平铺式的话, 扩展可以满足一部分要求, 但肯定比不上专业的窗管...  
+
+- move, resize, kill 一个窗口:  
+
+```bash
+# Move
+gsettings set org.gnome.desktop.wm.keybindings begin-move   "['<Super>x']"        #Default: Alt+F7
+
+# Resize
+gsettings set org.gnome.desktop.wm.keybindings begin-resize "['<Super>r']"        #Default: Alt+F8
+
+# Kill
+gsettings set org.gnome.desktop.wm.keybindings close        "['<Super><Shift>q']" #Default: Alt+F4
+```
+
+- toggle-max, max, min, toggle-fullscreen, show-desktop:  
+
+```bash
+# Toggle max
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized  "['<Super>m']"     #Default: Alt+F10
+
+# Max/Min
+gsettings set org.gnome.desktop.wm.keybindings maximize          "['<Super>j']"
+gsettings set org.gnome.desktop.wm.keybindings unmaximize        "['<Super>k']"
+gsettings set org.gnome.desktop.wm.keybindings minimize          "['<Super>comma']" #Default: Super+H
+
+# Toggle fullscreen
+gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']"     #Default: None
+
+# Show desktop
+gsettings set org.gnome.desktop.wm.keybindings show-desktop      "['<Super>d']"     #Default: None
+```
+
+- 还有套很重要的快捷键, 就是切换工作区了, 搭配消除过渡动画/增加特效的扩展, 流畅感Max:  
+
+```bash
+for i in $(seq 9)
+do
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i   "['<Super><Shift>$i']"
+done
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-10   "['<Super>0']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10     "['<Super><Shift>0']"
+```
+
+- 再比如, 覆写 `run-dialog` 的快捷键 (默认是按Alt-F2, 但太远了...):  
+
+```bash
+gsettings set org.gnome.desktop.wm.keybindings panel-run-dialog "['<Super>c']" #Default: Alt+F2
+```
+
+## 添加快捷键
+此处指的是真正的, 添加自己的快捷键. 不是简单的覆写  
+比如 `Super+Return` 打开一个终端, `Super+B` 打开浏览器, `Super+E` 打开文件管理器...  
+
+废话不多说, 你按下面照猫画虎, 就阔以了:  
+
+```bash
+gp0="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+gp1="org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:\
+/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+
+# Custom Keys
+# 注意!!!!!!!
+# 不要在最后添加逗号
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[     \
+    '$gp0/custom0/', '$gp0/custom1/', '$gp0/custom2/', '$gp0/custom3/'               \
+]"
+
+## Terminal
+gsettings set $gp1/custom0/ name     'Terminal'
+gsettings set $gp1/custom0/ command  'alacritty'
+gsettings set $gp1/custom0/ binding  '<Super>Return'
+
+## Files
+gsettings set $gp1/custom1/ name     'Files'
+gsettings set $gp1/custom1/ command  'nautilus'
+gsettings set $gp1/custom1/ binding  '<Super>e'
+
+## Browser
+gsettings set $gp1/custom2/ name     'Browser'
+gsettings set $gp1/custom2/ command  'microsoft-edge-beta'
+gsettings set $gp1/custom2/ binding  '<Super>b'
+
+## Fcitx5 Reload
+gsettings set $gp1/custom3/ name     'Fcitx5_Reload'
+gsettings set $gp1/custom3/ command  'fcitx5 -r'
+gsettings set $gp1/custom3/ binding  '<Alt>space'
+```
+
+我相信你不会将时间浪费在掉在坑里面了  
+上面的一切已经非常非常全了  
 
 - - -
-
-# 文件管理器
-
-- - -
-
 
 # 加载配置
 我们可以通过 dconf 这个工具, 导入或导出记载着 GNOME 数据的配置文件  
@@ -483,4 +700,5 @@ let picture = ../.background.png; in
 home.file.".face".source = ./.face;
 ```
 
-大功告成!  
+大功告成!  我相信这是最最最最最全的一份 GNOME 入坑指南了  
+
