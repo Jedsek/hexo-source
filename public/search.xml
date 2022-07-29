@@ -93,10 +93,10 @@
 <p><code>cabal</code>: Hsakell的包管理器</p>
 </li>
 </ul>
-<p>(注, 你也可以选择下载另一个叫 <code>stack</code> 的包管理器, 不过我选择了 <code>cabal</code>, 仅此而已)</p>
+<p>(注, 你也可以选择下载另一个叫 <code>stack</code> 的包管理器, 不过我选择了 <code>cabal (官方的)</code>, 仅此而已)</p>
 <p>请确保都能正确显示版本:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ghc -V</span><br><span class="line">ghci -V</span><br><span class="line">cabal -V</span><br></pre></td></tr></table></figure>
-<p>本系列暂时只会涉及到 Haskell 的语法部分， 所以 <code>cabal-install (即上面的 cabal)</code> 这东西不太会用到</p>
+<p>本系列暂时只涉及 Haskell 的语法部分， 大部分时间花在 <code>ghci</code>, 因此 <code>cabal-install (即上面的 cabal)</code> 这东西不太会用到</p>
 <hr>
 <h1 id="dai-ma-bian-ji">代码编辑</h1>
 <p>推荐的代码编辑器:</p>
@@ -108,15 +108,18 @@
 <p>Nvim/Vim</p>
 </li>
 <li class="lvl-2">
+<p>Emacs</p>
+</li>
+<li class="lvl-2">
 <p>Vscode</p>
 </li>
 </ul>
 <p>如果你使用的是Vscode, 直接下载对应的Haskell插件<br>
-如果你使用的是Vim/Helix, 要下载对应的LSP: <code>haskell-language-server</code></p>
+如果你使用的是 <code>Helix/Vim/Emacs</code>, 要下载对应的LSP: <code>haskell-language-server</code></p>
 <p>比如, 我现在用的是Fedora-Linux, 可以这样下载LSP:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dnf copr <span class="built_in">enable</span> -y petersen/haskell-language-server</span><br><span class="line">sudo dnf install -y haskell-language-server</span><br></pre></td></tr></table></figure>
-<p>如果你使用的是 <a href="https://helix-editor.com/">Helix</a>, LSP将会直接启用</p>
-<p>当然, 你也完全可以使用其他代码编辑器, 最好能支持LSP</p>
+<p>如果你使用的是 <a href="https://helix-editor.com/">Helix</a>, LSP将会直接启用<br>
+当然, 你也完全可以使用其他代码编辑器, 最好能支持LSP</p>
 <hr>
 <h1 id="huan-yuan">换源</h1>
 <p>Haskell的包都放在 <a href="https://hackage.haskell.org/">hackage</a>, 下载依赖时, 速度可能极慢<br>
@@ -466,7 +469,7 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 从 Rust, Scala, Java 等语言出发, 相当于实现了 <code>Enum</code> 这个 Trait/Interface</p>
 <p>你甚至可以舍去右端, 写下 <code>[1..]</code> 这样的式子来表达1到无穷<br>
 你还可以生成 [Char], 比如 <code>['a'..'z']</code> 将会生成 <code>&quot;abcdefghijklmnopqrstuvwxyz&quot;</code>, 因为String类型等价于 [Char]</p>
-<p>值得注意的是, 忽略右端点时, 生成的List可能会无穷大, 也可能遇到有界, 我们先假设元素的类型为a<br>
+<p>值得注意的是, 忽略右端点时, 生成的List可能无穷大, 也可能是有界的, 我们先假设元素的类型为a<br>
 当a也是 <code>Bounded</code> 类型类的成员时, 说明这种类型一定有边界, 比如 <code>Int</code>, <code>Char</code> 等<br>
 不然的话, a将无界, 比如 <code>[1..]</code> 便是一个真正的, 从1到正无穷的List, 类型为 <code>Num a =&gt; [a]</code></p>
 <p>当你看到这里时, 可能会有个疑问: 1 的类型不应该是Int吗?  为什么会是 <code>Num a =&gt; a</code> 呢?</p>
@@ -975,7 +978,7 @@ GNOME版的 <code>kdeconnect</code>, 用于电脑与手机互连 (一个网下),
 <p><strong>注意</strong><br>
 以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 <code>Just-perfection</code> 扩展<br>
 此扩展得到官方支持, 可以将桌面 <code>化简</code>, 包括Dash<br>
-如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的<a href="#jin-yong-kuai-jie-jian">自定义快捷键/禁用</a></p>
+如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的<a href="#jin-yong-kuai-jie-jian">禁用快捷键</a></p>
 </div>
 <ul class="lvl-0">
 <li class="lvl-2">
