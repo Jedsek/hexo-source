@@ -166,7 +166,7 @@ btn_dec.connect_clicked(|_| {
 - - -
 
 # clone!
-Yeah, 这个宏的名字就叫clone: `glib::clone`  
+Yeah, 这个宏的名字就叫clone: `glib::clone`, 你可以查看对应的文档: [glib::clone](https://docs.rs/glib/latest/glib/macro.clone.html)  
 请务必注意use必须像下面这样写, 你得先 `use gtk::glib`, 随后 `use glib::clone`:  
 
 ```rust
@@ -174,8 +174,8 @@ use std::cell::Cell;
 use std::rc::Rc;
 
 use glib::clone;
-use gtk::prelude::*;
-use gtk::{glib, Application, ApplicationWindow, Button, Orientation};
+use gtk::prelude::*;   // 这里
+use gtk::{glib, Application, ApplicationWindow, Button, Orientation};  // 这里
 ```
 
 如何使用这个宏呢?  如下, 明白怎么写就完事了, 还是蛮简单的:  
@@ -204,13 +204,20 @@ btn_dec.connect_clicked(clone!(@strong btn_inc => move |_| {
 - 两个闭包中, 我们都创建了另一个按钮的 strong-ref  
 我们获取了多所有权, 就像变量 num 一样, 只有单所有权时, 被move到闭包后的变量在之后会被使用, 编译报错, 如 btn_dec  
 
-至此, 已经可以顺利实现功能了, 但仍然有一个小问题, 那就是循环引用导致内存泄漏!  
-Rust只保障内存安全, 不保障内存不泄漏, 让我们看看问题所在  
-~~(大佬们可能一眼就看出来哪里循环引用了...)~~
+注意:  
+`clone!`, 在尝试升级 weak-ref 时, 若升级失败, 闭包将直接提前返回一个可选值, 若可选值未指定, 则默认返回 `()` 值  
+详情请见文档: [glib::clone](https://docs.rs/glib/latest/glib/macro.clone.html)  
+
+
+至此, 已经顺利实现了功能, 但仍有个小问题, 那就是:  
+循环引用导致内存泄漏!  
 
 - - -
 
 # 循环引用
+Rust只保障内存安全, 不保障内存不泄漏, 让我们看看问题所在  
+~~(大佬们可能一眼就看出来哪里循环引用了...)~~
+
 贴一份刚刚的代码:  
 
 ```rust
@@ -227,8 +234,61 @@ btn_dec.connect_clicked(clone!(@strong btn_inc => move |_| {
 
 说起来也很简单, 那就是 btn_inc 产生了对 btn_dec 的 strong-ref, btn_dec 也产生了对 btn_inc 的 strong-ref  
 两个 strong 互相指向, 导致每个变量的强引用的计数都至少是1, 永远不会归零, 永远不会释放内存  
+这就是 `循环引用`
 
-有那么一小块内存永远被它们抢走了, 在整个程序运行期间都得不到复用, 这就是 `内存泄漏`  
+由于 `循环引用`, 一小块内存在整个程序运行期间, 永远得不到复用, 这就是 `内存泄漏`  
 
-如何解决这个问题? 非常简单, 把 strong-ref 改成 weak-ref 不就Ok了?  
+如何解决这个问题? 非常简单, 把 strong-ref 改成 weak-ref 不就Ok了? 下面是代码:  
 
+```rust
+let num = Rc::new(Cell::new(0));
+btn_inc.connect_clicked(clone!(@weak num, @weak btn_dec => move |_| {
+    num.set(num.get() + 1);
+    btn_dec.set_label(&num.get().to_string());
+}));
+btn_dec.connect_clicked(clone!(@weak btn_inc => move |_| {
+    num.set(num.get() - 1);
+    btn_inc.set_label(&num.get().to_string());
+}));
+```
+
+嘿! num 已经被移动到第二个闭包, 因此不用担心它, 现在来看看 `btn_inc`/`btn_dec`  
+在闭包中, 对这两个btn都是弱引用, 当 `build_ui` 调用完毕后, 它们应该会自动drop掉 (因为作用域)  
+
+但若改成 weak-ref, `btn_inc`/`btn_dec` 不会因缺少 strong-ref 而出现问题吗?  
+答案是不会, 原因是以下两段代码  
+
+
+- 第一段:  
+
+```rust
+let gtk_box = gtk::Box::builder()
+    .orientation(Orientation::Vertical)
+    .build();
+gtk_box.append(&btn_inc);
+gtk_box.append(&btn_dec);
+```
+
+- 第二段:  
+
+```rust
+let win = ApplicationWindow::builder()
+    .application(app)
+    .title("My Gtk App")
+    .child(&gtk_box)
+    .build();
+win.present();
+```
+
+第一段中, `btn_inc`/`btn_dec` 的引用交给了 `append()`  
+第二段中, `gtk_box` 的引用交给了 `child()`  
+
+还记得我们已经强调过很多遍的事实吗? GObject 具有引用计数的特点, 而这些 Widget 都是其子类, 也具有该特性  
+`append()`, `child()`, 都保持了对这些 Widget 的强引用, 保持了它们的活性:  
+`gtk_box` 持有对 `btn` 的 strong-ref, `win` 持有对 `gtk_box` 的 strong-ref, 而 win (窗口), 一直显示着, 说明win一直活着  
+win活着, 导致 gtk_box 也会活着, gtk_box 活着, 导致 btn 也会活着  
+
+总而言之, 对待这些 Widget 时, 只需要尽可能地保持 weak-ref, 而对待自己的数据, 则需要多考虑一下, 仅此而已  
+尽可能保持 weak-ref, 就能够避免循环引用而导致内存泄漏了!  
+
+本节到此结束, 要鸽一会了, 我们下节见 :)

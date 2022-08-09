@@ -2680,9 +2680,9 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 所幸 Gtk4 的开发人员, 已经为我们提供了一个过程宏, 专门化简手动clone的繁琐操作</p>
 <hr>
 <h1 id="clone">clone!</h1>
-<p>Yeah, 这个宏的名字就叫clone: <code>glib::clone</code><br>
+<p>Yeah, 这个宏的名字就叫clone: <code>glib::clone</code>, 你可以查看对应的文档: <a href="https://docs.rs/glib/latest/glib/macro.clone.html">glib::clone</a><br>
 请务必注意use必须像下面这样写, 你得先 <code>use gtk::glib</code>, 随后 <code>use glib::clone</code>:</p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cell::Cell;</span><br><span class="line"><span class="keyword">use</span> std::rc::Rc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> glib::clone;</span><br><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;glib, Application, ApplicationWindow, Button, Orientation&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cell::Cell;</span><br><span class="line"><span class="keyword">use</span> std::rc::Rc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> glib::clone;</span><br><span class="line"><span class="keyword">use</span> gtk::prelude::*;   <span class="comment">// 这里</span></span><br><span class="line"><span class="keyword">use</span> gtk::&#123;glib, Application, ApplicationWindow, Button, Orientation&#125;;  <span class="comment">// 这里</span></span><br></pre></td></tr></table></figure>
 <p>如何使用这个宏呢?  如下, 明白怎么写就完事了, 还是蛮简单的:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = Rc::new(Cell::new(<span class="number">0</span>));</span><br><span class="line">btn_inc.connect_clicked(clone!(@weak num, @strong btn_dec =&gt; <span class="keyword">move</span> |_| &#123;</span><br><span class="line">    num.set(num.get() + <span class="number">1</span>);</span><br><span class="line">    btn_dec.set_label(&amp;num.get().to_string());</span><br><span class="line">&#125;));</span><br><span class="line">btn_dec.connect_clicked(clone!(@strong btn_inc =&gt; <span class="keyword">move</span> |_| &#123;</span><br><span class="line">    num.set(num.get() - <span class="number">1</span>);</span><br><span class="line">    btn_inc.set_label(&amp;num.get().to_string());</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
 <p>使用 <code>clone!</code> 这个宏, 生成了变量的克隆值, 并指定该克隆到底是强引用(strong), 还是弱引用(weak)<br>
@@ -2699,17 +2699,48 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 我们获取了多所有权, 就像变量 num 一样, 只有单所有权时, 被move到闭包后的变量在之后会被使用, 编译报错, 如 btn_dec</p>
 </li>
 </ul>
-<p>至此, 已经可以顺利实现功能了, 但仍然有一个小问题, 那就是循环引用导致内存泄漏!<br>
-Rust只保障内存安全, 不保障内存不泄漏, 让我们看看问题所在<br>
-<s>(大佬们可能一眼就看出来哪里循环引用了…)</s></p>
+<p>注意:<br>
+<code>clone!</code>, 在尝试升级 weak-ref 时, 若升级失败, 闭包将直接提前返回一个可选值, 若可选值未指定, 则默认返回 <code>()</code> 值<br>
+详情请见文档: <a href="https://docs.rs/glib/latest/glib/macro.clone.html">glib::clone</a></p>
+<p>至此, 已经顺利实现了功能, 但仍有个小问题, 那就是:<br>
+循环引用导致内存泄漏!</p>
 <hr>
 <h1 id="xun-huan-yin-yong">循环引用</h1>
+<p>Rust只保障内存安全, 不保障内存不泄漏, 让我们看看问题所在<br>
+<s>(大佬们可能一眼就看出来哪里循环引用了…)</s></p>
 <p>贴一份刚刚的代码:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = Rc::new(Cell::new(<span class="number">0</span>));</span><br><span class="line">btn_inc.connect_clicked(clone!(@weak num, @strong btn_dec =&gt; <span class="keyword">move</span> |_| &#123;</span><br><span class="line">    num.set(num.get() + <span class="number">1</span>);</span><br><span class="line">    btn_dec.set_label(&amp;num.get().to_string());</span><br><span class="line">&#125;));</span><br><span class="line">btn_dec.connect_clicked(clone!(@strong btn_inc =&gt; <span class="keyword">move</span> |_| &#123;</span><br><span class="line">    num.set(num.get() - <span class="number">1</span>);</span><br><span class="line">    btn_inc.set_label(&amp;num.get().to_string());</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
 <p>说起来也很简单, 那就是 btn_inc 产生了对 btn_dec 的 strong-ref, btn_dec 也产生了对 btn_inc 的 strong-ref<br>
-两个 strong 互相指向, 导致每个变量的强引用的计数都至少是1, 永远不会归零, 永远不会释放内存</p>
-<p>有那么一小块内存永远被它们抢走了, 在整个程序运行期间都得不到复用, 这就是 <code>内存泄漏</code></p>
-<p>如何解决这个问题? 非常简单, 把 strong-ref 改成 weak-ref 不就Ok了?</p>
+两个 strong 互相指向, 导致每个变量的强引用的计数都至少是1, 永远不会归零, 永远不会释放内存<br>
+这就是 <code>循环引用</code></p>
+<p>由于 <code>循环引用</code>, 一小块内存在整个程序运行期间, 永远得不到复用, 这就是 <code>内存泄漏</code></p>
+<p>如何解决这个问题? 非常简单, 把 strong-ref 改成 weak-ref 不就Ok了? 下面是代码:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = Rc::new(Cell::new(<span class="number">0</span>));</span><br><span class="line">btn_inc.connect_clicked(clone!(@weak num, @weak btn_dec =&gt; <span class="keyword">move</span> |_| &#123;</span><br><span class="line">    num.set(num.get() + <span class="number">1</span>);</span><br><span class="line">    btn_dec.set_label(&amp;num.get().to_string());</span><br><span class="line">&#125;));</span><br><span class="line">btn_dec.connect_clicked(clone!(@weak btn_inc =&gt; <span class="keyword">move</span> |_| &#123;</span><br><span class="line">    num.set(num.get() - <span class="number">1</span>);</span><br><span class="line">    btn_inc.set_label(&amp;num.get().to_string());</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>嘿! num 已经被移动到第二个闭包, 因此不用担心它, 现在来看看 <code>btn_inc</code>/<code>btn_dec</code><br>
+在闭包中, 对这两个btn都是弱引用, 当 <code>build_ui</code> 调用完毕后, 它们应该会自动drop掉 (因为作用域)</p>
+<p>但若改成 weak-ref, <code>btn_inc</code>/<code>btn_dec</code> 不会因缺少 strong-ref 而出现问题吗?<br>
+答案是不会, 原因是以下两段代码</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>第一段:</p>
+</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> gtk_box = gtk::<span class="built_in">Box</span>::builder()</span><br><span class="line">    .orientation(Orientation::Vertical)</span><br><span class="line">    .build();</span><br><span class="line">gtk_box.append(&amp;btn_inc);</span><br><span class="line">gtk_box.append(&amp;btn_dec);</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>第二段:</p>
+</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> win = ApplicationWindow::builder()</span><br><span class="line">    .application(app)</span><br><span class="line">    .title(<span class="string">&quot;My Gtk App&quot;</span>)</span><br><span class="line">    .child(&amp;gtk_box)</span><br><span class="line">    .build();</span><br><span class="line">win.present();</span><br></pre></td></tr></table></figure>
+<p>第一段中, <code>btn_inc</code>/<code>btn_dec</code> 的引用交给了 <code>append()</code><br>
+第二段中, <code>gtk_box</code> 的引用交给了 <code>child()</code></p>
+<p>还记得我们已经强调过很多遍的事实吗? GObject 具有引用计数的特点, 而这些 Widget 都是其子类, 也具有该特性<br>
+<code>append()</code>, <code>child()</code>, 都保持了对这些 Widget 的强引用, 保持了它们的活性:<br>
+<code>gtk_box</code> 持有对 <code>btn</code> 的 strong-ref, <code>win</code> 持有对 <code>gtk_box</code> 的 strong-ref, 而 win (窗口), 一直显示着, 说明win一直活着<br>
+win活着, 导致 gtk_box 也会活着, gtk_box 活着, 导致 btn 也会活着</p>
+<p>总而言之, 对待这些 Widget 时, 只需要尽可能地保持 weak-ref, 而对待自己的数据, 则需要多考虑一下, 仅此而已<br>
+尽可能保持 weak-ref, 就能够避免循环引用而导致内存泄漏了!</p>
+<p>本节到此结束, 要鸽一会了, 我们下节见 😃</p>
 ]]></content>
       <tags>
         <tag>Rust</tag>
