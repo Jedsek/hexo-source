@@ -15,10 +15,11 @@ quicklink: true
 # Rust
 Rust 是一门高性能, 工具链极其友善, 类型系统丰富的编程语言
 
-- [异步](/categories/rust-async)
+- [Clap|命令行](/posts/rust-clap/guide)
 - [声明宏](/categories/rust-decl-macro)
-- [TUI](/categories/rust-tui)
 - [GTK4](/categories/rust-gtk4)
+- [异步](/categories/rust-async)
+- [TUI](/categories/rust-tui)
 
 
 # Haskell

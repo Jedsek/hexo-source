@@ -1,7 +1,7 @@
 ---
 title: "rust-gtk4-p3: GObject-内存管理"
 abbrlink: posts/rust-gtk4/p3
-date: 2022-01-30 12:01:22
+date: 2022-03-30 12:01:22
 top: 9697
 tags: [Rust, GUI]
 keywords: [Rust, GUI, Gtk4]
@@ -13,7 +13,7 @@ keywords: [Rust, GUI, Gtk4]
 GNOME入坑指南: [gnome-guide](/posts/gnome/guide)
 
 # Widget
-任何一个Gtk应用, 都由许多部件组成, 而这些部件, 就叫 `Widget`, 比如我们上一节的 `ApplicationWindow` 就是一个 Widget  
+任何Gtk应用, 都由许多部件(Widget)组成, 比如窗口、对话框、按钮、多行文本、容器等, 因此 Widget 是个抽象概念  
 再比如, `Button(按钮)`, `Container(容器)`, 都属于 `Widget`  
 
 [Widget Gallery](https://docs.gtk.org/gtk4/visual_index.html) 是Gtk提供的网站, 你可以通过浏览它, 更好地选择 `Widget`  

@@ -3,7 +3,7 @@ title: "GNOME 入坑指南"
 abbrlink: posts/gnome/guide
 hidden: false
 date: 2022-07-20 11:22:42
-top: 10999
+top: 20999
 tags: [GNOME]
 keywords: [GNOME, 桌面环境, DE]
 ---
