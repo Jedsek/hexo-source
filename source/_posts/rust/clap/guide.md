@@ -8,9 +8,16 @@ tags: [Rust, Clap, CLI]
 keywords: [Rust, Clap, CLI]
 ---
 > 用 Rust 中的 Clap, 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出等功能  
+<!-- more -->
 
 前置知识: Rust基础  
 完整代码: [github-jedsek/rustwc](https://github.com/Jedsek/rust-wc)
+
+# 成品展示
+
+![彩色的表格输出, 根据参数进行统计](/images/clap-rwc.png)
+
+- - -
 
 # CLI
 CLI, 是 `command-line interface` 的简称, 意思是命令行界面, 和 GUI/TUI 是一个道理  
@@ -20,7 +27,7 @@ GNU 项目为我们提供了非常多的开源软件, 比如一个叫做 `wc` �
 等一会, 我们就要使用 Rust 语言, 搭配今天的主角: clap, 实现美化版的 `wc` 命令  
 
 ::: tips
-**注意**  
+**注意:**  
 cli 可以代表抽象的界面, 也可以指代具体的某个程序  
 而后文中的cli, 一般情况下都指代某个具体的命令行程序, 比如 ls/cp 等
 :::

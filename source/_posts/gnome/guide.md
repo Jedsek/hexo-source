@@ -11,7 +11,7 @@ keywords: [GNOME, 桌面环境, DE]
 <!-- more -->
 
 ::: tips
-**提示**
+**注意:**  
 本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置  
 请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新  
 目前, 该篇文章的GNOME 版本为: **42**  
@@ -143,7 +143,8 @@ gsettings set org.gnome.shell enabled-extensions $uuid_list
 {% endtabs %}
 
 假设使用Bash: 执行 `sh install-extensions.sh exts_list` 下载该目录下的所有插件  
-**注意 logout, 再登进来**  
+
+**注意: 先logout, 再登进来**  
 
 也可以通过dbus安装, 但获取uuid还得解压zip, 何不直接像上面那样手动安装? 所以不推荐:  
 
@@ -204,7 +205,7 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@exten
 ```
 
 你也可以参考或[**直接加载**](#jia-zai-pei-zhi)我博客下的 [**dconf.settings**](/downloads/gnome/dconf.settings)  
-**注意**: 如何你选择直接加载我的配置, 请注意 `picture-uri` 符合自己实际  
+**注意:** 如何你选择直接加载我的配置, 请注意 `picture-uri` 符合自己实际  
 
 - - -
 
@@ -445,7 +446,7 @@ gsettings set org.gnome.shell favorite-apps "[]"
 ```
 
 ::: tips
-**注意**
+**注意:**  
 以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 `Just-perfection` 扩展  
 此扩展得到官方支持, 可以将桌面 `化简`, 包括Dash  
 如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[禁用快捷键](#jin-yong-kuai-jie-jian)  
@@ -468,7 +469,7 @@ gsettings set org.gnome.desktop.wm.preferences workspace-names "['Browser', 'Ter
 当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash  
 
 ::: tips
-**注意**  
+**注意:**  
 快捷键之间有冲突的话, 可能无法生效, 请通过 `gnome-control-center keyboard` 查看快捷键冲突  
 :::
 
