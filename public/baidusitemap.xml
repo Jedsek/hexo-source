@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p3.html</loc>
+    <lastmod>2022-09-12</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p2.html</loc>
+    <lastmod>2022-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p1.html</loc>
+    <lastmod>2022-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-clap/guide.html</loc>
+    <lastmod>2022-08-16</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p4.html</loc>
+    <lastmod>2022-08-09</lastmod>
+  </url>
+  <url>
     <loc>https://jedsek.xyz/posts/gnome/guide.html</loc>
     <lastmod>2022-07-20</lastmod>
   </url>
@@ -30,7 +50,7 @@
   </url>
   <url>
     <loc>https://jedsek.xyz/posts/rust-gtk4/p3.html</loc>
-    <lastmod>2022-01-30</lastmod>
+    <lastmod>2022-03-30</lastmod>
   </url>
   <url>
     <loc>https://jedsek.xyz/posts/rust-gtk4/p2.html</loc>

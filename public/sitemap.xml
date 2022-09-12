@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p3</loc>
+    
+    <lastmod>2022-09-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p2</loc>
+    
+    <lastmod>2022-09-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p1</loc>
+    
+    <lastmod>2022-09-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-clap/guide</loc>
+    
+    <lastmod>2022-08-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p4</loc>
+    
+    <lastmod>2022-08-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jedsek.xyz/posts/gnome/guide</loc>
     
     <lastmod>2022-07-20</lastmod>
@@ -67,7 +112,7 @@
   <url>
     <loc>https://jedsek.xyz/posts/rust-gtk4/p3</loc>
     
-    <lastmod>2022-01-30</lastmod>
+    <lastmod>2022-03-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -184,7 +229,7 @@
 
   <url>
     <loc>https://jedsek.xyz/</loc>
-    <lastmod>2022-08-09</lastmod>
+    <lastmod>2022-09-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -192,49 +237,70 @@
   
   <url>
     <loc>https://jedsek.xyz/tags/GNOME/</loc>
-    <lastmod>2022-08-09</lastmod>
+    <lastmod>2022-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/%E9%AB%98%E4%B8%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2022-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jedsek.xyz/tags/Haskell/</loc>
-    <lastmod>2022-08-09</lastmod>
+    <lastmod>2022-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jedsek.xyz/tags/Rust/</loc>
-    <lastmod>2022-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/Macro/</loc>
-    <lastmod>2022-08-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/GUI/</loc>
-    <lastmod>2022-08-09</lastmod>
+    <lastmod>2022-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jedsek.xyz/tags/Async/</loc>
-    <lastmod>2022-08-09</lastmod>
+    <lastmod>2022-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Clap/</loc>
+    <lastmod>2022-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/CLI/</loc>
+    <lastmod>2022-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
+    <lastmod>2022-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jedsek.xyz/tags/TUI/</loc>
-    <lastmod>2022-08-09</lastmod>
+    <lastmod>2022-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/GUI/</loc>
+    <lastmod>2022-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

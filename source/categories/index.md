@@ -34,6 +34,7 @@ GNOME, 是一个简洁, 绚丽, 优雅的桌面环境
 **注意:** 下面的网址可能会频繁变动, 建议从本导航页点击
 [x]  [p1: 数据与信息](/posts/high-school-it/p1)
 [x]  [p2: 基础科普与环境搭建](/posts/high-school-it/p2)
+[ ]  [p3: python基础语法](/posts/high-school-it/p3)
 
 - - -
 

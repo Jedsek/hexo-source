@@ -1,6 +1,581 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>GNOME 入坑指南</title>
+    <url>/posts/gnome/guide.html</url>
+    <content><![CDATA[<blockquote>
+<p>关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境</p>
+</blockquote>
+<span id="more"></span>
+<div class="tips">
+<p><strong>注意:</strong><br>
+本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置<br>
+请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新<br>
+目前, 该篇文章的GNOME 版本为: <strong>42</strong></p>
+</div>
+<h1 id="cheng-pin-zhan-shi">成品展示</h1>
+<p>2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前…<br>
+我个人认为简洁+美观比较重要, 当然你也可以自行修改进行DIY, 请自己动手, 丰衣足食吧!</p>
+<details open>
+<summary><span class="pre-summary">&nbsp;</span><strong>以下是成品展示, 请点击隐藏/展开图像</strong></summary><p><img data-src="/images/gnome/overview.png" alt="按下Super后的Overview"></p>
+</details>
+<hr>
+<h1 id="dconf-amp-amp-gsettings">dconf &amp;&amp; gsettings</h1>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>dconf</code>:<br>
+是一套基于键的配置系统, 十分高效, 相当于 Windows 下的注册表</p>
+</li>
+<li class="lvl-2">
+<p><code>gsettings</code>:<br>
+是 GNOME-DE 下的高级API, 是命令行工具/前端, 用来简化对 dconf 的操作</p>
+</li>
+</ul>
+<p>你可能在年份久远的文章中听说过 <code>gconf</code>, 这是什么? 与 <code>dconf</code> 有啥区别?<br>
+答: 其作用也类似注册表, 但现在已经停止使用, 被效率更高的 <code>dconf</code> 所取代</p>
+<p>接下来的大部分配置, 都会使用 <code>gsettings</code></p>
+<hr>
+<h1 id="hong-mo-ban">触摸板</h1>
+<p>触摸板可是笔记本党的灵魂啊, 尤其对于我这种万年不用鼠标, 除非打CSGO <s>(但CS我也能用触摸板玩)</s></p>
+<h2 id="pei-zhi" id="配置">配置</h2>
+<p>有一些 Linux 发行版的 GNOME比较贴近上游, <code>轻击模拟鼠标点击</code> 默认未开启<br>
+这导致触摸板很难用, 得按下去才能模拟鼠标的点击</p>
+<p>你想一想, 你想选中一段文字, 得重重按下触摸板, 在巨大的摩擦力下移动手指…<br>
+而且, 默认的触摸板, 速度可能比较慢, 反正我不适应, 因此需要修改…<br>
+还有就是, 触摸板在打字的时候默认是禁用的, 这对有时会用触摸板打CSGO的我来说很愤怒…</p>
+<p>你可以在终端输入如下命令进行调整:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.peripherals.touchpad tap-to-click <span class="literal">true</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.peripherals.touchpad speed 0.57</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.peripherals.touchpad disable-while-typing <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>分别对应:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>轻击模拟鼠标点击, 默认为false</p>
+</li>
+<li class="lvl-2">
+<p>调整触摸板速度, 默认为0</p>
+</li>
+<li class="lvl-2">
+<p>打字时禁用触摸板, 默认为true</p>
+</li>
+</ul>
+<h2 id="shou-shi" id="手势">手势</h2>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>单指: 移动鼠标</p>
+</li>
+<li class="lvl-2">
+<p>双指上下: 翻页</p>
+</li>
+<li class="lvl-2">
+<p>三指左右: 切换Workspace</p>
+</li>
+<li class="lvl-2">
+<p>三指上: 打开Overview (不常用, 按Super更快)</p>
+</li>
+<li class="lvl-2">
+<p>三指下: 显示任务栏 (当你隐藏任务栏时)</p>
+</li>
+</ul>
+<hr>
+<h1 id="an-zhuang-kuo-zhan">安装扩展</h1>
+<p>GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的自由与强大, 说是一半的灵魂, 也不为过之<br>
+我将先介绍如何安装/使用它们, 因为后面需要用到扩展</p>
+<p>有两种安装方法, 一种从命令行安装, 一种从浏览器安装<br>
+我更倾向于前者, 因为不需要下载对应的东西, 适合快速部署, 但两者我都会介绍</p>
+<h2 id="cong-ming-ling-xing" id="从命令行">从命令行</h2>
+<div class="tips">
+<p><strong>提示</strong><br>
+请确保拥有以下命令: unzip, jq, 有些发行版默认连 unzip 都没有…<br>
+下载成功后, 切记要 logout, 然后再登进来</p>
+</div>
+<p>每个GNOME扩展都拥有独一无二的, 名为 <code>uuid</code> 的标识符, 我们可以通过 <code>uuid</code>, 下载扩展</p>
+<p>你可以在 <a href="https://extensions.gnome.org/">Extensions-GNOME</a> 这个网站上, 浏览并下载扩展<br>
+请将以 .zip 结尾的扩展放在同一目录下, 假设该目录叫 <code>exts_list</code></p>
+<p>下面是 Bash/Fish 脚本, 传入该目录的路径, 自动进行安装:</p>
+<div class="tabs" id="install-extensions"><ul class="nav-tabs"><li class="tab active"><a href="#install-extensions-1">Bash</a></li><li class="tab"><a href="#install-extensions-2">Fish</a></li></ul><div class="tab-content"><div class="tab-pane active" id="install-extensions-1"><figure class="highlight bash"><figcaption><span>install-extensions.sh</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"><span class="built_in">declare</span> -a UUID_LIST</span><br><span class="line">EXTS_DIR=<span class="variable">$HOME</span>/.<span class="built_in">local</span>/share/gnome-shell/extensions</span><br><span class="line">EXTS_LIST=<span class="variable">$&#123;1&#125;</span></span><br><span class="line"><span class="function"><span class="title">str_join</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;$*&quot;</span> | sed <span class="string">&#x27;s/&quot;&quot;/&quot;,&quot;/g&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">mkdir -p <span class="variable">$EXTS_DIR</span></span><br><span class="line">chmod -R 755 <span class="variable">$HOME</span>/.<span class="built_in">local</span>/</span><br><span class="line"><span class="keyword">for</span> EXT <span class="keyword">in</span> <span class="variable">$EXTS_LIST</span>/*.zip</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  UUID=$(unzip -p <span class="variable">$EXT</span> metadata.json | jq -r <span class="string">&quot;.uuid&quot;</span>)</span><br><span class="line">  mkdir -p <span class="variable">$EXTS_DIR</span>/<span class="variable">$UUID</span></span><br><span class="line">  unzip -q -o <span class="variable">$EXT</span> -d <span class="variable">$EXTS_DIR</span>/<span class="variable">$UUID</span></span><br><span class="line">  UUID_LIST+=<span class="string">&quot;\&quot;<span class="variable">$UUID</span>\&quot;&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">UUID_LIST=[$(str_join <span class="variable">$&#123;UUID_LIST[@]&#125;</span>)]</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell enabled-extensions <span class="variable">$&#123;UUID_LIST[@]&#125;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="install-extensions-2"><figure class="highlight bash"><figcaption><span>install-extensions.fish</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> exts_list <span class="variable">$argv</span>[1]</span><br><span class="line"><span class="built_in">set</span> exts_dir <span class="variable">$HOME</span>/.<span class="built_in">local</span>/share/gnome-shell/extensions/</span><br><span class="line"><span class="built_in">set</span> uuid_list</span><br><span class="line">mkdir -p <span class="variable">$exts_dir</span></span><br><span class="line"><span class="keyword">for</span> ext <span class="keyword">in</span> exts_list/*.zip</span><br><span class="line">  <span class="built_in">set</span> uuid ( unzip -p <span class="variable">$ext</span> metadata.json | jq -r <span class="string">&quot;.uuid&quot;</span> )</span><br><span class="line">  mkdir -p <span class="variable">$ext_dir</span>/<span class="variable">$uuid</span></span><br><span class="line">  unzip -q -o <span class="variable">$ext</span> -d <span class="variable">$ext_dir</span>/<span class="variable">$uuid</span></span><br><span class="line">  <span class="built_in">set</span> -a uuid_list \<span class="string">&#x27;$uuid\&#x27;</span></span><br><span class="line">end</span><br><span class="line"><span class="built_in">set</span> uuid_list [( string join <span class="string">&quot;,&quot;</span> <span class="variable">$uuid_list</span> )]</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell enabled-extensions <span class="variable">$uuid_list</span></span><br></pre></td></tr></table></figure></div></div></div>
+<p>假设使用Bash: 执行 <code>sh install-extensions.sh exts_list</code> 下载该目录下的所有插件</p>
+<p><strong>注意: 先logout, 再登进来</strong></p>
+<p>也可以通过dbus安装, 但获取uuid还得解压zip, 何不直接像上面那样手动安装? 所以不推荐:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dbus-send --<span class="built_in">type</span>=method_call --dest=org.gnome.Shell /org/gnome/Shell \</span><br><span class="line">  org.gnome.Shell.Extensions.InstallRemoteExtension string:<span class="string">&#x27;xxxxx_uuid&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="cong-liu-lan-qi" id="从浏览器">从浏览器</h2>
+<p>该方法其实也蛮方便的, 但不适合快速部署<br>
+你需要安装两个玩意, 才能直接从 <a href="https://extensions.gnome.org/">Extension-GNOME</a> 上直接下载</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>chrome-gnome-shell</code>:<br>
+本地软件, 你可以通过包管理器, 直接搜这个名字</p>
+</li>
+<li class="lvl-2">
+<p><code>GNOME Shell integration</code>:<br>
+浏览器插件, Chrome/Firefox 的浏览器商店都有它<br>
+Edge 的插件商店里无, 但可以下载 iGuge (谷歌访问助手), 然后下Chrome的插件</p>
+</li>
+</ul>
+<p>一个在本地, 一个在浏览器,  因此可以支持你从 <a href="https://extensions.gnome.org/">网站</a> 上 直接安装到本地</p>
+<hr>
+<h1 id="cha-kan-pei-zhi-kuo-zhan">查看/配置扩展</h1>
+<p>通过 <code>gnome-extensions</code> 这个命令, 我们可以查看/配置当前扩展</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取帮助, `Command` 为可选项</span></span><br><span class="line">gnome-extensions <span class="built_in">help</span> [Command]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看扩展列表</span></span><br><span class="line">gnome-extensions list --user    <span class="comment"># 查看用户级扩展</span></span><br><span class="line">gnome-extensions list --system  <span class="comment"># 查看系统级扩展</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看扩展的信息</span></span><br><span class="line">gnome-extensions info launch-new-instance@gnome-shell-extensions.gcampax.github.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用/禁用某个扩展</span></span><br><span class="line">gnome-extensions <span class="built_in">enable</span> nothing-to-say@extensions.gnome.wouter.bolsterl.ee</span><br><span class="line">gnome-extensions <span class="built_in">disable</span> nothing-to-say@extensions.gnome.wouter.bolsterl.ee</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置某个扩展 (打开 GUI 界面)</span></span><br><span class="line">gnome-extensions prefs nothing-to-say@extensions.gnome.wouter.bolsterl.ee</span><br></pre></td></tr></table></figure>
+<p>或者通过 <code>gsettings</code> 来配置某个扩展, 但不推荐, 因为麻烦:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看某个扩展的所有选项</span></span><br><span class="line">gsettings --schemadir ~/.<span class="built_in">local</span>/share/gnome-shell/extensions/nothing-to-say@extensions.gnome.wouter.bolsterl.ee/schemas/  \</span><br><span class="line">  list-recursively org.gnome.shell.extensions.nothing-to-say</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 得到/重置/设置 某个扩展的某选项当前的值 (根据上面这条命令查看所有选项)</span></span><br><span class="line">gsettings --schemadir ~/.<span class="built_in">local</span>/share/gnome-shell/extensions/nothing-to-say@extensions.gnome.wouter.bolsterl.ee/schemas/  \</span><br><span class="line">  get    org.gnome.shell.extensions.nothing-to-say show-osd</span><br><span class="line"><span class="comment"># reset  org.gnome.shell.extensions.nothing-to-say show-osd</span></span><br><span class="line"><span class="comment"># set    org.gnome.shell.extensions.nothing-to-say show-osd</span></span><br></pre></td></tr></table></figure>
+<p>你也可以参考或<a href="#jia-zai-pei-zhi"><strong>直接加载</strong></a>我博客下的 <a href="/downloads/gnome/dconf.settings"><strong>dconf.settings</strong></a><br>
+<strong>注意:</strong> 如何你选择直接加载我的配置, 请注意 <code>picture-uri</code> 符合自己实际</p>
+<hr>
+<h1 id="tui-jian-de-kuo-zhan">推荐的扩展</h1>
+<p>以下是我目前正在使用, 推荐的扩展</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/16/auto-move-windows/">auto-move-windows</a>:<br>
+通过指定窗口规则, 使得打开某个app时, 将其自动分配到特定工作区 (需要指定的.desktop文件)<br>
+<strong>无图片</strong></p>
+</li>
+</ul>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/905/refresh-wifi-connections/">refresh-wifi-connections</a><br>
+当你通过右上角的菜单选择 WIFI 时, 会多出来一个刷新键</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/refresh-wifi-connections.png" alt="refresh-wifi-connections"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/1446/transparent-window-moving/">transparent-window-moving</a><br>
+在对窗口进行移动/调整大小时, 使窗口变得透明</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/transparent-window-moving.png" alt="transparent-window-moving"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3843/just-perfection/">just-perfection</a><br>
+我最喜欢的一个扩展, 用于对界面进行大量自定义与精简<br>
+比如, 可以隐藏 Dash (按Super后底部的一行), 改变顶栏元素等</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview.png" alt="just-perfection"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3139/eye-extended/">eye-extended</a><br>
+很有趣的扩展, 平时当作小挂件, 但危机时或许可以派上用场<br>
+在顶栏显示一个眼睛, 眼珠子会一直注视着你的鼠标, 点一下会出现以你鼠标为中心的黄色圆圈</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/eye-extended.png" alt="eye-extended"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/1113/nothing-to-say/">nothing-to-say</a><br>
+用于切断/恢复声音的输入, 对我来说蛮有用的:<br>
+当与同学打游戏, 撞上爸妈查房, 立刻按下 <code>Super+\</code>, 防止爸妈训我的声音流入同学耳中, 维护尊严 😃</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/nothing-to-say.png" alt="nothing-to-say"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/5090/space-bar/">space-bar</a><br>
+模仿 I3/Sway/Bspwm 等窗口管理器, 将左上角烦人的 <code>Activities</code> 替换为 <code>Workspaces</code>, 有些类似的扩展, 但这个最好</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/space-bar.png" alt="space-bar"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4696/static-background-in-overview/">static-background-in-overview</a><br>
+在按下 <code>Super</code> 进入 <code>Overview</code> 时, 背景图片能够填补四边的空缺, 比起默认的四周黑框框更加好看</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview.png" alt="static-background-in-overview"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4788/workspace-switcher-manager/">workspace-switcher-manager</a><br>
+美化通过键盘(我配成了 <code>Super + 1..9</code>), 切换工作区时的动画效果, 很赞很好看, 可以高度 DIY</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/workspace-switcher-manager.png" alt="workspace-switcher-manager"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4290/disable-workspace-switch-animation-for-gnome-40/">disable-workspace-switch-animation-for-GNOME40+</a><br>
+消除通过键盘切换工作区时的过渡动画, 获得急速切换的体验感<br>
+<strong>无图片</strong></p>
+</li>
+</ul>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/1319/gsconnect/">gsconnect</a><br>
+GNOME版的 <code>kdeconnect</code>, 用于电脑与手机互连 (一个网下), 在右上角菜单添加对应菜单, 以便快速打开<br>
+手机需安装 <code>kdeconnect</code>, 你可以从本博客下载 apk 进行安装: <a href="/downloads/gnome/kdeconnect.apk">kdeconnect</a></p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/gsconnect.png" alt="gsconnect"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3193/blur-my-shell/">blur-my-shell</a><br>
+用于让面板, 顶栏, Overview, 锁屏, gnome自带的截屏, 甚至特定的app, 都能被毛玻璃化, 很强大的扩展</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview.png" alt="blur-my-shell"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3488/big-avatar/">big-avatar</a><br>
+让右上角菜单出现你的头像, 点击之后触发自定义的命令, 但这功能不常用, 提升逼格而已</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/big-avatar.png" alt="big-avatar"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4530/cpudots/">cpudots</a><br>
+监视你当前的CPU频率, 以百分数的形式呈现在顶栏</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/right-corner.png" alt="cpudots"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4817/colorful-battery-indicator/">colorful-battery-indicator</a><br>
+让右上角的电池变成彩色, 根据电量, 分别呈现绿色, 黄色, 黄色, 美观且提示作用强</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/right-corner.png" alt="colorful-battery-indicator"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4158/gnome-40-ui-improvements/">gnome40-ui-improvements</a><br>
+按下 <code>Super</code>, 进入 <code>Overview</code> 后, 在中上方显示工作区的内容</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/gnome40-ui-improvements.png" alt="gnome40-ui-improvements"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/">gnome-fuzzy-app-search</a><br>
+出于某些目的, 默认的 <code>GNOME</code> 在 <code>Overview</code> 中不支持模糊查找, 可以通过该扩展修改</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/gnome-fuzzy-app-search.png" alt="gnome-fuzzy-app-search"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4691/pip-on-top/">pip-on-top</a><br>
+当你通过浏览器中的画中画模式, 观看视频时, 让窗口一直保持在最顶部, 即使焦点在别的窗口<br>
+<strong>无图片</strong></p>
+</li>
+</ul>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/4792/frequency-boost-switch/">frequency-boost-switch</a><br>
+在右上角菜单中的 <code>电池策略</code> 中添加一个 <code>Checkox</code>, 用于切换 <code>是否允许超频</code></p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/frequency-boost-switch.png" alt="frequency-boost-switch"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/1702/overview-navigation/">overview-navigation</a><br>
+当按下 <code>Super</code> 进入 <code>Overview</code> 后, 可以按下 <code>空格键</code>, 窗口上会出现字母<br>
+输入小写字母就切换到对应窗口, 按下 <code>Shift</code> 会使字母颜色变红, 此时输入字母会关闭对应窗口</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview-navigation.png" alt="overview-navigation"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3759/cleaner-overview/">cleaner-overview</a><br>
+进入 <code>Overview</code> 时, 将窗口排列整齐, 简单实用</p>
+</li>
+</ul>
+<details>
+<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview-navigation.png" alt="cleaner-overview"></p>
+</details>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/19/user-themes/">user-theme</a><br>
+从用户目录加载对应的主题 (之后的换主题教程中会讲到)<br>
+注意: 还需要使用 <code>gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com</code> 指定主题<br>
+<strong>无图片</strong></p>
+</li>
+</ul>
+<br>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><a href="https://extensions.gnome.org/extension/3414/user-stylesheet-font/">user-syle-sheet</a><br>
+读取 <code>~/.local/share/gnome-shell/gnome-shell.css</code> 直接修改 GNOME 的默认CSS, 十分逆天, 适合重度 DIY 患者<br>
+<strong>无图片</strong></p>
+</li>
+</ul>
+<hr>
+<h1 id="mei-hua">美化</h1>
+<p>以下美化工作涉及暗模式, 背景, 头像, 主题, 字体, Dash等<br>
+还有很多扩展有帮助, 上面 <a href="#tui-jian-de-kuo-zhan">推荐的扩展</a> 里有提到, 比如那个更改css的, 这里不说了</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>启动暗模式:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface color-scheme <span class="string">&quot;prefer-dark&quot;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>背景壁纸: 暗模式下的背景与普通模式可以不一样, 因此也要注意设置下</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.background picture-uri <span class="string">&#x27;file:///usr/share/backgrounds/aaa.png&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.background picture-uri-dark <span class="string">&#x27;file:///usr/share/backgrounds/aaa.png&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>头像: 假设用户名是 <code>Xyz</code>, 则需要将图片命名为 <code>Xyz</code>, 随后放到 <code>/var/lib/AccountsService/icons/</code> 下</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mv ./Xyz /var/lib/AccountsService/icons/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或将图片命名为.face, 放到家目录</span></span><br><span class="line"><span class="comment"># mv ./Xyz ~/.face  </span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>主题: 单用户的放 <code>~/.themes/</code> , 多用户的放 <code>/usr/share/themes/</code>, 可前往 <a href="https://www.gnome-look.org/">gnome-look</a> 挑选主题</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以 Nordic 为例子</span></span><br><span class="line">mkdir ~/.themes/ &amp;&amp; <span class="built_in">cd</span> ~/.themes/</span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/mirror_jedsek/Nordic.git</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface gtk-theme <span class="string">&#x27;Nordic&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.preferences theme <span class="string">&#x27;Nordic&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 你也可以使用 `user-theme` 这个扩展进行设置:  </span></span><br><span class="line">mkdir ~/.themes/ &amp;&amp; <span class="built_in">cd</span> ~/.themes/</span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/mirror_jedsek/Nordic.gi</span><br><span class="line">gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>字体: 将顶栏字体换成 <code>Fira Code</code>, 顺便调整下大小</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface font-name <span class="string">&#x27;Fira Code 11.8&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>隐藏 <code>Dash</code> 栏: 对我个人来讲, Dash 毫无用处还占地方, 快捷键+Overview的搜索, 可以应付一切工作了</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell favorite-apps <span class="string">&quot;[]&quot;</span></span><br></pre></td></tr></table></figure>
+<div class="tips">
+<p><strong>注意:</strong><br>
+以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 <code>Just-perfection</code> 扩展<br>
+此扩展得到官方支持, 可以将桌面 <code>化简</code>, 包括Dash<br>
+如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的<a href="#jin-yong-kuai-jie-jian">禁用快捷键</a></p>
+</div>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>去掉左上角的 <code>Activities</code>: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: <code>space-bar</code> 或 <code>workspace-bar</code>)</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义工作区的名称, 不然就是默认的数字</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.preferences workspace-names <span class="string">&quot;[&#x27;Browser&#x27;, &#x27;Terminal&#x27;, &#x27;Game&#x27;, &#x27;Box&#x27;, &#x27;Other&#x27;]&quot;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>隐藏顶栏: 安装 <code>just-perfection</code> &amp;&amp; <code>blur-my-shell</code>, 配置后就是本文 <a href="#cheng-pin-zhan-shi">成品展示</a> 中的了, 处于 <code>Overview</code> 中才显示顶栏</p>
+</li>
+</ul>
+<hr>
+<h1 id="kuai-jie-jian">快捷键</h1>
+<p>这也是个很影响体验的地方, 如果你对自带的快捷键不满意, 完全可以自己更改</p>
+<p>我个人就不喜欢 <code>Alt+Fn数字</code>, 因为太远了, 而且记不清, 干脆换些简单易记的, 像 <code>I3/Sway</code> 那样<br>
+当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash</p>
+<div class="tips">
+<p><strong>注意:</strong><br>
+快捷键之间有冲突的话, 可能无法生效, 请通过 <code>gnome-control-center keyboard</code> 查看快捷键冲突</p>
+</div>
+<h2 id="cha-zhao-kuai-jie-jian" id="查找快捷键">查找快捷键</h2>
+<p>首先, 我们得明白如何查找对应的快捷键</p>
+<p>下面的命令会列出极大部分的快捷键:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings list-recursively | grep -E <span class="string">&quot;Super|Alt|Ctrl|Shift|F[0-9]|Page|Up|Down|Right|Left&quot;</span> | cat</span><br></pre></td></tr></table></figure>
+<p>你可以在后面通过 pipeline, 追加一个 grep, 搜索 theme, font, workspace, switch, move 等词语<br>
+如果实在找不到, 一点点看过去也行 😃</p>
+<h2 id="jin-yong-kuai-jie-jian" id="禁用快捷键">禁用快捷键</h2>
+<p>某命令的快捷键, 一般可以有多个, 即某命令的快捷键是一个数组<br>
+想要禁用该快捷键, 将对应的数组设置为空就行了</p>
+<p>举个例子, 禁用Dash的快捷键 (见上文的置空 <code>favorite-apps</code>):</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Default: Super+&quot;1..9&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 9)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    gsettings <span class="built_in">set</span> org.gnome.shell.keybindings switch-to-application-<span class="variable">$i</span> <span class="string">&quot;[]&quot;</span>  </span><br><span class="line"><span class="keyword">done</span>    </span><br></pre></td></tr></table></figure>
+<p>禁用快捷键还可以让你避免冲突, 比如:<br>
+某个操作绑定了快捷键A, 另一个操作也绑定了快捷键A, 可能键A就失效了, 我遇到过好几次<br>
+这时就要借助 GUI 的力量了: 输入 <code>gnome-control-center keyboard</code>, 然后进入自定义那栏, 会显示冲突的键</p>
+<p>举个例子, 我想修改 <code>Super+Esc</code> 变成锁屏, 我就要这样做:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.settings-daemon.plugins.media-keys screensaver <span class="string">&quot;[&#x27;&lt;Super&gt;Escape&#x27;]&quot;</span> <span class="comment">#Default: Sup+L</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.wayland.keybindings restore-shortcuts <span class="string">&quot;[]&quot;</span> <span class="comment"># Default: Sup+Esc</span></span><br></pre></td></tr></table></figure>
+<h2 id="xiu-gai-kuai-jie-jian" id="修改快捷键">修改快捷键</h2>
+<p>修改, 也就是覆写默认的快捷键, 与下文要讲的 <a href="#tian-jia-kuai-jie-jian">添加快捷键</a> 不是一个概念<br>
+单纯的改改改而已, 下面是我个人修改的一套快捷键, 供大家参考</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>Vim 式的案件, 改变窗口布局, 替代原有的 <code>Super+方向键</code>:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 其实还有更丧心病狂的, 可以绑定快捷键, 将窗口放左上角, 右上角, 中间左边, 中间右边的......</span></span><br><span class="line"></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.keybindings      toggle-tiled-left  <span class="string">&quot;[&#x27;&lt;Super&gt;h&#x27;]&quot;</span> <span class="comment"># 放左边</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings  maximize           <span class="string">&quot;[&#x27;&lt;Super&gt;j&#x27;]&quot;</span> <span class="comment"># 最大化</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings  unmaximize         <span class="string">&quot;[&#x27;&lt;Super&gt;k&#x27;]&quot;</span> <span class="comment"># 最小化</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.keybindings      toggle-tiled-right <span class="string">&quot;[&#x27;&lt;Super&gt;l&#x27;]&quot;</span> <span class="comment"># 放右边</span></span><br></pre></td></tr></table></figure>
+<p>对了, 如果你追求平铺式的话, 扩展可以满足一部分要求, 但肯定比不上专业的窗管…</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>move, resize, kill 一个窗口:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Move</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-move   <span class="string">&quot;[&#x27;&lt;Super&gt;x&#x27;]&quot;</span>        <span class="comment">#Default: Alt+F7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Resize</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-resize <span class="string">&quot;[&#x27;&lt;Super&gt;r&#x27;]&quot;</span>        <span class="comment">#Default: Alt+F8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Kill</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings close        <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;q&#x27;]&quot;</span> <span class="comment">#Default: Alt+F4</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>toggle-max, max, min, toggle-fullscreen, show-desktop:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Toggle max</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-maximized  <span class="string">&quot;[&#x27;&lt;Super&gt;m&#x27;]&quot;</span>     <span class="comment">#Default: Alt+F10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Max/Min</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings maximize          <span class="string">&quot;[&#x27;&lt;Super&gt;j&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings unmaximize        <span class="string">&quot;[&#x27;&lt;Super&gt;k&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings minimize          <span class="string">&quot;[&#x27;&lt;Super&gt;comma&#x27;]&quot;</span> <span class="comment">#Default: Super+H</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Toggle fullscreen</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-fullscreen <span class="string">&quot;[&#x27;&lt;Super&gt;f&#x27;]&quot;</span>     <span class="comment">#Default: None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Show desktop</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings show-desktop      <span class="string">&quot;[&#x27;&lt;Super&gt;d&#x27;]&quot;</span>     <span class="comment">#Default: None</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>还有套很重要的快捷键, 就是切换工作区了, 搭配消除过渡动画/增加特效的扩展, 流畅感Max:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 9)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-<span class="variable">$i</span> <span class="string">&quot;[&#x27;&lt;Super&gt;<span class="variable">$i</span>&#x27;]&quot;</span></span><br><span class="line">  gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings move-to-workspace-<span class="variable">$i</span>   <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;<span class="variable">$i</span>&#x27;]&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-10   <span class="string">&quot;[&#x27;&lt;Super&gt;0&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings move-to-workspace-10     <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;0&#x27;]&quot;</span></span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>再比如, 覆写 <code>run-dialog</code> 的快捷键 (默认是按Alt-F2, 但太远了…):</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings panel-run-dialog <span class="string">&quot;[&#x27;&lt;Super&gt;c&#x27;]&quot;</span> <span class="comment">#Default: Alt+F2</span></span><br></pre></td></tr></table></figure>
+<h2 id="tian-jia-kuai-jie-jian" id="添加快捷键">添加快捷键</h2>
+<p>此处指的是真正的, 添加自己的快捷键. 不是简单的覆写<br>
+比如 <code>Super+Return</code> 打开一个终端, <code>Super+B</code> 打开浏览器, <code>Super+E</code> 打开文件管理器…</p>
+<p>废话不多说, 你按下面照猫画虎, 就阔以了:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gp0=<span class="string">&quot;/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings&quot;</span></span><br><span class="line">gp1=<span class="string">&quot;org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:\</span></span><br><span class="line"><span class="string">/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Custom Keys</span></span><br><span class="line"><span class="comment"># 注意!!!!!!!</span></span><br><span class="line"><span class="comment"># 不要在最后添加逗号</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.settings-daemon.plugins.media-keys custom-keybindings <span class="string">&quot;[     \</span></span><br><span class="line"><span class="string">    &#x27;<span class="variable">$gp0</span>/custom0/&#x27;, &#x27;<span class="variable">$gp0</span>/custom1/&#x27;, &#x27;<span class="variable">$gp0</span>/custom2/&#x27;, &#x27;<span class="variable">$gp0</span>/custom3/&#x27;               \</span></span><br><span class="line"><span class="string">]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Terminal</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ name     <span class="string">&#x27;Terminal&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ <span class="built_in">command</span>  <span class="string">&#x27;alacritty&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ binding  <span class="string">&#x27;&lt;Super&gt;Return&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Files</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ name     <span class="string">&#x27;Files&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ <span class="built_in">command</span>  <span class="string">&#x27;nautilus&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ binding  <span class="string">&#x27;&lt;Super&gt;e&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Browser</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ name     <span class="string">&#x27;Browser&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ <span class="built_in">command</span>  <span class="string">&#x27;microsoft-edge-beta&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ binding  <span class="string">&#x27;&lt;Super&gt;b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Fcitx5 Reload</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ name     <span class="string">&#x27;Fcitx5_Reload&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ <span class="built_in">command</span>  <span class="string">&#x27;fcitx5 -r&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ binding  <span class="string">&#x27;&lt;Alt&gt;space&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>我相信你不会将时间浪费在掉在坑里面了<br>
+上面的一切已经非常非常全了</p>
+<hr>
+<h1 id="jia-zai-pei-zhi">加载配置</h1>
+<p>我们可以通过 dconf 这个工具, 导入或导出记载着 GNOME 数据的配置文件<br>
+你可以导出记载当前DE的配置文件, 然后导出到另一台机器上<br>
+这意味着, 当你重装系统时, 按下面的方法能快速恢复到先前的DE</p>
+<p>你也可以参考或直接加载我博客下的 <a href="/downloads/gnome/dconf.settings"><strong>dconf.settings</strong></a></p>
+<h2 id="dui-yu-fei-nixos" id="对于非Nixos">对于非Nixos</h2>
+<p>对于普通的Linux发行版, 直接按下面的方式</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>导出当前的dconf数据到某个文件:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dconf dump / &gt; dconf.settings</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>加载/导入某个dconf文件到当前系统:</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat dconf.settings | dconf load -f /</span><br></pre></td></tr></table></figure>
+<p>对于背景与头像, 你可以写一段脚本, 将其复制到相应位置, 然后再添加上面的代码加载配置<br>
+同时确认 <code>dconf.settings</code> 中的 <code>picture-uri</code> / <code>picture-uri-dark</code> 指向对应文件</p>
+<h2 id="dui-yu-nixos" id="对于Nixos">对于Nixos</h2>
+<p>如果你使用 Nixos, 请先确保已经安装了 <a href="https://github.com/nix-community/home-manager">HomeManager</a><br>
+HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
+<p>虽然也能按上面的方法配置 Nixos 的 GNOME, 但还是推荐使用 HomeManager, 原因略过, 自看文档<br>
+请先下载 <code>dconf2nix</code>, 这是一个将 dconf文件, 转换为 nix 表达式的工具<br>
+随后, 在终端输入以下内容, 得到 <code>dconf.nix</code> :</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dconf dump / &gt; dconf.settings</span><br><span class="line">dconf2nix -i dconf.settings -o dconf.nix</span><br></pre></td></tr></table></figure>
+<p>在你的 ~/.config/nixpkgs 中, 保持这样的目录结构 (当然了, 可以随你想法):</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nixpkgs/</span><br><span class="line">├── gnome</span><br><span class="line">│   ├── .background</span><br><span class="line">│   ├── .face</span><br><span class="line">│   └── dconf.nix</span><br><span class="line">└── home.nix</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>dconf.nix</code> 就是刚刚转换得到的nix表达式, 在 <code>home.nix</code> 中导入它:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">imports = [</span><br><span class="line">  ./gnome/dconf.nix</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>介于 HomeManager 的权限问题, 必须将背景图片/人物头像, 保持在 <code>$HOME</code> 下<br>
+这里将两个图片放在了 <code>~/.config/nixpkgs/gnome/</code> 下, 因此要修改下相应文件</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>对于背景图像, 修改 <code>dconf.nix</code> 中的 <code>picture-uri</code>:</p>
+</li>
+</ul>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;org/gnome/desktop/background&quot;</span> =</span><br><span class="line"><span class="keyword">let</span> <span class="attr">picture</span> = ../.background.png; <span class="keyword">in</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">picture-uri</span> = <span class="string">&quot;file://<span class="subst">$&#123;picture&#125;</span>&quot;</span>;</span><br><span class="line">  <span class="attr">picture-uri-dark</span> = <span class="string">&quot;file://<span class="subst">$&#123;picture&#125;</span>&quot;</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>对于人物头像, 在 <code>home.nix</code> 添加以下内容:</p>
+</li>
+</ul>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">home.file.<span class="string">&quot;.face&quot;</span>.<span class="attr">source</span> = ./.face;</span><br></pre></td></tr></table></figure>
+<p>大功告成!  我相信这是最最最最最全的一份 GNOME 入坑指南了</p>
+]]></content>
+      <tags>
+        <tag>GNOME</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Clap|命令行</title>
+    <url>/posts/rust-clap/guide.html</url>
+    <content><![CDATA[<blockquote>
+<p>用 Rust 中的 Clap, 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出等功能</p>
+</blockquote>
+<span id="more"></span>
+<p>前置知识: Rust基础<br>
+完整代码: <a href="https://github.com/Jedsek/rust-wc">github-jedsek/rustwc</a></p>
+<h1 id="cheng-pin-zhan-shi">成品展示</h1>
+<p><img data-src="/images/clap-rwc.png" alt="彩色的表格输出, 根据参数进行统计"></p>
+<hr>
+<h1 id="cli">CLI</h1>
+<p>CLI, 是 <code>command-line interface</code> 的简称, 意思是命令行界面, 和 GUI/TUI 是一个道理<br>
+比如我们在Linux下常见的 <code>ls/cp/mv</code> 等命令, 你传进去参数, 它做一些事情 (可能会有相应的输出)</p>
+<p>GNU 项目为我们提供了非常多的开源软件, 比如一个叫做 <code>wc</code> 的命令, 可以统计指定文件的字节/字符/行的数量<br>
+等一会, 我们就要使用 Rust 语言, 搭配今天的主角: clap, 实现美化版的 <code>wc</code> 命令</p>
+<div class="tips">
+<p><strong>注意:</strong><br>
+cli 可以代表抽象的界面, 也可以指代具体的某个程序<br>
+而后文中的cli, 一般情况下都指代某个具体的命令行程序, 比如 ls/cp 等</p>
+</div>
+<hr>
+<h1 id="clap">Clap</h1>
+<h2 id="kai-pian" id="开篇">开篇</h2>
+<p>clap 是个Rust中地位举足轻重的crate, 它十分强大, 能让cli的制作变得很容易<br>
+让我们新建一个叫做 <code>rwc</code> 的项目, 然后在 <code>Cargo.toml</code> 中添加clap吧:</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[package]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;rwc&quot;</span></span><br><span class="line"><span class="attr">version</span> = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line"><span class="attr">edition</span> = <span class="string">&quot;2021&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span></span><br><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">clap</span> = &#123;version = <span class="string">&quot;*&quot;</span>, features = [<span class="string">&quot;derive&quot;</span>]&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Clap-rs 的第三个大版本, clap 融合了另外一个很强大的库: structopt, 成为实至名归的第一<br>
+因此以后请直接用 clap, 它包含 structopt, structopt 也发过通知, 让别人直接用 clap<br>
+而clap最大的变化, 就是这来源于 structopt 的过程宏了, 它允许你用声明的方式定义参数, 然后自动帮你解析, 这就是 <code>derive</code> feature</p>
+<p>举个例子, 如果我们想定义 rwc, 那就这样写:</p>
+<figure class="highlight rust"><figcaption><span>src/main.rs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::path::PathBuf;</span><br><span class="line"><span class="keyword">use</span> clap::&#123;AppSettings, ArgGroup, Parser&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[clap(</span></span><br><span class="line"><span class="meta">    author = <span class="meta-string">&quot;Author: Jedsek &lt;jedsek@qq.com&gt;&quot;</span>,</span></span><br><span class="line"><span class="meta">    version,</span></span><br><span class="line"><span class="meta">    global_setting = AppSettings::DeriveDisplayOrder,</span></span><br><span class="line"><span class="meta">    group(ArgGroup::new(<span class="meta-string">&quot;options&quot;</span>)</span></span><br><span class="line"><span class="meta">      .multiple(true).required(true).args(&amp;[<span class="meta-string">&quot;bytes&quot;</span>, <span class="meta-string">&quot;chars&quot;</span>, <span class="meta-string">&quot;words&quot;</span>, <span class="meta-string">&quot;lines&quot;</span>, <span class="meta-string">&quot;longest-line&quot;</span>]</span>)),</span><br><span class="line">    about = </span><br><span class="line"><span class="string">r#&quot;</span></span><br><span class="line"><span class="string">This is just a simple GNU/wc command implementation, written in Rust</span></span><br><span class="line"><span class="string">It could print &lt;FILE&gt;&#x27;s count of bytes, chars, words, lines, and the longest line/word&#x27;s length</span></span><br><span class="line"><span class="string">&quot;#</span>,</span><br><span class="line">)]</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Cli</span></span> &#123;</span><br><span class="line">    <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, value_name = <span class="meta-string">&quot;FILE&quot;</span>, required = true)]</span></span><br><span class="line">    <span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of bytes</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> bytes: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of chars</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> chars: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of words</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> words: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of lines</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> lines: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the length of the longest line</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short = &#x27;L&#x27;, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> longest_line: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">  Cli::parse();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等下再解释, 现在先让我们看看效果吧, 查看下help:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">cargo run -- -h</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>--</code>, 起隔断的作用, 表示在这之后传入的参数, 是 <code>--</code> 前面的整体所形成的程序<br>
+如果你去掉 <code>--</code>, <code>-h</code> 打印的就是 <code>cargo run</code> 的帮助信息, 而不是 <code>cargo run</code> 之后产生的程序, <code>rwc</code> 的帮助信息了<br>
+之后的代码, 会保持这处 “传统”</p>
+<p>像 <code>-h/--help</code>, <code>-V/--version</code>, 这两个是 clap 自动为我们生成的, 之外的选项将什么也不会发生, 因为我们暂时都未实现<br>
+输出的help应该如下:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">rwc <span class="number">0.1</span>.<span class="number">0</span></span><br><span class="line">Author: Jedsek &lt;jedsek@qq.com&gt;</span><br><span class="line"></span><br><span class="line">This is just a simple GNU/wc command implementation, written <span class="keyword">in</span> Rust</span><br><span class="line">It could print &lt;FILE&gt;<span class="symbol">&#x27;s</span> count of bytes, chars, words, lines, and the longest line/word<span class="symbol">&#x27;s</span> length</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">    rwc &lt;--bytes|--chars|--words|--lines|--longest-line&gt; &lt;FILE&gt;...</span><br><span class="line"></span><br><span class="line">ARGS:</span><br><span class="line">    &lt;FILE&gt;...    The path(s) you should provide</span><br><span class="line"></span><br><span class="line">OPTIONS:</span><br><span class="line">    -b, --bytes           Print the count of bytes</span><br><span class="line">    -c, --chars           Print the count of chars</span><br><span class="line">    -w, --words           Print the count of words</span><br><span class="line">    -l, --lines           Print the count of lines</span><br><span class="line">    -L, --longest-line    Print the length of the longest line</span><br><span class="line">    -h, --help            Print help information</span><br><span class="line">    -V, --version         Print version information</span><br></pre></td></tr></table></figure>
+<p>如果仔细观察一下, 应该就搞懂之前的代码了, 毕竟是声明式的定义, 可以对照着看嘛, 而且 clap 的文档也很好, 可以自己去翻下<br>
+如果你认为自己已经搞懂上面的代码, 不需要看下面的解释了, 请直接跳转到 <a href="#luo-ji-shi-xian">逻辑实现</a> 部分</p>
+<hr>
+<h1 id="luo-ji-shi-xian">逻辑实现</h1>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>Clap</tag>
+        <tag>CLI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>haskell-basic-p1: 系列说明</title>
     <url>/posts/haskell-basic/p1.html</url>
     <content><![CDATA[<blockquote>
@@ -585,529 +1160,6 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 ]]></content>
       <tags>
         <tag>Haskell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GNOME 入坑指南</title>
-    <url>/posts/gnome/guide.html</url>
-    <content><![CDATA[<blockquote>
-<p>关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境</p>
-</blockquote>
-<span id="more"></span>
-<div class="tips">
-<p><strong>提示</strong><br>
-本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置<br>
-请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新<br>
-目前, 该篇文章的GNOME 版本为: <strong>42</strong></p>
-</div>
-<h1 id="cheng-pin-zhan-shi">成品展示</h1>
-<p>2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前…<br>
-我个人认为简洁+美观比较重要, 当然你也可以自行修改进行DIY, 请自己动手, 丰衣足食吧!</p>
-<details open>
-<summary><span class="pre-summary">&nbsp;</span><strong>以下是成品展示, 请点击隐藏/展开图像</strong></summary><p><img data-src="/images/gnome/overview.png" alt="按下Super后的Overview"></p>
-</details>
-<hr>
-<h1 id="dconf-amp-amp-gsettings">dconf &amp;&amp; gsettings</h1>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><code>dconf</code>:<br>
-是一套基于键的配置系统, 十分高效, 相当于 Windows 下的注册表</p>
-</li>
-<li class="lvl-2">
-<p><code>gsettings</code>:<br>
-是 GNOME-DE 下的高级API, 是命令行工具/前端, 用来简化对 dconf 的操作</p>
-</li>
-</ul>
-<p>你可能在年份久远的文章中听说过 <code>gconf</code>, 这是什么? 与 <code>dconf</code> 有啥区别?<br>
-答: 其作用也类似注册表, 但现在已经停止使用, 被效率更高的 <code>dconf</code> 所取代</p>
-<p>接下来的大部分配置, 都会使用 <code>gsettings</code></p>
-<hr>
-<h1 id="hong-mo-ban">触摸板</h1>
-<p>触摸板可是笔记本党的灵魂啊, 尤其对于我这种万年不用鼠标, 除非打CSGO <s>(但CS我也能用触摸板玩)</s></p>
-<h2 id="pei-zhi" id="配置">配置</h2>
-<p>有一些 Linux 发行版的 GNOME比较贴近上游, <code>轻击模拟鼠标点击</code> 默认未开启<br>
-这导致触摸板很难用, 得按下去才能模拟鼠标的点击</p>
-<p>你想一想, 你想选中一段文字, 得重重按下触摸板, 在巨大的摩擦力下移动手指…<br>
-而且, 默认的触摸板, 速度可能比较慢, 反正我不适应, 因此需要修改…<br>
-还有就是, 触摸板在打字的时候默认是禁用的, 这对有时会用触摸板打CSGO的我来说很愤怒…</p>
-<p>你可以在终端输入如下命令进行调整:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.peripherals.touchpad tap-to-click <span class="literal">true</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.peripherals.touchpad speed 0.57</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.peripherals.touchpad disable-while-typing <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<p>分别对应:</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>轻击模拟鼠标点击, 默认为false</p>
-</li>
-<li class="lvl-2">
-<p>调整触摸板速度, 默认为0</p>
-</li>
-<li class="lvl-2">
-<p>打字时禁用触摸板, 默认为true</p>
-</li>
-</ul>
-<h2 id="shou-shi" id="手势">手势</h2>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>单指: 移动鼠标</p>
-</li>
-<li class="lvl-2">
-<p>双指上下: 翻页</p>
-</li>
-<li class="lvl-2">
-<p>三指左右: 切换Workspace</p>
-</li>
-<li class="lvl-2">
-<p>三指上: 打开Overview (不常用, 按Super更快)</p>
-</li>
-<li class="lvl-2">
-<p>三指下: 显示任务栏 (当你隐藏任务栏时)</p>
-</li>
-</ul>
-<hr>
-<h1 id="an-zhuang-kuo-zhan">安装扩展</h1>
-<p>GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的自由与强大, 说是一半的灵魂, 也不为过之<br>
-我将先介绍如何安装/使用它们, 因为后面需要用到扩展</p>
-<p>有两种安装方法, 一种从命令行安装, 一种从浏览器安装<br>
-我更倾向于前者, 因为不需要下载对应的东西, 适合快速部署, 但两者我都会介绍</p>
-<h2 id="cong-ming-ling-xing" id="从命令行">从命令行</h2>
-<div class="tips">
-<p><strong>提示</strong><br>
-请确保拥有以下命令: unzip, jq, 有些发行版默认连 unzip 都没有…<br>
-下载成功后, 切记要 logout, 然后再登进来</p>
-</div>
-<p>每个GNOME扩展都拥有独一无二的, 名为 <code>uuid</code> 的标识符, 我们可以通过 <code>uuid</code>, 下载扩展</p>
-<p>你可以在 <a href="https://extensions.gnome.org/">Extensions-GNOME</a> 这个网站上, 浏览并下载扩展<br>
-请将以 .zip 结尾的扩展放在同一目录下, 假设该目录叫 <code>exts_list</code></p>
-<p>下面是 Bash/Fish 脚本, 传入该目录的路径, 自动进行安装:</p>
-<div class="tabs" id="install-extensions"><ul class="nav-tabs"><li class="tab active"><a href="#install-extensions-1">Bash</a></li><li class="tab"><a href="#install-extensions-2">Fish</a></li></ul><div class="tab-content"><div class="tab-pane active" id="install-extensions-1"><figure class="highlight bash"><figcaption><span>install-extensions.sh</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"><span class="built_in">declare</span> -a UUID_LIST</span><br><span class="line">EXTS_DIR=<span class="variable">$HOME</span>/.<span class="built_in">local</span>/share/gnome-shell/extensions</span><br><span class="line">EXTS_LIST=<span class="variable">$&#123;1&#125;</span></span><br><span class="line"><span class="function"><span class="title">str_join</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;$*&quot;</span> | sed <span class="string">&#x27;s/&quot;&quot;/&quot;,&quot;/g&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">mkdir -p <span class="variable">$EXTS_DIR</span></span><br><span class="line">chmod -R 755 <span class="variable">$HOME</span>/.<span class="built_in">local</span>/</span><br><span class="line"><span class="keyword">for</span> EXT <span class="keyword">in</span> <span class="variable">$EXTS_LIST</span>/*.zip</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  UUID=$(unzip -p <span class="variable">$EXT</span> metadata.json | jq -r <span class="string">&quot;.uuid&quot;</span>)</span><br><span class="line">  mkdir -p <span class="variable">$EXTS_DIR</span>/<span class="variable">$UUID</span></span><br><span class="line">  unzip -q -o <span class="variable">$EXT</span> -d <span class="variable">$EXTS_DIR</span>/<span class="variable">$UUID</span></span><br><span class="line">  UUID_LIST+=<span class="string">&quot;\&quot;<span class="variable">$UUID</span>\&quot;&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">UUID_LIST=[$(str_join <span class="variable">$&#123;UUID_LIST[@]&#125;</span>)]</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell enabled-extensions <span class="variable">$&#123;UUID_LIST[@]&#125;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="install-extensions-2"><figure class="highlight bash"><figcaption><span>install-extensions.fish</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> exts_list <span class="variable">$argv</span>[1]</span><br><span class="line"><span class="built_in">set</span> exts_dir <span class="variable">$HOME</span>/.<span class="built_in">local</span>/share/gnome-shell/extensions/</span><br><span class="line"><span class="built_in">set</span> uuid_list</span><br><span class="line">mkdir -p <span class="variable">$exts_dir</span></span><br><span class="line"><span class="keyword">for</span> ext <span class="keyword">in</span> exts_list/*.zip</span><br><span class="line">  <span class="built_in">set</span> uuid ( unzip -p <span class="variable">$ext</span> metadata.json | jq -r <span class="string">&quot;.uuid&quot;</span> )</span><br><span class="line">  mkdir -p <span class="variable">$ext_dir</span>/<span class="variable">$uuid</span></span><br><span class="line">  unzip -q -o <span class="variable">$ext</span> -d <span class="variable">$ext_dir</span>/<span class="variable">$uuid</span></span><br><span class="line">  <span class="built_in">set</span> -a uuid_list \<span class="string">&#x27;$uuid\&#x27;</span></span><br><span class="line">end</span><br><span class="line"><span class="built_in">set</span> uuid_list [( string join <span class="string">&quot;,&quot;</span> <span class="variable">$uuid_list</span> )]</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell enabled-extensions <span class="variable">$uuid_list</span></span><br></pre></td></tr></table></figure></div></div></div>
-<p>假设使用Bash: 执行 <code>sh install-extensions.sh exts_list</code> 下载该目录下的所有插件<br>
-<strong>注意 logout, 再登进来</strong></p>
-<p>也可以通过dbus安装, 但获取uuid还得解压zip, 何不直接像上面那样手动安装? 所以不推荐:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dbus-send --<span class="built_in">type</span>=method_call --dest=org.gnome.Shell /org/gnome/Shell \</span><br><span class="line">  org.gnome.Shell.Extensions.InstallRemoteExtension string:<span class="string">&#x27;xxxxx_uuid&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="cong-liu-lan-qi" id="从浏览器">从浏览器</h2>
-<p>该方法其实也蛮方便的, 但不适合快速部署<br>
-你需要安装两个玩意, 才能直接从 <a href="https://extensions.gnome.org/">Extension-GNOME</a> 上直接下载</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><code>chrome-gnome-shell</code>:<br>
-本地软件, 你可以通过包管理器, 直接搜这个名字</p>
-</li>
-<li class="lvl-2">
-<p><code>GNOME Shell integration</code>:<br>
-浏览器插件, Chrome/Firefox 的浏览器商店都有它<br>
-Edge 的插件商店里无, 但可以下载 iGuge (谷歌访问助手), 然后下Chrome的插件</p>
-</li>
-</ul>
-<p>一个在本地, 一个在浏览器,  因此可以支持你从 <a href="https://extensions.gnome.org/">网站</a> 上 直接安装到本地</p>
-<hr>
-<h1 id="cha-kan-pei-zhi-kuo-zhan">查看/配置扩展</h1>
-<p>通过 <code>gnome-extensions</code> 这个命令, 我们可以查看/配置当前扩展</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取帮助, `Command` 为可选项</span></span><br><span class="line">gnome-extensions <span class="built_in">help</span> [Command]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看扩展列表</span></span><br><span class="line">gnome-extensions list --user    <span class="comment"># 查看用户级扩展</span></span><br><span class="line">gnome-extensions list --system  <span class="comment"># 查看系统级扩展</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看扩展的信息</span></span><br><span class="line">gnome-extensions info launch-new-instance@gnome-shell-extensions.gcampax.github.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用/禁用某个扩展</span></span><br><span class="line">gnome-extensions <span class="built_in">enable</span> nothing-to-say@extensions.gnome.wouter.bolsterl.ee</span><br><span class="line">gnome-extensions <span class="built_in">disable</span> nothing-to-say@extensions.gnome.wouter.bolsterl.ee</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置某个扩展 (打开 GUI 界面)</span></span><br><span class="line">gnome-extensions prefs nothing-to-say@extensions.gnome.wouter.bolsterl.ee</span><br></pre></td></tr></table></figure>
-<p>或者通过 <code>gsettings</code> 来配置某个扩展, 但不推荐, 因为麻烦:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看某个扩展的所有选项</span></span><br><span class="line">gsettings --schemadir ~/.<span class="built_in">local</span>/share/gnome-shell/extensions/nothing-to-say@extensions.gnome.wouter.bolsterl.ee/schemas/  \</span><br><span class="line">  list-recursively org.gnome.shell.extensions.nothing-to-say</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 得到/重置/设置 某个扩展的某选项当前的值 (根据上面这条命令查看所有选项)</span></span><br><span class="line">gsettings --schemadir ~/.<span class="built_in">local</span>/share/gnome-shell/extensions/nothing-to-say@extensions.gnome.wouter.bolsterl.ee/schemas/  \</span><br><span class="line">  get    org.gnome.shell.extensions.nothing-to-say show-osd</span><br><span class="line"><span class="comment"># reset  org.gnome.shell.extensions.nothing-to-say show-osd</span></span><br><span class="line"><span class="comment"># set    org.gnome.shell.extensions.nothing-to-say show-osd</span></span><br></pre></td></tr></table></figure>
-<p>你也可以参考或<a href="#jia-zai-pei-zhi"><strong>直接加载</strong></a>我博客下的 <a href="/downloads/gnome/dconf.settings"><strong>dconf.settings</strong></a><br>
-<strong>注意</strong>: 如何你选择直接加载我的配置, 请注意 <code>picture-uri</code> 符合自己实际</p>
-<hr>
-<h1 id="tui-jian-de-kuo-zhan">推荐的扩展</h1>
-<p>以下是我目前正在使用, 推荐的扩展</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/16/auto-move-windows/">auto-move-windows</a>:<br>
-通过指定窗口规则, 使得打开某个app时, 将其自动分配到特定工作区 (需要指定的.desktop文件)<br>
-<strong>无图片</strong></p>
-</li>
-</ul>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/905/refresh-wifi-connections/">refresh-wifi-connections</a><br>
-当你通过右上角的菜单选择 WIFI 时, 会多出来一个刷新键</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/refresh-wifi-connections.png" alt="refresh-wifi-connections"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/1446/transparent-window-moving/">transparent-window-moving</a><br>
-在对窗口进行移动/调整大小时, 使窗口变得透明</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/transparent-window-moving.png" alt="transparent-window-moving"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3843/just-perfection/">just-perfection</a><br>
-我最喜欢的一个扩展, 用于对界面进行大量自定义与精简<br>
-比如, 可以隐藏 Dash (按Super后底部的一行), 改变顶栏元素等</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview.png" alt="just-perfection"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3139/eye-extended/">eye-extended</a><br>
-很有趣的扩展, 平时当作小挂件, 但危机时或许可以派上用场<br>
-在顶栏显示一个眼睛, 眼珠子会一直注视着你的鼠标, 点一下会出现以你鼠标为中心的黄色圆圈</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/eye-extended.png" alt="eye-extended"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/1113/nothing-to-say/">nothing-to-say</a><br>
-用于切断/恢复声音的输入, 对我来说蛮有用的:<br>
-当与同学打游戏, 撞上爸妈查房, 立刻按下 <code>Super+\</code>, 防止爸妈训我的声音流入同学耳中, 维护尊严 😃</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/nothing-to-say.png" alt="nothing-to-say"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/5090/space-bar/">space-bar</a><br>
-模仿 I3/Sway/Bspwm 等窗口管理器, 将左上角烦人的 <code>Activities</code> 替换为 <code>Workspaces</code>, 有些类似的扩展, 但这个最好</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/space-bar.png" alt="space-bar"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4696/static-background-in-overview/">static-background-in-overview</a><br>
-在按下 <code>Super</code> 进入 <code>Overview</code> 时, 背景图片能够填补四边的空缺, 比起默认的四周黑框框更加好看</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview.png" alt="static-background-in-overview"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4788/workspace-switcher-manager/">workspace-switcher-manager</a><br>
-美化通过键盘(我配成了 <code>Super + 1..9</code>), 切换工作区时的动画效果, 很赞很好看, 可以高度 DIY</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/workspace-switcher-manager.png" alt="workspace-switcher-manager"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4290/disable-workspace-switch-animation-for-gnome-40/">disable-workspace-switch-animation-for-GNOME40+</a><br>
-消除通过键盘切换工作区时的过渡动画, 获得急速切换的体验感<br>
-<strong>无图片</strong></p>
-</li>
-</ul>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/1319/gsconnect/">gsconnect</a><br>
-GNOME版的 <code>kdeconnect</code>, 用于电脑与手机互连 (一个网下), 在右上角菜单添加对应菜单, 以便快速打开<br>
-手机需安装 <code>kdeconnect</code>, 你可以从本博客下载 apk 进行安装: <a href="/downloads/gnome/kdeconnect.apk">kdeconnect</a></p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/gsconnect.png" alt="gsconnect"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3193/blur-my-shell/">blur-my-shell</a><br>
-用于让面板, 顶栏, Overview, 锁屏, gnome自带的截屏, 甚至特定的app, 都能被毛玻璃化, 很强大的扩展</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview.png" alt="blur-my-shell"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3488/big-avatar/">big-avatar</a><br>
-让右上角菜单出现你的头像, 点击之后触发自定义的命令, 但这功能不常用, 提升逼格而已</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/big-avatar.png" alt="big-avatar"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4530/cpudots/">cpudots</a><br>
-监视你当前的CPU频率, 以百分数的形式呈现在顶栏</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/right-corner.png" alt="cpudots"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4817/colorful-battery-indicator/">colorful-battery-indicator</a><br>
-让右上角的电池变成彩色, 根据电量, 分别呈现绿色, 黄色, 黄色, 美观且提示作用强</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/right-corner.png" alt="colorful-battery-indicator"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4158/gnome-40-ui-improvements/">gnome40-ui-improvements</a><br>
-按下 <code>Super</code>, 进入 <code>Overview</code> 后, 在中上方显示工作区的内容</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/gnome40-ui-improvements.png" alt="gnome40-ui-improvements"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/">gnome-fuzzy-app-search</a><br>
-出于某些目的, 默认的 <code>GNOME</code> 在 <code>Overview</code> 中不支持模糊查找, 可以通过该扩展修改</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/gnome-fuzzy-app-search.png" alt="gnome-fuzzy-app-search"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4691/pip-on-top/">pip-on-top</a><br>
-当你通过浏览器中的画中画模式, 观看视频时, 让窗口一直保持在最顶部, 即使焦点在别的窗口<br>
-<strong>无图片</strong></p>
-</li>
-</ul>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/4792/frequency-boost-switch/">frequency-boost-switch</a><br>
-在右上角菜单中的 <code>电池策略</code> 中添加一个 <code>Checkox</code>, 用于切换 <code>是否允许超频</code></p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/frequency-boost-switch.png" alt="frequency-boost-switch"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/1702/overview-navigation/">overview-navigation</a><br>
-当按下 <code>Super</code> 进入 <code>Overview</code> 后, 可以按下 <code>空格键</code>, 窗口上会出现字母<br>
-输入小写字母就切换到对应窗口, 按下 <code>Shift</code> 会使字母颜色变红, 此时输入字母会关闭对应窗口</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview-navigation.png" alt="overview-navigation"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3759/cleaner-overview/">cleaner-overview</a><br>
-进入 <code>Overview</code> 时, 将窗口排列整齐, 简单实用</p>
-</li>
-</ul>
-<details>
-<summary><span class="pre-summary">&nbsp;</span><strong>点击展开/隐藏图片</strong></summary><p><img data-src="/images/gnome/overview-navigation.png" alt="cleaner-overview"></p>
-</details>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/19/user-themes/">user-theme</a><br>
-从用户目录加载对应的主题 (之后的换主题教程中会讲到)<br>
-注意: 还需要使用 <code>gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com</code> 指定主题<br>
-<strong>无图片</strong></p>
-</li>
-</ul>
-<br>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p><a href="https://extensions.gnome.org/extension/3414/user-stylesheet-font/">user-syle-sheet</a><br>
-读取 <code>~/.local/share/gnome-shell/gnome-shell.css</code> 直接修改 GNOME 的默认CSS, 十分逆天, 适合重度 DIY 患者<br>
-<strong>无图片</strong></p>
-</li>
-</ul>
-<hr>
-<h1 id="mei-hua">美化</h1>
-<p>以下美化工作涉及暗模式, 背景, 头像, 主题, 字体, Dash等<br>
-还有很多扩展有帮助, 上面 <a href="#tui-jian-de-kuo-zhan">推荐的扩展</a> 里有提到, 比如那个更改css的, 这里不说了</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>启动暗模式:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface color-scheme <span class="string">&quot;prefer-dark&quot;</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>背景壁纸: 暗模式下的背景与普通模式可以不一样, 因此也要注意设置下</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.background picture-uri <span class="string">&#x27;file:///usr/share/backgrounds/aaa.png&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.background picture-uri-dark <span class="string">&#x27;file:///usr/share/backgrounds/aaa.png&#x27;</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>头像: 假设用户名是 <code>Xyz</code>, 则需要将图片命名为 <code>Xyz</code>, 随后放到 <code>/var/lib/AccountsService/icons/</code> 下</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mv ./Xyz /var/lib/AccountsService/icons/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或将图片命名为.face, 放到家目录</span></span><br><span class="line"><span class="comment"># mv ./Xyz ~/.face  </span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>主题: 单用户的放 <code>~/.themes/</code> , 多用户的放 <code>/usr/share/themes/</code>, 可前往 <a href="https://www.gnome-look.org/">gnome-look</a> 挑选主题</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以 Nordic 为例子</span></span><br><span class="line">mkdir ~/.themes/ &amp;&amp; <span class="built_in">cd</span> ~/.themes/</span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/mirror_jedsek/Nordic.git</span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface gtk-theme <span class="string">&#x27;Nordic&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.preferences theme <span class="string">&#x27;Nordic&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 你也可以使用 `user-theme` 这个扩展进行设置:  </span></span><br><span class="line">mkdir ~/.themes/ &amp;&amp; <span class="built_in">cd</span> ~/.themes/</span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/mirror_jedsek/Nordic.gi</span><br><span class="line">gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com</span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>字体: 将顶栏字体换成 <code>Fira Code</code>, 顺便调整下大小</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.interface font-name <span class="string">&#x27;Fira Code 11.8&#x27;</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>隐藏 <code>Dash</code> 栏: 对我个人来讲, Dash 毫无用处还占地方, 快捷键+Overview的搜索, 可以应付一切工作了</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell favorite-apps <span class="string">&quot;[]&quot;</span></span><br></pre></td></tr></table></figure>
-<div class="tips">
-<p><strong>注意</strong><br>
-以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 <code>Just-perfection</code> 扩展<br>
-此扩展得到官方支持, 可以将桌面 <code>化简</code>, 包括Dash<br>
-如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的<a href="#jin-yong-kuai-jie-jian">禁用快捷键</a></p>
-</div>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>去掉左上角的 <code>Activities</code>: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: <code>space-bar</code> 或 <code>workspace-bar</code>)</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义工作区的名称, 不然就是默认的数字</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.preferences workspace-names <span class="string">&quot;[&#x27;Browser&#x27;, &#x27;Terminal&#x27;, &#x27;Game&#x27;, &#x27;Box&#x27;, &#x27;Other&#x27;]&quot;</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>隐藏顶栏: 安装 <code>just-perfection</code> &amp;&amp; <code>blur-my-shell</code>, 配置后就是本文 <a href="#cheng-pin-zhan-shi">成品展示</a> 中的了, 处于 <code>Overview</code> 中才显示顶栏</p>
-</li>
-</ul>
-<hr>
-<h1 id="kuai-jie-jian">快捷键</h1>
-<p>这也是个很影响体验的地方, 如果你对自带的快捷键不满意, 完全可以自己更改</p>
-<p>我个人就不喜欢 <code>Alt+Fn数字</code>, 因为太远了, 而且记不清, 干脆换些简单易记的, 像 <code>I3/Sway</code> 那样<br>
-当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash</p>
-<div class="tips">
-<p><strong>注意</strong><br>
-快捷键之间有冲突的话, 可能无法生效, 请通过 <code>gnome-control-center keyboard</code> 查看快捷键冲突</p>
-</div>
-<h2 id="cha-zhao-kuai-jie-jian" id="查找快捷键">查找快捷键</h2>
-<p>首先, 我们得明白如何查找对应的快捷键</p>
-<p>下面的命令会列出极大部分的快捷键:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings list-recursively | grep -E <span class="string">&quot;Super|Alt|Ctrl|Shift|F[0-9]|Page|Up|Down|Right|Left&quot;</span> | cat</span><br></pre></td></tr></table></figure>
-<p>你可以在后面通过 pipeline, 追加一个 grep, 搜索 theme, font, workspace, switch, move 等词语<br>
-如果实在找不到, 一点点看过去也行 😃</p>
-<h2 id="jin-yong-kuai-jie-jian" id="禁用快捷键">禁用快捷键</h2>
-<p>某命令的快捷键, 一般可以有多个, 即某命令的快捷键是一个数组<br>
-想要禁用该快捷键, 将对应的数组设置为空就行了</p>
-<p>举个例子, 禁用Dash的快捷键 (见上文的置空 <code>favorite-apps</code>):</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Default: Super+&quot;1..9&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 9)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    gsettings <span class="built_in">set</span> org.gnome.shell.keybindings switch-to-application-<span class="variable">$i</span> <span class="string">&quot;[]&quot;</span>  </span><br><span class="line"><span class="keyword">done</span>    </span><br></pre></td></tr></table></figure>
-<p>禁用快捷键还可以让你避免冲突, 比如:<br>
-某个操作绑定了快捷键A, 另一个操作也绑定了快捷键A, 可能键A就失效了, 我遇到过好几次<br>
-这时就要借助 GUI 的力量了: 输入 <code>gnome-control-center keyboard</code>, 然后进入自定义那栏, 会显示冲突的键</p>
-<p>举个例子, 我想修改 <code>Super+Esc</code> 变成锁屏, 我就要这样做:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.settings-daemon.plugins.media-keys screensaver <span class="string">&quot;[&#x27;&lt;Super&gt;Escape&#x27;]&quot;</span> <span class="comment">#Default: Sup+L</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.wayland.keybindings restore-shortcuts <span class="string">&quot;[]&quot;</span> <span class="comment"># Default: Sup+Esc</span></span><br></pre></td></tr></table></figure>
-<h2 id="xiu-gai-kuai-jie-jian" id="修改快捷键">修改快捷键</h2>
-<p>修改, 也就是覆写默认的快捷键, 与下文要讲的 <a href="#tian-jia-kuai-jie-jian">添加快捷键</a> 不是一个概念<br>
-单纯的改改改而已, 下面是我个人修改的一套快捷键, 供大家参考</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>Vim 式的案件, 改变窗口布局, 替代原有的 <code>Super+方向键</code>:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 其实还有更丧心病狂的, 可以绑定快捷键, 将窗口放左上角, 右上角, 中间左边, 中间右边的......</span></span><br><span class="line"></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.keybindings      toggle-tiled-left  <span class="string">&quot;[&#x27;&lt;Super&gt;h&#x27;]&quot;</span> <span class="comment"># 放左边</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings  maximize           <span class="string">&quot;[&#x27;&lt;Super&gt;j&#x27;]&quot;</span> <span class="comment"># 最大化</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings  unmaximize         <span class="string">&quot;[&#x27;&lt;Super&gt;k&#x27;]&quot;</span> <span class="comment"># 最小化</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.mutter.keybindings      toggle-tiled-right <span class="string">&quot;[&#x27;&lt;Super&gt;l&#x27;]&quot;</span> <span class="comment"># 放右边</span></span><br></pre></td></tr></table></figure>
-<p>对了, 如果你追求平铺式的话, 扩展可以满足一部分要求, 但肯定比不上专业的窗管…</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>move, resize, kill 一个窗口:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Move</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-move   <span class="string">&quot;[&#x27;&lt;Super&gt;x&#x27;]&quot;</span>        <span class="comment">#Default: Alt+F7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Resize</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings begin-resize <span class="string">&quot;[&#x27;&lt;Super&gt;r&#x27;]&quot;</span>        <span class="comment">#Default: Alt+F8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Kill</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings close        <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;q&#x27;]&quot;</span> <span class="comment">#Default: Alt+F4</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>toggle-max, max, min, toggle-fullscreen, show-desktop:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Toggle max</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-maximized  <span class="string">&quot;[&#x27;&lt;Super&gt;m&#x27;]&quot;</span>     <span class="comment">#Default: Alt+F10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Max/Min</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings maximize          <span class="string">&quot;[&#x27;&lt;Super&gt;j&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings unmaximize        <span class="string">&quot;[&#x27;&lt;Super&gt;k&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings minimize          <span class="string">&quot;[&#x27;&lt;Super&gt;comma&#x27;]&quot;</span> <span class="comment">#Default: Super+H</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Toggle fullscreen</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings toggle-fullscreen <span class="string">&quot;[&#x27;&lt;Super&gt;f&#x27;]&quot;</span>     <span class="comment">#Default: None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Show desktop</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings show-desktop      <span class="string">&quot;[&#x27;&lt;Super&gt;d&#x27;]&quot;</span>     <span class="comment">#Default: None</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>还有套很重要的快捷键, 就是切换工作区了, 搭配消除过渡动画/增加特效的扩展, 流畅感Max:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 9)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-<span class="variable">$i</span> <span class="string">&quot;[&#x27;&lt;Super&gt;<span class="variable">$i</span>&#x27;]&quot;</span></span><br><span class="line">  gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings move-to-workspace-<span class="variable">$i</span>   <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;<span class="variable">$i</span>&#x27;]&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings switch-to-workspace-10   <span class="string">&quot;[&#x27;&lt;Super&gt;0&#x27;]&quot;</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings move-to-workspace-10     <span class="string">&quot;[&#x27;&lt;Super&gt;&lt;Shift&gt;0&#x27;]&quot;</span></span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>再比如, 覆写 <code>run-dialog</code> 的快捷键 (默认是按Alt-F2, 但太远了…):</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.wm.keybindings panel-run-dialog <span class="string">&quot;[&#x27;&lt;Super&gt;c&#x27;]&quot;</span> <span class="comment">#Default: Alt+F2</span></span><br></pre></td></tr></table></figure>
-<h2 id="tian-jia-kuai-jie-jian" id="添加快捷键">添加快捷键</h2>
-<p>此处指的是真正的, 添加自己的快捷键. 不是简单的覆写<br>
-比如 <code>Super+Return</code> 打开一个终端, <code>Super+B</code> 打开浏览器, <code>Super+E</code> 打开文件管理器…</p>
-<p>废话不多说, 你按下面照猫画虎, 就阔以了:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gp0=<span class="string">&quot;/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings&quot;</span></span><br><span class="line">gp1=<span class="string">&quot;org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:\</span></span><br><span class="line"><span class="string">/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Custom Keys</span></span><br><span class="line"><span class="comment"># 注意!!!!!!!</span></span><br><span class="line"><span class="comment"># 不要在最后添加逗号</span></span><br><span class="line">gsettings <span class="built_in">set</span> org.gnome.settings-daemon.plugins.media-keys custom-keybindings <span class="string">&quot;[     \</span></span><br><span class="line"><span class="string">    &#x27;<span class="variable">$gp0</span>/custom0/&#x27;, &#x27;<span class="variable">$gp0</span>/custom1/&#x27;, &#x27;<span class="variable">$gp0</span>/custom2/&#x27;, &#x27;<span class="variable">$gp0</span>/custom3/&#x27;               \</span></span><br><span class="line"><span class="string">]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Terminal</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ name     <span class="string">&#x27;Terminal&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ <span class="built_in">command</span>  <span class="string">&#x27;alacritty&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom0/ binding  <span class="string">&#x27;&lt;Super&gt;Return&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Files</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ name     <span class="string">&#x27;Files&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ <span class="built_in">command</span>  <span class="string">&#x27;nautilus&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom1/ binding  <span class="string">&#x27;&lt;Super&gt;e&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Browser</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ name     <span class="string">&#x27;Browser&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ <span class="built_in">command</span>  <span class="string">&#x27;microsoft-edge-beta&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom2/ binding  <span class="string">&#x27;&lt;Super&gt;b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Fcitx5 Reload</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ name     <span class="string">&#x27;Fcitx5_Reload&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ <span class="built_in">command</span>  <span class="string">&#x27;fcitx5 -r&#x27;</span></span><br><span class="line">gsettings <span class="built_in">set</span> <span class="variable">$gp1</span>/custom3/ binding  <span class="string">&#x27;&lt;Alt&gt;space&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>我相信你不会将时间浪费在掉在坑里面了<br>
-上面的一切已经非常非常全了</p>
-<hr>
-<h1 id="jia-zai-pei-zhi">加载配置</h1>
-<p>我们可以通过 dconf 这个工具, 导入或导出记载着 GNOME 数据的配置文件<br>
-你可以导出记载当前DE的配置文件, 然后导出到另一台机器上<br>
-这意味着, 当你重装系统时, 按下面的方法能快速恢复到先前的DE</p>
-<p>你也可以参考或直接加载我博客下的 <a href="/downloads/gnome/dconf.settings"><strong>dconf.settings</strong></a></p>
-<h2 id="dui-yu-fei-nixos" id="对于非Nixos">对于非Nixos</h2>
-<p>对于普通的Linux发行版, 直接按下面的方式</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>导出当前的dconf数据到某个文件:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dconf dump / &gt; dconf.settings</span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>加载/导入某个dconf文件到当前系统:</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat dconf.settings | dconf load -f /</span><br></pre></td></tr></table></figure>
-<p>对于背景与头像, 你可以写一段脚本, 将其复制到相应位置, 然后再添加上面的代码加载配置<br>
-同时确认 <code>dconf.settings</code> 中的 <code>picture-uri</code> / <code>picture-uri-dark</code> 指向对应文件</p>
-<h2 id="dui-yu-nixos" id="对于Nixos">对于Nixos</h2>
-<p>如果你使用 Nixos, 请先确保已经安装了 <a href="https://github.com/nix-community/home-manager">HomeManager</a><br>
-HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
-<p>虽然也能按上面的方法配置 Nixos 的 GNOME, 但还是推荐使用 HomeManager, 原因略过, 自看文档<br>
-请先下载 <code>dconf2nix</code>, 这是一个将 dconf文件, 转换为 nix 表达式的工具<br>
-随后, 在终端输入以下内容, 得到 <code>dconf.nix</code> :</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dconf dump / &gt; dconf.settings</span><br><span class="line">dconf2nix -i dconf.settings -o dconf.nix</span><br></pre></td></tr></table></figure>
-<p>在你的 ~/.config/nixpkgs 中, 保持这样的目录结构 (当然了, 可以随你想法):</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nixpkgs/</span><br><span class="line">├── gnome</span><br><span class="line">│   ├── .background</span><br><span class="line">│   ├── .face</span><br><span class="line">│   └── dconf.nix</span><br><span class="line">└── home.nix</span><br></pre></td></tr></table></figure>
-<p>这里的 <code>dconf.nix</code> 就是刚刚转换得到的nix表达式, 在 <code>home.nix</code> 中导入它:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">imports = [</span><br><span class="line">  ./gnome/dconf.nix</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<p>介于 HomeManager 的权限问题, 必须将背景图片/人物头像, 保持在 <code>$HOME</code> 下<br>
-这里将两个图片放在了 <code>~/.config/nixpkgs/gnome/</code> 下, 因此要修改下相应文件</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>对于背景图像, 修改 <code>dconf.nix</code> 中的 <code>picture-uri</code>:</p>
-</li>
-</ul>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;org/gnome/desktop/background&quot;</span> =</span><br><span class="line"><span class="keyword">let</span> <span class="attr">picture</span> = ../.background.png; <span class="keyword">in</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">picture-uri</span> = <span class="string">&quot;file://<span class="subst">$&#123;picture&#125;</span>&quot;</span>;</span><br><span class="line">  <span class="attr">picture-uri-dark</span> = <span class="string">&quot;file://<span class="subst">$&#123;picture&#125;</span>&quot;</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>对于人物头像, 在 <code>home.nix</code> 添加以下内容:</p>
-</li>
-</ul>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">home.file.<span class="string">&quot;.face&quot;</span>.<span class="attr">source</span> = ./.face;</span><br></pre></td></tr></table></figure>
-<p>大功告成!  我相信这是最最最最最全的一份 GNOME 入坑指南了</p>
-]]></content>
-      <tags>
-        <tag>GNOME</tag>
       </tags>
   </entry>
   <entry>
@@ -2401,12 +2453,15 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p>资料正在持续更新ing. . .</p>
 <ol>
 <li class="lvl-3">
-<p>书籍(官方圣经, 质量杠杆的)</p>
+<p>书籍</p>
 </li>
 </ol>
 <ul class="lvl-0">
 <li class="lvl-2">
-<p><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a></p>
+<p><a href="https://gtk-rs.org/gtk4-rs/stable/latest/book/">GUI development with Rust and GTK 4</a> (官方书籍)</p>
+</li>
+<li class="lvl-2">
+<p><a href="https://toshiocp.github.io/Gtk4-tutorial/">Gtk4 Tutorial</a> (由社区编写的gtk4教学书籍)</p>
 </li>
 </ul>
 <ol start="2">
@@ -2464,7 +2519,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
     <title>rust-gtk4-p2: 创建窗口</title>
     <url>/posts/rust-gtk4/p2.html</url>
     <content><![CDATA[<blockquote>
-<p>让我们使用Gtk, 创建一个窗口, 了解下大致的框架, 作为旅途的起点吧</p>
+<p>让我们使用 Gtk 创建窗口, 了解下 app_id, 构造者模式, 信号量, handler 等概念吧</p>
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
@@ -2506,20 +2561,27 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 </li>
 </ul>
 <hr>
-<h1 id="xin-hao-liang-de-gai-nian">信号量的概念</h1>
-<p>来吧! 当你跃跃欲试, <code>cargo run</code> 之后, 会看到:</p>
+<h1 id="xin-hao-liang">信号量</h1>
+<p>当你跃跃欲试, <code>cargo run</code> 之后, 会看到:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GLib-GIO-WARNING : Your application does not implement g_application_activate()</span><br><span class="line">and has no handlers connected to the <span class="string">&#x27;activate&#x27;</span> signal.  </span><br><span class="line">It should <span class="keyword">do</span> one of these.</span><br></pre></td></tr></table></figure>
-<p>我们实际上还要添加一个名为 activate 的信号量(Signal), 你得像下面这样写:</p>
+<p>靠, 这是啥子玩意儿? 实际上, 我们还要添加一个名为 activate 的信号量(Signal):</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> APP_ID: &amp;<span class="built_in">str</span> = <span class="string">&quot;xyz.jedsek.myapp&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder().application_id(APP_ID).build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当然, 现在还无法执行, 请注意 <code>build_ui</code> 函数中的 <code>todo!()</code>, 我们还没有填充这个函数!<br>
-因为我想逐步地讲解, 对上面的东西来点小小的解释</p>
-<p>Gtk应用的理念是: App只关心在特定的时候需要做什么事<br>
-什么时候做 ? Gtk已经帮我们安排好了, 至于 <code>事情的内容</code>, 则交由开发者自己决定</p>
-<p>接口方面, Gtk已经帮我们分类好一些虚函数, 它们也被称为 <code>信号(Signal)</code>, 我们只需要实现这些虚函数即可<br>
-你可以将虚函数, 简单理解为, 其函数体是空的, 库作者想让你用, 但具体怎么用随你, 需要自己来填充函数体<br>
-它们的调用顺序已经被安排好了, 只是需要等待我们实现函数体而已<br>
-(也就是事件, 与事件发生时进行处理的回调函数)</p>
-<p>下面是四个待响应的信号, 也就是待实现的虚函数:</p>
+因为我想逐步地讲解一下… 先来讲什么是 signal 吗:</p>
+<p>当某件事情发生时, signal 就会被发送, 交由Gtk的全局处理系统, 由它进行调度<br>
+比如窗口打开, 按钮被点击, 拖动控件…这些事件都会发送一个 signal 来告诉处理系统, 让它知道有事情发生了<br>
+你可以为每个 signal 绑定一个函数, 当处理系统接受到某个 signal, 就可以调用对应的处理函数了</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>我们把处理函数, 称之为 <code>handler</code></p>
+</li>
+<li class="lvl-2">
+<p>我们将为 signal 绑定一个 handler 的过程, 称之为 <code>connect</code></p>
+</li>
+</ul>
+<p>Gtk 的理念是: App只关心在特定的时候需要做的事情<br>
+<code>事件发送的时间</code> , 即 signal 什么时候发送已经定好了, 至于 <code>事情的内容</code>, 即 handler 的具体实现, 由开发者自己负责</p>
+<p>下面是四个待响应的信号, 也对应着四个待实现的虚函数/handler:</p>
 <ul class="lvl-0">
 <li class="lvl-2">
 <p>startup:<br>
@@ -2539,20 +2601,17 @@ GtkApp总得有至少一个窗口, 该函数决定如何显示/绘制窗口</p>
 </li>
 </ul>
 <p>正如上面第三个信号所说, 一个GtkApp至少得有一个窗口<br>
-当某个App试图打开第二个窗口, Gtk全局系统, 会发送Signal(activate/open)给第一个窗口<br>
+当某个App试图打开第二个窗口, Gtk全局系统, 会发送 signal(activate/open) 给第一个窗口<br>
 所有的初始化工作都应在startup中完成, 哪怕是第二个窗口相关的初始化</p>
-<p>这些只是Gtk给我们的虚函数中最为常见的几个, 实际上还有很多信号, 帮你自定义设计App<br>
-本节后面, 会再讲下关于按钮被点击时的信号量, 帮你加深印象, 此处暂先略过</p>
+<p>这些只是Gtk给我们的 signal 中最为常见的几个, 实际上还有很多信号, 帮你自定义设计App, 本节后面, 会再帮你加深下印象</p>
 <hr>
 <h1 id="chuang-jian-kong-bai-chuang-kou">创建空白窗口</h1>
 <p>回到之前的代码, 如下:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::Application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> APP_ID: &amp;<span class="built_in">str</span> = <span class="string">&quot;xyz.jedsek.myapp&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder().application_id(APP_ID).build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    todo!()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">Your <span class="built_in">application</span> <span class="keyword">does</span> <span class="keyword">not</span> implement g_application_activate()</span><br><span class="line"><span class="keyword">and</span> has no handlers connected <span class="keyword">to</span> <span class="keyword">the</span> &#x27;<span class="built_in">activate</span>&#x27; signal. </span><br></pre></td></tr></table></figure>
-<p>现在你应该明白, 为什么之前会报出一个警告, 要求连接activate这个信号了吧?<br>
-(<code>connect_xxxx</code> 相关的方法, 代表着连接信号/实现虚函数)</p>
-<p>我们得调用 <code>connect_activate</code>, 并传入一个函数作为参数<br>
-根据定义, 这个被传入的函数, 具有静态的生命周期, 参数的类型是 <code>&amp;Application</code></p>
-<p>我们创建的这个函数, 名为 <code>build_ui</code>, 正是为了消除该警告, 真正显示窗口, 毕竟一个GUI程序若无任何显示, 这…啧, 不太聪明?</p>
+<p>现在你应该明白, 为什么之前会报出这个警告了吧? <code>connect_xxxx</code>, 代表着连接某个 signal , 即实现对应的虚函数/handler</p>
+<p><code>connect_activate</code>, 要求传入一个具有静态lifetime的函数作为参数, 且被传入函数只有唯一的参数, 其类型是 <code>&amp;Application</code><br>
+我们创建的这个函数, 名为 <code>build_ui</code>, 正是为了消除该警告, 真正显示窗口, 毕竟一个GUI程序若无任何显示, 这…啧, 不太聪明?</p>
 <p>直接上 <code>build_ui</code> 的代码, 注意 use 那边多了东西:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;Application, ApplicationWindow&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> APP_ID: &amp;<span class="built_in">str</span> = <span class="string">&quot;xyz.jedsek.myapp&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder().application_id(APP_ID).build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    <span class="keyword">let</span> win = ApplicationWindow::builder()</span><br><span class="line">        .application(app)</span><br><span class="line">        .title(<span class="string">&quot;My App&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    win.present();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们用builder模式, 指定了窗口对应的App是谁, 标题是啥, 并在最后显示它<br>
@@ -2563,12 +2622,9 @@ GtkApp总得有至少一个窗口, 该函数决定如何显示/绘制窗口</p>
 <h1 id="xin-zeng-an-niu">新增按钮</h1>
 <p>让我们再创建一个按钮, 提示信息是 <code>Press me!</code>, 在按下之后, 变成显示 <code>Hello World!</code>:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::&#123;prelude::*, Button&#125;;</span><br><span class="line"><span class="keyword">use</span> gtk::&#123;Application, ApplicationWindow&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> APP_ID: &amp;<span class="built_in">str</span> = <span class="string">&quot;xyz.jedsek.myapp&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> app = Application::builder().application_id(APP_ID).build();</span><br><span class="line">    app.connect_activate(build_ui);</span><br><span class="line">    app.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_ui</span></span>(app: &amp;Application) &#123;</span><br><span class="line">    <span class="keyword">let</span> btn = Button::builder().label(<span class="string">&quot;Press me!&quot;</span>).build();</span><br><span class="line">    btn.connect_clicked(|btn| btn.set_label(<span class="string">&quot;Hello World!&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> win = ApplicationWindow::builder()</span><br><span class="line">        .application(app)</span><br><span class="line">        .title(<span class="string">&quot;My App&quot;</span>)</span><br><span class="line">        .child(&amp;btn)</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">    win.present();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>之前说过, 我们可以覆写的虚函数/信号量, 远远不止那四个, 这里为btn连接了名叫clicked的信号量</p>
-<p>再次加深一下印象:<br>
-库的作者为你预先定义好了很多虚函数, 什么时候调用已经定好了, 但调用之后会做什么, 则自己决定<br>
-这里, 按钮被按下这个事件发生后, 调用了对应的函数, 本来这应该是个虚函数<br>
-但我们覆写了它, 被点击后, 会将按钮上的信息(Label)设置为 <code>Hello World!</code></p>
-<p>clicked这个事情发生后, 本来就能啥也不做, 因此即使你不调用connect_clicked, 也不会出现警告</p>
+<p>我在这里使用Button, 而不是Label, 单纯是为了复习先前学过的概念, 仅此而已</p>
+<p>之前说过, 我们可以 connect 的 signal 远不止那四个, 比如这里的 connect_clicked, 就代表按钮被点击后的handler<br>
+点击事情发生时, 本来就能啥也不做, 因此即使不调用 connect_clicked 也不会出现警告, 不像 activate 强制要求你处理</p>
 <p>然后, 我们在使用 <code>Builder Pattern</code> 构造窗口时, 调用child, 将该按钮的引用传入, 让按钮也出现在窗口中<br>
 注意: 这里会使得按钮的强引用数量+1, 因为Button是GObject的子类, 而GObject具有引用计数的特点, 下节会讲</p>
 <hr>
@@ -2610,7 +2666,7 @@ GtkApp总得有至少一个窗口, 该函数决定如何显示/绘制窗口</p>
 <p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
 GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <h1 id="widget">Widget</h1>
-<p>任何一个Gtk应用, 都由许多部件组成, 而这些部件, 就叫 <code>Widget</code>, 比如我们上一节的 <code>ApplicationWindow</code> 就是一个 Widget<br>
+<p>任何Gtk应用, 都由许多部件(Widget)组成, 比如窗口、对话框、按钮、多行文本、容器等, 因此 Widget 是个抽象概念<br>
 再比如, <code>Button(按钮)</code>, <code>Container(容器)</code>, 都属于 <code>Widget</code></p>
 <p><a href="https://docs.gtk.org/gtk4/visual_index.html">Widget Gallery</a> 是Gtk提供的网站, 你可以通过浏览它, 更好地选择 <code>Widget</code></p>
 <p>我们甚至能自定义出新的Widget, 通过<code>继承/子类化</code>, 因为 Gtk 是面向对象的GUI框架<br>
@@ -2652,9 +2708,9 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p>多所有权的问题已经达成了, 但我们还需要内部可变性, 因此还需要使用 <code>std::cell::Cell</code><br>
 于是, num变量的类型, 从简单的i32, 变成了一个Wrapper类型, 即 <code>Rc&lt;Cell&lt;i32&gt;&gt;</code></p>
 <div class="tips">
-<p><strong>小提示</strong><br>
-对于实现了Copy的类型, 请直接使用Cell, 而非Refcell<br>
-因为Cell简单, 是直接使用memcpy来改变值的, 效率高, 易理解</p>
+<p><strong>提示</strong><br>
+对于实现了 Copy 的类型, 请直接使用 Cell, 而非 Refcell<br>
+因为 Cell 简单, 且直接使用 memcpy 来改变值, 效率高易理解</p>
 </div>
 <p>下面是代码, 请务必记得use一下:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = Rc::new(Cell::new(<span class="number">0</span>));</span><br><span class="line"><span class="keyword">let</span> num_clone = num.clone();</span><br><span class="line"></span><br><span class="line">btn_inc.connect_clicked(|_| &#123;</span><br><span class="line">    num_clone.set(num_clone.get() + <span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line">btn_dec.connect_clicked(|_| &#123;</span><br><span class="line">    num.set(num.get() - <span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -2699,9 +2755,11 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 我们获取了多所有权, 就像变量 num 一样, 只有单所有权时, 被move到闭包后的变量在之后会被使用, 编译报错, 如 btn_dec</p>
 </li>
 </ul>
-<p>注意:<br>
+<div class="tips">
+<p><strong>注意:</strong><br>
 <code>clone!</code>, 在尝试升级 weak-ref 时, 若升级失败, 闭包将直接提前返回一个可选值, 若可选值未指定, 则默认返回 <code>()</code> 值<br>
 详情请见文档: <a href="https://docs.rs/glib/latest/glib/macro.clone.html">glib::clone</a></p>
+</div>
 <p>至此, 已经顺利实现了功能, 但仍有个小问题, 那就是:<br>
 循环引用导致内存泄漏!</p>
 <hr>
@@ -2745,6 +2803,286 @@ win活着, 导致 gtk_box 也会活着, gtk_box 活着, 导致 btn 也会活着<
       <tags>
         <tag>Rust</tag>
         <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-gtk4-p4: GObject-子类化</title>
+    <url>/posts/rust-gtk4/p4.html</url>
+    <content><![CDATA[<blockquote>
+<p>本节将学习如何使用子类化(Subclassing), 从而定制自己的 Widget</p>
+</blockquote>
+<span id="more"></span>
+<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
+GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
+<h1 id=""></h1>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>high-school-it-p1: 数据与信息</title>
+    <url>/posts/high-school-it/p1.html</url>
+    <content><![CDATA[<blockquote>
+<p>本章是一些小小的概念, 涉及了数据与信息的定义, 及之间的关系与区别</p>
+</blockquote>
+<span id="more"></span>
+<p>我们会学习数据(Data), 信息(Information), 知识(Knowledge)的概念<br>
+当然, 你可以跳过本节, 因为考试不考, 此篇仅为单纯科普</p>
+<h1 id="shu-ju-de-ding-yi">数据的定义</h1>
+<p>数据(Data), 是一种符号表示, 包括图形符号, 数字, 字母等<br>
+传统意义上的数据有书上的文字, 草稿纸上的数字, 信息时代的数据有电脑中的音频, 图像, 文件等<br>
+数据仅为一种客观层面上的载体, 如果没有主观上的理解, 其完全没有意义, 举个例子:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>你是位山顶洞人, 看见了从未来穿梭而来的草稿纸, 上面记载着爱因斯坦的相对论, 你无法理解</p>
+</li>
+<li class="lvl-2">
+<p>你是位现代的科学家, 接受过高等教育, 正在研究相对论, 你可以理解</p>
+</li>
+</ul>
+<p>上面的两种情况中:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>记载在纸上的相对论的文字</code> 就是数据, 属于客观层面</p>
+</li>
+<li class="lvl-2">
+<p><code>山顶洞人/科学家</code> 看见相对论的两种态度, 属于主观层面</p>
+</li>
+</ul>
+<p>没有主观层面上的理解, 数据便只是一张废纸, 毫无意义</p>
+<hr>
+<h1 id="xin-xi-de-ding-yi">信息的定义</h1>
+<p>虽然数据是客观的, 但你可以通过数据获取信息, 获取的信息因人而异, 因此过程是主观的 (想象山顶洞人与科学家的例子)<br>
+其实目前仍然没有对信息的具体定义, 毕竟这东西玄乎, 因观察角度, 研究目的等不同而存在不同的定义</p>
+<p>信息论之父, 香农, 对此就有一套理解: “信息是用来消除随机不确定性的东西”, 这通常被看作经典定义<br>
+比如, 当你向朋友描述一台电脑笔记本, 有以下不同版本:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>这是一台电脑笔记本</p>
+</li>
+<li class="lvl-2">
+<p>这是一台屏幕大小为15.6英寸的电脑笔记本</p>
+</li>
+<li class="lvl-2">
+<p>这是一台屏幕大小为15.6英寸, 支持type-c接口的电脑笔记本</p>
+</li>
+<li class="lvl-2">
+<p>这是一台屏幕大小为15.6英寸, 支持type-c接口, 16GB内存的电脑笔记本</p>
+</li>
+</ul>
+<p>你会看到, 信息越多, 越能消除随机不确定性</p>
+<hr>
+<h1 id="xin-xi-de-te-zheng">信息的特征</h1>
+<p>我们通过香农对信息的定义, 与一个例子, 大概懂得了 “信息是用来消除随机不确定性的东西”<br>
+但我们还得了解更多关于&quot;信息&quot;的信息, 来完善&quot;信息&quot;的定义, 来加速理解</p>
+<p>下面是信息的5个特征, 教科书上搬的:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>载体依附性<br>
+信息不能独立存在, 它是虚的, 必须有载体<br>
+比如珍贵的古代文献, 有好多都失传了, 就是因为记载着信息的载体, 也就是书籍, 遭受损害, 导致信息丢失</p>
+</li>
+<li class="lvl-2">
+<p>时效性<br>
+信息往往反映的是某事物特定时间内的状况, 但事物会随着时间的推移而改变<br>
+比如 “太阳亮着” 这条信息, 一百万亿亿亿年后太阳绝壁熄灭了, 你敢说这条信息永远适用?</p>
+</li>
+<li class="lvl-2">
+<p>共享性<br>
+信息可以被共享, 可以被重复利用, 不像能源那样会发生损耗<br>
+毕竟信息是虚的, 不是实物, 你QQ发的消息, 已经被人看到了, 撤回后那个人还是记得的</p>
+</li>
+<li class="lvl-2">
+<p>可加工处理性/真伪性<br>
+信息能被加工, 比如要打仗了, 肯定要给地方一些假信息, 来迷惑敌人<br>
+因此, 不要轻易跟随网上的人云亦云!</p>
+</li>
+<li class="lvl-2">
+<p>价值性<br>
+比如天气预报让你出门避免被雨淋湿, 这就是价值<br>
+对不同的人, 同信息会产生不同的价值, 比如英国的天气预报对中国居民就没多大价值</p>
+</li>
+</ul>
+<hr>
+<h1 id="zhi-shi-de-ding-yi">知识的定义</h1>
+<p>不管有用无用的信息, 那都是信息, 但知识是有用的, 能够运用在实践中的信息, 是人类社会的经验总和它能够被继承, 被传递, 这显而易见, 毕竟它本身就是信息的真子集, 人类就是依靠知识的继承而不断发展的</p>
+<p>这部分很简单, 简单概述即可</p>
+<hr>
+<h1 id="zong-jie">总结</h1>
+<p>以下是一个很好的, 对三者进行了区分的例子:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>数据: 人们看到的3.1415926, 这是客观的数字, 是表达符号</p>
+</li>
+<li class="lvl-2">
+<p>信息: 人们想到了圆周率就是3.1415926</p>
+</li>
+<li class="lvl-2">
+<p>知识: 人们能够运用圆周率, 知道如何求解圆的面积</p>
+</li>
+</ul>
+<p>这是我花了二十分钟写的, 毕竟只是简单地抄了下教科书, 考试也不考, 姑且就这样吧, 累了<br>
+您可以看之后的python语法, 数据结构, 算法, 内存等方面的文字, 等课上到了我应该就会更新…</p>
+]]></content>
+      <tags>
+        <tag>高中信息技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>high-school-it-p2: 基础科普与环境搭建</title>
+    <url>/posts/high-school-it/p2.html</url>
+    <content><![CDATA[<blockquote>
+<p>p2: 让我们了解下python, 顺便科普一些常识, 进行环境搭建, 写一个Hello World吧!</p>
+</blockquote>
+<span id="more"></span>
+<div class="tips">
+<p><strong>注意:</strong><br>
+本文是偏向初学者的科普性文章, 语言尽量小白化, 或因此丧失一定的严谨, 望理解</p>
+</div>
+<h1 id="python-jie-shao">Python介绍</h1>
+<p>计算机是二进制的, 只认识二进制, 但你不可能手写二进制<br>
+c/cpp/python 等编程语言, 让你写人类可理解的 “代码”, 然后将它们 “转化” 为二进制后供机器执行</p>
+<p>反正记住一点:<br>
+机器无法理解代码, 它只理解二进制, 但你能通过程序, 将代码解析为二进制可执行文件, 也就是.exe结尾的文件<br>
+我们将代码被解析为二进制的过程, 称为 “编译”, 将解析工具, 称为 “编译器”</p>
+<p>当然, python 特殊一些, 编译的过程是分段的, 先编译一段, 再执行这段二进制, 重复, 直到全部解析完毕<br>
+我们将分段编译的过程, 称为 “解释”, 将分段编译的工具, 称为 “解释器”</p>
+<p>编程语言, 以 python 为例子, 在不断地高速迭代与进化, 因此有很多新旧版本<br>
+新版本的 python, 可能就会出现许多新的强大语法, 让人更爽地编写代码</p>
+<p>py的代码很简单, 不像c语言要涉及底层的内存管理知识, 你不需关注底层的繁琐细节, 只需关注逻辑<br>
+因此它出现在了高中的信息技术学科教育中, 适合初学者, 虽然我个人并不喜欢python 😃</p>
+<div class="tips">
+<p><strong>常识科普: 代码</strong><br>
+代码并非特殊之物, 你完全能在桌面新建个txt文件, 然后在里面写代码<br>
+它仅是段文本, 若没了编译器/解释器, 代码毫无用处<br>
+编译器/解释器才是最重要的, 因为它们可以接收文本, 将其解析为exe文件</p>
+</div>
+<div class="tips">
+<p><strong>常识科普: 文件后缀</strong><br>
+文件本身的内容, 并不会因修改文件的后缀名而发生更改<br>
+后缀只不过起到一个进行分辨的作用, 当你看见 “xxx.jpg”, 就知道它是张图片, 看见 “xxx.txt”, 就知道它是段文本</p>
+<p>文件的后缀只不过是个约定, 让人们知道该文件代表什么, 但约定不具有强制性<br>
+windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如:</p>
+<p>当你新建个txt, 然后将其后缀改为jpg, windows就会以为它是张图片, 用查看图片的方式来处理它, 此时自然就无法显示了<br>
+一个图片文件, 你非要把内容改成你随便敲打的文字, 工具无法识别, 自然就是 “文件损坏” 了</p>
+<p>如何显示文件后缀?<br>
+按住 “win+e” (“win” 是键盘下面的windows图标, win与e一起按), 打开文件浏览器<br>
+在上方顶栏, 点击 “查看”, 随后勾选右侧的 “文件扩展名”, 然后关闭文件浏览器<br>
+此时, 桌面上的文件, 就会显示后缀了, 你也能通过重命名修改文件后缀了</p>
+</div>
+<hr>
+<h1 id="huan-jing-da-jian">环境搭建</h1>
+<p>你可以选择用家里的电脑练习python, 这时就需要自己安装python了<br>
+<s>(以Windows为例, 毕竟你要是用的是linux还需要看这步吗…)</s></p>
+<p>python的官网在国外, 访问起来有点慢, 让我们使用华为搭建的镜像网站, 点击此处下载py, 版本是3.9.0: <a href="https://mirrors.huaweicloud.com/python/3.9.0/python-3.9.0.exe">安装程序</a><br>
+至于出现安装界面后点哪里, 你就记住两个地方:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>先勾选底部的两个框框, 分别是&quot;install launcher&quot; 与 “add path”, 都选上</p>
+</li>
+<li class="lvl-2">
+<p>点击 “Install Now” 进行安装, 等待安装成功后直接点击close</p>
+</li>
+</ul>
+<p>如何检验自己是否安装成功?<br>
+请按住 <code>win+r</code> (win键是键盘最下面的window图标, “win” 与 “r” 要一起按)<br>
+随后输入 <code>cmd</code>, 然后再敲回车, 会出现一个黑窗口, 不用理会闪烁的粗体光标, 与光标前的前置提示</p>
+<p>请输入以下命令, 检验python是否安装成功:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python  --version</span><br></pre></td></tr></table></figure>
+<p>以上的 <code>python</code>, 就是安装的python解释器, 是个可执行文件(exe)<br>
+我们执行它, 但并不让它解释代码, 此处仅表示: 让它输出当前python的版本<br>
+它应该会输出类似下面的文字:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Python 3.9.0</span><br></pre></td></tr></table></figure>
+<p>如果是其他输出, 很可能是安装的时候, 未勾选 <code>add path</code> 这个框, 导致路径无法被识别</p>
+<div class="tips">
+<p><strong>常识科普: 命令与路径</strong><br>
+这个出现的黑框框, 作用是执行你敲下的命令, 我们称其为 “终端/命令行/cmd”<br>
+粗体闪烁的光标前的提示符, 表示你当前处于的路径</p>
+<p>你能输入命令, 敲回车, 来运行该命令 (命令其实也就是一个exe文件)<br>
+事实上, 当你想执行命令时, 应输入它的完整路径, 告诉了windows可执行文件的路径, 才能执行对应的文件嘛<br>
+比如, 敲下 “C:\asdiasdadows\asdadtem32\casd.exe” 来执行某个叫 casd.exe 的可执行文件 (乱编的路径)<br>
+你鼠标点击软件图标后, 就会出现界面, 这也相当于, 在终端/命令行中, 敲下了对应的路径 😃</p>
+<p>但若有个很常用的命令, 不想每次都输完整路径, 只想简单地用 “xxx” 来执行 “C:\asdad\xxx.exe” 该怎么办呢?<br>
+这时, 可将该path添加到系统path中, 然后为该path取个名字, 之后输入这名字, 此时就相当于, 执行了对应path指向的文件</p>
+<p>你现在懂得, 为什么在python的安装向导程序中, 需要勾选下方的 “add path” 了吗?<br>
+就是为了能够直接输入 “python” 来执行命令, 而不需要在意它的路径!</p>
+<p>同样的道理, 你按 “win+r” 后, 输入的 <code>cmd</code>, 其实就代表着, 通过 <code>cmd</code> 背后对应的路径, 执行了叫 <code>cmd.exe</code> 的exe文件<br>
+因此, 出现了这个黑框框 😃</p>
+<p>但请明白一点, 这个黑框框只不过是个 “外壳”, 只是让你输入命令而已, 能够显示文字而已<br>
+真正执行命令的, 还是windows系统本身, 你在cmd中敲下的命令, 都会交给windows系统本身去执行<br>
+你可以 “win+r” 后直接敲 python, 与在 cmd 中敲 python, 效果是一样的</p>
+</div>
+<hr>
+<h1 id="idle-de-bei-hou-yuan-li">idle的背后原理</h1>
+<p>你现在已经了解了很多基础的概念/常识了, 对吧?!</p>
+<p>在课堂上, 老师是怎么教你们码代码的?  是不是通过一个叫 “idle” 的工具, 编辑代码后, 点击 “Run” 开始运行? (或类似工具)<br>
+实际上, 若你明白了先前讲的 “编译器/解释器”, 这个图形化的界面实际上也并不神秘</p>
+<p>你编辑代码后点击的 “Run”, 实际上的作用, 就是获取你编辑的当前文件的路径, 然后把该路径传递给python解释器, 进行执行<br>
+执行后, python解释器根据你的代码, 可能会进行输出, 然后 idle 就会该输出粘过来, 显示给你, 仅此而已</p>
+<p>整个过程如下:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>新建一个文件, 编辑, 然后保存, 复制该文件的路径, 假设该路径是 “<a href="http://xxx.py">xxx.py</a>”</p>
+</li>
+<li class="lvl-2">
+<p>在 cmd 中输入: <code>python xxx.py</code></p>
+</li>
+</ul>
+<hr>
+<h1 id="hello-world">Hello world!</h1>
+<p>来加深印象, 写个非常简单的程序吧, 作用是打印一句话: “Hello world!”<br>
+这是计算机界非常经典的, 几乎适用于一切编程语言的, 非常简单的初学者代码</p>
+<div class="tips">
+<p><strong>注意:</strong><br>
+这是本教程唯一的一次不用idle, 目的是理解上面的知识, 之后的所有代码, 都会使用idle编辑, 因为小白化<br>
+你可以选择直接跳过本节, 该讲的都讲了, 特在此说明</p>
+</div>
+<p>首先, 在桌面右键, 新建一个txt文件, 假设它叫 “first_app”, 然后右键编辑, 输入下面的内容:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello world!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>随后打开cmd/终端, 你的当前路径应该是 “C:\Users\用户名”<br>
+我们新建的文件, 在桌面中, 桌面对应的文件夹是 “Desktop”, 因此我们应该进入Desktop文件夹, 然后根据路径执行它:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Desktop</span><br><span class="line">python first_app.txt</span><br></pre></td></tr></table></figure>
+<p>这将会打印:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+<p>瞧吧! 编辑器/解释器本身, 是不在乎文件后缀的, 只在乎文件的内容, 然后读取文件的内容, 将其解析为二进制, 然后运行<br>
+当然, 这样有个问题, 那就是人们看见其后缀txt, 会下意识认为它仅是个普通的文本文件</p>
+<p>你可以将后缀改为py, 告诉其他人, 这是个装着py代码的文件, 让含义更加清晰, 仅此而已<br>
+(如果你不懂怎么修改后缀, 请看上面的 “常识科普: 文件后缀”)</p>
+<p>当你将后缀更改为py后, 你会发现文件的图标变成了python的图标, 啊, 多么清晰!<br>
+当你右键它, 会发现能用idle编辑了, windows根据后缀, 知道了 “这是段python代码”, 然后去寻找相关的工具了<br>
+这就是正确使用后缀的便利, 即使后缀并不改变文件本身的内容, 但我们能更好地, 根据后缀辨别文件的类型与用途</p>
+<p>但还是有个问题<br>
+那就是, 当你双击时, windows会根据后缀, 将该文件的路径, 传入命令 “python”, 进行执行<br>
+执行的时候, 会自动打开cmd, 来显示你的输出/接收你的输入</p>
+<p>这时, 你会发现, 黑窗窗一闪而过, 为何它没停下来, 直接闪退了?!?!<br>
+实际上, 我们的代码已经执行完毕了, 那么既然已经好了, 临时打开的cmd自然就消失了</p>
+<p>在之前通过win+r产生的cmd, 用途是进行交互, 让你能一直在一个 “输入命令, 得到结果” 的循环<br>
+但通过双击而获得的cmd, 此时仅为单个程序服务, 程序一结束自己就消失</p>
+<p>有没有什么办法来阻止双击后黑框框的消失呢? 当然有<br>
+windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, 作用是停顿cmd, 直到你随便按一个键, 打破这个停顿<br>
+你可以 win+r 打开 cmd, 然后输入 pause, 自己来试试, 就明白了, 很简单的</p>
+<p>python是可以调用外部命令的!</p>
+<p>你可以在 first_app.py 中, 这样改进你的代码:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">os.system(<span class="string">&quot;pause&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>import</code>, 表示你导入了一个库, 关于库的概念之后会讲, 此处不懂也没事<br>
+<code>os.system(&quot;pause&quot;)</code> 表示调用一条外部命令, 相当于在cmd中调用了 pause 命令</p>
+<p>好了, 本节已经结束了, 仅作为一篇科普向文章, 之后会正式涉及python的语法部分</p>
+]]></content>
+      <tags>
+        <tag>高中信息技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>high-school-it-p3: python基础语法</title>
+    <url>/posts/high-school-it/p3.html</url>
+    <content><![CDATA[<blockquote>
+<p>正式的对python语法的学习, 包含常见库函数的使用</p>
+</blockquote>
+<span id="more"></span>]]></content>
+      <tags>
+        <tag>高中信息技术</tag>
       </tags>
   </entry>
 </search>
