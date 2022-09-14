@@ -558,14 +558,12 @@ cli 可以代表抽象的界面, 也可以指代具体的某个程序<br>
 <figure class="highlight rust"><figcaption><span>src/main.rs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::path::PathBuf;</span><br><span class="line"><span class="keyword">use</span> clap::&#123;AppSettings, ArgGroup, Parser&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[clap(</span></span><br><span class="line"><span class="meta">    author = <span class="meta-string">&quot;Author: Jedsek &lt;jedsek@qq.com&gt;&quot;</span>,</span></span><br><span class="line"><span class="meta">    version,</span></span><br><span class="line"><span class="meta">    global_setting = AppSettings::DeriveDisplayOrder,</span></span><br><span class="line"><span class="meta">    group(ArgGroup::new(<span class="meta-string">&quot;options&quot;</span>)</span></span><br><span class="line"><span class="meta">      .multiple(true).required(true).args(&amp;[<span class="meta-string">&quot;bytes&quot;</span>, <span class="meta-string">&quot;chars&quot;</span>, <span class="meta-string">&quot;words&quot;</span>, <span class="meta-string">&quot;lines&quot;</span>, <span class="meta-string">&quot;longest-line&quot;</span>]</span>)),</span><br><span class="line">    about = </span><br><span class="line"><span class="string">r#&quot;</span></span><br><span class="line"><span class="string">This is just a simple GNU/wc command implementation, written in Rust</span></span><br><span class="line"><span class="string">It could print &lt;FILE&gt;&#x27;s count of bytes, chars, words, lines, and the longest line/word&#x27;s length</span></span><br><span class="line"><span class="string">&quot;#</span>,</span><br><span class="line">)]</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Cli</span></span> &#123;</span><br><span class="line">    <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, value_name = <span class="meta-string">&quot;FILE&quot;</span>, required = true)]</span></span><br><span class="line">    <span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of bytes</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> bytes: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of chars</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> chars: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of words</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> words: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of lines</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> lines: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the length of the longest line</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short = &#x27;L&#x27;, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> longest_line: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">  Cli::parse();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>等下再解释, 现在先让我们看看效果吧, 查看下help:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">cargo run -- -h</span><br></pre></td></tr></table></figure>
-<p>上面的 <code>--</code>, 起隔断的作用, 表示在这之后传入的参数, 是 <code>--</code> 前面的整体所形成的程序<br>
-如果你去掉 <code>--</code>, <code>-h</code> 打印的就是 <code>cargo run</code> 的帮助信息, 而不是 <code>cargo run</code> 之后产生的程序, <code>rwc</code> 的帮助信息了<br>
-之后的代码, 会保持这处 “传统”</p>
-<p>像 <code>-h/--help</code>, <code>-V/--version</code>, 这两个是 clap 自动为我们生成的, 之外的选项将什么也不会发生, 因为我们暂时都未实现<br>
-输出的help应该如下:</p>
+<p>上面的 <code>--</code> 表示命令的结尾, 之后的全被视为传递给命令的文件名/参数<br>
+若你去掉 <code>--</code>, <code>-h</code> 打印的就是 <code>cargo run</code> 的帮助信息, 而不是 <code>cargo run</code> 之后产生的程序 <code>rwc</code> 的帮助信息了</p>
+<p>像 <code>-h/--help</code>, <code>-V/--version</code>, 这两个是 clap 自动为我们生成的, 之外的选项将什么也不会发生, 因为我们暂时未实现<br>
+之后生成的help应该如下:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">rwc <span class="number">0.1</span>.<span class="number">0</span></span><br><span class="line">Author: Jedsek &lt;jedsek@qq.com&gt;</span><br><span class="line"></span><br><span class="line">This is just a simple GNU/wc command implementation, written <span class="keyword">in</span> Rust</span><br><span class="line">It could print &lt;FILE&gt;<span class="symbol">&#x27;s</span> count of bytes, chars, words, lines, and the longest line/word<span class="symbol">&#x27;s</span> length</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">    rwc &lt;--bytes|--chars|--words|--lines|--longest-line&gt; &lt;FILE&gt;...</span><br><span class="line"></span><br><span class="line">ARGS:</span><br><span class="line">    &lt;FILE&gt;...    The path(s) you should provide</span><br><span class="line"></span><br><span class="line">OPTIONS:</span><br><span class="line">    -b, --bytes           Print the count of bytes</span><br><span class="line">    -c, --chars           Print the count of chars</span><br><span class="line">    -w, --words           Print the count of words</span><br><span class="line">    -l, --lines           Print the count of lines</span><br><span class="line">    -L, --longest-line    Print the length of the longest line</span><br><span class="line">    -h, --help            Print help information</span><br><span class="line">    -V, --version         Print version information</span><br></pre></td></tr></table></figure>
-<p>如果仔细观察一下, 应该就搞懂之前的代码了, 毕竟是声明式的定义, 可以对照着看嘛, 而且 clap 的文档也很好, 可以自己去翻下<br>
-如果你认为自己已经搞懂上面的代码, 不需要看下面的解释了, 请直接跳转到 <a href="#luo-ji-shi-xian">逻辑实现</a> 部分</p>
+<p>如果仔细观察一下, 应该就搞懂之前的代码了, 毕竟是声明式的定义, 可以对照着看嘛, 而且 clap 的文档也很好, 可以自己去翻下</p>
 <hr>
 <h1 id="luo-ji-shi-xian">逻辑实现</h1>
 ]]></content>
@@ -2941,7 +2939,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p><strong>注意:</strong><br>
 本文是偏向初学者的科普性文章, 语言尽量小白化, 或因此丧失一定的严谨, 望理解</p>
 </div>
-<h1 id="python-jie-shao">Python介绍</h1>
+<h1 id="bian-yi-yu-jie-shi">编译与解释</h1>
 <p>计算机是二进制的, 只认识二进制, 但你不可能手写二进制<br>
 c/cpp/python 等编程语言, 让你写人类可理解的 “代码”, 然后将它们 “转化” 为二进制后供机器执行</p>
 <p>反正记住一点:<br>
@@ -2954,13 +2952,13 @@ c/cpp/python 等编程语言, 让你写人类可理解的 “代码”, 然后�
 <p>py的代码很简单, 不像c语言要涉及底层的内存管理知识, 你不需关注底层的繁琐细节, 只需关注逻辑<br>
 因此它出现在了高中的信息技术学科教育中, 适合初学者, 虽然我个人并不喜欢python 😃</p>
 <div class="tips">
-<p><strong>常识科普: 代码</strong><br>
+<p><strong>代码:</strong><br>
 代码并非特殊之物, 你完全能在桌面新建个txt文件, 然后在里面写代码<br>
 它仅是段文本, 若没了编译器/解释器, 代码毫无用处<br>
 编译器/解释器才是最重要的, 因为它们可以接收文本, 将其解析为exe文件</p>
 </div>
 <div class="tips">
-<p><strong>常识科普: 文件后缀</strong><br>
+<p><strong>文件后缀:</strong><br>
 文件本身的内容, 并不会因修改文件的后缀名而发生更改<br>
 后缀只不过起到一个进行分辨的作用, 当你看见 “xxx.jpg”, 就知道它是张图片, 看见 “xxx.txt”, 就知道它是段文本</p>
 <p>文件的后缀只不过是个约定, 让人们知道该文件代表什么, 但约定不具有强制性<br>
@@ -2971,6 +2969,44 @@ windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如
 按住 “win+e” (“win” 是键盘下面的windows图标, win与e一起按), 打开文件浏览器<br>
 在上方顶栏, 点击 “查看”, 随后勾选右侧的 “文件扩展名”, 然后关闭文件浏览器<br>
 此时, 桌面上的文件, 就会显示后缀了, 你也能通过重命名修改文件后缀了</p>
+</div>
+<hr>
+<h1 id="python-de-te-dian">Python的特点</h1>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>是一门 <ins>高级语言</ins></p>
+</li>
+<li class="lvl-2">
+<p>是一门 <ins>面向对象</ins> 的语言</p>
+</li>
+<li class="lvl-2">
+<p>是一门 <ins>解释型</ins> 语言</p>
+</li>
+<li class="lvl-2">
+<p>语法简单, 拥有丰富强大的库, 适合快速开发</p>
+</li>
+</ul>
+<div class="tips">
+<p><strong>高级语言</strong><br>
+计算机界, 编程语言具有一个演化史, 那就是越来越具有可读性, 分为三个阶段</p>
+<ul class="lvl-1">
+<li class="lvl-2">机器语言: 由二进制代码组成, 计算机可以识别并运行, 但人类无法理解</li>
+<li class="lvl-2">汇编语言: 加上了许多符号, 通过编译器编译为机器语言, 人类稍微可以理解了</li>
+<li class="lvl-2">高级语言: 加上了非常多的符号与语法, 通过编译器/解释器, 转为汇编语言, 人类可读, 比如py/c/cpp</li>
+</ul>
+<p>值得注意的是, 还有一个叫 <ins>自然语言</ins>, 别和上面的搞混了<br>
+自然语言指我们日常生活中, 进行对话时使用的语言, 如汉语/英语/法语/德语</p>
+</div>
+<div class="tips">
+<p><strong>面向对象</strong><br>
+假设你要搭积木, 这个积木很复杂, 那么你可以将积木分解成五六个子型的小积木<br>
+那么, 可以先拼好这五个小积木, 然后组合成搭积木, 而不是一块一块拼<br>
+(非严谨版, 勿喷, 只是快速了解而已)</p>
+</div>
+<div class="tips">
+<p><strong>库:</strong><br>
+当你需要开发一个无比复杂的程序, 不可能自己从头开始一行一行敲, 太复杂<br>
+比如你用Python时, 想使用产生随机数的功能, 不用自己写, 官方已经给你写好了, 你直接调用就完事了</p>
 </div>
 <hr>
 <h1 id="huan-jing-da-jian">环境搭建</h1>
@@ -2997,7 +3033,7 @@ windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Python 3.9.0</span><br></pre></td></tr></table></figure>
 <p>如果是其他输出, 很可能是安装的时候, 未勾选 <code>add path</code> 这个框, 导致路径无法被识别</p>
 <div class="tips">
-<p><strong>常识科普: 命令与路径</strong><br>
+<p><strong>命令与路径</strong><br>
 这个出现的黑框框, 作用是执行你敲下的命令, 我们称其为 “终端/命令行/cmd”<br>
 粗体闪烁的光标前的提示符, 表示你当前处于的路径</p>
 <p>你能输入命令, 敲回车, 来运行该命令 (命令其实也就是一个exe文件)<br>
@@ -3080,7 +3116,116 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
     <content><![CDATA[<blockquote>
 <p>正式的对python语法的学习, 包含常见库函数的使用</p>
 </blockquote>
-<span id="more"></span>]]></content>
+<span id="more"></span>
+<div class="tips">
+<p>有关python的基本介绍, 比如编译/解释/面向对象, 怎么自己下载python, 请看 <a href="/posts/high-school-it/p2">p2: 基础科普与环境搭建</a></p>
+</div>
+<h1 id="bian-liang-yu-fu-zhi">变量与赋值</h1>
+<p>编程不就是为了模拟世界, 求解问题吗? 求解问题都需要什么?<br>
+需要数据, 还需要存放数据的地方, <ins>变量</ins>, 就是这么一个存放数据的地方</p>
+<p>变量变量, 顾名思义, 指的是可变的量 (有些语言严格区分可变性, 但python里不用在意这么多)<br>
+你可以理解为, 变量, 是一个箱子/寄存器, 装着一些可以运算的数值, 用来求解问题, 模拟现实</p>
+<p>有两个概念:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>声明变量:  创建变量 (声明一个变量出现了)</p>
+</li>
+<li class="lvl-2">
+<p>赋值: 把一个值装到箱子(变量)里</p>
+</li>
+</ul>
+<p>比如, 一个很简单的例子:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>这里, 我们声明了一个叫做 a 的变量, 然后把值装到了 a 中, 这就是 声明+赋值<br>
+右边是数值, 左边是变量名, 等号表示把右边的值赋给左边的变量</p>
+<p>你也可以这样:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a</span><br></pre></td></tr></table></figure>
+<p>我们先声明了一个变量a, 值是1, 然后把a放在右边传给了左边的b<br>
+第二行表示, 把a里面的数值取出来, 传给了b</p>
+<p>python支持也支持这样的赋值操作, 甚至可以继续长下去</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = b = c = <span class="number">1</span></span><br><span class="line">d = e = f = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">a,b,c = d,e,f</span><br></pre></td></tr></table></figure>
+<p>上面的代码中, a,b,c都被初始化为1, def则为2, 然后赋值, 把abc的值变成了2</p>
+<p>你还可以这样, 表示把b中的值给a, 把a中的值给b, 达到交换值的效果:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line">a,b = b,a</span><br></pre></td></tr></table></figure>
+<p>你可能会疑惑:<br>
+当我把b中的值给了a时, a的值不就是2了吗, 此时再把a赋值给b, 那b不还是2吗?<br>
+该想法对应的代码是这样的:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">a = b</span><br><span class="line">b = a</span><br></pre></td></tr></table></figure>
+<p>但在交换数值的代码中, 你应该这样理解:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">_t1 = b</span><br><span class="line">_t2 = a</span><br><span class="line">a = _t1</span><br><span class="line">b = _t2</span><br></pre></td></tr></table></figure>
+<p>这表示, 进行 <code>a,b = b,a</code> 时, 会先把右边的变量给复制(赋值给新的变量)一遍, 再分别赋给a,b<br>
+只不过, 只要我们按照py的语法写, 我们就不需要考虑这么多了, py为我们隐藏了_t1, _t2, 你只需要可以这么写就行了</p>
+<p>现在有没有明白, 为什么大家都说py语法简单呢? 之后还会有很多像这样甜的地方 😃</p>
+<hr>
+<h1 id="ji-ben-shu-ju-lei-xing">基本数据类型</h1>
+<p>前面说了, 求解问题时, 你需要数据, 还有存放数据的地方<br>
+如何存放数据, 我相信你已经明白了, 现在就要讲数据本身了</p>
+<p>为了模拟现实, py将数据进行了抽象与分类:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>int: 对应整数</p>
+</li>
+<li class="lvl-2">
+<p>float: 对应实数</p>
+</li>
+<li class="lvl-2">
+<p>string: 对应文字</p>
+</li>
+<li class="lvl-2">
+<p>bool: 对应真与假</p>
+</li>
+</ul>
+<p>有了这些 <ins>基本数据类型</ins>, 我们就能够模拟世界了, 进行抽象, 求解问题了</p>
+<p>举些例子:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>我今天吃饭了吗: 用bool来抽象到底吃饭没, True就是吃了, False就是没吃</p>
+</li>
+<li class="lvl-2">
+<p>我的年龄是16岁: 用int来表示 16 这个数字</p>
+</li>
+<li class="lvl-2">
+<p>我的名字叫做: 用string来表示 “赵二狗”, “Anasdpa” 这样的文字</p>
+</li>
+</ul>
+<p>同时, 我们还可以用这些 <ins>基本数据类型</ins>, 构建出 <ins>复杂数据类型</ins>, 比如, 我想创建一个类型, 叫 student, 表示学生<br>
+你可以这样抽象:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">student &#123;</span><br><span class="line">  age:  <span class="built_in">int</span>,</span><br><span class="line">  height: <span class="built_in">float</span>,</span><br><span class="line">  name: string,</span><br><span class="line">  fat_or_not: <span class="built_in">bool</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>py中也有语法, 支持创建自定义的类型, 但不是本系列的重点, 此处仅提一嘴而已</p>
+<hr>
+<h1 id="bian-liang-ming-ming-gui-fan">变量命名规范</h1>
+<p>python中, 变量的命名必须符合规范, 不然直接报错<br>
+在符合规范的同时, 你也应当尽可能地, 让变量名更加清洗直观, 比如年龄用age, 而不是a</p>
+<p>命名规范如下:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>变量名由字母, 数字, 下划线组成</p>
+</li>
+<li class="lvl-2">
+<p>数字不能在第一位</p>
+</li>
+<li class="lvl-2">
+<p>不能与python中的关键字重名</p>
+</li>
+</ul>
+<p>以下都是合法的变量名</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">abada</span><br><span class="line">asd111231</span><br><span class="line">ad190123kkad</span><br><span class="line">asd_asd1_asd2</span><br><span class="line">_123daa</span><br><span class="line">_as11</span><br></pre></td></tr></table></figure>
+<p>以下是不合法的变量名:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span></span></span><br><span class="line"><span class="function"><span class="title">not</span></span></span><br><span class="line"><span class="function"><span class="title">in</span></span></span><br><span class="line"><span class="function"><span class="title">lambda</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">1123</span></span><br><span class="line"><span class="function">123<span class="title">adad</span></span></span><br><span class="line"><span class="function"><span class="title">sad</span>;;-``</span></span><br><span class="line"><span class="function">``?/</span></span><br><span class="line"><span class="function">&#x27;,</span></span><br></pre></td></tr></table></figure>
+<div class="tips">
+<p><strong>关键字:</strong><br>
+关键字/保留字, 是python语法中具有特殊含义的东西, 比如for/while/and/or/not/in<br>
+这些都被称作关键字, 一般出现了关键字, 就能用对应的语法, 实现一些效果<br>
+比如for就对应for循环, not就对应逻辑取反, 具有特殊作用</p>
+</div>
+<p>如何判断一个变量名是不是关键字?<br>
+呃…多认识下就知道了… 反正也不可能考没学过的关键字 😃</p>
+<hr>
+<h1 id="yun-suan-fu">运算符</h1>
+<p>python 提供了一些运算符, 能够让你进行加减乘除, 逻辑运算之类的操作</p>
+<h2 id="suan-shu-yun-suan-fu" id="算数运算符">算数运算符</h2>
+<p>算术运算符, 可以让你对数字类型 (int, float) 进行计算, 得到新的数字</p>
+]]></content>
       <tags>
         <tag>高中信息技术</tag>
       </tags>
