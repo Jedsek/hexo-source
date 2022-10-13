@@ -112,7 +112,7 @@ prismjs:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 8
+  per_page: 12
   order_by: -date
 
 symbols_count_time:

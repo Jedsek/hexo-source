@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jedsek.xyz/posts/high-school-it/p4</loc>
+    
+    <lastmod>2022-10-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jedsek.xyz/posts/high-school-it/p3</loc>
     
     <lastmod>2022-09-12</lastmod>
@@ -285,14 +294,14 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/Macro/</loc>
+    <loc>https://jedsek.xyz/tags/GUI/</loc>
     <lastmod>2022-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/GUI/</loc>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

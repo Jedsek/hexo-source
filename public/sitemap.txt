@@ -1,3 +1,4 @@
+https://jedsek.xyz/posts/high-school-it/p4
 https://jedsek.xyz/posts/high-school-it/p3
 https://jedsek.xyz/posts/high-school-it/p2
 https://jedsek.xyz/posts/high-school-it/p1
@@ -31,6 +32,6 @@ https://jedsek.xyz/tags/Rust/
 https://jedsek.xyz/tags/Async/
 https://jedsek.xyz/tags/Clap/
 https://jedsek.xyz/tags/CLI/
-https://jedsek.xyz/tags/Macro/
 https://jedsek.xyz/tags/GUI/
+https://jedsek.xyz/tags/Macro/
 https://jedsek.xyz/tags/TUI/

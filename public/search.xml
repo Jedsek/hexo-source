@@ -3114,7 +3114,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
       </tags>
   </entry>
   <entry>
-    <title>high-school-it-p2: 基础科普与环境搭建</title>
+    <title>high-school-it-p2: 基础科普</title>
     <url>/posts/high-school-it/p2.html</url>
     <content><![CDATA[<blockquote>
 <p>让我们了解下python, 顺便科普一些常识, 进行环境搭建, 写一个Hello World吧!</p>
@@ -3591,6 +3591,18 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
 我们通过 <code>list[m:n]</code>, 得到了一个子列表, 只要索引在 <code>[m, n) (左开右闭区间)</code> 内, 就会被放入这个子列表</p>
 <hr>
 <h2 id="zi-dian" id="字典">字典</h2>
+]]></content>
+      <tags>
+        <tag>高中信息技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>high-school-it-p4: 进制转换</title>
+    <url>/posts/high-school-it/p4.html</url>
+    <content><![CDATA[<blockquote>
+<p>关于任意进制间的互相转换与应用</p>
+</blockquote>
+<span id="more"></span>
 ]]></content>
       <tags>
         <tag>高中信息技术</tag>

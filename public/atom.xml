@@ -6,7 +6,7 @@
   <link href="https://jedsek.xyz/atom.xml" rel="self"/>
   
   <link href="https://jedsek.xyz/"/>
-  <updated>2022-09-12T03:45:45.000Z</updated>
+  <updated>2022-10-13T15:51:02.000Z</updated>
   <id>https://jedsek.xyz/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>high-school-it-p4: 进制转换</title>
+    <link href="https://jedsek.xyz/posts/high-school-it/p4"/>
+    <id>https://jedsek.xyz/posts/high-school-it/p4</id>
+    <published>2022-10-13T15:51:02.000Z</published>
+    <updated>2022-10-13T15:51:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>关于任意进制间的互相转换与应用</p></blockquote><span id="more"></span>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;关于任意进制间的互相转换与应用&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="高中信息技术" scheme="https://jedsek.xyz/tags/%E9%AB%98%E4%B8%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>high-school-it-p3: python基础语法</title>
@@ -38,7 +59,7 @@
   </entry>
   
   <entry>
-    <title>high-school-it-p2: 基础科普与环境搭建</title>
+    <title>high-school-it-p2: 基础科普</title>
     <link href="https://jedsek.xyz/posts/high-school-it/p2"/>
     <id>https://jedsek.xyz/posts/high-school-it/p2</id>
     <published>2022-09-11T12:51:16.000Z</published>
@@ -426,29 +447,6 @@
     
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;我们从熟悉的 println! 开始, 了解下声明宏的大致结构吧&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    
-    <category term="Rust" scheme="https://jedsek.xyz/tags/Rust/"/>
-    
-    <category term="Macro" scheme="https://jedsek.xyz/tags/Macro/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rust-dm-p1: 系列说明</title>
-    <link href="https://jedsek.xyz/posts/rust-decl-macro/p1"/>
-    <id>https://jedsek.xyz/posts/rust-decl-macro/p1</id>
-    <published>2021-09-19T13:51:27.000Z</published>
-    <updated>2021-09-19T13:51:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列</p></blockquote><span id="more"></span><p>同系列传送门:</p><ul class="lvl-0"><li class="lvl-2"><p><a href="/categories/rust-decl-macro">博客: rust-decl-macro</a></p></li><li class="lvl-2"><p><a href="https://www.bilibili.com/video/BV1Wv411W7FH?p=1">B站视频: Rust编程语言-声明宏</a></p></li></ul><h1 id="xi-lie-shuo-ming">系列说明</h1><p>此系列,我们将学习Rust中的 <code>声明宏</code><br>请注意, 是声明宏, 过程宏日后再说</p><hr><h1 id="can-kao-zi-liao">参考资料</h1><ol><li class="lvl-3"><p>书籍</p></li></ol><ul class="lvl-0"><li class="lvl-2"><p><a href="https://zjp-cn.github.io/tlborm/">宏小册</a></p></li><li class="lvl-2"><p><a href="https://rustcc.gitbooks.io/rustprimer/content/macro/macro.html">RustPrimer</a></p></li><li class="lvl-2"><p><a href="https://kaisery.github.io/trpl-zh-cn/ch19-06-macros.html">TRPL</a></p></li></ul><ol start="2"><li class="lvl-3"><p>文章</p></li></ol><ul class="lvl-0"><li class="lvl-2"><p><a href="https://zhuanlan.zhihu.com/p/353421021">【译】Rust宏: 教程与示例 (一)</a></p></li><li class="lvl-2"><p><a href="https://zhuanlan.zhihu.com/p/356427780">【译】Rust宏: 教程与示例 (二)</a></p></li></ul><hr><h1 id="huan-ying-sao-rao">欢迎骚扰</h1><p>发现错误的话, 请及时跟我联系, 毕竟我也在学习中<br>你可以通过博客侧边栏上的联系方式找到我~~</p><p>最后, 谢谢你的观看 😃</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;欢迎大家来到 Rust 的 声明宏(declarative-macro) 系列&lt;/p&gt;
 &lt;/blockquote&gt;</summary>
     
     
