@@ -16,9 +16,7 @@
 <h1 id="cheng-pin-zhan-shi">成品展示</h1>
 <p>2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前…<br>
 我个人认为简洁+美观比较重要, 当然你也可以自行修改进行DIY, 请自己动手, 丰衣足食吧!</p>
-<details open>
-<summary><span class="pre-summary">&nbsp;</span><strong>以下是成品展示, 请点击隐藏/展开图像</strong></summary><p><img data-src="/images/gnome/overview.png" alt="按下Super后的Overview"></p>
-</details>
+<p><img data-src="/images/gnome/overview.png" alt="按下Super后的Overview"></p>
 <hr>
 <h1 id="dconf-amp-amp-gsettings">dconf &amp;&amp; gsettings</h1>
 <ul class="lvl-0">
@@ -500,9 +498,9 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 随后, 在终端输入以下内容, 得到 <code>dconf.nix</code> :</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dconf dump / &gt; dconf.settings</span><br><span class="line">dconf2nix -i dconf.settings -o dconf.nix</span><br></pre></td></tr></table></figure>
 <p>在你的 ~/.config/nixpkgs 中, 保持这样的目录结构 (当然了, 可以随你想法):</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nixpkgs/</span><br><span class="line">├── gnome</span><br><span class="line">│   ├── .background</span><br><span class="line">│   ├── .face</span><br><span class="line">│   └── dconf.nix</span><br><span class="line">└── home.nix</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">nixpkgs/</span><br><span class="line">├── gnome</span><br><span class="line">│   ├── <span class="selector-class">.background</span></span><br><span class="line">│   ├── <span class="selector-class">.face</span></span><br><span class="line">│   └── dconf<span class="selector-class">.nix</span></span><br><span class="line">└── home.nix</span><br></pre></td></tr></table></figure>
 <p>这里的 <code>dconf.nix</code> 就是刚刚转换得到的nix表达式, 在 <code>home.nix</code> 中导入它:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">imports = [</span><br><span class="line">  ./gnome/dconf.nix</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line"><span class="attr">imports</span> = [</span><br><span class="line">  ./gnome/dconf.nix</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 <p>介于 HomeManager 的权限问题, 必须将背景图片/人物头像, 保持在 <code>$HOME</code> 下<br>
 这里将两个图片放在了 <code>~/.config/nixpkgs/gnome/</code> 下, 因此要修改下相应文件</p>
 <ul class="lvl-0">
@@ -524,46 +522,233 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
       </tags>
   </entry>
   <entry>
-    <title>Clap|命令行</title>
+    <title>clap-rs 入坑指南</title>
     <url>/posts/rust-clap/guide.html</url>
     <content><![CDATA[<blockquote>
-<p>用 Rust 中的 Clap, 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出等功能</p>
+<p>学习命令行的常识, 然后用 clap-rs 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出, 并行化等功能</p>
 </blockquote>
 <span id="more"></span>
 <p>前置知识: Rust基础<br>
-完整代码: <a href="https://github.com/Jedsek/rust-wc">github-jedsek/rustwc</a></p>
+完整代码: <a href="https://github.com/Jedsek/rust-wc">github/jedsek/rust-wc</a></p>
+<div class="tips">
+<p><strong>注意</strong><br>
+本项目基于当前最新版本的 clap, 也就是 version 4<br>
+本项目使用 clap 中的 derive 特性, 而非 builder 特性 (其实差不多)</p>
+<p>推荐读者别直接跟着敲代码, 先整体看一遍, 明白大致思路后再动手<br>
+官方教程: <a href="https://docs.rs/clap/latest/clap/_derive/_tutorial/index.html">derive tutorial</a><br>
+官方资料: <a href="https://docs.rs/clap/latest/clap/_derive/index.html">derive reference</a></p>
+</div>
 <h1 id="cheng-pin-zhan-shi">成品展示</h1>
-<p><img data-src="/images/clap-rwc.png" alt="彩色的表格输出, 根据参数进行统计"></p>
+<p>你可以通过如下命令, 从 <a href="https://crates.io">crates.io</a> 上下载该成品, 可执行文件的名称是 <code>rwc</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cargo install rust-wc</span><br></pre></td></tr></table></figure>
+<p>以下是一些展示:</p>
+<p><img data-src="/images/clap-rwc-help.png" alt="显示help"><br>
+<img data-src="/images/clap-rwc-all-options.png" alt="开启所有options"></p>
 <hr>
-<h1 id="cli">CLI</h1>
+<h1 id="ji-chu-gai-nian">基础概念</h1>
 <p>CLI, 是 <code>command-line interface</code> 的简称, 意思是命令行界面, 和 GUI/TUI 是一个道理<br>
-比如我们在Linux下常见的 <code>ls/cp/mv</code> 等命令, 你传进去参数, 它做一些事情 (可能会有相应的输出)</p>
-<p>GNU 项目为我们提供了非常多的开源软件, 比如一个叫做 <code>wc</code> 的命令, 可以统计指定文件的字节/字符/行的数量<br>
-等一会, 我们就要使用 Rust 语言, 搭配今天的主角: clap, 实现美化版的 <code>wc</code> 命令</p>
+如在Linux下常见的 <code>ls/cp/mv</code> 等命令, 你传入参数, 它就会做些事情, 并可能会打印相应输出</p>
+<p>GNU 项目提供了非常多的开源命令, 如 <code>wc</code>, 它可以统计文件的 bytes/char/line 的数量<br>
+我们将会使用 Rust 语言, 搭配一个叫 clap 的库, 写一个升级版的 <code>wc</code></p>
 <div class="tips">
 <p><strong>注意:</strong><br>
 cli 可以代表抽象的界面, 也可以指代具体的某个程序<br>
-而后文中的cli, 一般情况下都指代某个具体的命令行程序, 比如 ls/cp 等</p>
+后文中的cli, 一般情况下都指代某个具体的命令行程序, 比如 ls/cp 等</p>
 </div>
+<p>再写之前, 我们还应了解些基本概念 <s>(直接跳过感觉也木得问题??)</s>:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>参数(Arguments)</code>:<br>
+传给命令的参数, 比如一个路径 <s>(嘶, 感觉在说废话)</s></p>
+</li>
+<li class="lvl-2">
+<p><code>选项(Options)</code>:<br>
+通常以单/双横杠开头, 不同的options表示不同的行为<br>
+比如 <code>ls ./*</code>, 表示以默认行为下进行输出, <code>ls -l ./*</code> 以长列表形式输出, <code>ls -a ./*</code> 输出所有隐藏文件<br>
+单横杠开头的只有一个字母, 双横杠开头的可以有很多字母, 如 <code>ls -i</code> 与 <code>ls --inode</code></p>
+</li>
+<li class="lvl-2">
+<p><code>子命令(Subcommands)</code>:<br>
+一个命令的子命令, 通常情况下需要不同的 args, 有不同的 options<br>
+比如 <code>cargo build</code> 与 <code>cargo publish</code>, 都是 <code>cargo</code> 的子命令</p>
+</li>
+<li class="lvl-2">
+<p><code>双横杠(--)</code>:<br>
+在命令后面的某处位置, 加上 <code>--</code>, 可以将 <code>--</code> 后面的内容当作 argument 传入, 而非 options<br>
+举个例子, 我有个文件, 叫做 <code>--asd</code>, 我想使用 <code>cat --asd</code> 来输出里面的内容<br>
+如果你直接这样传参, 因为文件名以横杠开头, 将会被命令视作 options, 而 cat 本身没 <code>--asd</code> 这个option, 故失败<br>
+在比如有个文件叫 <code>--help</code>, 使用 <code>cat --help</code> 将会打印其 help 信息<br>
+此时, 你应该使用 <code>cat -- --asd</code>, 将 <code>--asd</code> 视作参数传入</p>
+</li>
+<li class="lvl-2">
+<p><code>短/长帮助(short/long help)</code>:<br>
+有些命令, <code>-h</code> 与 <code>--help</code> 分别对应短帮助与长帮助, 后者比前者会显示更多提示信息</p>
+</li>
+</ul>
 <hr>
-<h1 id="clap">Clap</h1>
-<h2 id="kai-pian" id="开篇">开篇</h2>
-<p>clap 是个Rust中地位举足轻重的crate, 它十分强大, 能让cli的制作变得很容易<br>
-让我们新建一个叫做 <code>rwc</code> 的项目, 然后在 <code>Cargo.toml</code> 中添加clap吧:</p>
-<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[package]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;rwc&quot;</span></span><br><span class="line"><span class="attr">version</span> = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line"><span class="attr">edition</span> = <span class="string">&quot;2021&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html</span></span><br><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">clap</span> = &#123;version = <span class="string">&quot;*&quot;</span>, features = [<span class="string">&quot;derive&quot;</span>]&#125;</span><br></pre></td></tr></table></figure>
-<p>在 Clap-rs 的第三个大版本, clap 融合了另外一个很强大的库: structopt, 成为实至名归的第一<br>
-因此以后请直接用 clap, 它包含 structopt, structopt 也发过通知, 让别人直接用 clap<br>
-而clap最大的变化, 就是这来源于 structopt 的过程宏了, 它允许你用声明的方式定义参数, 然后自动帮你解析, 这就是 <code>derive</code> feature</p>
-<p>举个例子, 如果我们想定义 rwc, 那就这样写:</p>
-<figure class="highlight rust"><figcaption><span>src/main.rs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::path::PathBuf;</span><br><span class="line"><span class="keyword">use</span> clap::&#123;AppSettings, ArgGroup, Parser&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[clap(</span></span><br><span class="line"><span class="meta">    author = <span class="meta-string">&quot;Author: Jedsek &lt;jedsek@qq.com&gt;&quot;</span>,</span></span><br><span class="line"><span class="meta">    version,</span></span><br><span class="line"><span class="meta">    global_setting = AppSettings::DeriveDisplayOrder,</span></span><br><span class="line"><span class="meta">    group(ArgGroup::new(<span class="meta-string">&quot;options&quot;</span>)</span></span><br><span class="line"><span class="meta">      .multiple(true).required(true).args(&amp;[<span class="meta-string">&quot;bytes&quot;</span>, <span class="meta-string">&quot;chars&quot;</span>, <span class="meta-string">&quot;words&quot;</span>, <span class="meta-string">&quot;lines&quot;</span>, <span class="meta-string">&quot;longest-line&quot;</span>]</span>)),</span><br><span class="line">    about = </span><br><span class="line"><span class="string">r#&quot;</span></span><br><span class="line"><span class="string">This is just a simple GNU/wc command implementation, written in Rust</span></span><br><span class="line"><span class="string">It could print &lt;FILE&gt;&#x27;s count of bytes, chars, words, lines, and the longest line/word&#x27;s length</span></span><br><span class="line"><span class="string">&quot;#</span>,</span><br><span class="line">)]</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Cli</span></span> &#123;</span><br><span class="line">    <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, value_name = <span class="meta-string">&quot;FILE&quot;</span>, required = true)]</span></span><br><span class="line">    <span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of bytes</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> bytes: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of chars</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> chars: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of words</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> words: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the count of lines</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> lines: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the length of the longest line</span></span><br><span class="line">    <span class="meta">#[clap(value_parser, short = &#x27;L&#x27;, long, action)]</span></span><br><span class="line">    <span class="keyword">pub</span> longest_line: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">  Cli::parse();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>等下再解释, 现在先让我们看看效果吧, 查看下help:</p>
+<h1 id="chu-shi-pei-zhi">初始配置</h1>
+<p>以下是层次结构, 之后要生成自动补全文件时, 还会再增加一些文件<br>
+请自行创建好目录:</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line">./rust-wc</span><br><span class="line">├── Cargo.lock</span><br><span class="line">├── Cargo.toml</span><br><span class="line">└── src</span><br><span class="line">   ├── calc.rs   <span class="meta"># 计算与打印</span></span><br><span class="line">   ├── <span class="keyword">cli</span>.rs    <span class="meta"># 命令行的定义</span></span><br><span class="line">   ├── files.rs  <span class="meta"># 读取文件</span></span><br><span class="line">   ├── lib.rs</span><br><span class="line">   └── main.rs</span><br></pre></td></tr></table></figure>
+<p>clap 一个举足轻重的 crate, 它十分强大, 能让 cli 的制作变得很容易<br>
+让我们新建一个叫做 <code>rwc</code> 的项目, 然后在 <code>Cargo.toml</code> 中添加 clap 吧:</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 包名为 `rust-wc` (因为我发布到 crates.io 的时候, `rwc` 已经被占了呜呜呜呜呜)</span></span><br><span class="line"><span class="section">[package]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;rust-wc&quot;</span></span><br><span class="line"><span class="attr">authors</span> = [<span class="string">&quot;jedsek &lt;jedsek@qq.com&gt;&quot;</span>]</span><br><span class="line"><span class="attr">version</span> = <span class="string">&quot;0.0.1&quot;</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;A GNU/wc clone written in rust, which is super faster when reading a large of big files&quot;</span></span><br><span class="line"><span class="attr">edition</span> = <span class="string">&quot;2021&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定生成的可执行文件的名字, 此处是 `rwc`</span></span><br><span class="line"><span class="section">[[bin]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;rwc&quot;</span></span><br><span class="line"><span class="attr">path</span> = <span class="string">&quot;src/main.rs&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定lib并命名, 管理模块</span></span><br><span class="line"><span class="section">[lib]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;lib&quot;</span></span><br><span class="line"><span class="attr">path</span> = <span class="string">&quot;src/lib.rs&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定依赖</span></span><br><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">clap</span> = &#123;version = <span class="string">&quot;4.0.8&quot;</span>, features = [<span class="string">&quot;derive&quot;</span>]&#125;      <span class="comment"># 解析参数</span></span><br><span class="line"><span class="attr">indicatif</span> = <span class="string">&quot;0.17.1&quot;</span>                                   <span class="comment"># 进度条</span></span><br><span class="line"><span class="attr">prettytable-rs</span> = <span class="string">&quot;0.9.0&quot;</span>                               <span class="comment"># 打印表格</span></span><br><span class="line"><span class="attr">rayon</span> = <span class="string">&quot;1.5.3&quot;</span>                                        <span class="comment"># 并行化</span></span><br><span class="line"><span class="attr">tap</span> = <span class="string">&quot;1.0.1&quot;</span>                                          <span class="comment"># 链式的语法糖库</span></span><br></pre></td></tr></table></figure>
+<p>以下是 <a href="http://lib.rs">lib.rs</a> 的内容:</p>
+<figure class="highlight rust"><figcaption><span>src/lib.rs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#![feature(let_chains)]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> calc;</span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> cli;</span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> files;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">type</span> <span class="title">Result</span></span>&lt;T&gt; = std::result::<span class="built_in">Result</span>&lt;T, <span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> std::error::Error&gt;&gt;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="ming-ling-ding-yi">命令定义</h1>
+<div class="tips">
+<p><strong>注意:</strong><br>
+clap-v3时, 融进了另一个很强大的命令行编写库: structopt<br>
+因此以后看见 structopt 与 clap, 直接用 clap 就完事了, 前者也发过通知, 让别人直接用 clap<br>
+这给 clap 带来的巨大变化, 就是出现了derive宏, 以一种非常便利的声明式写法, 帮你生成与解析代码</p>
+</div>
+<p>让我们先来想象这个命令:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>必须接受一个参数</p>
+</li>
+<li class="lvl-2">
+<p>参数必须是存在的路径, 或者是 -, 表示从标准输入读取内容</p>
+</li>
+<li class="lvl-2">
+<p>-h/–help: 查看帮助</p>
+</li>
+<li class="lvl-2">
+<p>-V/–version: 查看版本</p>
+</li>
+<li class="lvl-2">
+<p>-b/–bytes: 打印文件的字节数</p>
+</li>
+<li class="lvl-2">
+<p>-c/–chars: 打印文件的字符数</p>
+</li>
+<li class="lvl-2">
+<p>-w/–words: 打印文件的单词数</p>
+</li>
+<li class="lvl-2">
+<p>-l/–lines: 打印文件的总行数</p>
+</li>
+<li class="lvl-2">
+<p>-L/–longest-line: 打印文件中最长行的字节数</p>
+</li>
+<li class="lvl-2">
+<p>all: 一个子命令, 表示启用所有 options</p>
+</li>
+</ul>
+<p>多亏了 derive 宏, 我们可以这样定义它:<br>
+<strong>注意:</strong> 下面的是 <code>src/cli.rs</code> 中的完整代码, 但后面讲解时会忽略一些代码, 来循序渐进地讲解</p>
+<figure class="highlight rust"><figcaption><span>src/cli.rs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> clap::&#123;ArgGroup, Parser, Subcommand&#125;;</span><br><span class="line"><span class="keyword">use</span> std::path::PathBuf;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Parser)]</span>  <span class="comment">// 这里的 derive(Parser) 表示下面这一坨都会被 `宏的黑魔法` 所洗礼 </span></span><br><span class="line"><span class="meta">#[command(</span></span><br><span class="line"><span class="meta">    author, version, about,</span></span><br><span class="line"><span class="meta">    group(ArgGroup::new(<span class="meta-string">&quot;options&quot;</span>).multiple(true).required(true).args(&amp;[ <span class="meta-string">&quot;bytes&quot;</span>, <span class="meta-string">&quot;chars&quot;</span>, <span class="meta-string">&quot;words&quot;</span>, <span class="meta-string">&quot;lines&quot;</span>, <span class="meta-string">&quot;longest_line&quot;</span>]</span>)),</span><br><span class="line">    subcommand_negates_reqs = <span class="literal">true</span>,</span><br><span class="line">)]</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Cli</span></span> &#123;</span><br><span class="line">    <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">    <span class="meta">#[arg(value_parser = check_path, value_name = <span class="meta-string">&quot;PATH&quot;</span>, required = true)]</span></span><br><span class="line">    <span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the byte counts</span></span><br><span class="line">    <span class="meta">#[arg(short, long)]</span></span><br><span class="line">    <span class="keyword">pub</span> bytes: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the character counts</span></span><br><span class="line">    <span class="meta">#[arg(short, long)]</span></span><br><span class="line">    <span class="keyword">pub</span> chars: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the word counts</span></span><br><span class="line">    <span class="meta">#[arg(short, long)]</span></span><br><span class="line">    <span class="keyword">pub</span> words: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the line counts</span></span><br><span class="line">    <span class="meta">#[arg(short, long)]</span></span><br><span class="line">    <span class="keyword">pub</span> lines: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Print the maximum line width (Bytes)</span></span><br><span class="line">    <span class="meta">#[arg(short = &#x27;L&#x27;, long)]</span></span><br><span class="line">    <span class="keyword">pub</span> longest_line: <span class="built_in">bool</span>,</span><br><span class="line"></span><br><span class="line">    <span class="meta">#[command(subcommand)]</span></span><br><span class="line">    <span class="keyword">pub</span> sub_commands: <span class="built_in">Option</span>&lt;SubCommands&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Subcommand)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">enum</span> <span class="title">SubCommands</span></span> &#123;</span><br><span class="line">    <span class="comment">/// Enabled all available options</span></span><br><span class="line">    All &#123;</span><br><span class="line">        <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">        <span class="meta">#[arg(value_parser = check_path, value_name = <span class="meta-string">&quot;PATH&quot;</span>, required = true)]</span></span><br><span class="line">        paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">check_path</span></span>(path: &amp;<span class="built_in">str</span>) -&gt; <span class="built_in">Result</span>&lt;PathBuf, <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> path = PathBuf::from(path);</span><br><span class="line">    <span class="keyword">if</span> path.exists() || path.as_os_str() == <span class="string">&quot;-&quot;</span> &#123;</span><br><span class="line">        <span class="literal">Ok</span>(path)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="literal">Err</span>(<span class="built_in">format!</span>(<span class="string">&quot;No such path: `&#123;&#125;`&quot;</span>, path.display()))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后面会逐一进行说明, 以上的代码表示, 我们定义了一个 <code>Cli</code> 结构体<br>
+当传入参数时, 会根据宏的黑魔法生成的代码, 自动将其解析为对应类型的值, 作为 <code>Cli</code> 实例的成员</p>
+<p>换言之, 该结构体其实就是用来存放一些状态, 也就是被解析成对应类型的参数我们将在 <code>src/main.rs</code> 中得到实例, 但那是后话了:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> clap::Parser;</span><br><span class="line"><span class="keyword">use</span> lib::&#123;cli::Cli, <span class="built_in">Result</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; <span class="built_in">Result</span>&lt;()&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> cli = Cli::parse();</span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="wen-dang-zhu-shi-yu-bang-zhu" id="文档注释与帮助">文档注释与帮助</h2>
+<p>等下再解释, 现在先让我们看看效果, 查看下 help 吧:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">cargo run -- -h</span><br></pre></td></tr></table></figure>
-<p>上面的 <code>--</code> 表示命令的结尾, 之后的全被视为传递给命令的文件名/参数<br>
-若你去掉 <code>--</code>, <code>-h</code> 打印的就是 <code>cargo run</code> 的帮助信息, 而不是 <code>cargo run</code> 之后产生的程序 <code>rwc</code> 的帮助信息了</p>
-<p>像 <code>-h/--help</code>, <code>-V/--version</code>, 这两个是 clap 自动为我们生成的, 之外的选项将什么也不会发生, 因为我们暂时未实现<br>
-之后生成的help应该如下:</p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">rwc <span class="number">0.1</span>.<span class="number">0</span></span><br><span class="line">Author: Jedsek &lt;jedsek@qq.com&gt;</span><br><span class="line"></span><br><span class="line">This is just a simple GNU/wc command implementation, written <span class="keyword">in</span> Rust</span><br><span class="line">It could print &lt;FILE&gt;<span class="symbol">&#x27;s</span> count of bytes, chars, words, lines, and the longest line/word<span class="symbol">&#x27;s</span> length</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">    rwc &lt;--bytes|--chars|--words|--lines|--longest-line&gt; &lt;FILE&gt;...</span><br><span class="line"></span><br><span class="line">ARGS:</span><br><span class="line">    &lt;FILE&gt;...    The path(s) you should provide</span><br><span class="line"></span><br><span class="line">OPTIONS:</span><br><span class="line">    -b, --bytes           Print the count of bytes</span><br><span class="line">    -c, --chars           Print the count of chars</span><br><span class="line">    -w, --words           Print the count of words</span><br><span class="line">    -l, --lines           Print the count of lines</span><br><span class="line">    -L, --longest-line    Print the length of the longest line</span><br><span class="line">    -h, --help            Print help information</span><br><span class="line">    -V, --version         Print version information</span><br></pre></td></tr></table></figure>
-<p>如果仔细观察一下, 应该就搞懂之前的代码了, 毕竟是声明式的定义, 可以对照着看嘛, 而且 clap 的文档也很好, 可以自己去翻下</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">A GNU/wc clone written in rust, which <span class="keyword">is</span> super faster when reading <span class="keyword">a</span> large of big <span class="keyword">files</span></span><br><span class="line"></span><br><span class="line">Usage: rwc &lt;--bytes|--chars|--words|--lines|--longest-<span class="built_in">line</span>&gt; <span class="symbol">&lt;PATH&gt;</span>...</span><br><span class="line">       rwc [PATH]... <span class="symbol">&lt;COMMAND&gt;</span></span><br><span class="line"></span><br><span class="line">Command<span class="variable">s:</span></span><br><span class="line">  <span class="keyword">all</span>   Enabled <span class="keyword">all</span> available <span class="keyword">options</span></span><br><span class="line">  <span class="keyword">help</span>  <span class="keyword">Print</span> this message <span class="built_in">or</span> the <span class="keyword">help</span> of the given subcommand(s)</span><br><span class="line"></span><br><span class="line">Argument<span class="variable">s:</span></span><br><span class="line">  <span class="symbol">&lt;PATH&gt;</span>...  The path(s) you should provide</span><br><span class="line"></span><br><span class="line">Option<span class="variable">s:</span></span><br><span class="line">  -<span class="keyword">b</span>, --bytes         <span class="keyword">Print</span> the byte counts</span><br><span class="line">  -<span class="keyword">c</span>, --chars         <span class="keyword">Print</span> the character counts</span><br><span class="line">  -<span class="keyword">w</span>, --words         <span class="keyword">Print</span> the word counts</span><br><span class="line">  -<span class="keyword">l</span>, --lines         <span class="keyword">Print</span> the <span class="built_in">line</span> counts</span><br><span class="line">  -L, --longest-<span class="built_in">line</span>  <span class="keyword">Print</span> the maximum <span class="built_in">line</span> width (Bytes)</span><br><span class="line">  -h, --<span class="keyword">help</span>          <span class="keyword">Print</span> <span class="keyword">help</span> information</span><br><span class="line">  -V, --<span class="keyword">version</span>       <span class="keyword">Print</span> <span class="keyword">version</span> information</span><br></pre></td></tr></table></figure>
+<p>哇哦! 若你用这段文字, 对比下前面的 <code>src/cli.rs</code>, 会发现先前的文档注释, 在声明宏的威力下, 变成了 help 信息<br>
+没错! clap 能自动帮你做很多事情, 包括但不限于通过文本注释来生成 help 信息</p>
+<p>如果你不想要 <code>about</code> 信息直接照搬 <code>Cargo.toml</code> 里的 <code>description</code> 怎么办? 没事, 直接覆写就行, 覆写的优先级更高:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[command(</span></span><br><span class="line"><span class="meta">    about = <span class="meta-string">&quot;...&quot;</span>,</span></span><br><span class="line"><span class="meta">// ......</span></span><br><span class="line"><span class="meta">// ......</span></span><br></pre></td></tr></table></figure>
+<p>并且, 像 author/version/about 等信息, 是通过读取 <code>Cargo.toml</code> 来获取的, 但在 v4 版本, clap 默认不显示, 以保持简洁<br>
+你可以查看 <a href="https://docs.rs/clap/latest/clap/builder/struct.Command.html#method.help_template">help_template</a> 知晓如何显示, 例子可能是 <code>builder形式</code>, 也就是非声明式, 但别慌张:</p>
+<p>你可以像这样将 builder形式 的代码转化为 derive形式:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">Command::new(<span class="string">&quot;myprog&quot;</span>)</span><br><span class="line">    .help_template(<span class="string">&quot;&#123;bin&#125; (&#123;version&#125;) - &#123;usage&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[command(</span></span><br><span class="line"><span class="meta">    help_template = <span class="meta-string">&quot;&#123;bin&#125; (&#123;version&#125;) - &#123;usage&#125;&quot;</span>,</span></span><br><span class="line"><span class="meta">// ......</span></span><br><span class="line"><span class="meta">// ......</span></span><br></pre></td></tr></table></figure>
+<p>实际上, 宏的黑魔法, 就是将这些声明式代码, 在编译期转化为 builder 代码</p>
+<h2 id="xuan-xiang-yu-can-shu-de-sheng-cheng" id="选项与参数的生成">选项与参数的生成</h2>
+<p>clap 能非常方便地以声明的方式, 定义选项/参数</p>
+<h3 id="xuan-xiang" id="选项">选项</h3>
+<p>对于一个option, 比如 <code>-b/--bytes</code>, 你只需要这样写:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// Print the byte counts</span></span><br><span class="line"><span class="meta">#[arg(short, long)]</span></span><br><span class="line"><span class="keyword">pub</span> bytes: <span class="built_in">bool</span>,</span><br></pre></td></tr></table></figure>
+<p>它由三部分组成:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>文档注释: help 中对该命令的解释</p>
+</li>
+<li class="lvl-2">
+<p><code>#[arg(short, long)]</code>: 该 option 具有短/长横杠的形式</p>
+</li>
+<li class="lvl-2">
+<p>类型为bool: 传入时默认的行为是将其设置为 true</p>
+</li>
+</ul>
+<p>如 help 中所示, 会生成如下内容:</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Options</span>:</span><br><span class="line">  -b, --bytes         <span class="keyword">Print</span> the <span class="keyword">byte</span> counts</span><br></pre></td></tr></table></figure>
+<p>当你传入该参数时, <code>Cli</code> 实例中的 <code>bytes</code> 属性将被设置为 true<br>
+你也可以自行指定 short/long 的名称, 不指定时, short取首字母, long取全部</p>
+<p>比如 <code>-l/--lines</code> 与 <code>-L/--longest-line</code>, 不指定时都是 <code>-l</code>, 编译会报错, 需要自己指定:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// Print the maximum line width (Bytes)</span></span><br><span class="line"><span class="meta">#[arg(short = &#x27;L&#x27;, long)]</span></span><br><span class="line"><span class="keyword">pub</span> longest_line: <span class="built_in">bool</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="can-shu" id="参数">参数</h3>
+<p>当你没有添加 <code>short</code> 或 <code>long</code> 时, 自然就代表这是个 argument</p>
+<p>在这里, 我们唯一需要的参数, 是一个或多个路径, 因此我们使用 Vec<PathBuf> 来表示它, clap 会自动将参数解析为路径<br>
+为了醒目, 我们将其显示在 help 中的名字, 改为大写的 <code>PATH</code>, 同时指定该参数必选, 防止路径数为0:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// The path(s) you should provide</span></span><br><span class="line"><span class="meta">#[arg(value_name = <span class="meta-string">&quot;PATH&quot;</span>, required = true)]</span></span><br><span class="line"><span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br></pre></td></tr></table></figure>
+<p>如果你不输入参数, 命令行就会优雅地显示错误, 友善地来提醒你:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cargo run -- -b</span><br></pre></td></tr></table></figure>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">error: </span>The following required arguments were not provided:</span><br><span class="line">  &lt;PATH&gt;...</span><br><span class="line"></span><br><span class="line">Usage: rwc &lt;--bytes|--chars|--words|--lines|--longest-line&gt; &lt;PATH&gt;...</span><br><span class="line"></span><br><span class="line">For more information try &#x27;--help&#x27;</span><br></pre></td></tr></table></figure>
+<p>但此时, 其实还有一个问题: 参数虽然被转化为 PathBuf, 但不存在的路径也是路径啊! 此时就应该报错才行<br>
+没错, clap 只是负责帮我们生成 <code>进行转换的代码</code><br>
+但验证存在性等工作, 应该自己来完成, 毕竟 clap 又不知道这个参数会被拿去干啥 😃</p>
+<p>因此, 我们来学学如何使用自定义的参数解析器吧</p>
+<h2 id="zi-ding-yi-can-shu-jie-xi-qi" id="自定义参数解析器">自定义参数解析器</h2>
+<p>有些疑问或许会萦绕在你的心头:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>clap 是怎么进行解析的?</p>
+</li>
+<li class="lvl-2">
+<p>clap 能否将传入的参数, 解析为自定义的类型呢?</p>
+</li>
+<li class="lvl-2">
+<p>我们能否在用户穿参时, 检查参数是否合法, 非法的直接报错, 来提醒用户呢?</p>
+</li>
+</ul>
+<p>实际上, 你需要通过向名为 value_parser 的函数, 传入一个解析器, 通过调用该解析器来对参数进行解析与验证<br>
+比如, 如果我们想验证传入的路径是否合法, 可以这样写:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ......</span></span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line">    <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">    <span class="meta">#[arg(value_parser = check_path, value_name = <span class="meta-string">&quot;PATH&quot;</span>, required = true)]</span></span><br><span class="line">    <span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">check_path</span></span>(path: &amp;<span class="built_in">str</span>) -&gt; <span class="built_in">Result</span>&lt;PathBuf, <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> path = PathBuf::from(path);</span><br><span class="line">    <span class="keyword">if</span> path.exists() || path.as_os_str() == <span class="string">&quot;-&quot;</span> &#123;</span><br><span class="line">        <span class="literal">Ok</span>(path)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="literal">Err</span>(<span class="built_in">format!</span>(<span class="string">&quot;No such path: `&#123;&#125;`&quot;</span>, path.display()))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Good, 现在当你传入路径时, 程序会对路径进行验证, 若路径不存在, 那就返回一个错误<br>
+该错误会在用户传入非法路径时, 作为报错信息出现:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cargo run -- -b asd</span><br></pre></td></tr></table></figure>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">error: </span>Invalid value &quot;asd&quot; for &#x27;&lt;PATH&gt;...&#x27;: No such path: `asd`</span><br><span class="line"></span><br><span class="line">For more information try &#x27;--help&#x27;</span><br></pre></td></tr></table></figure>
+<p>于此同时, clap 已经为非常多的基本类型, 常用类型, 嵌套基本类型, 嵌套常用类型实现了非常多的 parser<br>
+得益于此, 你可以为任何类型定义对应的 parser</p>
+<h2 id="can-shu-guan-xi" id="参数关系">参数关系</h2>
+<p>有时候, 我们可能会面临这样或那样的问题:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>当启用这个 option 时, 另外一个与其冲突的 option 不应该被启用</p>
+</li>
+<li class="lvl-2">
+<p>一个或多个指定的 option(s) 必须被启用</p>
+</li>
+<li class="lvl-2">
+<p>多个指定的 options 可以同时被启用</p>
+</li>
+</ul>
+<p>如何实现这些关系? 你可能会想自己手写, 但时间不应该浪费在这些事情上, 在 clap 中, 有着对应机制来处理这些事情<br>
+它叫做 <code>参数关系(Argument Relations)</code>, 当参数不符合对应关系时, 会出现友善的报错信息, 提示用户应该如何修改<br>
+因此, 我们可以使用 Arg/ArgGroup (参数与参数组) 来声明这些关系</p>
+<p>实际上, 你先前在 <code>paths</code> 头上写的 <code>required = true</code>, 就是一种参数关系</p>
+<p>以我们的 <code>rwc</code> 举个例子:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>-b/-c/-w/-l/-L</code> 能同时出现, 即支持类似 <code>-b -c -w</code> 或 <code>-bcw</code> 的形式</p>
+</li>
+<li class="lvl-2">
+<p><code>-b/-c/-w/-l/-L</code> 至少出现其中一个, 防止只传路径不传 option</p>
+</li>
+</ul>
+<p>任何一个 Arg 类型 (被 #[arg] 所修饰的), 或者 ArgGroup, 都能够声明这种参数间的关系<br>
+我们可以新建一个 ArgGroup 的实例, 然后把先前的一坨 <code>-b/-c/-w/-l/-L</code> 都放入其中:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ......</span></span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[command(</span></span><br><span class="line"><span class="meta">    author, version, about,</span></span><br><span class="line"><span class="meta">    group(ArgGroup::new(<span class="meta-string">&quot;options&quot;</span>).multiple(true).required(true).args(&amp;[ <span class="meta-string">&quot;bytes&quot;</span>, <span class="meta-string">&quot;chars&quot;</span>, <span class="meta-string">&quot;words&quot;</span>, <span class="meta-string">&quot;lines&quot;</span>, <span class="meta-string">&quot;longest_line&quot;</span>]</span>)),</span><br><span class="line">)]</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Cli</span></span> &#123;</span><br><span class="line">    <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">    <span class="meta">#[arg(value_parser = check_path, value_name = <span class="meta-string">&quot;PATH&quot;</span>, required = true)]</span></span><br><span class="line">    <span class="keyword">pub</span> paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line"><span class="comment">// ......</span></span><br></pre></td></tr></table></figure>
+<p><code>multiple(true)</code> 表示可以同时出现参数组的成员, <code>required(true)</code> 表示至少传入该参数组中的其中一个成员</p>
+<h2 id="zi-ming-ling" id="子命令">子命令</h2>
+<p>我们还可以定义一个 subcommand, 用来启用所有的 options, 它也要接受一个路径作为参数</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Cli</span></span> &#123;</span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line"><span class="comment">// ......</span></span><br><span class="line">    <span class="meta">#[command(subcommand)]</span></span><br><span class="line">    <span class="keyword">pub</span> sub_commands: <span class="built_in">Option</span>&lt;SubCommands&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Subcommand)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">enum</span> <span class="title">SubCommands</span></span> &#123;</span><br><span class="line">    <span class="comment">/// Enabled all available options</span></span><br><span class="line">    All &#123;</span><br><span class="line">        <span class="comment">/// The path(s) you should provide</span></span><br><span class="line">        <span class="meta">#[arg(value_parser = check_path, value_name = <span class="meta-string">&quot;PATH&quot;</span>, required = true)]</span></span><br><span class="line">        paths: <span class="built_in">Vec</span>&lt;PathBuf&gt;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以会想, 能不能让子命令复用 <code>Cli</code> 中定义的 <code>paths</code>, 减少重复代码呢?<br>
+当然可以, 请在 <code>Cli</code> 的成员 <code>paths</code>, 头上的<code>#[arg]</code> 中添加 <code>global = true</code>, 表示该参数是全局性的, 相当于子命令中也添加了这么个参数</p>
+<p>但非常遗憾, 当设置 <code>global = true</code> 后, 就无法设置 <code>required = true</code> 了, 因此我们还是得定义一份相同的参数, 详见 <a href="https://github.com/clap-rs/clap/issues/1546">相关issue</a></p>
 <hr>
 <h1 id="luo-ji-shi-xian">逻辑实现</h1>
 ]]></content>
@@ -2669,7 +2854,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p><a href="https://docs.gtk.org/gtk4/visual_index.html">Widget Gallery</a> 是Gtk提供的网站, 你可以通过浏览它, 更好地选择 <code>Widget</code></p>
 <p>我们甚至能自定义出新的Widget, 通过<code>继承/子类化</code>, 因为 Gtk 是面向对象的GUI框架<br>
 例如 <code>Button</code>, 其继承树如下:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GObject</span><br><span class="line">└── Widget</span><br><span class="line">    └── Button</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">GObject</span><br><span class="line">└── Widget</span><br><span class="line">    └── <span class="selector-tag">Button</span></span><br></pre></td></tr></table></figure>
 <p>GObject, 也就是 <code>gtk::glib::object::Object</code>, 是 Gtk 对象层级中的基类, 继承 GObject 可以获取其特性<br>
 举个例子, GObject 具有 <code>引用计数</code> 的特性, GObject 的子类对象也具有该特性, 当指向自身的强引用归零时, 自动释放内存</p>
 <p>接下来, 我们就来创建一个双按钮加减数字的程序, 探讨一下相关的注意事项, 这是来自官方书籍中的例子:</p>
@@ -2932,7 +3117,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
     <title>high-school-it-p2: 基础科普与环境搭建</title>
     <url>/posts/high-school-it/p2.html</url>
     <content><![CDATA[<blockquote>
-<p>p2: 让我们了解下python, 顺便科普一些常识, 进行环境搭建, 写一个Hello World吧!</p>
+<p>让我们了解下python, 顺便科普一些常识, 进行环境搭建, 写一个Hello World吧!</p>
 </blockquote>
 <span id="more"></span>
 <div class="tips">
@@ -3026,11 +3211,11 @@ windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如
 请按住 <code>win+r</code> (win键是键盘最下面的window图标, “win” 与 “r” 要一起按)<br>
 随后输入 <code>cmd</code>, 然后再敲回车, 会出现一个黑窗口, 不用理会闪烁的粗体光标, 与光标前的前置提示</p>
 <p>请输入以下命令, 检验python是否安装成功:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python  --version</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">python</span>  --<span class="keyword">version</span></span><br></pre></td></tr></table></figure>
 <p>以上的 <code>python</code>, 就是安装的python解释器, 是个可执行文件(exe)<br>
 我们执行它, 但并不让它解释代码, 此处仅表示: 让它输出当前python的版本<br>
 它应该会输出类似下面的文字:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Python 3.9.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Python</span> <span class="number">3</span>.<span class="number">9</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
 <p>如果是其他输出, 很可能是安装的时候, 未勾选 <code>add path</code> 这个框, 导致路径无法被识别</p>
 <div class="tips">
 <p><strong>命令与路径</strong><br>
@@ -3081,7 +3266,7 @@ windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如
 我们新建的文件, 在桌面中, 桌面对应的文件夹是 “Desktop”, 因此我们应该进入Desktop文件夹, 然后根据路径执行它:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Desktop</span><br><span class="line">python first_app.txt</span><br></pre></td></tr></table></figure>
 <p>这将会打印:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+<figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
 <p>瞧吧! 编辑器/解释器本身, 是不在乎文件后缀的, 只在乎文件的内容, 然后读取文件的内容, 将其解析为二进制, 然后运行<br>
 当然, 这样有个问题, 那就是人们看见其后缀txt, 会下意识认为它仅是个普通的文本文件</p>
 <p>你可以将后缀改为py, 告诉其他人, 这是个装着py代码的文件, 让含义更加清晰, 仅此而已<br>
@@ -3363,11 +3548,11 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <h3 id="dan-suo-yin" id="单索引">单索引</h3>
 <p>我们可以通过单个索引, 访问对应的单个元素</p>
 <p>举个例子:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有着 3 个元素的列表</span></span><br><span class="line"><span class="built_in">list</span> = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过索引, 访问元素 (索引从 0 开始)</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">0</span>] <span class="comment"># 300</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">1</span>] <span class="comment"># 400</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">2</span>] <span class="comment"># 500</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有着 3 个元素的列表</span></span><br><span class="line"><span class="built_in">list</span> = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过索引, 访问元素 (索引从 0 开始)</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">0</span>]  <span class="comment"># 300</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">1</span>]  <span class="comment"># 400</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">2</span>]  <span class="comment"># 500</span></span><br></pre></td></tr></table></figure>
 <p>list 可以通过 index 来访问元素, 那么如果 index 过大呢, 比如下面这样:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有着 3 个元素的列表</span></span><br><span class="line"><span class="built_in">list</span> = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>]</span><br><span class="line"><span class="built_in">list</span>[<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
 <p>脑子想一想都知道一定会报错:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">  list[3]</span><br><span class="line">  ~~~~^^^</span><br><span class="line">IndexError: list index out of range</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">  list[<span class="number">3</span>]</span><br><span class="line">  ~~~~^^^</span><br><span class="line">IndexError: list <span class="built_in">index</span> <span class="keyword">out</span> of <span class="built_in">range</span></span><br></pre></td></tr></table></figure>
 <p>果不其然, 解释器告诉我们了报错信息, 提示 “列表的索引越界了”<br>
 如果一个列表的长度length = n, 那么 index 自然要 &lt;= n-1 (从0开始哦~~)</p>
 <div class="tips">
@@ -3400,7 +3585,7 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
 <h3 id="qie-pian" id="切片">切片</h3>
 <p>切片, 能通过索引与冒号, 创建一个区间, 访问一定范围内, 列表的多个元素</p>
 <p>举个例子:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numbers = [<span class="number">201</span>, <span class="number">202</span>, <span class="number">203</span>, <span class="number">204</span>]  <span class="comment"># 定义列表</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">4</span>] <span class="comment"># [201, 202, 203, 204]</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">2</span>] <span class="comment"># [201, 202]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numbers = [<span class="number">201</span>, <span class="number">202</span>, <span class="number">203</span>, <span class="number">204</span>]  <span class="comment"># 定义列表</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">4</span>]  <span class="comment"># [201, 202, 203, 204]</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># [201, 202]</span></span><br></pre></td></tr></table></figure>
 <p>在上面的例子中, 我们通过索引+冒号, 创建了一个左开右闭的区间, 访问索引在该区间内的所有元素<br>
 如 <code>0:4</code> 代表 [0, 1, 2, 3], 再如 <code>0:2</code>, 代表 [0, 1]<br>
 我们通过 <code>list[m:n]</code>, 得到了一个子列表, 只要索引在 <code>[m, n) (左开右闭区间)</code> 内, 就会被放入这个子列表</p>

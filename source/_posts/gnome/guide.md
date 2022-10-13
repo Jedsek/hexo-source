@@ -21,9 +21,7 @@ keywords: [GNOME, 桌面环境, DE]
 2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前...  
 我个人认为简洁+美观比较重要, 当然你也可以自行修改进行DIY, 请自己动手, 丰衣足食吧!  
 
-+++ **以下是成品展示, 请点击隐藏/展开图像**
 ![按下Super后的Overview](/images/gnome/overview.png)  
-+++
 
 - - -
 
@@ -662,7 +660,7 @@ dconf2nix -i dconf.settings -o dconf.nix
 
 在你的 ~/.config/nixpkgs 中, 保持这样的目录结构 (当然了, 可以随你想法):  
 
-```bash
+```
 nixpkgs/
 ├── gnome
 │   ├── .background
@@ -673,7 +671,7 @@ nixpkgs/
 
 这里的 `dconf.nix` 就是刚刚转换得到的nix表达式, 在 `home.nix` 中导入它:  
 
-```bash
+```nix
 imports = [
   ./gnome/dconf.nix
 ];

@@ -1,0 +1,33 @@
+.sidebar-inner {
+  padding: 0px;
+  margin: 0px;
+}
+
+.sidebar-nav {
+  margin-top: 20px;
+}
+
+.sidebar-nav-toc, .sidebar-nav-overview {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.menu-item, .nav-text {
+  font-weight: bold;
+}
+
+.back-to-top {
+  font-size: 25px;
+}
+
+.post-title, .post-nav-item {
+  font-weight: bold;
+}
+
+.site-subtitle {
+  font-style: italic;
+}
+
+.fa-copy, .fa-fw{
+  font-size: 25px;
+}

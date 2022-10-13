@@ -160,10 +160,10 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  QQ: tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com || iconfont icon-QQ
-  B站: https://space.bilibili.com/673774482 || iconfont icon-bilibili-fill
-  知乎: https://www.zhihu.com/people/zhu-xia-hun || iconfont icon-zhihu-square-fill
-  邮箱: mailto:jedsek@qq.com || iconfont icon-email-fill
+  " QQ": tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2948804617&website=www.oicqzone.com || iconfont icon-QQ
+  " B站": https://space.bilibili.com/673774482 || iconfont icon-bilibili-fill
+  " 知乎": https://www.zhihu.com/people/zhu-xia-hun || iconfont icon-zhihu-square-fill
+  " 邮箱": mailto:jedsek@qq.com || iconfont icon-email-fill
   #GitHub: https://github.com/yourname || fab fa-github
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google

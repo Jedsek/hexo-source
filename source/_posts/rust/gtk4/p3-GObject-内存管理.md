@@ -21,7 +21,7 @@ GNOME入坑指南: [gnome-guide](/posts/gnome/guide)
 我们甚至能自定义出新的Widget, 通过`继承/子类化`, 因为 Gtk 是面向对象的GUI框架  
 例如 `Button`, 其继承树如下:  
 
-```bash
+```
 GObject
 └── Widget
     └── Button
