@@ -11,4 +11,4 @@ categories:
 keywords:
 ---
 
-- [p1-系列说明](/posts/rust-tui/p1)
+[x]  [p1-系列说明](/posts/rust-tui/p1)

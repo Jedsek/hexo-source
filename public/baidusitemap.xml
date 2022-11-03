@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jedsek.xyz/posts/rust-gstreamer/p6.html</loc>
+    <lastmod>2022-10-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gstreamer/p5.html</loc>
+    <lastmod>2022-10-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gstreamer/p4.html</loc>
+    <lastmod>2022-10-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gstreamer/p3.html</loc>
+    <lastmod>2022-10-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gstreamer/p2.html</loc>
+    <lastmod>2022-10-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/rust-gstreamer/p1.html</loc>
+    <lastmod>2022-10-22</lastmod>
+  </url>
+  <url>
     <loc>https://jedsek.xyz/posts/high-school-it/p4.html</loc>
     <lastmod>2022-10-13</lastmod>
   </url>

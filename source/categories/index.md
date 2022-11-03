@@ -15,11 +15,12 @@ quicklink: true
 
 # Rust
 Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
-[ ]  [命令行](/posts/rust-clap/guide)
+[ ]  [音视频处理 (gstreamer)](/categories/rust-gstreamer)
+[ ]  [命令行 (clap-rs)](/posts/rust-clap/guide)
 [ ]  [声明宏](/categories/rust-decl-macro)
 [ ]  [GTK4](/categories/rust-gtk4)
 [ ]  [异步](/categories/rust-async)
-[ ]  [TUI](/categories/rust-tui)
+[ ]  [TUI (tui-rs)](/categories/rust-tui)
 
 - - -
 
