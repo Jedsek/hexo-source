@@ -1,6 +1,6 @@
 ---
-title: "clap-rs 入坑指南"
-abbrlink: posts/rust-clap/guide
+title: "clap-rs 简介"
+abbrlink: posts/rust-clap/intro
 hidden: false
 date: 2022-08-16 20:03:34
 top: 12999
@@ -30,10 +30,9 @@ keywords: [Rust, Clap, CLI, 命令行]
 cargo install rust-wc
 ```
 
-以下是一些展示:  
+以下是使用 [asciinema](https://asciinema.org/) 录制的展示:  
 
-![显示help](/images/clap-rwc-help.png)
-![开启所有options](/images/clap-rwc-all-options.png)
+<script id="asciicast-534647" src="https://asciinema.org/a/534647.js" async></script>
 
 - - -
 
@@ -90,51 +89,47 @@ cli 可以代表抽象的界面, 也可以指代具体的某个程序
    ├── calc.rs   # 计算与打印
    ├── cli.rs    # 命令行的定义
    ├── files.rs  # 读取文件
-   ├── lib.rs
+   ├── lib.rs    # 声明模块, 类型别名
    └── main.rs
 ```
 
-clap 一个举足轻重的 crate, 它十分强大, 能让 cli 的制作变得很容易  
-让我们新建一个叫做 `rwc` 的项目, 然后在 `Cargo.toml` 中添加 clap 吧:
+让我们新建一个叫做 `rust-wc` 的项目, 然后在 `Cargo.toml` 中添加 clap 吧:
 
-```toml
+```toml Cargo.toml
 # 包名为 `rust-wc` (因为我发布到 crates.io 的时候, `rwc` 已经被占了呜呜呜呜呜)
 [package]
 name = "rust-wc"
 authors = ["jedsek <jedsek@qq.com>"]
 version = "0.0.1"
-description = "A GNU/wc clone written in rust, which is super faster when reading a large of big files"
+description = "A GNU/wc implementation written in rust, which is faster when reading a large of big files"
 edition = "2021"
 
-# 指定生成的可执行文件的名字, 此处是 `rwc`
+# 指定生成的可执行文件的名字, 此处是 `rwc`, 虽然包名是 `rust-wc`, 但命令是 `rwc`
 [[bin]]
 name = "rwc"
 path = "src/main.rs"
 
-# 指定lib并命名, 管理模块
-[lib]
-name = "lib"
-path = "src/lib.rs"
-
 # 指定依赖
 [dependencies]
 clap = {version = "4.0.8", features = ["derive"]}      # 解析参数
+unicode-width = "0.1.10"                               # 计算 Unicode 字符宽度
 indicatif = "0.17.1"                                   # 进度条
 prettytable-rs = "0.9.0"                               # 打印表格
 rayon = "1.5.3"                                        # 并行化
-tap = "1.0.1"                                          # 链式的语法糖库
 ```
 
 以下是 lib.rs 的内容:  
 
 ```rust src/lib.rs
-#![feature(let_chains)]
+ use std::{collections::HashMap, path::PathBuf};
 
-pub mod calc;
 pub mod cli;
 pub mod files;
+pub mod wc_result;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+pub type Counts = Vec<usize>;
+pub type PathWithContent = HashMap<PathBuf, String>;
 ```
 
 - - -
@@ -143,27 +138,19 @@ pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 :::tips
 **注意:**
-clap-v3时, 融进了另一个很强大的命令行编写库: structopt  
+clap-v3 时, 融进了另一个很强大的命令行编写库: structopt  
 因此以后看见 structopt 与 clap, 直接用 clap 就完事了, 前者也发过通知, 让别人直接用 clap  
 这给 clap 带来的巨大变化, 就是出现了derive宏, 以一种非常便利的声明式写法, 帮你生成与解析代码  
 :::
 
 
-让我们先来想象这个命令:  
+让我们来想象下这个命令:  
 
 - 必须接受一个参数
 - 参数必须是存在的路径, 或者是 -, 表示从标准输入读取内容
-- -h/--help: 查看帮助
-- -V/--version: 查看版本
-- -b/--bytes: 打印文件的字节数
-- -c/--chars: 打印文件的字符数
-- -w/--words: 打印文件的单词数
-- -l/--lines: 打印文件的总行数
-- -L/--longest-line: 打印文件中最长行的字节数
-- all: 一个子命令, 表示启用所有 options
+- 根据启用的 flag 来决定计算并打印哪些东西
 
-多亏了 derive 宏, 我们可以这样定义它:  
-**注意:** 下面的是 `src/cli.rs` 中的完整代码, 但后面讲解时会忽略一些代码, 来循序渐进地讲解
+多亏了 derive 宏, 我们可以这样定义它, 下面是 `src/cli.rs` 的完整代码:  
 
 ```rust src/cli.rs
 use clap::{ArgGroup, Parser, Subcommand};
@@ -196,7 +183,7 @@ pub struct Cli {
     #[arg(short, long)]
     pub lines: bool,
 
-    /// Print the maximum line width (Bytes)
+    /// Print the maximum line width (Unicode)
     #[arg(short = 'L', long)]
     pub longest_line: bool,
 
@@ -214,25 +201,53 @@ pub enum SubCommands {
     },
 }
 
-fn check_path(path: &str) -> Result<PathBuf, String> {
-    let path = PathBuf::from(path);
-    if path.exists() || path.as_os_str() == "-" {
+
+// 自定义了一个解析器, 检测路径是否存在, 或者是否从标准输入读取内容
+fn check_path(filename: &str) -> Result<PathBuf, String> {
+    let path = PathBuf::from(filename);
+    if filename == "-" || path.exists() {
         Ok(path)
     } else {
         Err(format!("No such path: `{}`", path.display()))
     }
 }
+
+impl Cli {
+    // 开启所有的 options
+    pub fn enable_all_options(&mut self) {
+        self.bytes = true;
+        self.chars = true;
+        self.words = true;
+        self.lines = true;
+        self.longest_line = true;
+    }
+        
+    // 返回启用的options, 类型是 Vec<&str>, 方便后面打印表格时, 作为表格的标题
+    pub fn get_enabled_options(&self) -> Vec<&'static str> {
+        let mut enabled_options = vec![];
+
+        self.bytes.then(|| enabled_options.push("Bytes"));
+        self.chars.then(|| enabled_options.push("Chars"));
+        self.words.then(|| enabled_options.push("Words"));
+        self.lines.then(|| enabled_options.push("Lines"));
+        self.longest_line.then(|| enabled_options.push("Maximum line width (Unicode)"));
+
+        enabled_options
+    }
+}
 ```
 
-后面会逐一进行说明, 以上的代码表示, 我们定义了一个 `Cli` 结构体  
-当传入参数时, 会根据宏的黑魔法生成的代码, 自动将其解析为对应类型的值, 作为 `Cli` 实例的成员  
+以上的代码表示, 我们定义了一个 `Cli` 结构体, 表示对输入参数的建模  
+得益于宏的黑魔法, clap 将生成一些代码, 使我们不用再耗费脑力, 考虑如何处理输入参数, 并将其解析为对应类型  
+也不用再考虑解析失败时, 应该如何编写一个用户友好的错误提示  
 
-换言之, 该结构体其实就是用来存放一些状态, 也就是被解析成对应类型的参数
-我们将在 `src/main.rs` 中得到实例, 但那是后话了:  
+clap 以及为我们做好了一切 :)  
+
+我们能调用 clap 为我们实现的 Parser (trait) 中的 parse 方法, 解析参数并进行转换:  
 
 ```rust
 use clap::Parser;
-use lib::{cli::Cli, Result};
+use rust_wc::{cli::Cli, Result};
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
@@ -266,7 +281,7 @@ Options:
   -c, --chars         Print the character counts
   -w, --words         Print the word counts
   -l, --lines         Print the line counts
-  -L, --longest-line  Print the maximum line width (Bytes)
+  -L, --longest-line  Print the maximum line width (Unicode)
   -h, --help          Print help information
   -V, --version       Print version information
 ```
@@ -333,7 +348,7 @@ Options:
 比如 `-l/--lines` 与 `-L/--longest-line`, 不指定时都是 `-l`, 编译会报错, 需要自己指定:  
 
 ```rust
-/// Print the maximum line width (Bytes)
+/// Print the maximum line width (Unicode)
 #[arg(short = 'L', long)]
 pub longest_line: bool,
 ```
@@ -389,9 +404,9 @@ For more information try '--help'
 // ......
 // ......
 
-fn check_path(path: &str) -> Result<PathBuf, String> {
-    let path = PathBuf::from(path);
-    if path.exists() || path.as_os_str() == "-" {
+fn check_path(filename: &str) -> Result<PathBuf, String> {
+    let path = PathBuf::from(filename);
+    if filename == "-" || path.exists() {
         Ok(path)
     } else {
         Err(format!("No such path: `{}`", path.display()))
@@ -403,11 +418,11 @@ Good, 现在当你传入路径时, 程序会对路径进行验证, 若路径不�
 该错误会在用户传入非法路径时, 作为报错信息出现:  
 
 ```bash
-cargo run -- -b asd
+cargo run -- -b asdxxx
 ```
 
 ```
-error: Invalid value "asd" for '<PATH>...': No such path: `asd`
+error: Invalid value "asd" for '<PATH>...': No such path: `asdxxx`
 
 For more information try '--help'
 ```
@@ -483,3 +498,146 @@ pub enum SubCommands {
 
 - - -
 # 逻辑实现
+根据:
+
+```
+   ├── calc.rs   # 计算与打印
+   ├── cli.rs    # 命令行的定义
+   ├── files.rs  # 读取文件
+```
+
+我们已经完成了对命令行的定义, 接下来要做的, 就是根据 Cli 的内容来实现逻辑了  
+为了避免你回到前面看 `lib.rs` 的内容, 下面再贴一遍:  
+
+```rust src/lib.rs
+use std::{collections::HashMap, path::PathBuf};
+
+pub mod cli;
+pub mod files;
+pub mod wc_result;
+
+pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+pub type Counts = Vec<usize>;
+pub type PathWithContent = HashMap<PathBuf, String>;
+```
+
+下面是逻辑实现, 在我的博客中, 是用tab的形式分开呈现的, 其他平台未知:  
+
+{% tabs asd %}
+
+<!-- tab 读取文件 -->
+
+```rust src/files.rs
+// 声明依赖
+use crate::{PathWithContent, Result};
+use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
+use rayon::prelude::*;
+use std::ffi::OsStr;
+use std::process;
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::{
+    fs::File,
+    io::{BufReader, Read},
+    path::PathBuf,
+};
+
+// `INPUTTED_FILE_NUMBER` 表示
+static INPUTTED_FILE_NUMBER: AtomicUsize = AtomicUsize::new(0);
+const BUFFER_SIZR: usize = 16 * 1024;
+
+trait PathExt {
+    fn without_dotted_prefix(&self) -> bool;
+    fn add_dotted_prefix(&mut self);
+}
+
+impl PathExt for PathBuf {
+    fn without_dotted_prefix(&self) -> bool {
+        self.is_relative() && !self.starts_with("../") && !self.starts_with("./")
+    }
+
+    fn add_dotted_prefix(&mut self) {
+        *self = PathBuf::from_iter([OsStr::new("./"), self.as_os_str()]);
+    }
+}
+
+pub fn read_files(paths: Vec<PathBuf>) -> Result<PathWithContent> {
+    println!("Reading files / Getting content from stdin:");
+
+    let result = paths
+        .into_par_iter()
+        .filter(|path| path.is_file() || path.as_os_str() == "-")
+        .map(|mut path| {
+            let should_read_from_input = path.as_os_str() == "-";
+
+            let content = get_content(&path, should_read_from_input);
+
+            if path.without_dotted_prefix() {
+                path.add_dotted_prefix();
+            }
+
+            if should_read_from_input {
+                let inputted_file_number = INPUTTED_FILE_NUMBER.fetch_add(1, Ordering::SeqCst);
+                path = PathBuf::from(format!("Input/{}", inputted_file_number));
+            }
+
+            let content = content.unwrap_or_else(|err| {
+                eprintln!("{}: {}", path.display(), err);
+                process::exit(1);
+            });
+
+            (path, content)
+        })
+        .collect();
+    Ok(result)
+}
+
+fn get_content(path: &PathBuf, should_read_from_input: bool) -> Result<String> {
+    if should_read_from_input {
+        read_from_stdin()
+    } else {
+        let bars = MultiProgress::new();
+        let style =
+            ProgressStyle::with_template("[{elapsed}][{percent}%] {bar:45.cyan/blue} {bytes} {wide_msg}")?
+                .progress_chars(">-");
+        read_file_with_progress(path, style, bars)
+    }
+}
+
+fn read_file_with_progress(path: &PathBuf, style: ProgressStyle, bars: MultiProgress) -> Result<String> {
+    let mut content = String::new();
+
+    let file = File::open(path)?;
+    let size = file.metadata()?.len();
+
+    let bar = ProgressBar::new(size).with_message(format! {"Reading {}", path.display()}).with_style(style);
+    let bar = bars.add(bar);
+
+    let mut bufreader = BufReader::new(file);
+    let mut buf = [0; BUFFER_SIZR];
+
+    while let Ok(n) = bufreader.read(&mut buf) {
+        if n == 0 {
+            break;
+        }
+        bar.inc(n as u64);
+        content += &String::from_utf8_lossy(&buf[..n]);
+    }
+    bar.finish_with_message("Done!");
+
+    Ok(content)
+}
+
+fn read_from_stdin() -> Result<String> {
+    let mut content = vec![];
+    std::io::stdin().read_to_end(&mut content)?;
+    Ok(String::from_utf8(content)?)
+}
+```
+
+<!-- endtab -->
+
+<!-- tab aaa-->
+
+<!-- endtab -->
+
+{% endtabs %}
