@@ -63,7 +63,6 @@ cli 可以代表抽象的界面, 也可以指代具体的某个程序
 一个命令的子命令, 通常情况下需要不同的 args, 有不同的 options  
 比如 `cargo build` 与 `cargo publish`, 都是 `cargo` 的子命令  
 
-
 - `双横杠(--)`:  
 在命令后面的某处位置, 加上 `--`, 可以将 `--` 后面的内容当作 argument 传入, 而非 options  
 举个例子, 我有个文件, 叫做 `--asd`, 我想使用 `cat --asd` 来输出里面的内容  
@@ -73,7 +72,6 @@ cli 可以代表抽象的界面, 也可以指代具体的某个程序
 
 - `短/长帮助(short/long help)`:
 有些命令, `-h` 与 `--help` 分别对应短帮助与长帮助, 后者比前者会显示更多提示信息
-
 
 - - -
 
@@ -86,10 +84,10 @@ cli 可以代表抽象的界面, 也可以指代具体的某个程序
 ├── Cargo.lock
 ├── Cargo.toml
 └── src
-   ├── calc.rs   # 计算与打印
-   ├── cli.rs    # 命令行的定义
-   ├── files.rs  # 读取文件
-   ├── lib.rs    # 声明模块, 类型别名
+   ├── wc_result.rs   # 计算并存储结果
+   ├── cli.rs         # 命令行的定义
+   ├── files.rs       # 读取文件
+   ├── lib.rs         # 声明模块, 类型别名
    └── main.rs
 ```
 
@@ -495,15 +493,21 @@ pub enum SubCommands {
 
 但非常遗憾, 当设置 `global = true` 后, 就无法设置 `required = true` 了, 因此我们还是得定义一份相同的参数, 详见 [相关issue](https://github.com/clap-rs/clap/issues/1546)
 
+::: tips
+**注意:**  
+这里其实可以选择不定义 subcommand, 当没有传入 options 时默认开启所有 options, 来简化用户输入  
+但本文还是定义了 subcommand 以便读者了解, 起演示作用
+:::
+
 
 - - -
 # 逻辑实现
 根据:
 
 ```
-   ├── calc.rs   # 计算与打印
-   ├── cli.rs    # 命令行的定义
-   ├── files.rs  # 读取文件
+   ├── wc_result.rs   # 计算并存储结果
+   ├── cli.rs         # 命令行的定义
+   ├── files.rs       # 读取文件
 ```
 
 我们已经完成了对命令行的定义, 接下来要做的, 就是根据 Cli 的内容来实现逻辑了  
@@ -521,14 +525,15 @@ pub type Counts = Vec<usize>;
 pub type PathWithContent = HashMap<PathBuf, String>;
 ```
 
-下面是逻辑实现, 在我的博客中, 是用tab的形式分开呈现的, 其他平台未知:  
+下面是对应模块的逻辑实现, 在我的博客中是以tab的形式呈现, 比较清晰, 其他平台未知:  
 
-{% tabs asd %}
+{% tabs 逻辑实现代码 %}
 
 <!-- tab 读取文件 -->
 
 ```rust src/files.rs
 // 声明依赖
+// 我写的时候遇见没有导入的, 也是直接用 lsp 来自动导入, 直接与后面的代码对照看会比较好
 use crate::{PathWithContent, Result};
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use rayon::prelude::*;
@@ -541,10 +546,16 @@ use std::{
     path::PathBuf,
 };
 
-// `INPUTTED_FILE_NUMBER` 表示
+
+// `INPUTTED_FILE_NUMBER` 表示 INPUT 的编号, 是本文开篇的 asciinema 展示中的效果
+// `BUFFER_SIZR` 表示每次读取文件时缓冲区的大小 (实现进度条)
 static INPUTTED_FILE_NUMBER: AtomicUsize = AtomicUsize::new(0);
 const BUFFER_SIZR: usize = 16 * 1024;
 
+
+// 使用 trait 来扩展标准库中的 PathBuf 类型, 有两个函数, 一个检测是否是以点开头的, 一个加上点前缀
+// 比如, 当你传入 `./build.rs` 与 `build.rs`, 前者输出时有点前缀, 后者没有, 因此统一下
+// 并且当是从 stdin 读取的时候, 就显示无点前缀的 `Input/0` 会更清晰
 trait PathExt {
     fn without_dotted_prefix(&self) -> bool;
     fn add_dotted_prefix(&mut self);
@@ -560,9 +571,12 @@ impl PathExt for PathBuf {
     }
 }
 
+
+// 读取文件的函数, 被暴露给其他模块, 参数是一个路径数组
 pub fn read_files(paths: Vec<PathBuf>) -> Result<PathWithContent> {
     println!("Reading files / Getting content from stdin:");
 
+    // 其实这里的 filter 不太好, 还可以判断目录与递归读取, 但暂时就这样吧
     let result = paths
         .into_par_iter()
         .filter(|path| path.is_file() || path.as_os_str() == "-")
@@ -591,6 +605,8 @@ pub fn read_files(paths: Vec<PathBuf>) -> Result<PathWithContent> {
     Ok(result)
 }
 
+
+// helper 函数, 针对单个路径
 fn get_content(path: &PathBuf, should_read_from_input: bool) -> Result<String> {
     if should_read_from_input {
         read_from_stdin()
@@ -603,6 +619,8 @@ fn get_content(path: &PathBuf, should_read_from_input: bool) -> Result<String> {
     }
 }
 
+
+// 读取对应路径的文件
 fn read_file_with_progress(path: &PathBuf, style: ProgressStyle, bars: MultiProgress) -> Result<String> {
     let mut content = String::new();
 
@@ -627,6 +645,8 @@ fn read_file_with_progress(path: &PathBuf, style: ProgressStyle, bars: MultiProg
     Ok(content)
 }
 
+
+// 从 stdin 中读取, 作为临时文件的内容
 fn read_from_stdin() -> Result<String> {
     let mut content = vec![];
     std::io::stdin().read_to_end(&mut content)?;
@@ -636,8 +656,121 @@ fn read_from_stdin() -> Result<String> {
 
 <!-- endtab -->
 
-<!-- tab aaa-->
+<!-- tab  进行计算 -->
+
+```rust src/wc_result.rs
+// 声明依赖
+use crate::{
+    cli::{Cli, SubCommands},
+    files::read_files,
+    Counts, Result,
+};
+use prettytable::{cell, format::consts::FORMAT_BOX_CHARS, Row, Table};
+use rayon::prelude::*;
+use std::{collections::HashMap, path::PathBuf, str};
+
+
+// 存放被启用的 options, 与键值对
+pub struct WcResult {
+    enabled_options: Vec<&'static str>,
+    paths_with_counts: HashMap<PathBuf, Counts>,
+}
+
+
+// 实例化函数
+pub fn get(mut cli: Cli) -> Result<WcResult> {
+    println!("Please waiting...\n");
+
+    // 根据子命令进行相应操作
+    match cli.sub_commands {
+        Some(SubCommands::All { ref paths }) => {
+            cli.paths = paths.clone();
+            cli.enable_all_options();
+        }
+        None => cli.enable_all_options(),
+    };
+
+    // 进行计算
+    println!("Calculating...");
+    let wc_result = WcResult {
+        enabled_options: cli.get_enabled_options(),
+        paths_with_counts: {
+            let contents = read_files(cli.paths.clone())?;
+            contents.into_par_iter().map(|(path, content)| (path, calculate_counts(&cli, content))).collect()
+        },
+    };
+
+    Ok(wc_result)
+}
+
+
+impl WcResult {
+    // 将保存的信息转化为美化后的表格
+    pub fn to_pretty_table(self) -> Table {
+        let titles = {
+            let enabled_options = self.enabled_options;
+            let mut titles = Row::new(enabled_options.into_iter().map(|x| cell!(Fybi -> x)).collect());
+            titles.insert_cell(0, cell!(Fybi -> "Path"));
+            titles
+        };
+
+        let mut table = Table::new();
+        table.set_titles(titles);
+        table.set_format(*FORMAT_BOX_CHARS);
+
+        for (path, counts) in self.paths_with_counts {
+            let mut row = Row::new(counts.into_iter().map(|x| cell!(x)).collect());
+            let path_cell = if path.starts_with("Input") {
+                cell!(Fbb -> path.display())
+            } else {
+                cell!(Fmb -> path.display())
+            };
+
+            row.insert_cell(0, path_cell);
+            table.add_row(row);
+        }
+
+        table
+    }
+}
+
+
+// 不太懂 rayon, 暂时这样糊上去了
+fn calculate_counts(cli: &Cli, content: String) -> Counts {
+    let v: Vec<Option<usize>> = vec![None; 5];
+    v.into_par_iter()
+        .enumerate()
+        .map(|(idx, _)| match idx {
+            0 => cli.bytes.then_some(content.len()),
+            1 => cli.chars.then_some(content.chars().count()),
+            2 => cli.words.then_some(content.split_whitespace().count()),
+            3 => cli.lines.then_some(content.lines().count()),
+            4 => cli
+                .longest_line
+                .then_some(content.lines().map(unicode_width::UnicodeWidthStr::width).max().unwrap_or(0)),
+            _ => None,
+        })
+        .flatten()
+        .collect()
+}
+```
 
 <!-- endtab -->
 
 {% endtabs %}
+
+然后就是 main 函数:  
+
+```rust src/main.rs
+use clap::Parser;
+use rust_wc::{cli::Cli, wc_result, Result};
+
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+    let pretty_table = wc_result::get(cli)?.to_pretty_table();
+    pretty_table.printstd();
+    Ok(())
+}
+```
+
+就酱, 结束啦! 希望本文能帮到你 :)
