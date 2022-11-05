@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/posts/rust-clap/guide</loc>
+    <loc>https://jedsek.xyz/posts/rust-clap/intro</loc>
     
     <lastmod>2022-08-16</lastmod>
     
@@ -299,14 +299,14 @@
 
   
   <url>
-    <loc>https://jedsek.xyz/tags/GNOME/</loc>
+    <loc>https://jedsek.xyz/tags/%E9%AB%98%E4%B8%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2022-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/%E9%AB%98%E4%B8%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/</loc>
+    <loc>https://jedsek.xyz/tags/GNOME/</loc>
     <lastmod>2022-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -334,13 +334,6 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/Macro/</loc>
-    <lastmod>2022-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jedsek.xyz/tags/Clap/</loc>
     <lastmod>2022-11-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -355,14 +348,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/TUI/</loc>
-    <lastmod>2022-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/GUI/</loc>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -384,6 +370,20 @@
   
   <url>
     <loc>https://jedsek.xyz/tags/Audio/</loc>
+    <lastmod>2022-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/GUI/</loc>
+    <lastmod>2022-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/TUI/</loc>
     <lastmod>2022-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
