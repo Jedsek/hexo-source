@@ -6,7 +6,12 @@
 {% block class %}index posts-expand{% endblock %}
 
 {% block content %}
-
+  <div>
+    Tips: 点击 <strong><a href="/categories">分类</a></strong> 查看更多文章哟~~
+    <hr/>
+    <br/>
+    <br/>
+  </div>
   {%- for post in page.posts.toArray() %}
     {{ partial('_macro/post.njk', {post: post, is_index: true}) }}
   {%- endfor %}
