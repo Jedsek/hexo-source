@@ -11,7 +11,7 @@ categories:
 keywords:
 ---
 
-- [p1: 系列说明](/posts/rust-async/p1)
-- [p2: 异步简介](/posts/rust-async/p2)
-- [p3: Future](/posts/rust-async/p3)
-- [p4: 状态的保存与变换](/posts/rust-async/p4)
+[x]  [p1: 系列说明](/posts/rust-async/p1)
+[x]  [p2: 异步简介](/posts/rust-async/p2)
+[x]  [p3: Future](/posts/rust-async/p3)
+[x]  [p4: 状态的保存与变换](/posts/rust-async/p4)
