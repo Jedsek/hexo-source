@@ -2578,7 +2578,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p>计算机是二进制的, 只认识二进制, 但你不可能手写二进制<br>
 c/cpp/python 等编程语言, 让你写人类可理解的 “代码”, 然后将它们 “转化” 为二进制后供机器执行</p>
 <p>反正记住一点:<br>
-机器无法理解代码, 它只理解二进制, 但你能通过程序, 将代码解析为二进制可执行文件, 也就是.exe结尾的文件<br>
+机器无法理解代码, 它只理解二进制, 但你能通过程序, 将代码解析为二进制可执行文件, 即 <code>.exe</code> 结尾的文件<br>
 我们将代码被解析为二进制的过程, 称为 “编译”, 将解析工具, 称为 “编译器”</p>
 <p>当然, python 特殊一些, 编译的过程是分段的, 先编译一段, 再执行这段二进制, 重复, 直到全部解析完毕<br>
 我们将分段编译的过程, 称为 “解释”, 将分段编译的工具, 称为 “解释器”</p>
@@ -2773,6 +2773,8 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>这里, 我们声明了一个叫做 a 的变量, 然后把值装到了 a 中, 这就是 声明+赋值<br>
 右边是数值, 左边是变量名, 等号表示把右边的值赋给左边的变量</p>
+<p>变量名是随便你取的, 但必须遵守命名规范, 只能由字母, 下划线开头, 不能由数字开头, 中间不能有空格分割, 不能与关键字相同<br>
+你怎么知道哪些是关键字呢? 慢慢看吧, 像 <code>def/import</code> 经常使用在特殊位置, 有特殊功能的字符, 自然就是关键字了, 又不会考你超纲的关键字</p>
 <p>你也可以这样:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a</span><br></pre></td></tr></table></figure>
 <p>我们先声明了一个变量a, 值是1, 然后把a放在右边传给了左边的b<br>
@@ -2789,8 +2791,11 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <p>但在交换数值的代码中, 你应该这样理解:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">_t1 = b</span><br><span class="line">_t2 = a</span><br><span class="line">a = _t1</span><br><span class="line">b = _t2</span><br></pre></td></tr></table></figure>
 <p>这表示, 进行 <code>a,b = b,a</code> 时, 会先把右边的变量给复制(赋值给新的变量)一遍, 再分别赋给a,b<br>
-只不过, 只要我们按照py的语法写, 我们就不需要考虑这么多了, py为我们隐藏了_t1, _t2, 你只需要可以这么写就行了</p>
-<p>现在有没有明白, 为什么大家都说py语法简单呢? 之后还会有很多像这样甜的地方 😃</p>
+只不过, 只要我们按照py的语法写, 我们就不需要考虑这么多了, py为我们隐藏了_t1, _t2, 你只需要可以这么写就行了<br>
+现在有没有明白, 为什么大家都说py语法简单呢? 之后还会有很多像这样甜的地方 😃</p>
+<p>另外 选择题会出现这样的常见选项:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">A.  a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span></span><br><span class="line">B.  a, b, c = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">C.  a = <span class="number">1</span>; b = <span class="number">2</span>; c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>其中 A 是错的, 别问为什么, 因为 python 的作者这样设计 python 的而已</p>
 <hr>
 <h1 id="zhu-shi">注释</h1>
 <h2 id="zuo-yong" id="作用">作用</h2>
@@ -2999,12 +3004,6 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <p>我们可以通过单个索引, 访问对应的单个元素</p>
 <p>举个例子:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有着 3 个元素的列表</span></span><br><span class="line"><span class="built_in">list</span> = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过索引, 访问元素 (索引从 0 开始)</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">0</span>]  <span class="comment"># 300</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">1</span>]  <span class="comment"># 400</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">2</span>]  <span class="comment"># 500</span></span><br></pre></td></tr></table></figure>
-<p>list 可以通过 index 来访问元素, 那么如果 index 过大呢, 比如下面这样:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有着 3 个元素的列表</span></span><br><span class="line"><span class="built_in">list</span> = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>]</span><br><span class="line"><span class="built_in">list</span>[<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
-<p>脑子想一想都知道一定会报错:</p>
-<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">  list[<span class="number">3</span>]</span><br><span class="line">  ~~~~^^^</span><br><span class="line">IndexError: list <span class="built_in">index</span> <span class="keyword">out</span> of <span class="built_in">range</span></span><br></pre></td></tr></table></figure>
-<p>果不其然, 解释器告诉我们了报错信息, 提示 “列表的索引越界了”<br>
-如果一个列表的长度length = n, 那么 index 自然要 &lt;= n-1 (从0开始哦~~)</p>
 <div class="tips">
 <p><strong>扩展: 为何 index 从 0 开始?</strong><br>
 因为, 所谓的index, 代表的概念, 其实是 <code>偏移量</code><br>
@@ -3027,20 +3026,227 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
 <p>如果你每次计算偏移量, 都得计算一遍 index-1, 次数一多起来不就会降低效率?<br>
 现代计算机其实可以忽略这点影响, 但早期计算机可是一寸内存一寸金, 这个习惯自然而然地被保留下来了<br>
 <s>(好吧, 原因其实真的只是因为习俗)</s></p>
-<p>而且在设计算法, 并且需要考虑下标的边界问题时, 下标从0开始会很方便</p>
+<p>而且在某些情况下, 下标从0开始会很方便, 有相关论文, 但本菜鸡看不懂 😃</p>
 </div>
 <p>py 中还存在 <code>负索引</code> 的语法糖, 也就是用负数来充当索引, 此时, 下标从右往左, 从 -1 依次递减<br>
 比如 <code>ls[-1]</code>, 就代表倒数第一个元素, <code>ls[-2]</code> 就代表倒数第二个元素</p>
-<p>此时, <code>ls[-1]</code>, 就相当于 <code>ls[len(ls) - 1]</code> ( len(ls) 表示得到列表ls的长度 )</p>
+<p>举个例子, 已知 <code>a = [10, 20, 30, 40, 50]</code> 让我们将其与图表进行对立:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>元素</td>
+<td>10</td>
+<td>20</td>
+<td>30</td>
+<td>40</td>
+<td>50</td>
+</tr>
+<tr>
+<td>正索引</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>负索引</td>
+<td>-5</td>
+<td>-4</td>
+<td>-3</td>
+<td>-2</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+<p>显而易见的, <code>ls[-1]</code>, 就相当于 <code>ls[len(ls) - 1]</code> ( len(ls) 表示得到列表ls的长度 )</p>
+<h3 id="suo-yin-yue-jie" id="索引越界">索引越界</h3>
+<p>于此同时, 通过下标/索引访问某个列表的元素时, 不应该超出范围:</p>
+<figure class="highlight python"><figcaption><span>demo.py</span></figcaption><table><tr><td class="code"><pre><span class="line">a = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>]</span><br><span class="line">a[<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<p>当我们在命令行中执行 <code>python demo.py</code> (见 <a href="/posts/high-school-it/p2#huan-jing-da-jian">p2: 基础科普#环境搭建</a> ) 或直接使用图形化工具, 点击运行按钮</p>
+<p>脑子想一想都知道肯定编译不过, 我们将得到以下报错:</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">Traceback (most recent <span class="keyword">call</span> <span class="keyword">last</span>):</span><br><span class="line">  File <span class="string">&quot;/home/jedsek/a.py&quot;</span>, <span class="built_in">line</span> <span class="number">2</span>, in <span class="symbol">&lt;module&gt;</span></span><br><span class="line">    <span class="keyword">a</span>[<span class="number">5</span>]</span><br><span class="line">    ~^^^</span><br><span class="line">IndexError: <span class="keyword">list</span> <span class="built_in">index</span> out of <span class="built_in">range</span></span><br></pre></td></tr></table></figure>
+<p>看不懂的直接像做玩英语完形一样当作 “哔(屏蔽词)” 跳过就好, index 是 “索引/下标的意思”, 这条报错表示, 下标越界了!<br>
+因为 a 是个长度为 5 的列表, 所以只能用 <code>n ∈ [0, 5) ∩ N (区间[0, 5) 范围内的自然数)</code> 来当下标, 即 0 到 4, 因此 5 是非法的<br>
+负索引也是一样的道理, 不能越界哟~~</p>
 <h3 id="qie-pian" id="切片">切片</h3>
 <p>切片, 能通过索引与冒号, 创建一个区间, 访问一定范围内, 列表的多个元素</p>
 <p>举个例子:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numbers = [<span class="number">201</span>, <span class="number">202</span>, <span class="number">203</span>, <span class="number">204</span>]  <span class="comment"># 定义列表</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">4</span>]  <span class="comment"># [201, 202, 203, 204]</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># [201, 202]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numbers = [<span class="number">201</span>, <span class="number">202</span>, <span class="number">203</span>, <span class="number">204</span>]  <span class="comment"># 定义列表</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">4</span>]  <span class="comment"># [201, 202, 203, 204]</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># [201, 202]</span></span><br><span class="line">numbers[<span class="number">0</span>:<span class="number">1</span>]  <span class="comment"># [201]</span></span><br></pre></td></tr></table></figure>
 <p>在上面的例子中, 我们通过索引+冒号, 创建了一个左开右闭的区间, 访问索引在该区间内的所有元素<br>
-如 <code>0:4</code> 代表 [0, 1, 2, 3], 再如 <code>0:2</code>, 代表 [0, 1]<br>
 我们通过 <code>list[m:n]</code>, 得到了一个子列表, 只要索引在 <code>[m, n) (左开右闭区间)</code> 内, 就会被放入这个子列表</p>
+<p>图表依然会较为直观:</p>
+<p><code>numbers = [201, 202, 203, 204]</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>切片</td>
+<td>对应索引</td>
+<td>取出的子列表</td>
+</tr>
+<tr>
+<td>0:4</td>
+<td>[0, 1, 2, 3]</td>
+<td>[201, 202, 203, 204]</td>
+</tr>
+<tr>
+<td>0:2</td>
+<td>[0, 1]</td>
+<td>[201, 202]</td>
+</tr>
+<tr>
+<td>0:1</td>
+<td>[0]</td>
+<td>[201]</td>
+</tr>
+<tr>
+<td>-3:-1</td>
+<td>[-3, -2]</td>
+<td>[202, 203]</td>
+</tr>
+</tbody>
+</table>
+<p>默认的步长是1, 我们还可以再加一个冒号设置其步长, 比如 <code>numbers[0:4:1]</code> 就相当于 <code>numbers[0:4]</code><br>
+而 <code>numbers[0:4:2]</code> 则相当于从 <code>[0, 1, 2, 3]</code> 中的第一个元素 <code>0</code> 开始, 作为下标取 numbers 的元素, 然后走两步到 <code>2</code>, 依次类推<br>
+步长不能设置为 0, 不然会报错</p>
+<p>有个地方需要注意: 当切片对应的索引个数为 0 时, 子列表是个空列表, 即单个的 <code>[]</code><br>
+举个例子: <code>numbers[3:2]</code> 将会得到空列表, 因为步长默认是 1, 而索引越界会直接报错, 两者注意区分</p>
+<h3 id="sheng-lue-yu-mo-ren-zhi" id="省略与默认值">省略与默认值</h3>
+<p>关于此处的知识点, 前面已经提到过一部分了, 即步长默认是1, 但现在还有更多更多滴细节 😃</p>
+<p>已知 <code>a = [10, 20, 30, 40, 50]</code>, 你可以使用 <code>a[start:stop:step]</code> 来表示 a 的切片, 其中 start/stop/step 都是可以省略的<br>
+当它们被省略时, 会有一个默认值作为替补登场, 比如步长被省略, 即 <code>a[start:stop]</code>/<code>a[start:stop:]</code> 的形式时, 步长会使用默认值1</p>
+<p>而对于 <code>start/stop</code> 来讲, 当步长分别为正数或负数时, 默认值是不同的, 因为步长为正时, 切片是正着取元素的, 为负时自然是倒着取<br>
+举些例子, 已知 <code>a = [10, 20, 30, 40, 50, 60, 70]</code>:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>a[2:5:1]</code> 中, <code>2:4</code> 对应的下标是 <code>[2, 3, 4]</code>, 索引对应的元素是 <code>[30, 40, 50]</code>, 因为步长为1, 所以结果直接就是 <code>[30, 40, 50]</code></p>
+</li>
+<li class="lvl-2">
+<p><code>a[2::1]</code> 中,  右边界为省略, 因为步长为正, 其默认值是该列表的长度, 结果是 <code>[30, 40, 50, 60, 70]</code></p>
+</li>
+<li class="lvl-2">
+<p><code>a[:2:1]</code> 中, 左边界忽略, 因为步长为正, 其默认值是0, 结果是 <code>[10, 20]</code></p>
+</li>
+<li class="lvl-2">
+<p><code>a[2::-1]</code> 中, 右边界忽略, 因为步长为负, 其默认值是0, 结果是 <code>[30, 20, 10]</code></p>
+</li>
+<li class="lvl-2">
+<p><code>a[:2:-1]</code> 中, 左边界忽略, 因为步长为负, 其默认值是该列表长度, 结果是 <code>[70, 60, 50, 40]</code></p>
+</li>
+</ul>
+<p>什么鬼, 这是人能记得下来的? 而且这些还只是正索引, 对于负索引呢? 别慌, ***才直接背, 你只需要熟悉定义就行:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>start</code> 代表列表中某个元素的下标, 这个元素是切片的起头</p>
+</li>
+<li class="lvl-2">
+<p><code>stop</code> 代表列表中某个元素的下标, 原列表中该元素附近的那个元素才是切片的结尾 (因为左闭右开, 且步长正负不知)</p>
+</li>
+<li class="lvl-2">
+<p><code>step</code> 代表步长, 其正负决定正序还是倒序取, 其大小决定一次性跳过多少个元素后再取</p>
+</li>
+</ul>
+<p>要开始了哦, 超级直观的方法:</p>
+<p>以 <code>a[2:5:1]</code> 为例:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>因为步长为正, 先画条从左往右的箭头: <s>[10, 20, 30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>start</code> 是 <code>2</code>, 所以箭头的起点从 <code>30</code> 开始: [10, 20, <s>30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>stop</code> 是 <code>5</code>, 所以箭头的终点是 <code>50</code> (箭头从 60 逆方向缩一格): [10, 20, <s>30, 40, 50</s>&gt;, 60, 70]</p>
+</li>
+</ul>
+<p>以 <code>a[2::1]</code> 为例:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>因为步长为正, 先画条从左往右的箭头: <s>[10, 20, 30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>start</code> 是 <code>2</code>, 所以箭头的起点从 <code>30</code> 开始: [10, 20, <s>30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>stop</code> 被省略, 所以箭头无终点, 一直延伸: [10, 20, <s>30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+</ul>
+<p>以 <code>a[:2:1]</code> 为例:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>因为步长为正, 先画条从左往右的箭头: <s>[10, 20, 30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>start</code> 被省略, 所以箭头的起点在左边的无限远处, 不用动: <s>[10, 20, 30, 40, 50, 60, 70]</s>&gt;</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>stop</code> 是 <code>2</code>, 所以箭头的终点是 <code>20</code> (箭头从 30 逆方向缩一格): <s>[10, 20</s>&gt;, 30, 40, 50, 60, 70]</p>
+</li>
+</ul>
+<p>以 <code>a[2::-1]</code> 为例:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>因为步长为负, 先画条从右往左的箭头: &lt;<s>[10, 20, 30, 40, 50, 60, 70]</s></p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>start</code> 是 <code>2</code>, 所以箭头的起点从 <code>30</code> 开始: &lt;<s>[10, 20, 30</s>, 40, 50, 60, 70]</p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>stop</code> 被省略, 所以箭头无终点, 一直延伸: &lt;<s>[10, 20, 30</s>, 40, 50, 60, 70]</p>
+</li>
+</ul>
+<p>以 <code>a[:2:-1]</code> 为例:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>因为步长为负, 先画条从右往左的箭头: &lt;<s>[10, 20, 30, 40, 50, 60, 70]</s></p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>start</code> 被省略, 所以箭头的起点在右边的无限远处, 不用动: &lt;<s>[10, 20, 30, 40, 50, 60, 70]</s></p>
+</li>
+<li class="lvl-2">
+<p>因为 <code>stop</code> 是 <code>2</code>, 所以箭头的终点是 <code>40</code> (箭头从 30 逆方向缩一格): [10, 20, 30, &lt;<s>40, 50, 60, 70]</s></p>
+</li>
+</ul>
+<p>对于负索引也是一样的道理, 先确定好 <code>start</code> 与 <code>stop</code> 的位置, 然后根据步长画对应方向的箭头<br>
+最后被覆盖的元素, 就是当步长为 1 时, 构成切片的元素, 逆序还是倒叙看箭头就行<br>
+最后根据步长的大小, 决定跳过多少个元素后取一个, 将其作为切片的元素即可</p>
 <hr>
 <h2 id="zi-dian" id="字典">字典</h2>
+<p>python 中的字典, 实际上就是一些键值对组成的集合<br>
+键值对, 指的就是根据某个键值, 获取其对应的另外一个值</p>
+<p>举个例子:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>名字: “小明”</p>
+</li>
+<li class="lvl-2">
+<p>年龄(year): 16</p>
+</li>
+<li class="lvl-2">
+<p>身高(cm): 178</p>
+</li>
+</ul>
+<p>名字 -&gt; “小明”, 根据键, 得到对应的值, 这就是一对键值对, 由键值对组成的集合, 在 python 中便叫作字典了</p>
+<p>在 python 中, 你可以用一对花括号来定义字典:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = &#123;<span class="string">&#x27;Shadd&#x27;</span>: <span class="number">10</span>, <span class="string">&#x27;Lasd&#x27;</span>: <span class="number">111</span>, <span class="string">&#x27;PPqwea&#x27;</span>: <span class="number">899</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>冒号前的就是键, 冒号后的就是这个键对应的值, 键值对之间用逗号进行分割, 比如:  <code>a['Shadd']</code> 将得到 <code>10</code></p>
 ]]></content>
       <tags>
         <tag>高中信息技术</tag>
