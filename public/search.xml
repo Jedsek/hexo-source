@@ -2518,6 +2518,9 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 比如珍贵的古代文献, 有好多都失传了, 就是因为记载着信息的载体, 也就是书籍, 遭受损害, 导致信息丢失</p>
 </li>
 <li class="lvl-2">
+<p>不损耗性信息在传播的过程中, 是不会发生损耗的</p>
+</li>
+<li class="lvl-2">
 <p>时效性<br>
 信息往往反映的是某事物特定时间内的状况, 但事物会随着时间的推移而改变<br>
 比如 “太阳亮着” 这条信息, 一百万亿亿亿年后太阳绝壁熄灭了, 你敢说这条信息永远适用?</p>
@@ -2530,7 +2533,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <li class="lvl-2">
 <p>可加工处理性/真伪性<br>
 信息能被加工, 比如要打仗了, 肯定要给地方一些假信息, 来迷惑敌人<br>
-因此, 不要轻易跟随网上的人云亦云!</p>
+在比如 <code>盲人摸象/管中窥豹</code>, 都体现了真伪性</p>
 </li>
 <li class="lvl-2">
 <p>价值性<br>
@@ -2540,8 +2543,12 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 </ul>
 <hr>
 <h1 id="zhi-shi-de-ding-yi">知识的定义</h1>
-<p>不管有用无用的信息, 那都是信息, 但知识是有用的, 能够运用在实践中的信息, 是人类社会的经验总和它能够被继承, 被传递, 这显而易见, 毕竟它本身就是信息的真子集, 人类就是依靠知识的继承而不断发展的</p>
-<p>这部分很简单, 简单概述即可</p>
+<p>不管有用无用的信息, 那都是信息, 但知识是有用的, 能够运用在实践中的信息, 是人类社会的经验总和它能够被继承, 被传递, 这显而易见, 毕竟它本身就是信息的真子集, 人类就是依靠知识的继承而不断发展的<br>
+指的是人们已经掌握的能力</p>
+<p>这部分很简单, 简单概述即可, 但请注意不要与下面的 <code>智慧的定义搞错了</code></p>
+<hr>
+<h1 id="zhi-hui-de-ding-yi">智慧的定义</h1>
+<p>一般指人们运用所掌握的信息, 知识, 在面对新事物时所发挥的能力</p>
 <hr>
 <h1 id="zong-jie">总结</h1>
 <p>以下是一个很好的, 对三者进行了区分的例子:</p>
@@ -2550,10 +2557,13 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p>数据: 人们看到的3.1415926, 这是客观的数字, 是表达符号</p>
 </li>
 <li class="lvl-2">
-<p>信息: 人们想到了圆周率就是3.1415926</p>
+<p>信息: 人们知道圆周率就是3.1415926</p>
 </li>
 <li class="lvl-2">
-<p>知识: 人们能够运用圆周率, 知道如何求解圆的面积</p>
+<p>知识: 人们知道如何求解圆的面积来解决现实问题</p>
+</li>
+<li class="lvl-2">
+<p>智慧: 刘徽在落后的时代背景下, 面对如何求解 pai 时创造了割圆术</p>
 </li>
 </ul>
 <p>这是我花了二十分钟写的, 毕竟只是简单地抄了下教科书, 考试也不考, 姑且就这样吧, 累了<br>
@@ -2746,7 +2756,7 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
       </tags>
   </entry>
   <entry>
-    <title>high-school-it-p3: python基础语法</title>
+    <title>high-school-it-p3: python基础语法-part1</title>
     <url>/posts/high-school-it/p3.html</url>
     <content><![CDATA[<blockquote>
 <p>正式的对python语法的学习, 包含常见库函数的使用</p>
@@ -2773,8 +2783,7 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>这里, 我们声明了一个叫做 a 的变量, 然后把值装到了 a 中, 这就是 声明+赋值<br>
 右边是数值, 左边是变量名, 等号表示把右边的值赋给左边的变量</p>
-<p>变量名是随便你取的, 但必须遵守命名规范, 只能由字母, 下划线开头, 不能由数字开头, 中间不能有空格分割, 不能与关键字相同<br>
-你怎么知道哪些是关键字呢? 慢慢看吧, 像 <code>def/import</code> 经常使用在特殊位置, 有特殊功能的字符, 自然就是关键字了, 又不会考你超纲的关键字</p>
+<p>变量名是随便你取的, 但必须遵守命名规范, 只能由字母, 下划线开头, 不能由数字开头, 中间不能有空格分割, 不能与关键字相同</p>
 <p>你也可以这样:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a</span><br></pre></td></tr></table></figure>
 <p>我们先声明了一个变量a, 值是1, 然后把a放在右边传给了左边的b<br>
@@ -2796,6 +2805,36 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <p>另外 选择题会出现这样的常见选项:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">A.  a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span></span><br><span class="line">B.  a, b, c = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">C.  a = <span class="number">1</span>; b = <span class="number">2</span>; c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p>其中 A 是错的, 别问为什么, 因为 python 的作者这样设计 python 的而已</p>
+<hr>
+<h1 id="bian-liang-ming-ming-gui-fan">变量命名规范</h1>
+<p>python中, 变量的命名必须符合规范, 不然直接报错<br>
+在符合规范的同时, 你也应当尽可能地, 让变量名更加清洗直观, 比如年龄用age, 而不是a</p>
+<p>命名规范如下:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>变量名由字母, 数字, 下划线组成</p>
+</li>
+<li class="lvl-2">
+<p>不能由数字开头</p>
+</li>
+<li class="lvl-2">
+<p>中间不能有空格分割</p>
+</li>
+<li class="lvl-2">
+<p>不能与python中的关键字重名</p>
+</li>
+</ul>
+<p>以下都是合法的变量名</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">abada</span><br><span class="line">asd111231</span><br><span class="line">ad190123kkad</span><br><span class="line">asd_asd1_asd2</span><br><span class="line">_123daa</span><br><span class="line">_as11</span><br></pre></td></tr></table></figure>
+<p>以下是不合法的变量名:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span></span></span><br><span class="line"><span class="function"><span class="title">not</span></span></span><br><span class="line"><span class="function"><span class="title">in</span></span></span><br><span class="line"><span class="function"><span class="title">lambda</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">1123</span></span><br><span class="line"><span class="function">123<span class="title">adad</span></span></span><br><span class="line"><span class="function"><span class="title">sad</span>;;-``</span></span><br><span class="line"><span class="function">``?/</span></span><br><span class="line"><span class="function">&#x27;,</span></span><br></pre></td></tr></table></figure>
+<div class="tips">
+<p><strong>关键字:</strong><br>
+关键字/保留字, 是python语法中具有特殊含义的东西, 比如for/while/and/or/not/in<br>
+这些都被称作关键字, 一般出现了关键字, 就能用对应的语法, 实现一些效果<br>
+比如for就对应for循环, not就对应逻辑取反, 具有特殊作用</p>
+</div>
+<p>你怎么知道哪些是关键字呢? 慢慢看吧, 像 <code>def/import/for/if/break</code> 这种经常使用在特殊位置, 有特殊功能的字符, 自然就是关键字了, 又不会考你超纲的关键字</p>
 <hr>
 <h1 id="zhu-shi">注释</h1>
 <h2 id="zuo-yong" id="作用">作用</h2>
@@ -2850,34 +2889,6 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 你可以这样抽象:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">student &#123;</span><br><span class="line">  age:  <span class="built_in">int</span>,</span><br><span class="line">  height: <span class="built_in">float</span>,</span><br><span class="line">  name: string,</span><br><span class="line">  fat_or_not: <span class="built_in">bool</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>py中也有语法, 支持创建自定义的类型, 但不是本系列的重点, 此处仅提一嘴而已</p>
-<hr>
-<h1 id="bian-liang-ming-ming-gui-fan">变量命名规范</h1>
-<p>python中, 变量的命名必须符合规范, 不然直接报错<br>
-在符合规范的同时, 你也应当尽可能地, 让变量名更加清洗直观, 比如年龄用age, 而不是a</p>
-<p>命名规范如下:</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>变量名由字母, 数字, 下划线组成</p>
-</li>
-<li class="lvl-2">
-<p>数字不能在第一位</p>
-</li>
-<li class="lvl-2">
-<p>不能与python中的关键字重名</p>
-</li>
-</ul>
-<p>以下都是合法的变量名</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">abada</span><br><span class="line">asd111231</span><br><span class="line">ad190123kkad</span><br><span class="line">asd_asd1_asd2</span><br><span class="line">_123daa</span><br><span class="line">_as11</span><br></pre></td></tr></table></figure>
-<p>以下是不合法的变量名:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span></span></span><br><span class="line"><span class="function"><span class="title">not</span></span></span><br><span class="line"><span class="function"><span class="title">in</span></span></span><br><span class="line"><span class="function"><span class="title">lambda</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">1123</span></span><br><span class="line"><span class="function">123<span class="title">adad</span></span></span><br><span class="line"><span class="function"><span class="title">sad</span>;;-``</span></span><br><span class="line"><span class="function">``?/</span></span><br><span class="line"><span class="function">&#x27;,</span></span><br></pre></td></tr></table></figure>
-<div class="tips">
-<p><strong>关键字:</strong><br>
-关键字/保留字, 是python语法中具有特殊含义的东西, 比如for/while/and/or/not/in<br>
-这些都被称作关键字, 一般出现了关键字, 就能用对应的语法, 实现一些效果<br>
-比如for就对应for循环, not就对应逻辑取反, 具有特殊作用</p>
-</div>
-<p>如何判断一个变量名是不是关键字?<br>
-呃…多认识下就知道了… 反正也不可能考没学过的关键字 😃</p>
 <hr>
 <h1 id="yun-suan-fu-yu-you-xian-ji">运算符与优先级</h1>
 <p>python 提供了一些运算符, 能够让你进行加减乘除, 逻辑运算之类的操作<br>
@@ -3225,8 +3236,8 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
 </li>
 </ul>
 <p>对于负索引也是一样的道理, 先确定好 <code>start</code> 与 <code>stop</code> 的位置, 然后根据步长画对应方向的箭头<br>
-最后被覆盖的元素, 就是当步长为 1 时, 构成切片的元素, 逆序还是倒叙看箭头就行<br>
-最后根据步长的大小, 决定跳过多少个元素后取一个, 将其作为切片的元素即可</p>
+照这样算, 最后被覆盖的元素, 就是当步长大小为 1 时, 构成切片的元素, 逆序还是倒叙看箭头就行<br>
+最后根据步长大小, 决定跳过多少个元素后取一个, 将其作为切片的元素即可</p>
 <hr>
 <h2 id="zi-dian" id="字典">字典</h2>
 <p>python 中的字典, 实际上就是一些键值对组成的集合<br>
@@ -3253,7 +3264,7 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
       </tags>
   </entry>
   <entry>
-    <title>high-school-it-p4: 进制转换</title>
+    <title>high-school-it-p4: 进制的转换与应用</title>
     <url>/posts/high-school-it/p4.html</url>
     <content><![CDATA[<blockquote>
 <p>关于任意进制间的互相转换与应用</p>
