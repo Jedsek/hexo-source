@@ -755,7 +755,7 @@ clap-v3 时, 融进了另一个很强大的命令行编写库: structopt<br>
     <title>rust-gstreamer-p1: 系列说明</title>
     <url>/posts/rust-gstreamer/p1.html</url>
     <content><![CDATA[<blockquote>
-<p>学习使用 gstreamer 来处理音视频</p>
+<p>欢迎大家来到 gstreamer 的系列, 学习如何处理音视频</p>
 </blockquote>
 <span id="more"></span>
 ]]></content>
@@ -767,33 +767,61 @@ clap-v3 时, 融进了另一个很强大的命令行编写库: structopt<br>
       </tags>
   </entry>
   <entry>
-    <title>rust-gstreamer-p2: Basic-管道的自动构建</title>
+    <title>rust-gstreamer-p2: Basic-管道的基础概念</title>
     <url>/posts/rust-gstreamer/p2.html</url>
     <content><![CDATA[<blockquote>
-<p>一个入门级例子</p>
+<p>通过一个入门级例子, 讲述 gstreamer 中管道的基础概念</p>
 </blockquote>
 <span id="more"></span>
 ]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GStreamer</tag>
+        <tag>Video</tag>
+        <tag>Audio</tag>
+      </tags>
   </entry>
   <entry>
-    <title>rust-gstreamer-p3: Basic-管道的手动构建</title>
+    <title>rust-gstreamer-p3: Basic-管道的动态构建</title>
     <url>/posts/rust-gstreamer/p3.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<blockquote>
+<p>学习如何动态地构建管道</p>
+</blockquote>
+<span id="more"></span>]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GStreamer</tag>
+        <tag>Video</tag>
+        <tag>Audio</tag>
+      </tags>
   </entry>
   <entry>
-    <title>rust-gstreamer-p4: Basic-管道的动态构建</title>
+    <title>rust-gstreamer-p4: Basic-时间管理</title>
     <url>/posts/rust-gstreamer/p4.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<blockquote>
+<p>学习 gstreamer 中的时间管理, 执行快进/后退等操作</p>
+</blockquote>
+<span id="more"></span>]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GStreamer</tag>
+        <tag>Video</tag>
+        <tag>Audio</tag>
+      </tags>
   </entry>
   <entry>
-    <title>rust-gstreamer-p5: Basic-时间管理</title>
+    <title>rust-gstreamer-p5: Basic-与GUI集成</title>
     <url>/posts/rust-gstreamer/p5.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>rust-gstreamer-p6: Basic-与GUI集成</title>
-    <url>/posts/rust-gstreamer/p6.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<blockquote>
+<p>通过与 GUI 集成, 来制作一个简易的音乐播放器</p>
+</blockquote>
+<span id="more"></span>]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GStreamer</tag>
+        <tag>Video</tag>
+        <tag>Audio</tag>
+      </tags>
   </entry>
   <entry>
     <title>rust-decl-macro-p1: 系列说明</title>
