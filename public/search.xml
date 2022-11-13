@@ -2793,6 +2793,7 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <div class="tips">
 <p>有关python的基本介绍, 比如编译/解释/面向对象, 怎么自己下载python, 请看 <a href="/posts/high-school-it/p2">p2: 基础科普与环境搭建</a></p>
 </div>
+<p><strong>感谢:</strong> 本文的切片部分来源于 <a href="https://zhuanlan.zhihu.com/p/79541418">python切片完全指南(语法篇)</a>, 已经过原作者准许</p>
 <h1 id="bian-liang-yu-fu-zhi">变量与赋值</h1>
 <p>编程不就是为了模拟世界, 求解问题吗? 求解问题都需要什么?<br>
 需要数据, 还需要存放数据的地方, <ins>变量</ins>, 就是这么一个存放数据的地方</p>
