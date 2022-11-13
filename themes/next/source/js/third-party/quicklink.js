@@ -24,15 +24,7 @@
       ignoresArr = [ignoresArr];
     }
 
-    resetFn = quicklink.listen({
-      timeout : CONFIG.quicklink.timeout,
-      priority: CONFIG.quicklink.priority,
-      ignores : [
-        uri => uri.includes('#'),
-        uri => uri === CONFIG.quicklink.url,
-        ...ignoresArr
-      ]
-    });
+    resetFn = quicklink.listen();
   };
 
   if (CONFIG.quicklink.delay) {

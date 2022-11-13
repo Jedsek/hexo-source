@@ -31,3 +31,8 @@
 .fa-copy, .fa-fw{
   font-size: 25px;
 }
+
+@font-face {
+  font-family: 'Fira Code';
+  src: url('./FiraCode-Regular.ttf')
+}

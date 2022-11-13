@@ -13,6 +13,7 @@ keywords: [高中信息技术, python]
 :::tips
 有关python的基本介绍, 比如编译/解释/面向对象, 怎么自己下载python, 请看 [p2: 基础科普与环境搭建](/posts/high-school-it/p2)
 :::
+**感谢:** 本文的切片部分来源于 [python切片完全指南(语法篇)](https://zhuanlan.zhihu.com/p/79541418), 已经过原作者准许
 
 # 变量与赋值  
 编程不就是为了模拟世界, 求解问题吗? 求解问题都需要什么? 

@@ -176,7 +176,7 @@ deploy:
 
 # PWA -- offline config passed to sw-precache.
 service_worker:
-  maximumFileSizeToCacheInBytes: 5242880000
+  maximumFileSizeToCacheInBytes: 524288000
   staticFileGlobs:
   - public/**/*.{js,html,xml,json,css,png,jpg,gif,svg,eot,ttf,woff,woff2,ico,cur}  # code 1
   stripPrefix: public

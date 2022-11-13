@@ -42,12 +42,12 @@ scheme: Pisces
 #scheme: Gemini
 
 # Dark Mode
-darkmode: true
+darkmode: false
 
 # Darkmode JS
 # For more information: https://github.com/rqh656418510/hexo-next-darkmode, https://github.com/sandoche/Darkmode.js
 darkmode_js:
-  enable: false
+  enable: true
   bottom: '1px' # default: '32px'
   right: '256px' # default: '32px'
   left: '200000px' # default: 'unset'
@@ -429,7 +429,7 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: true
+  enable: false
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
   host: https://fonts.lug.ustc.edu.cn
@@ -888,7 +888,7 @@ vendors:
   # Available values: local | jsdelivr | unpkg | cdnjs
   # Dependencies for `plugins: local`: https://github.com/next-theme/plugins
   plugins: jsdelivr
-  quicklink: //cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js
+  quicklink: //cdn.jsdelivr.net/npm/quicklink@2.3/dist/quicklink.umd.js
   fancybox: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js
   fancybox_css: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css
   
