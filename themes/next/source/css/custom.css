@@ -36,3 +36,44 @@
   font-family: 'Fira Code';
   src: url('./FiraCode-Regular.ttf')
 }
+
+.tips {
+  padding-left: 10px;
+  background-color rgba(52,152,219,.3);
+  border-left 4px solid rgb(52,152,219);
+  color: darken(rgb(255,255,255),20%);
+}
+.success {
+  padding-left: 10px;
+  background-color rgba(46,204,113,.3);
+  border-left 4px solid rgb(46,204,113);
+  color: darken(rgb(255,255,255),20%);
+}
+.warning {
+  padding-left: 10px;
+  background-color rgba(241,196,15,.3);
+  border-left 4px solid rgb(241,196,15);
+  color: darken(rgb(255,255,255),20%);
+}
+.danger {
+  padding-left: 10px;
+  background-color rgba(231,76,60,.3);
+  border-left 4px solid rgb(231,76,60);
+  color: darken(rgb(255,255,255),20%);
+}
+
+a {
+  line-height: 1.6;
+}
+
+br {
+  line-height: 2;
+}
+
+.lvl-2 {
+  line-height: 1;
+}
+
+ul {
+  line-height: 1.6;
+}
