@@ -5,11 +5,15 @@ date: 2022-03-30 12:01:22
 top: 9697
 tags: [Rust, GUI]
 keywords: [Rust, GUI, Gtk4]
+is_series: true
+series_link: rust-gui
+prev_post: [posts/rust-gtk4/p2, 创建窗口]
+next_post: [posts/rust-gtk4/p4, GObject-子类化]
 ---
 > 来看看什么是 Widget, 由此出发, 创建一个双按钮加减数字的经典程序, 探讨内存管理, 防止内存泄漏  
 <!-- more -->
 
-同系列传送门: [rust-gtk4](/categories/rust-gtk4)
+同系列传送门: [rust-gui](/categories/rust-gui)
 GNOME入坑指南: [gnome-guide](/posts/gnome/guide)
 
 # Widget

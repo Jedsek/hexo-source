@@ -1760,7 +1760,7 @@ async, 便是用来创建一个匿名结构体实例, 自动为该结构体实�
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-async">rust-async</a></p>
 <h1 id="kai-pian">开篇</h1>
-<p><strong>注</strong>: 参考了 &lt;<Writing an OS in Rust>&gt; 中的 async 篇,可以自己搜索下看看<br>
+<p><strong>注</strong>: 参考了 &lt;&lt;Writing an OS in Rust&gt;&gt; 中的 async 篇,可以自己搜索下看看<br>
 为了更好地理解 <code>Rust异步</code>背后的原理, 我们先了解下一些概念, 当然, 只是小补充而已:</p>
 <ul class="lvl-0">
 <li class="lvl-2">
@@ -1987,7 +1987,7 @@ Done状态下, 若进行resume, 则可能得到panic! 因为恢复已结束的�
 <p>欢迎大家来到 Rust 的 gkt-rs 系列</p>
 </blockquote>
 <span id="more"></span>
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
+<p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
 GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <h1 id="xi-lie-shuo-ming">系列说明</h1>
 <p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成, 由于是使用C语言编写, 各类语言都能使用它开发GUI程序</p>
@@ -2069,7 +2069,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <p>让我们使用 Gtk 创建窗口, 了解下 app_id, 构造者模式, 信号量, handler 等概念吧</p>
 </blockquote>
 <span id="more"></span>
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
+<p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
 GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <h1 id="bei-jing-liao-jie">背景了解</h1>
 <h2 id="gtk" id="GTK">GTK</h2>
@@ -2210,7 +2210,7 @@ GtkApp总得有至少一个窗口, 该函数决定如何显示/绘制窗口</p>
 <p>来看看什么是 Widget, 由此出发, 创建一个双按钮加减数字的经典程序, 探讨内存管理, 防止内存泄漏</p>
 </blockquote>
 <span id="more"></span>
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
+<p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
 GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 <h1 id="widget">Widget</h1>
 <p>任何Gtk应用, 都由许多部件(Widget)组成, 比如窗口、对话框、按钮、多行文本、容器等, 因此 Widget 是个抽象概念<br>
@@ -2359,9 +2359,9 @@ win活着, 导致 gtk_box 也会活着, gtk_box 活着, 导致 btn 也会活着<
 <p>本节将学习如何使用子类化(Subclassing), 从而定制自己的 Widget</p>
 </blockquote>
 <span id="more"></span>
-<p>同系列传送门: <a href="/categories/rust-gtk4">rust-gtk4</a><br>
+<p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
 GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
-<h1 id=""></h1>
+<h1 id="zi-lei-hua">子类化</h1>
 ]]></content>
       <tags>
         <tag>Rust</tag>
