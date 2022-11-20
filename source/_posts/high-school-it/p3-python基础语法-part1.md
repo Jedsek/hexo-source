@@ -1,5 +1,5 @@
 ---
-title: "high-school-it-p3: python基础语法-part1"
+title: "high-school-it-p3~> python基础语法-part1"
 abbrlink: posts/high-school-it/p3
 hidden: false
 date: 2022-09-12 11:45:45

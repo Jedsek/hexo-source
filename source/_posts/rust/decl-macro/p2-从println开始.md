@@ -1,10 +1,13 @@
 ---
-title: "rust-decl-macro-p2: 从println开始"
+title: "rust-decl-macro-p2~> 从println开始"
 abbrlink: posts/rust-decl-macro/p2
 date: 2021-09-19 22:50:27
 top: 10998
 tags: [Rust, Macro]
 keywords: [Macro, 声明宏, Rust]
+is_series: true
+prev_post: [posts/rust-decl-macro/p1, 系列说明]
+next_post: [posts/rust-decl-macro/p3, 声明与使用]
 ---
 > 我们从熟悉的 println! 开始, 了解下声明宏的大致结构吧  
 <!-- more -->

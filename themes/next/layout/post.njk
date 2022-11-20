@@ -17,34 +17,33 @@
 
   {%- if page.prev_post %}
     {%- set prev_link = url_for(page.prev_post[0]) %}
-    {%- set prev_name = prev_link.substring(prev_link.lastIndexOf("/")+1) +  ": " + page.prev_post[1] %}
+    {%- set prev_name =  page.prev_post[1] %}
     
-    <div style="float: left">
-      <strong style="float: left">&lt;~~上一篇─┐</strong><br>
-      <a style="font-style: italic" href="{{prev_link}}"> {{prev_name}} </a>
+    <div style="float: left;text-align:right" >
+      <strong style="float: left">&lt;~~同系列: prev─┐</strong><br>
+      <a style="font-style: italic;font-size: 130%" href="{{prev_link}}"> {{prev_name}} </a>
     </div>
   {%- endif %}
 
 
-
   {%- if page.next_post %}
     {%- set next_link = url_for(page.next_post[0]) %}
-    {%- set next_name = next_link.substring(next_link.lastIndexOf("/")+1) +  ": " + page.next_post[1] %}
+    {%- set next_name = page.next_post[1] %}
     
-    <div style="float: right">
-      <strong style="float: right">┌─下一篇~~&gt;</strong><br>
-      <a style="font-style: italic" href="{{next_link}}"> {{next_name}} </a>
+    <div style="float: right;text-align:left">
+      <strong style="float: right">┌─next :同系列~~&gt;</strong><br>
+      <a style="font-style: italic; font-size: 130%" href="{{next_link}}"> {{next_name}} </a>
     </div>
   {%- endif %}
 
 
   {%- if page.is_series %}
-      {%- set categories_name = url_for(page.path).split("/").reverse()[1] if page.series_link === null else page.series_link %}
+      {%- set categories_name = url_for(page.path).split("/").reverse()[1] if not page.series_link else page.series_link %}
       {%- set categories_link = url_for("/categories/" + categories_name) %}
 
-      <div style="margin: 0 auto; width: 100px;text-align: center">
-          <strong>&lt;~同系列~&gt;</strong><br>
-          <a style="font-style: italic" href="{{categories_link}}"> {{categories_name}} </a>
+      <div style="text-align: center;white-space: nowrap">
+          <strong>&lt;~同系列目录~&gt;</strong><br>
+          <a style="font-style: italic;font-size: 130%" href="{{categories_link}}"> {{categories_name}} </a>
       </div>
   {%- endif %}
 

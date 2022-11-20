@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p5.html</loc>
+    <lastmod>2022-11-20</lastmod>
+  </url>
+  <url>
     <loc>https://jedsek.xyz/posts/rust-gstreamer/p5.html</loc>
     <lastmod>2022-10-22</lastmod>
   </url>
@@ -25,6 +29,10 @@
     <lastmod>2022-10-13</lastmod>
   </url>
   <url>
+    <loc>https://jedsek.xyz/posts/rust-gtk4/p4.html</loc>
+    <lastmod>2022-10-09</lastmod>
+  </url>
+  <url>
     <loc>https://jedsek.xyz/posts/high-school-it/p3.html</loc>
     <lastmod>2022-09-12</lastmod>
   </url>
@@ -39,10 +47,6 @@
   <url>
     <loc>https://jedsek.xyz/posts/rust-clap/intro.html</loc>
     <lastmod>2022-08-16</lastmod>
-  </url>
-  <url>
-    <loc>https://jedsek.xyz/posts/rust-gtk4/p4.html</loc>
-    <lastmod>2022-08-09</lastmod>
   </url>
   <url>
     <loc>https://jedsek.xyz/posts/gnome/guide.html</loc>
