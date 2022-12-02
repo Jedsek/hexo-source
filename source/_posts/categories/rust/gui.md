@@ -17,6 +17,7 @@ keywords:
 [x]  [p2~> 创建窗口](/posts/rust-gtk4/p2)
 [x]  [p3~> GObject: 内存管理](/posts/rust-gtk4/p3)
 [x]  [p4~> GObject: 子类化](/posts/rust-gtk4/p4)
+[ ]  [p5~> GObject: 通用值](/posts/rust-gtk4/p5)
 
 - - -
 

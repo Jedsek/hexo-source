@@ -7,7 +7,7 @@ top: 12999
 tags: [Rust, Clap, CLI]
 keywords: [Rust, Clap, CLI, 命令行]
 ---
-> 学习命令行的常识, 然后用 clap-rs 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出, 并行化等功能  
+> 了解命令行, 然后用 clap-rs 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出, 并行化等功能  
 <!-- more -->
 
 前置知识: Rust基础  

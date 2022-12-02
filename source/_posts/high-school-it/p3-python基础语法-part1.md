@@ -6,6 +6,9 @@ date: 2022-09-12 11:45:45
 top: 7997
 tags: [高中信息技术]
 keywords: [高中信息技术, python]
+is_series: true
+prev_post: [/posts/high-school-it/p2, "p2~> 基础科普"]
+next_post: [/posts/high-school-it/p4, "p4~> python基础语法-part2"]
 ---
 > 正式的对python语法的学习, 包含常见库函数的使用
 <!-- more -->
