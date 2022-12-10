@@ -7,14 +7,15 @@ top: 20999
 tags: [Linux, GNOME, Waylnad, Desktop]
 keywords: [GNOME, 桌面环境, DE, Linux, Wayland, Desktop]
 is_series: true
-next_post: [posts/desktop-beautify/hyprland, Hyprland]
+next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 ---
 > 关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境
 <!-- more -->
 
 ::: tips
 **注意:**  
-本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置  
+本篇文章的配置皆在注重简洁, 高效, 美观  
+想要平铺式, 炫酷效果, 更多功能的, 请自行配置, 或查看我的另外一篇博客: [Hyprland 平铺式](/posts/desktop-beautify/hyprland)  
 请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新  
 目前, 该篇文章的GNOME 版本为: **42**  
 :::

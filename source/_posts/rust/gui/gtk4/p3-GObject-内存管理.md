@@ -4,7 +4,7 @@ abbrlink: posts/rust-gtk4/p3
 date: 2022-03-30 12:01:22
 top: 9697
 tags: [Rust, GUI]
-keywords: [Rust, GUI, Gtk4]
+keywords: [Rust, GUI, GTK4]
 is_series: true
 series_link: rust-gui
 prev_post: [posts/rust-gtk4/p2, 创建窗口]

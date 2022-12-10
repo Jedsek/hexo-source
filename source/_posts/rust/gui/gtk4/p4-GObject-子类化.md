@@ -5,11 +5,11 @@ hidden: false
 date: 2022-10-09 22:52:26
 top: 9696
 tags: [Rust, GUI]
-keywords: [Rust, GUI, Gtk4]
+keywords: [Rust, GUI, GTK4]
 is_series: true
 series_link: rust-gui
 prev_post: [posts/rust-gtk4/p3, "GObject: 内存管理"]
-next_post: [posts/rust-gtk4/p5, "GObject: 通用值"]
+next_post: [posts/rust-gtk4/p5, "GObject: 通用类型"]
 ---
 > 本节将学习如何使用子类化(Subclassing), 从而定制自己的 Widget
 <!-- more -->
