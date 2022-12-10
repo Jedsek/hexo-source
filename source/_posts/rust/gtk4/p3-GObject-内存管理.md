@@ -14,7 +14,7 @@ next_post: [posts/rust-gtk4/p4, "GObject: 子类化"]
 <!-- more -->
 
 同系列传送门: [rust-gui](/categories/rust-gui)
-GNOME入坑指南: [gnome-guide](/posts/gnome/guide)
+GNOME入坑指南: [gnome](/posts/desktop-beautify/gnome)
 
 # Widget
 任何Gtk应用, 都由许多部件(Widget)组成, 比如窗口、对话框、按钮、多行文本、容器等, 因此 Widget 是个抽象概念  

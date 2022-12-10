@@ -22,11 +22,13 @@ Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
 [ ]  [GUI (gtk4 && relm4)](/categories/rust-gui)
 [ ]  [TUI (tui-rs)](/categories/rust-tui)
 
+<input type="checkbox" id="checkbox1" />
+
 - - -
 
-# GNOME
-GNOME, 是一个简洁, 绚丽, 优雅的桌面环境  
-[x]  [入坑指南](/posts/gnome/guide)
+# 桌面美化
+[x]  [GNOME 入坑指南](/posts/desktop-beautify/gnome)
+[ ]  [Hyprland 入坑指南](/posts/desktop-beautify/hyprland)
 
 - - -
 

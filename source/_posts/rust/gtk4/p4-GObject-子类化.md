@@ -15,7 +15,7 @@ next_post: [posts/rust-gtk4/p5, "GObject: 通用值"]
 <!-- more -->
 
 同系列传送门: [rust-gui](/categories/rust-gui)
-GNOME入坑指南: [gnome-guide](/posts/gnome/guide)
+GNOME入坑指南: [gnome](/posts/desktop-beautify/gnome)
 
 # 目录结构
 gtk 基于 glib, 而 glib 最让人印象深刻的地方, 又是其 `Gobject System`, 用 C 语言实现了一套完整且强悍的面向对象框架  

@@ -1,6 +1,6 @@
 ---
 title: "GNOME 入坑指南"
-abbrlink: posts/gnome/guide
+abbrlink: posts/desktop-beautify/gnome
 hidden: false
 date: 2022-07-20 11:22:42
 top: 20999

@@ -15,4 +15,4 @@ next_post: [posts/rust-gtk4/p6, "GObject: 属性"]
 <!-- more -->
 
 同系列传送门: [rust-gui](/categories/rust-gui)
-GNOME入坑指南: [gnome-guide](/posts/gnome/guide)
+GNOME入坑指南: [gnome](/posts/desktop-beautify/gnome)
