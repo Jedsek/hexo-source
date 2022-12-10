@@ -22,18 +22,20 @@ Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
 [ ]  [GUI (gtk4 && relm4)](/categories/rust-gui)
 [ ]  [TUI (tui-rs)](/categories/rust-tui)
 
-<input type="checkbox" id="checkbox1" />
-
 - - -
 
 # 桌面美化
+关于桌面美化的一些文章, 大家可以参考一下  
+[目录~~>](/categories/desktop-beautify)
+
 [x]  [GNOME 入坑指南](/posts/desktop-beautify/gnome)
 [ ]  [Hyprland 入坑指南](/posts/desktop-beautify/hyprland)
 
 - - -
 
 # 高中信息技术
-[ ]  [导航页](/categories/high-school-it)
+目前高中信息技术的课程, 欢迎感兴趣的同学们观看  
+[目录~~>](/categories/high-school-it)
 
 - - -
 

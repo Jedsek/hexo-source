@@ -4,8 +4,10 @@ abbrlink: posts/desktop-beautify/gnome
 hidden: false
 date: 2022-07-20 11:22:42
 top: 20999
-tags: [GNOME]
-keywords: [GNOME, 桌面环境, DE]
+tags: [Linux, GNOME, Waylnad, Desktop]
+keywords: [GNOME, 桌面环境, DE, Linux, Wayland, Desktop]
+is_series: true
+next_post: [posts/desktop-beautify/hyprland, Hyprland]
 ---
 > 关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境
 <!-- more -->
