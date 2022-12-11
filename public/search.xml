@@ -2,14 +2,15 @@
 <search>
   <entry>
     <title>GNOME 入坑指南</title>
-    <url>/posts/gnome/guide.html</url>
+    <url>/posts/desktop-beautify/gnome.html</url>
     <content><![CDATA[<blockquote>
 <p>关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境</p>
 </blockquote>
 <span id="more"></span>
 <div class="tips">
 <p><strong>注意:</strong><br>
-本篇文章的配置皆在注重简洁, 高效, 美观, 想要平铺式, 炫酷效果, 更多功能的, 请自行配置<br>
+本篇文章的配置皆在注重简洁, 高效, 美观<br>
+想要平铺式, 炫酷效果, 更多功能的, 请自行配置, 或查看我的另外一篇博客: <a href="/posts/desktop-beautify/hyprland">Hyprland 平铺式</a><br>
 请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新<br>
 目前, 该篇文章的GNOME 版本为: <strong>42</strong></p>
 </div>
@@ -518,14 +519,32 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 <p>大功告成!  我相信这是最最最最最全的一份 GNOME 入坑指南了</p>
 ]]></content>
       <tags>
+        <tag>Linux</tag>
+        <tag>Waylnad</tag>
+        <tag>Desktop</tag>
         <tag>GNOME</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hyprland 平铺式</title>
+    <url>/posts/desktop-beautify/hyprland.html</url>
+    <content><![CDATA[<blockquote>
+<p>Wayland/Linux 下的炫酷窗管/混合器: Hyprland, 拥有丰富的特性集, 适合追求高度自由与极致性能的用户</p>
+</blockquote>
+<span id="more"></span>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Hyprland</tag>
+        <tag>Waylnad</tag>
+        <tag>Desktop</tag>
       </tags>
   </entry>
   <entry>
     <title>clap-rs 简介</title>
     <url>/posts/rust-clap/intro.html</url>
     <content><![CDATA[<blockquote>
-<p>学习命令行的常识, 然后用 clap-rs 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出, 并行化等功能</p>
+<p>了解命令行, 然后用 clap-rs 写个类似 GNU/wc 命令的 rwc 吧, 增加了进度条, 表格输出, 并行化等功能</p>
 </blockquote>
 <span id="more"></span>
 <p>前置知识: Rust基础<br>
@@ -1988,7 +2007,7 @@ Done状态下, 若进行resume, 则可能得到panic! 因为恢复已结束的�
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
-GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 <h1 id="xi-lie-shuo-ming">系列说明</h1>
 <p><a href="https://www.gtk.org/">Gtk</a>, 是一个著名的GUI库, 是 GNOME 项目的关键组成, 由于是使用C语言编写, 各类语言都能使用它开发GUI程序</p>
 <p>Rust语言自是其中之一, 具有相关的绑定库: <a href="https://gtk-rs.org/">gtk-rs</a> (gtk官方网页所指定)<br>
@@ -2070,7 +2089,7 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
-GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 <h1 id="bei-jing-liao-jie">背景了解</h1>
 <h2 id="gtk" id="GTK">GTK</h2>
 <p>GTK, 简单来说是个有名的GUI库, 开源免费, 用C编写<br>
@@ -2218,7 +2237,7 @@ GtkApp总得有至少一个窗口, 该函数决定如何显示/绘制窗口</p>
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
-GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 <h1 id="widget">Widget</h1>
 <p>任何Gtk应用, 都由许多部件(Widget)组成, 比如窗口、对话框、按钮、多行文本、容器等, 因此 Widget 是个抽象概念<br>
 再比如, <code>Button(按钮)</code>, <code>Container(容器)</code>, 都属于 <code>Widget</code></p>
@@ -2367,13 +2386,15 @@ win活着, 导致 gtk_box 也会活着, gtk_box 活着, 导致 btn 也会活着<
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
-GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 <h1 id="mu-lu-jie-gou">目录结构</h1>
-<p>gtk 基于 glib, 而 glib 最让人印象深刻的地方, 又是其 <code>Gobject System</code>, 用 C 语言实现了一套完整且强悍的面向对象框架<br>
-在这样一个面向对象, 依赖继承的体系中, 我们可以通过子类化(Subclassing)来创建新的自定义的 GObject</p>
-<p>让我们保持这样子的目录结构:</p>
+<p>gtk 基于 glib, 而 glib 最让人印象深刻的地方, 又是其 <code>Gobject System</code><br>
+众所周知, C 是一套面向过程的语言, 但基于 C 的 glib库, 却通过高超的思想, 提供了面向对象的支持</p>
+<p>在这样一个面向对象, 依赖继承的体系中, 我们可以通过子类化(Subclassing)来创建新的自定义的 GObject<br>
+让我们保持这样子的目录结构:</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="attribute">src</span></span><br><span class="line">├── custom_button</span><br><span class="line">│   ├── imp<span class="selector-class">.rs</span></span><br><span class="line">│   └── mod<span class="selector-class">.rs</span></span><br><span class="line">└── <span class="selector-tag">main</span>.rs</span><br></pre></td></tr></table></figure>
-<p>我们将会创建一个新的 GObject, 它将通过继承, 成为 <code>gtk::Button</code> 的 subclass, 以此来获得一个实现了自定义功能的按钮类</p>
+<p>在 glib 中, 我们将通过创建两个结构体来创建一个子类<br>
+我们将会创建一个新的 GObject, 通过继承成为 <code>gtk::Button</code> 的子类, 以此添加一些自定义的功能</p>
 <hr>
 <h1 id="zi-lei-hua">子类化</h1>
 <p>如上面的目录结构所示, 我们定义了一个叫 <code>custom_button</code> 的模块, 在 <code>mod.rs</code> 中将 <code>CustomButton</code> 暴露给外部<br>
@@ -2478,14 +2499,103 @@ GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
       </tags>
   </entry>
   <entry>
-    <title>rust-gtk4-p5~&gt; GObject: 通用值</title>
+    <title>rust-gtk4-p5~&gt; GObject: 通用类型</title>
     <url>/posts/rust-gtk4/p5.html</url>
     <content><![CDATA[<blockquote>
-<p>本节将学习 GObject 的 property(属性) 概念</p>
+<p>本节将学习 GObject 的 generic-values(通用值), 了解 glib 的通用体系, 与序列化的代码</p>
 </blockquote>
 <span id="more"></span>
 <p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
-GNOME入坑指南: <a href="/posts/gnome/guide">gnome-guide</a></p>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
+<h1 id="shuo-ming">说明</h1>
+<p>之前说过, gnome体系依赖于 glib, 以C语言为核心的实现, 通过 Gobject-Introspection 为大量语言提供绑定<br>
+这是一套以C为核心, 支持多语言互相交互的运行时系统, 自然要有套完整且够通用的数据类型</p>
+<p>在为Rust提供的绑定中, 有两套这样的数据类型, 分别是:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><code>glib::Value</code>: 作用于 rust 与 glib 之间数据类型的互相转换</p>
+</li>
+<li class="lvl-2">
+<p><code>glib::Variant</code>: 作用于数据类型的序列化/反序列化, 以使应用与外部世界(比如某个进程)交互, 或存储数据到本地磁盘</p>
+</li>
+</ul>
+<p>之后学习属性与信号时, 我们将会用到 <code>glib::Value</code>, 即 <code>GValue</code>, 让 rust 中的数据类型 能与 glib 的库函数互相交互<br>
+之后学习偏好持久化/设置保存时, 我们将会用到 <code>glib::Variant</code>, 即 <code>GVariant</code>, 进行数据的序列化与反序列化</p>
+<p>搞清楚以上的说明之后, 接下来的难度便是一马平川, 只需稍微看几眼有个印象, 到时候多查查文档就 ok 了<br>
+接下来的代码直接抄官方书籍了, 不过加了大量解释, 希望有助于你理解它们</p>
+<hr>
+<h1 id="value">Value</h1>
+<p>你可以简单地将 <code>glib::Value</code> 理解为一个 Wrapper 类型, 如果用 rust 中的 enum 来表示, 它可以是这样的:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Value</span></span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="built_in">bool</span>(<span class="built_in">bool</span>),</span><br><span class="line">    <span class="built_in">i8</span>(<span class="built_in">i8</span>),</span><br><span class="line">    <span class="built_in">i32</span>(<span class="built_in">i32</span>),</span><br><span class="line">    <span class="built_in">u32</span>(<span class="built_in">u32</span>),</span><br><span class="line">    <span class="built_in">i64</span>(<span class="built_in">i64</span>),</span><br><span class="line">    <span class="built_in">u64</span>(<span class="built_in">u64</span>),</span><br><span class="line">    <span class="built_in">f32</span>(<span class="built_in">f32</span>),</span><br><span class="line">    <span class="built_in">f64</span>(<span class="built_in">f64</span>),</span><br><span class="line">    <span class="comment">// boxed-types</span></span><br><span class="line">    <span class="built_in">String</span>(<span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;),</span><br><span class="line">    Object(<span class="built_in">Option</span>&lt;<span class="keyword">dyn</span> IsA&lt;glib::Object&gt;&gt;),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你会观察到 <code>boxed-types(装箱类型)</code> 这几个字, 它包装一个 rust 中的 <code>Option&lt;T&gt;</code> 类型<br>
+即, boxed-types, 可接受包装 <code>Option&lt;T&gt;::None</code>, 以此来表示可空这个概念</p>
+<p>此时, 装箱所得的结果, 是个代表着C语言中 <code>null</code> 概念的东西, 而其他的如数字/布尔类型的 GValue, 则不允许包装 <code>None</code></p>
+<p>听着云里雾里的? 那就直接看代码吧, 下面是一些例子, 或许能帮助你更好地理解:</p>
+<figure class="highlight rust"><figcaption><span>non-boxed-types example:</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Store `i32` as `Value`</span></span><br><span class="line">    <span class="keyword">let</span> integer_value = <span class="number">10</span>.to_value();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Retrieve `i32` from `Value`</span></span><br><span class="line">    <span class="keyword">let</span> integer = integer_value</span><br><span class="line">        .get::&lt;<span class="built_in">i32</span>&gt;()</span><br><span class="line">        .expect(<span class="string">&quot;The value needs to be of type `i32`.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check if the retrieved value is correct</span></span><br><span class="line">    <span class="built_in">assert_eq!</span>(integer, <span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><figcaption><span>boxed-types example:</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Store `Option&lt;String&gt;` as `Value`</span></span><br><span class="line">    <span class="keyword">let</span> string_some_value = <span class="string">&quot;Hello!&quot;</span>.to_value();</span><br><span class="line">    <span class="keyword">let</span> string_none_value = None::&lt;<span class="built_in">String</span>&gt;.to_value();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Retrieve `String` from `Value`</span></span><br><span class="line">    <span class="keyword">let</span> string_some = string_some_value</span><br><span class="line">        .get::&lt;<span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;&gt;()</span><br><span class="line">        .expect(<span class="string">&quot;The value needs to be of type `Option&lt;String&gt;`.&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string_none = string_none_value</span><br><span class="line">        .get::&lt;<span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;&gt;()</span><br><span class="line">        .expect(<span class="string">&quot;The value needs to be of type `Option&lt;String&gt;`.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check if the retrieved value is correct</span></span><br><span class="line">    <span class="built_in">assert_eq!</span>(string_some, <span class="literal">Some</span>(<span class="string">&quot;Hello!&quot;</span>.to_string()));</span><br><span class="line">    <span class="built_in">assert_eq!</span>(string_none, <span class="literal">None</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当你希望区分可以表示空的Value, 只需将 <code>get::&lt;String&gt;</code> 换成 <code>get::&lt;Option&lt;String&gt;&gt;</code> 即可, 函数会自动帮你进行转换</p>
+<figure class="highlight rust"><figcaption><span>directly use `get::&lt;String&gt;` instead of `get::&lt;Option&lt;String&gt;&gt;` if you are sure it is not none:</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Store string as `Value`</span></span><br><span class="line">    <span class="keyword">let</span> string_value = <span class="string">&quot;Hello!&quot;</span>.to_value();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Retrieve `String` from `Value`</span></span><br><span class="line">    <span class="keyword">let</span> string = string_value</span><br><span class="line">        .get::&lt;<span class="built_in">String</span>&gt;()</span><br><span class="line">        .expect(<span class="string">&quot;The value needs to be of type `String`.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check if the retrieved value is correct</span></span><br><span class="line">    <span class="built_in">assert_eq!</span>(string, <span class="string">&quot;Hello!&quot;</span>.to_string());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将在之后学习 信号(signal) 与 属性(property) 时, 使用到 <code>glib::Value</code></p>
+<hr>
+<h1 id="variant">Variant</h1>
+<p>数据要发送到某个进程或网络, 或想将数据存储在磁盘上时, 就可以使用 <code>glib::Variant</code><br>
+你可以将 <code>glib::Variant</code> 想象为 json 文本, 那是一种非常通用的文件格式</p>
+<p>根据文档所述:<br>
+glib 中的 Variant, 被设计为与 dbus 体系有着基本相同的格式, 能够方便与 dbus 集成<br>
+Variant 在处理序列化形式的数据方面进行了大量优化, 可在很短的常量时间内, 执行几乎所有的反序列化操作，且占用非常小的内存<br>
+序列化的 Variant 数据也可以通过网络发送</p>
+<p>因此你希望更深入学习, 可以查找 dbus 的相关资料, 这不在接下来的文章范围内</p>
+<p>与使用 <code>glib::Value</code> 的经验非常相似, 我们只需要将 <code>to_value()</code> 替换为 <code>to_variant()</code>:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Store `i32` as `Variant`</span></span><br><span class="line">    <span class="keyword">let</span> integer_variant = <span class="number">10</span>.to_variant();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Retrieve `i32` from `Variant`</span></span><br><span class="line">    <span class="keyword">let</span> integer = integer_variant</span><br><span class="line">        .get::&lt;<span class="built_in">i32</span>&gt;()</span><br><span class="line">        .expect(<span class="string">&quot;The variant needs to be of type `i32`.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check if the retrieved value is correct</span></span><br><span class="line">    <span class="built_in">assert_eq!</span>(integer, <span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多例子, 以下代码将实现 <code>Vec&lt;T&gt;</code> 与 <code>glib::Variant</code> 间的互相转化:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> gtk::prelude::*;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> variant = <span class="built_in">vec!</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;there!&quot;</span>].to_variant();</span><br><span class="line">    <span class="built_in">assert_eq!</span>(variant.n_children(), <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> vec = &amp;variant</span><br><span class="line">        .get::&lt;<span class="built_in">Vec</span>&lt;<span class="built_in">String</span>&gt;&gt;()</span><br><span class="line">        .expect(<span class="string">&quot;The variant needs to be of type `String`.&quot;</span>);</span><br><span class="line">    <span class="built_in">assert_eq!</span>(vec[<span class="number">0</span>], <span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将在使用 <code>gio::Settings</code> 保存设置, 或使用 <code>gio::Action</code> 激活操作时，用到 <code>glib::Variant</code></p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-gtk4-p6~&gt; GObject: 属性</title>
+    <url>/posts/rust-gtk4/p6.html</url>
+    <content><![CDATA[<blockquote>
+<p>本节将学习 GObject 的 property(属性), 探索其强大且灵活的动态运行时</p>
+</blockquote>
+<span id="more"></span>
+<p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
+<h1 id="shuo-ming">说明</h1>
+<p>属性(Property), 让我们能够访问 GObject 的状态(state)</p>
+<p>glib 虽然以面向过程的 C 为核心, 但却具有面向对象的思想, 属性自然是其中重要的一环<br>
+通过库为我们提供的运行时, 我们得到了一个灵活的, 动态的运行时, 直接使用就好</p>
+<p>得益于此, 我们可以在程序的运行过程中, 动态地修改其属性, 比如:</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>动态注册某个新的属性</p>
+</li>
+<li class="lvl-2">
+<p>进行属性间的自动绑定</p>
+</li>
+<li class="lvl-2">
+<p>属性变更时将执行操作</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rust-gtk4-p7~&gt; GObject: 信号</title>
+    <url>/posts/rust-gtk4/p7.html</url>
+    <content><![CDATA[<blockquote>
+<p>本节将学习 GObject 的 signal(信号)</p>
+</blockquote>
+<span id="more"></span>
+<p>同系列传送门: <a href="/categories/rust-gui">rust-gui</a><br>
+GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 ]]></content>
       <tags>
         <tag>Rust</tag>
@@ -3303,8 +3413,16 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
       </tags>
   </entry>
   <entry>
-    <title>high-school-it-p4~&gt; 进制的转换与应用</title>
+    <title>high-school-it-p4~&gt; python基础语法-part2</title>
     <url>/posts/high-school-it/p4.html</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>高中信息技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>high-school-it-p5~&gt; 进制的转换与应用</title>
+    <url>/posts/high-school-it/p5.html</url>
     <content><![CDATA[<blockquote>
 <p>关于任意进制间的互相转换与应用</p>
 </blockquote>
