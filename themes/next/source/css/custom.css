@@ -104,3 +104,7 @@ label:after {
 input[type=checkbox]:checked+label:after{
 	background-color: #e2d1c3;
 }
+
+* {
+  color-scheme: dark
+}

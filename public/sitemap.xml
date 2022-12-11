@@ -342,7 +342,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/Hyprland/</loc>
+    <loc>https://jedsek.xyz/tags/GNOME/</loc>
     <lastmod>2022-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -363,7 +363,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/GNOME/</loc>
+    <loc>https://jedsek.xyz/tags/Hyprland/</loc>
     <lastmod>2022-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -377,6 +377,13 @@
   </url>
   
   <url>
+    <loc>https://jedsek.xyz/tags/Haskell/</loc>
+    <lastmod>2022-12-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jedsek.xyz/tags/Rust/</loc>
     <lastmod>2022-12-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -384,7 +391,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/Async/</loc>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -399,20 +406,6 @@
   
   <url>
     <loc>https://jedsek.xyz/tags/CLI/</loc>
-    <lastmod>2022-12-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/Haskell/</loc>
-    <lastmod>2022-12-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -434,6 +427,13 @@
   
   <url>
     <loc>https://jedsek.xyz/tags/Audio/</loc>
+    <lastmod>2022-12-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Async/</loc>
     <lastmod>2022-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

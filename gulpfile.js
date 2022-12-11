@@ -7,11 +7,12 @@ var fontmin = require('gulp-fontmin');
 // gulp-tester
 var terser = require('gulp-terser');
 // Compress js
-gulp.task('compress', () =>
+gulp.task('compress', (cb) => {
   gulp.src(['./public/**/*.js', '!./public/**/*.min.js'])
     .pipe(terser())
-    .pipe(gulp.dest('./public'))
-)
+    .pipe(gulp.dest('./public'));
+  cb();
+})
 //Compress css
 gulp.task('minify-css', () => {
     return gulp.src(['./public/**/*.css'])

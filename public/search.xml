@@ -520,9 +520,9 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 ]]></content>
       <tags>
         <tag>Linux</tag>
+        <tag>GNOME</tag>
         <tag>Waylnad</tag>
         <tag>Desktop</tag>
-        <tag>GNOME</tag>
       </tags>
   </entry>
   <entry>
@@ -535,9 +535,9 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 ]]></content>
       <tags>
         <tag>Linux</tag>
-        <tag>Hyprland</tag>
         <tag>Waylnad</tag>
         <tag>Desktop</tag>
+        <tag>Hyprland</tag>
       </tags>
   </entry>
   <entry>

@@ -1,1 +1,15 @@
-"use strict";const Util=require("next-util"),utils=new Util(hexo,__dirname);hexo.extend.filter.register("theme_inject",(e=>{["likely","needmoreshare","sharejs"].forEach((t=>{let i=utils.defaultConfigFile(t,"default.yaml");i.enable&&require(`./lib/${t}`)(i,e)}))}));
+/* global hexo */
+
+'use strict';
+
+const Util = require('next-util');
+const utils = new Util(hexo, __dirname);
+
+hexo.extend.filter.register('theme_inject', injects => {
+  ['likely', 'needmoreshare', 'sharejs'].forEach(item => {
+    let config = utils.defaultConfigFile(item, 'default.yaml');
+    if (config.enable) {
+      require(`./lib/${item}`)(config, injects);
+    }
+  });
+});
