@@ -42,12 +42,12 @@ scheme: Pisces
 #scheme: Gemini
 
 # Dark Mode
-darkmode: true
+darkmode: false
 
 # Darkmode JS
 # For more information: https://github.com/rqh656418510/hexo-next-darkmode, https://github.com/sandoche/Darkmode.js
 darkmode_js:
-  enable: false
+  enable: true
   bottom: '1px' # default: '32px'
   right: '256px' # default: '32px'
   left: '200000px' # default: 'unset'
