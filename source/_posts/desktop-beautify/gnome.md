@@ -12,13 +12,11 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 > 关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境
 <!-- more -->
 
-::: tips
 **注意:**  
 本篇文章的配置皆在注重简洁, 高效, 美观  
 想要平铺式, 炫酷效果, 更多功能的, 请自行配置, 或查看我的另外一篇博客: [Hyprland 平铺式](/posts/desktop-beautify/hyprland)  
 请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新  
 目前, 该篇文章的GNOME 版本为: **42**  
-:::
 
 # 成品展示
 2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前...  
@@ -83,11 +81,9 @@ GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的自由
 我更倾向于前者, 因为不需要下载对应的东西, 适合快速部署, 但两者我都会介绍  
 
 ## 从命令行
-:::tips
 **提示**  
 请确保拥有以下命令: unzip, jq, 有些发行版默认连 unzip 都没有...  
 下载成功后, 切记要 logout, 然后再登进来  
-:::
 
 每个GNOME扩展都拥有独一无二的, 名为 `uuid` 的标识符, 我们可以通过 `uuid`, 下载扩展  
 
@@ -211,7 +207,11 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@exten
 - - -
 
 # 推荐的扩展
-以下是我目前正在使用, 推荐的扩展  
+以下是我目前正在使用且推荐的扩展  
+
+**注意:**
+如果你是通过我的博客 jedsek.xyz 观看的话, 我默认隐藏了这些图片  
+你可以展开任意一张图片后, 点击图片, 在 fancybox 种通过方向键切换图片 :)  
 
 - [auto-move-windows](https://extensions.gnome.org/extension/16/auto-move-windows/):  
 通过指定窗口规则, 使得打开某个app时, 将其自动分配到特定工作区 (需要指定的.desktop文件)  
@@ -446,12 +446,10 @@ gsettings set org.gnome.desktop.interface font-name 'Fira Code 11.8'
 gsettings set org.gnome.shell favorite-apps "[]"
 ```
 
-::: tips
 **注意:**  
 以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 `Just-perfection` 扩展  
 此扩展得到官方支持, 可以将桌面 `化简`, 包括Dash  
 如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[禁用快捷键](#jin-yong-kuai-jie-jian)  
-:::
 
 - 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: `space-bar` 或 `workspace-bar`)  
 
@@ -469,10 +467,8 @@ gsettings set org.gnome.desktop.wm.preferences workspace-names "['Browser', 'Ter
 我个人就不喜欢 `Alt+Fn数字`, 因为太远了, 而且记不清, 干脆换些简单易记的, 像 `I3/Sway` 那样  
 当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash  
 
-::: tips
 **注意:**  
 快捷键之间有冲突的话, 可能无法生效, 请通过 `gnome-control-center keyboard` 查看快捷键冲突  
-:::
 
 
 ## 查找快捷键

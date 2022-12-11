@@ -13,7 +13,6 @@ keywords: [Rust, Clap, CLI, 命令行]
 前置知识: Rust基础  
 完整代码: [github/jedsek/rust-wc](https://github.com/Jedsek/rust-wc)
 
-:::tips
 **注意**
 本项目基于当前最新版本的 clap, 也就是 version 4
 本项目使用 clap 中的 derive 特性, 而非 builder 特性 (其实差不多)
@@ -21,7 +20,6 @@ keywords: [Rust, Clap, CLI, 命令行]
 推荐读者别直接跟着敲代码, 先整体看一遍, 明白大致思路后再动手  
 官方教程: [derive tutorial](https://docs.rs/clap/latest/clap/_derive/_tutorial/index.html)
 官方资料: [derive reference](https://docs.rs/clap/latest/clap/_derive/index.html)
-:::
 
 # 成品展示
 你可以通过如下命令, 从 [crates.io](https://crates.io) 上下载该成品, 可执行文件的名称是 `rwc`:  
@@ -43,11 +41,9 @@ CLI, 是 `command-line interface` 的简称, 意思是命令行界面, 和 GUI/T
 GNU 项目提供了非常多的开源命令, 如 `wc`, 它可以统计文件的 bytes/char/line 的数量  
 我们将会使用 Rust 语言, 搭配一个叫 clap 的库, 写一个升级版的 `wc`  
 
-::: tips
 **注意:**  
 cli 可以代表抽象的界面, 也可以指代具体的某个程序  
 后文中的cli, 一般情况下都指代某个具体的命令行程序, 比如 ls/cp 等
-:::
 
 再写之前, 我们还应了解些基本概念 ~~(直接跳过感觉也木得问题??)~~:  
 
@@ -134,12 +130,10 @@ pub type PathWithContent = HashMap<PathBuf, String>;
 
 # 命令定义
 
-:::tips
 **注意:**
 clap-v3 时, 融进了另一个很强大的命令行编写库: structopt  
 因此以后看见 structopt 与 clap, 直接用 clap 就完事了, 前者也发过通知, 让别人直接用 clap  
 这给 clap 带来的巨大变化, 就是出现了derive宏, 以一种非常便利的声明式写法, 帮你生成与解析代码  
-:::
 
 
 让我们来想象下这个命令:  
@@ -493,11 +487,9 @@ pub enum SubCommands {
 
 但非常遗憾, 当设置 `global = true` 后, 就无法设置 `required = true` 了, 因此我们还是得定义一份相同的参数, 详见 [相关issue](https://github.com/clap-rs/clap/issues/1546)
 
-::: tips
 **注意:**  
 这里其实可以选择不定义 subcommand, 当没有传入 options 时默认开启所有 options, 来简化用户输入  
 但本文还是定义了 subcommand 以便读者了解, 起演示作用
-:::
 
 
 - - -

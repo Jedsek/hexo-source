@@ -129,11 +129,9 @@ fn build_ui(app: &Application) {
 多所有权的问题已经达成了, 但我们还需要内部可变性, 因此还需要使用 `std::cell::Cell`  
 于是, num变量的类型, 从简单的i32, 变成了一个Wrapper类型, 即 `Rc<Cell<i32>>`  
 
-:::tips
 **提示**  
 对于实现了 Copy 的类型, 请直接使用 Cell, 而非 Refcell  
 因为 Cell 简单, 且直接使用 memcpy 来改变值, 效率高易理解
-:::
 
 下面是代码, 请务必记得use一下:  
 
@@ -208,11 +206,9 @@ btn_dec.connect_clicked(clone!(@strong btn_inc => move |_| {
 - 两个闭包中, 我们都创建了另一个按钮的 strong-ref  
 我们获取了多所有权, 就像变量 num 一样, 只有单所有权时, 被move到闭包后的变量在之后会被使用, 编译报错, 如 btn_dec  
 
-::: tips
 **注意:**  
 `clone!`, 在尝试升级 weak-ref 时, 若升级失败, 闭包将直接提前返回一个可选值, 若可选值未指定, 则默认返回 `()` 值  
 详情请见文档: [glib::clone](https://docs.rs/glib/latest/glib/macro.clone.html)  
-::: 
 
 
 至此, 已经顺利实现了功能, 但仍有个小问题, 那就是:  
