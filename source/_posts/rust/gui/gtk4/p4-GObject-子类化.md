@@ -18,9 +18,10 @@ next_post: [posts/rust-gtk4/p5, "GObject: 通用类型"]
 GNOME入坑指南: [gnome](/posts/desktop-beautify/gnome)
 
 # 目录结构
-gtk 基于 glib, 而 glib 最让人印象深刻的地方, 又是其 `Gobject System`, 用 C 语言实现了一套完整且强悍的面向对象框架  
-在这样一个面向对象, 依赖继承的体系中, 我们可以通过子类化(Subclassing)来创建新的自定义的 GObject  
+gtk 基于 glib, 而 glib 最让人印象深刻的地方, 又是其 `Gobject System`  
+众所周知, C 是一套面向过程的语言, 但基于 C 的 glib库, 却通过高超的思想, 提供了面向对象的支持  
 
+在这样一个面向对象, 依赖继承的体系中, 我们可以通过子类化(Subclassing)来创建新的自定义的 GObject  
 让我们保持这样子的目录结构:  
 
 ```
@@ -31,7 +32,8 @@ src
 └── main.rs
 ```
 
-我们将会创建一个新的 GObject, 它将通过继承, 成为 `gtk::Button` 的 subclass, 以此来获得一个实现了自定义功能的按钮类  
+在 glib 中, 我们将通过创建两个结构体来创建一个子类  
+我们将会创建一个新的 GObject, 通过继承成为 `gtk::Button` 的子类, 以此添加一些自定义的功能  
 
 - - -
 
