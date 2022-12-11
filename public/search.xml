@@ -7,13 +7,11 @@
 <p>关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境</p>
 </blockquote>
 <span id="more"></span>
-<div class="tips">
 <p><strong>注意:</strong><br>
 本篇文章的配置皆在注重简洁, 高效, 美观<br>
 想要平铺式, 炫酷效果, 更多功能的, 请自行配置, 或查看我的另外一篇博客: <a href="/posts/desktop-beautify/hyprland">Hyprland 平铺式</a><br>
 请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新<br>
 目前, 该篇文章的GNOME 版本为: <strong>42</strong></p>
-</div>
 <h1 id="cheng-pin-zhan-shi">成品展示</h1>
 <p>2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前…<br>
 我个人认为简洁+美观比较重要, 当然你也可以自行修改进行DIY, 请自己动手, 丰衣足食吧!</p>
@@ -81,11 +79,9 @@
 <p>有两种安装方法, 一种从命令行安装, 一种从浏览器安装<br>
 我更倾向于前者, 因为不需要下载对应的东西, 适合快速部署, 但两者我都会介绍</p>
 <h2 id="cong-ming-ling-xing" id="从命令行">从命令行</h2>
-<div class="tips">
 <p><strong>提示</strong><br>
 请确保拥有以下命令: unzip, jq, 有些发行版默认连 unzip 都没有…<br>
 下载成功后, 切记要 logout, 然后再登进来</p>
-</div>
 <p>每个GNOME扩展都拥有独一无二的, 名为 <code>uuid</code> 的标识符, 我们可以通过 <code>uuid</code>, 下载扩展</p>
 <p>你可以在 <a href="https://extensions.gnome.org/">Extensions-GNOME</a> 这个网站上, 浏览并下载扩展<br>
 请将以 .zip 结尾的扩展放在同一目录下, 假设该目录叫 <code>exts_list</code></p>
@@ -120,7 +116,10 @@ Edge 的插件商店里无, 但可以下载 iGuge (谷歌访问助手), 然后�
 <strong>注意:</strong> 如何你选择直接加载我的配置, 请注意 <code>picture-uri</code> 符合自己实际</p>
 <hr>
 <h1 id="tui-jian-de-kuo-zhan">推荐的扩展</h1>
-<p>以下是我目前正在使用, 推荐的扩展</p>
+<p>以下是我目前正在使用且推荐的扩展</p>
+<p><strong>注意:</strong><br>
+如果你是通过我的博客 jedsek.xyz 观看的话, 我默认隐藏了这些图片<br>
+你可以展开任意一张图片后, 点击图片, 在 fancybox 种通过方向键切换图片 😃</p>
 <ul class="lvl-0">
 <li class="lvl-2">
 <p><a href="https://extensions.gnome.org/extension/16/auto-move-windows/">auto-move-windows</a>:<br>
@@ -386,12 +385,10 @@ GNOME版的 <code>kdeconnect</code>, 用于电脑与手机互连 (一个网下),
 </li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell favorite-apps <span class="string">&quot;[]&quot;</span></span><br></pre></td></tr></table></figure>
-<div class="tips">
 <p><strong>注意:</strong><br>
 以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 <code>Just-perfection</code> 扩展<br>
 此扩展得到官方支持, 可以将桌面 <code>化简</code>, 包括Dash<br>
 如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的<a href="#jin-yong-kuai-jie-jian">禁用快捷键</a></p>
-</div>
 <ul class="lvl-0">
 <li class="lvl-2">
 <p>去掉左上角的 <code>Activities</code>: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: <code>space-bar</code> 或 <code>workspace-bar</code>)</p>
@@ -408,10 +405,8 @@ GNOME版的 <code>kdeconnect</code>, 用于电脑与手机互连 (一个网下),
 <p>这也是个很影响体验的地方, 如果你对自带的快捷键不满意, 完全可以自己更改</p>
 <p>我个人就不喜欢 <code>Alt+Fn数字</code>, 因为太远了, 而且记不清, 干脆换些简单易记的, 像 <code>I3/Sway</code> 那样<br>
 当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash</p>
-<div class="tips">
 <p><strong>注意:</strong><br>
 快捷键之间有冲突的话, 可能无法生效, 请通过 <code>gnome-control-center keyboard</code> 查看快捷键冲突</p>
-</div>
 <h2 id="cha-zhao-kuai-jie-jian" id="查找快捷键">查找快捷键</h2>
 <p>首先, 我们得明白如何查找对应的快捷键</p>
 <p>下面的命令会列出极大部分的快捷键:</p>
@@ -520,9 +515,9 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 ]]></content>
       <tags>
         <tag>Linux</tag>
-        <tag>GNOME</tag>
         <tag>Waylnad</tag>
         <tag>Desktop</tag>
+        <tag>GNOME</tag>
       </tags>
   </entry>
   <entry>
@@ -535,9 +530,9 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 ]]></content>
       <tags>
         <tag>Linux</tag>
+        <tag>Hyprland</tag>
         <tag>Waylnad</tag>
         <tag>Desktop</tag>
-        <tag>Hyprland</tag>
       </tags>
   </entry>
   <entry>
@@ -549,14 +544,12 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 <span id="more"></span>
 <p>前置知识: Rust基础<br>
 完整代码: <a href="https://github.com/Jedsek/rust-wc">github/jedsek/rust-wc</a></p>
-<div class="tips">
 <p><strong>注意</strong><br>
 本项目基于当前最新版本的 clap, 也就是 version 4<br>
 本项目使用 clap 中的 derive 特性, 而非 builder 特性 (其实差不多)</p>
 <p>推荐读者别直接跟着敲代码, 先整体看一遍, 明白大致思路后再动手<br>
 官方教程: <a href="https://docs.rs/clap/latest/clap/_derive/_tutorial/index.html">derive tutorial</a><br>
 官方资料: <a href="https://docs.rs/clap/latest/clap/_derive/index.html">derive reference</a></p>
-</div>
 <h1 id="cheng-pin-zhan-shi">成品展示</h1>
 <p>你可以通过如下命令, 从 <a href="https://crates.io">crates.io</a> 上下载该成品, 可执行文件的名称是 <code>rwc</code>:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cargo install rust-wc</span><br></pre></td></tr></table></figure>
@@ -568,11 +561,9 @@ HomeManager 是 Nixos 中用来管理用户配置, 支持回滚的工具</p>
 如在Linux下常见的 <code>ls/cp/mv</code> 等命令, 你传入参数, 它就会做些事情, 并可能会打印相应输出</p>
 <p>GNU 项目提供了非常多的开源命令, 如 <code>wc</code>, 它可以统计文件的 bytes/char/line 的数量<br>
 我们将会使用 Rust 语言, 搭配一个叫 clap 的库, 写一个升级版的 <code>wc</code></p>
-<div class="tips">
 <p><strong>注意:</strong><br>
 cli 可以代表抽象的界面, 也可以指代具体的某个程序<br>
 后文中的cli, 一般情况下都指代某个具体的命令行程序, 比如 ls/cp 等</p>
-</div>
 <p>再写之前, 我们还应了解些基本概念 <s>(直接跳过感觉也木得问题??)</s>:</p>
 <ul class="lvl-0">
 <li class="lvl-2">
@@ -614,12 +605,10 @@ cli 可以代表抽象的界面, 也可以指代具体的某个程序<br>
 <figure class="highlight rust"><figcaption><span>src/lib.rs</span></figcaption><table><tr><td class="code"><pre><span class="line"> <span class="keyword">use</span> std::&#123;collections::HashMap, path::PathBuf&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> cli;</span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> files;</span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> wc_result;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">type</span> <span class="title">Result</span></span>&lt;T&gt; = std::result::<span class="built_in">Result</span>&lt;T, <span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> std::error::Error&gt;&gt;;</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">type</span> <span class="title">Counts</span></span> = <span class="built_in">Vec</span>&lt;<span class="built_in">usize</span>&gt;;</span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">type</span> <span class="title">PathWithContent</span></span> = HashMap&lt;PathBuf, <span class="built_in">String</span>&gt;;</span><br></pre></td></tr></table></figure>
 <hr>
 <h1 id="ming-ling-ding-yi">命令定义</h1>
-<div class="tips">
 <p><strong>注意:</strong><br>
 clap-v3 时, 融进了另一个很强大的命令行编写库: structopt<br>
 因此以后看见 structopt 与 clap, 直接用 clap 就完事了, 前者也发过通知, 让别人直接用 clap<br>
 这给 clap 带来的巨大变化, 就是出现了derive宏, 以一种非常便利的声明式写法, 帮你生成与解析代码</p>
-</div>
 <p>让我们来想象下这个命令:</p>
 <ul class="lvl-0">
 <li class="lvl-2">
@@ -746,11 +735,9 @@ clap-v3 时, 融进了另一个很强大的命令行编写库: structopt<br>
 <p>你可以会想, 能不能让子命令复用 <code>Cli</code> 中定义的 <code>paths</code>, 减少重复代码呢?<br>
 当然可以, 请在 <code>Cli</code> 的成员 <code>paths</code>, 头上的<code>#[arg]</code> 中添加 <code>global = true</code>, 表示该参数是全局性的, 相当于子命令中也添加了这么个参数</p>
 <p>但非常遗憾, 当设置 <code>global = true</code> 后, 就无法设置 <code>required = true</code> 了, 因此我们还是得定义一份相同的参数, 详见 <a href="https://github.com/clap-rs/clap/issues/1546">相关issue</a></p>
-<div class="tips">
 <p><strong>注意:</strong><br>
 这里其实可以选择不定义 subcommand, 当没有传入 options 时默认开启所有 options, 来简化用户输入<br>
 但本文还是定义了 subcommand 以便读者了解, 起演示作用</p>
-</div>
 <hr>
 <h1 id="luo-ji-shi-xian">逻辑实现</h1>
 <p>根据:</p>
@@ -2280,11 +2267,9 @@ GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 那就可以使用 <code>std::rc::Rc</code> 这个类型, 通过引用计数, 绕过编译期的检查, 实现多所有权</p>
 <p>多所有权的问题已经达成了, 但我们还需要内部可变性, 因此还需要使用 <code>std::cell::Cell</code><br>
 于是, num变量的类型, 从简单的i32, 变成了一个Wrapper类型, 即 <code>Rc&lt;Cell&lt;i32&gt;&gt;</code></p>
-<div class="tips">
 <p><strong>提示</strong><br>
 对于实现了 Copy 的类型, 请直接使用 Cell, 而非 Refcell<br>
 因为 Cell 简单, 且直接使用 memcpy 来改变值, 效率高易理解</p>
-</div>
 <p>下面是代码, 请务必记得use一下:</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = Rc::new(Cell::new(<span class="number">0</span>));</span><br><span class="line"><span class="keyword">let</span> num_clone = num.clone();</span><br><span class="line"></span><br><span class="line">btn_inc.connect_clicked(|_| &#123;</span><br><span class="line">    num_clone.set(num_clone.get() + <span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line">btn_dec.connect_clicked(|_| &#123;</span><br><span class="line">    num.set(num.get() - <span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>感谢强大的编译器与聪明的库作者, 他们逼迫着你, 让你考虑到了这种情况, 不然别想编译通过<br>
@@ -2328,11 +2313,9 @@ GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 我们获取了多所有权, 就像变量 num 一样, 只有单所有权时, 被move到闭包后的变量在之后会被使用, 编译报错, 如 btn_dec</p>
 </li>
 </ul>
-<div class="tips">
 <p><strong>注意:</strong><br>
 <code>clone!</code>, 在尝试升级 weak-ref 时, 若升级失败, 闭包将直接提前返回一个可选值, 若可选值未指定, 则默认返回 <code>()</code> 值<br>
 详情请见文档: <a href="https://docs.rs/glib/latest/glib/macro.clone.html">glib::clone</a></p>
-</div>
 <p>至此, 已经顺利实现了功能, 但仍有个小问题, 那就是:<br>
 循环引用导致内存泄漏!</p>
 <hr>
@@ -2728,10 +2711,8 @@ GNOME入坑指南: <a href="/posts/desktop-beautify/gnome">gnome</a></p>
 <p>让我们了解下python, 顺便科普一些常识, 进行环境搭建, 写一个Hello World吧!</p>
 </blockquote>
 <span id="more"></span>
-<div class="tips">
 <p><strong>注意:</strong><br>
 本文是偏向初学者的科普性文章, 语言尽量小白化, 或因此丧失一定的严谨, 望理解</p>
-</div>
 <h1 id="bian-yi-yu-jie-shi">编译与解释</h1>
 <p>计算机是二进制的, 只认识二进制, 但你不可能手写二进制<br>
 c/cpp/python 等编程语言, 让你写人类可理解的 “代码”, 然后将它们 “转化” 为二进制后供机器执行</p>
@@ -2744,13 +2725,10 @@ c/cpp/python 等编程语言, 让你写人类可理解的 “代码”, 然后�
 新版本的 python, 可能就会出现许多新的强大语法, 让人更爽地编写代码</p>
 <p>py的代码很简单, 不像c语言要涉及底层的内存管理知识, 你不需关注底层的繁琐细节, 只需关注逻辑<br>
 因此它出现在了高中的信息技术学科教育中, 适合初学者, 虽然我个人并不喜欢python 😃</p>
-<div class="tips">
 <p><strong>代码:</strong><br>
 代码并非特殊之物, 你完全能在桌面新建个txt文件, 然后在里面写代码<br>
 它仅是段文本, 若没了编译器/解释器, 代码毫无用处<br>
 编译器/解释器才是最重要的, 因为它们可以接收文本, 将其解析为exe文件</p>
-</div>
-<div class="tips">
 <p><strong>文件后缀:</strong><br>
 文件本身的内容, 并不会因修改文件的后缀名而发生更改<br>
 后缀只不过起到一个进行分辨的作用, 当你看见 “xxx.jpg”, 就知道它是张图片, 看见 “xxx.txt”, 就知道它是段文本</p>
@@ -2762,7 +2740,6 @@ windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如
 按住 “win+e” (“win” 是键盘下面的windows图标, win与e一起按), 打开文件浏览器<br>
 在上方顶栏, 点击 “查看”, 随后勾选右侧的 “文件扩展名”, 然后关闭文件浏览器<br>
 此时, 桌面上的文件, 就会显示后缀了, 你也能通过重命名修改文件后缀了</p>
-</div>
 <hr>
 <h1 id="python-de-te-dian">Python的特点</h1>
 <ul class="lvl-0">
@@ -2779,28 +2756,28 @@ windows会根据文件的后缀, 尝试用对应的工具打开该文件, 比如
 <p>语法简单, 拥有丰富强大的库, 适合快速开发</p>
 </li>
 </ul>
-<div class="tips">
 <p><strong>高级语言</strong><br>
 计算机界, 编程语言具有一个演化史, 那就是越来越具有可读性, 分为三个阶段</p>
-<ul class="lvl-1">
-<li class="lvl-2">机器语言: 由二进制代码组成, 计算机可以识别并运行, 但人类无法理解</li>
-<li class="lvl-2">汇编语言: 加上了许多符号, 通过编译器编译为机器语言, 人类稍微可以理解了</li>
-<li class="lvl-2">高级语言: 加上了非常多的符号与语法, 通过编译器/解释器, 转为汇编语言, 人类可读, 比如py/c/cpp</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>机器语言: 由二进制代码组成, 计算机可以识别并运行, 但人类无法理解</p>
+</li>
+<li class="lvl-2">
+<p>汇编语言: 加上了许多符号, 通过编译器编译为机器语言, 人类稍微可以理解了</p>
+</li>
+<li class="lvl-2">
+<p>高级语言: 加上了非常多的符号与语法, 通过编译器/解释器, 转为汇编语言, 人类可读, 比如py/c/cpp</p>
+</li>
 </ul>
 <p>值得注意的是, 还有一个叫 <ins>自然语言</ins>, 别和上面的搞混了<br>
 自然语言指我们日常生活中, 进行对话时使用的语言, 如汉语/英语/法语/德语</p>
-</div>
-<div class="tips">
 <p><strong>面向对象</strong><br>
 假设你要搭积木, 这个积木很复杂, 那么你可以将积木分解成五六个子型的小积木<br>
 那么, 可以先拼好这五个小积木, 然后组合成搭积木, 而不是一块一块拼<br>
 (非严谨版, 勿喷, 只是快速了解而已)</p>
-</div>
-<div class="tips">
 <p><strong>库:</strong><br>
 当你需要开发一个无比复杂的程序, 不可能自己从头开始一行一行敲, 太复杂<br>
 比如你用Python时, 想使用产生随机数的功能, 不用自己写, 官方已经给你写好了, 你直接调用就完事了</p>
-</div>
 <hr>
 <h1 id="huan-jing-da-jian">环境搭建</h1>
 <p>你可以选择用家里的电脑练习python, 这时就需要自己安装python了<br>
@@ -2910,10 +2887,9 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <p>正式的对python语法的学习, 包含常见库函数的使用</p>
 </blockquote>
 <span id="more"></span>
-<div class="tips">
-<p>有关python的基本介绍, 比如编译/解释/面向对象, 怎么自己下载python, 请看 <a href="/posts/high-school-it/p2">p2: 基础科普与环境搭建</a></p>
-</div>
-<p><strong>感谢:</strong> 本文的切片部分来源于 <a href="https://zhuanlan.zhihu.com/p/79541418">python切片完全指南(语法篇)</a>, 已经过原作者准许</p>
+<p>有关python的基本介绍, 比如编译/解释/面向对象, 怎么自己下载python, 请看 <a href="/posts/high-school-it/p2">p2: 基础科普与环境搭建</a><br>
+<strong>感谢:</strong><br>
+本文的切片部分来源于 <a href="https://zhuanlan.zhihu.com/p/79541418">python切片完全指南(语法篇)</a>, 已经过原作者准许</p>
 <h1 id="bian-liang-yu-fu-zhi">变量与赋值</h1>
 <p>编程不就是为了模拟世界, 求解问题吗? 求解问题都需要什么?<br>
 需要数据, 还需要存放数据的地方, <ins>变量</ins>, 就是这么一个存放数据的地方</p>
@@ -2977,12 +2953,10 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">abada</span><br><span class="line">asd111231</span><br><span class="line">ad190123kkad</span><br><span class="line">asd_asd1_asd2</span><br><span class="line">_123daa</span><br><span class="line">_as11</span><br></pre></td></tr></table></figure>
 <p>以下是不合法的变量名:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span></span></span><br><span class="line"><span class="function"><span class="title">not</span></span></span><br><span class="line"><span class="function"><span class="title">in</span></span></span><br><span class="line"><span class="function"><span class="title">lambda</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">1123</span></span><br><span class="line"><span class="function">123<span class="title">adad</span></span></span><br><span class="line"><span class="function"><span class="title">sad</span>;;-``</span></span><br><span class="line"><span class="function">``?/</span></span><br><span class="line"><span class="function">&#x27;,</span></span><br></pre></td></tr></table></figure>
-<div class="tips">
 <p><strong>关键字:</strong><br>
 关键字/保留字, 是python语法中具有特殊含义的东西, 比如for/while/and/or/not/in<br>
 这些都被称作关键字, 一般出现了关键字, 就能用对应的语法, 实现一些效果<br>
 比如for就对应for循环, not就对应逻辑取反, 具有特殊作用</p>
-</div>
 <p>你怎么知道哪些是关键字呢? 慢慢看吧, 像 <code>def/import/for/if/break</code> 这种经常使用在特殊位置, 有特殊功能的字符, 自然就是关键字了, 又不会考你超纲的关键字</p>
 <hr>
 <h1 id="zhu-shi">注释</h1>
@@ -3164,7 +3138,6 @@ windows中有这么一个命令, 叫做 “pause”, 英文的意思是停顿, �
 <p>我们可以通过单个索引, 访问对应的单个元素</p>
 <p>举个例子:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有着 3 个元素的列表</span></span><br><span class="line"><span class="built_in">list</span> = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过索引, 访问元素 (索引从 0 开始)</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">0</span>]  <span class="comment"># 300</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">1</span>]  <span class="comment"># 400</span></span><br><span class="line"><span class="built_in">list</span>[<span class="number">2</span>]  <span class="comment"># 500</span></span><br></pre></td></tr></table></figure>
-<div class="tips">
 <p><strong>扩展: 为何 index 从 0 开始?</strong><br>
 因为, 所谓的index, 代表的概念, 其实是 <code>偏移量</code><br>
 实际上, py中的列表, 其元素的内存地址是连续的, 创建一个新的列表时, 会先申请一块内存空间, 用来存放元素<br>
@@ -3187,7 +3160,6 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
 现代计算机其实可以忽略这点影响, 但早期计算机可是一寸内存一寸金, 这个习惯自然而然地被保留下来了<br>
 <s>(好吧, 原因其实真的只是因为习俗)</s></p>
 <p>而且在某些情况下, 下标从0开始会很方便, 有相关论文, 但本菜鸡看不懂 😃</p>
-</div>
 <p>py 中还存在 <code>负索引</code> 的语法糖, 也就是用负数来充当索引, 此时, 下标从右往左, 从 -1 依次递减<br>
 比如 <code>ls[-1]</code>, 就代表倒数第一个元素, <code>ls[-2]</code> 就代表倒数第二个元素</p>
 <p>举个例子, 已知 <code>a = [10, 20, 30, 40, 50]</code> 让我们将其与图表进行对立:</p>
@@ -3635,10 +3607,8 @@ list[1] 代表第 1 个元素, 但相对于第一个元素的偏移量还是0<br
 记住FP与OOP这两个缩写即可, 这两个是最常被提及的, 其他的无需记忆</p>
 <p>编程范式, 它就像是国家的意识形态一样, 具有指导意义, 对如何编程求解问题的思考方法有巨大影响<br>
 下面是一些编程范式的例子:</p>
-<div class="tips">
 <p><strong>提示</strong><br>
 如果你已经了解过以下范式, 直接跳到 <a href="#zong-jie"><strong>总结</strong></a> 吧</p>
-</div>
 <ul class="lvl-0">
 <li class="lvl-2">
 <p>面向过程:<br>
@@ -3974,13 +3944,15 @@ a 实际上就是元素的类型, [a] 表示装着这种类型元素的List</p>
 <p>BMI, Body Mass Index (身体质量指数)<br>
 它与体内脂肪总量密切相关，常用来衡量人体胖瘦程度、是否健康</p>
 <p>让我们来编写一个程序, 根据输入的bmi判断胖与瘦吧</p>
-<div class="tips">
 <p><strong>你可以这样运行以 .hs 结尾的文件:</strong></p>
-<ol>
-<li class="lvl-3">在 <code>demo.hs</code> 所在的目录下, 输入 <code>runghc demo.hs</code>, 不会留下目标文件</li>
-<li class="lvl-3">输入 <code>ghc demo.hs</code>, 留下目标文件 <code>./demo</code></li>
-</ol>
-</div>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>在 <code>demo.hs</code> 所在的目录下, 输入 <code>runghc demo.hs</code>, 不会留下目标文件</p>
+</li>
+<li class="lvl-2">
+<p>输入 <code>ghc demo.hs</code>, 留下目标文件 <code>./demo</code></p>
+</li>
+</ul>
 <figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- demo.hs</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">  putStrLn <span class="string">&quot;Please input your BMI:&quot;</span></span><br><span class="line">  bmi &lt;- readLn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>  bmi &gt; <span class="number">25</span></span><br><span class="line">    <span class="keyword">then</span> putStrLn <span class="string">&quot;Fat!!!&quot;</span></span><br><span class="line">  <span class="keyword">else</span> putStrLn <span class="string">&quot;Thin!!!&quot;</span></span><br></pre></td></tr></table></figure>
 <p>先别在意那个 <code>do</code> 与 <code>&lt;-</code> 是啥, 无视即可, 反正这段代码你应该也看得懂:<br>
 程序会读取输入, 作为 <code>bmi</code> 的值, 随后根据大小, 判断是胖是瘦</p>
