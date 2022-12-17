@@ -3,7 +3,7 @@ title: "rust-gtk4-p5~> GObject: 通用类型"
 abbrlink: posts/rust-gtk4/p5
 hidden: false
 date: 2022-11-20 13:51:26
-top: 9695
+top: 98995
 tags: [Rust, GUI]
 keywords: [Rust, GUI, GTK4]
 is_series: true

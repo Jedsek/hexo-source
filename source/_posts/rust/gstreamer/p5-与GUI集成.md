@@ -7,5 +7,5 @@ top: 11994
 tags: [GStreamer, Rust, Video, Audio]
 keywords: [GStreamer, Rust, Video, Audio]
 ---
-> 通过与 GUI 集成, 来制作一个简易的音乐播放器
+> 通过将 GUI 与 gstreamer 集成, 来制作一个简易的音乐播放器
 <!-- more -->

@@ -8,3 +8,5 @@
 !source/
 !source/**
 source/CNAME
+*.png
+*.apk

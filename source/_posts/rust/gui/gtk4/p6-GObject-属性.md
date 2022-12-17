@@ -3,7 +3,7 @@ title: "rust-gtk4-p6~> GObject: 属性"
 abbrlink: posts/rust-gtk4/p6
 hidden: false
 date: 2022-12-10 23:39:26
-top: 9694
+top: 98994
 tags: [Rust, GUI]
 keywords: [Rust, GUI, GTK4]
 is_series: true

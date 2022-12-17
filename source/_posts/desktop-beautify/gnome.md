@@ -3,7 +3,7 @@ title: "GNOME 入坑指南"
 abbrlink: posts/desktop-beautify/gnome
 hidden: false
 date: 2022-07-20 11:22:42
-top: 20999
+top: 99999
 tags: [Linux, GNOME, Waylnad, Desktop]
 keywords: [GNOME, 桌面环境, DE, Linux, Wayland, Desktop]
 is_series: true
@@ -201,7 +201,7 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@exten
 # set    org.gnome.shell.extensions.nothing-to-say show-osd
 ```
 
-你也可以参考或[**直接加载**](#jia-zai-pei-zhi)我博客下的 [**dconf.settings**](/downloads/gnome/dconf.settings)  
+你也可以参考或[**直接加载**](#jia-zai-pei-zhi) `dconf.settings` 文件  
 **注意:** 如何你选择直接加载我的配置, 请注意 `picture-uri` 符合自己实际  
 
 - - -
@@ -624,7 +624,6 @@ gsettings set $gp1/custom3/ binding  '<Alt>space'
 你可以导出记载当前DE的配置文件, 然后导出到另一台机器上  
 这意味着, 当你重装系统时, 按下面的方法能快速恢复到先前的DE  
 
-你也可以参考或直接加载我博客下的 [**dconf.settings**](/downloads/gnome/dconf.settings)  
 ## 对于非Nixos
 对于普通的Linux发行版, 直接按下面的方式  
 

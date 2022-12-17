@@ -3,7 +3,7 @@ title: "rust-gtk4-p7~> GObject: 信号"
 abbrlink: posts/rust-gtk4/p7
 hidden: false
 date: 2022-12-10 23:45:10
-top: 9693
+top: 98993
 tags: [Rust, GUI]
 keywords: [Rust, GUI, GTK4]
 is_series: true

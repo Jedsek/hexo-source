@@ -3,7 +3,7 @@ title: "Hyprland 平铺式"
 abbrlink: posts/desktop-beautify/hyprland
 hidden: false
 date: 2022-12-10 17:46:21
-top: 20998
+top: 99998
 tags: [Linux, Hyprland, Waylnad, Desktop]
 keywords: [Linux, Hyprland, Waylnad, Desktop]
 is_series: true

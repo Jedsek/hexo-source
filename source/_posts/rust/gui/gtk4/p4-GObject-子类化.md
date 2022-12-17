@@ -3,7 +3,7 @@ title: "rust-gtk4-p4~> GObject: 子类化"
 abbrlink: posts/rust-gtk4/p4
 hidden: false
 date: 2022-10-09 22:52:26
-top: 9696
+top: 98996
 tags: [Rust, GUI]
 keywords: [Rust, GUI, GTK4]
 is_series: true
