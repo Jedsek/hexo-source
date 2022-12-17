@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jedsek.xyz/posts/scala3-basic/p2.html</loc>
+    <lastmod>2022-12-17</lastmod>
+  </url>
+  <url>
+    <loc>https://jedsek.xyz/posts/scala3-basic/p1.html</loc>
+    <lastmod>2022-12-17</lastmod>
+  </url>
+  <url>
     <loc>https://jedsek.xyz/posts/rust-gtk4/p7.html</loc>
     <lastmod>2022-12-10</lastmod>
   </url>
