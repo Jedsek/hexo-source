@@ -150,7 +150,5 @@ class CursorSpecialEffects {
 	}
 }
 
-window.onload = function(){
-	const cursorSpecialEffects = new CursorSpecialEffects()
-	cursorSpecialEffects.init()
-}
+const cursorSpecialEffects = new CursorSpecialEffects()
+cursorSpecialEffects.init()

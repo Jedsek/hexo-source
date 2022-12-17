@@ -360,7 +360,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/Hyprland/</loc>
+    <loc>https://jedsek.xyz/tags/GNOME/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -381,6 +381,13 @@
   </url>
   
   <url>
+    <loc>https://jedsek.xyz/tags/Hyprland/</loc>
+    <lastmod>2022-12-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jedsek.xyz/tags/%E9%AB%98%E4%B8%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -388,7 +395,7 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/GNOME/</loc>
+    <loc>https://jedsek.xyz/tags/Haskell/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -396,6 +403,13 @@
   
   <url>
     <loc>https://jedsek.xyz/tags/Rust/</loc>
+    <lastmod>2022-12-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jedsek.xyz/tags/Async/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -410,20 +424,6 @@
   
   <url>
     <loc>https://jedsek.xyz/tags/CLI/</loc>
-    <lastmod>2022-12-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/Async/</loc>
-    <lastmod>2022-12-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -451,14 +451,14 @@
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/TUI/</loc>
+    <loc>https://jedsek.xyz/tags/Macro/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jedsek.xyz/tags/Haskell/</loc>
+    <loc>https://jedsek.xyz/tags/TUI/</loc>
     <lastmod>2022-12-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

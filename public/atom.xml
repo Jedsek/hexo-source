@@ -123,11 +123,11 @@
     
     <category term="Linux" scheme="https://jedsek.xyz/tags/Linux/"/>
     
-    <category term="Hyprland" scheme="https://jedsek.xyz/tags/Hyprland/"/>
-    
     <category term="Waylnad" scheme="https://jedsek.xyz/tags/Waylnad/"/>
     
     <category term="Desktop" scheme="https://jedsek.xyz/tags/Desktop/"/>
+    
+    <category term="Hyprland" scheme="https://jedsek.xyz/tags/Hyprland/"/>
     
   </entry>
   
@@ -455,11 +455,11 @@
     
     <category term="Linux" scheme="https://jedsek.xyz/tags/Linux/"/>
     
+    <category term="GNOME" scheme="https://jedsek.xyz/tags/GNOME/"/>
+    
     <category term="Waylnad" scheme="https://jedsek.xyz/tags/Waylnad/"/>
     
     <category term="Desktop" scheme="https://jedsek.xyz/tags/Desktop/"/>
-    
-    <category term="GNOME" scheme="https://jedsek.xyz/tags/GNOME/"/>
     
   </entry>
   
