@@ -78,15 +78,17 @@ impl ButtonImpl for CustomButton {}
 
 先前也说了, 模块 `imp.rs` 的作用便是描述一个子类, 负责新添加的状态与待覆写的虚函数  
 对于某个子类 GObject 的描述, 在 `ObjectSubclass` 中:  
-- `NAME`: 该 GObject 的名字, 为避免命名冲突, 应使用 crate-name 与 object-name 组成 (UpperCamelCase)
+- `NAME`: 该 GObject 的名字  
 - `Type`: 指之后将被创建的, 实际的 GObject  
-- `ParentType`: 我们继承的那个父类 GObject
+- `ParentType`: 我们继承的那个父类 GObject  
 
 你可能会疑惑, 这个 `Name` 与 `Type` 是什么鬼, 就不能直接用 `Type (我们在Rust中实际创建的类型)` 作为 `NAME` 吗?  
 
-别忘了, gtk 是一套跨语言的通用 GUI 框架, 拥有几十种语言的绑定, 设计必然不能拘泥在一种语言上, 即使对 C 也不例外  
-不同语言自有不同命名规范, 必然得先统一风格, 比如之后会学习的 `.ui` 为后缀的 xml 文件, 可以用来描述界面, 这可是不管哪个语言都通用的啊  
-因此 `NAME` 是用来描述其名字, 而 `Type/ParentType` 则是特定于语言的某一个类型 (此处是Rust中的 `CustomButton`/`gtk::Button`)  
+别忘了, gtk 是一套跨语言的通用 GUI 框架, 拥有几十种语言的绑定, 设计必然不能拘泥在一种语言上  
+不同语言自有不同命名规范, 必然得先统一风格, 比如之后会学习的 `.ui` 为后缀的 xml 文件, 可以用来描述界面, 不管哪个语言都是通用的  
+
+因此, `NAME` 是用来描述其名字, 是统一的, 为避免命名冲突, 应使用 crate-name 与 object-name 组成 (UpperCamelCase)  
+而 `Type/ParentType` 则是特定于语言的某个具体类型, 此处是Rust中的 `CustomButton`/`gtk::Button`  
 
 再提一嘴, 之后将学习的以 `.ui` 为后缀的 xml 文件, 可以创建 GtkBuilder template class(模板类), 像下面这样去描述界面:  
 
