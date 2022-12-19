@@ -1,2 +1,11 @@
-name,        type,         rank
-GNOMR 入坑指南,     Serial,       0
+name,rank
+desktop-beautify,99999
+rust-gtk4,98999
+rust-tui,9799
+clap-rs 简介,99995
+rust-async,9899
+rust-gstreamer,11999
+rust-decl-macro,97999
+scala3-basic,39999
+haskell-basic,6999
+high-school-it,7999
