@@ -105,17 +105,17 @@ path = "src/main.rs"
 
 # 指定依赖
 [dependencies]
-clap = {version = "4.0.8", features = ["derive"]}      # 解析参数
+clap = {version = "4.0.29", features = ["derive"]}     # 解析参数
 unicode-width = "0.1.10"                               # 计算 Unicode 字符宽度
-indicatif = "0.17.1"                                   # 进度条
+indicatif = "0.17.2"                                   # 进度条
 prettytable-rs = "0.9.0"                               # 打印表格
-rayon = "1.5.3"                                        # 并行化
+rayon = "1.6.1"                                        # 并行化
 ```
 
 以下是 lib.rs 的内容:  
 
 ```rust src/lib.rs
- use std::{collections::HashMap, path::PathBuf};
+use std::{collections::HashMap, path::PathBuf};
 
 pub mod cli;
 pub mod files;
@@ -150,9 +150,13 @@ use std::path::PathBuf;
 
 #[derive(Parser)]  // 这里的 derive(Parser) 表示下面这一坨都会被 `宏的黑魔法` 所洗礼 
 #[command(
-    author, version, about,
-    group(ArgGroup::new("options").multiple(true).required(true).args(&[ "bytes", "chars", "words", "lines", "longest_line"])),
-    subcommand_negates_reqs = true,
+    author, version, about, subcommand_negates_reqs = true,
+    group(
+        ArgGroup::new("options")
+            .multiple(true)
+            .required(true)
+            .args(&[ "bytes", "chars", "words", "lines", "longest_line"])
+    ),
 )]
 pub struct Cli {
     /// The path(s) you should provide
@@ -447,8 +451,13 @@ For more information try '--help'
 // ......
 #[derive(Parser)]
 #[command(
-    author, version, about,
-    group(ArgGroup::new("options").multiple(true).required(true).args(&[ "bytes", "chars", "words", "lines", "longest_line"])),
+    author, version, about, subcommand_negates_reqs = true,
+    group(
+        ArgGroup::new("options")
+            .multiple(true)
+            .required(true)
+            .args(&[ "bytes", "chars", "words", "lines", "longest_line"])
+    ),
 )]
 pub struct Cli {
     /// The path(s) you should provide
@@ -765,4 +774,58 @@ fn main() -> Result<()> {
 }
 ```
 
-就酱, 结束啦! 希望本文能帮到你 :)
+- - -
+
+# 自动补全
+我们已经写好了命令行程序, 可以通过 -h/--help 查看帮助信息, 但能不能更方便地与 shell 集成呢?  
+比如, 当你使用 bash/zsh/fish 时, 输入命令后点 Tab, 能帮你自动显示该命令的 flag/subcommand  
+
+我们将使用 `clap_complete` 这个库, 在编译器生成特定于 shell 的自动补全文件 (也可以运行时生成, 自看 [clap_complete](https://docs.rs/clap_complete/latest/clap_complete/) 的文档)  
+首先要修改 `Cargo.toml`, 在后面添加 [`build-dependencies`](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#build-dependencies):  
+
+```toml Cargo.toml
+[build-dependencies]
+clap = {version = "4.0.29", features = ["derive"]}
+clap_complete = "4.0.6"
+```
+
+在项目根目录下添加 `build.rs`, 内容如下:  
+
+```rust
+use clap::CommandFactory;
+use clap_complete::{generate_to, shells::*};
+use std::error::Error;
+
+include!("src/cli.rs");
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let outdir = "completions";
+    let app_name = "rwc";
+    let mut cmd = Cli::command();
+
+    generate_to(Bash, &mut cmd, app_name, outdir)?;
+    generate_to(Zsh, &mut cmd, app_name, outdir)?;
+    generate_to(Fish, &mut cmd, app_name, outdir)?;
+    generate_to(Elvish, &mut cmd, app_name, outdir)?;
+    generate_to(PowerShell, &mut cmd, app_name, outdir)?;
+
+    Ok(())
+}
+```
+
+目前, clap_complete 仅支持以上几种 shell, 更多的偏小众 shell, 一般以 `clap_complete_xxx` 的形式出现在 `crates.io` 上  
+比如 `clap_complete_nushell`, 但亲测质量不佳, 不建议使用  
+
+同时, 请确保项目根目录下存在 `completions` 目录, 随后运行 `cargo build`, 通过 `tree` 命令可以看到生成的补全文件:  
+
+```bash
+completions
+├── _rwc
+├── rwc.bash
+├── rwc.elv
+├── rwc.fish
+└── _rwc.ps1
+```
+
+就酱, 本文结束啦!  
+希望本文能帮到你, 让你快速了解使用 clap 的流程 :)
