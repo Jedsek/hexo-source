@@ -11,7 +11,7 @@ series_link: rust-gui
 prev_post: [posts/rust-gtk4/p5, "GObject: 通用类型"]
 next_post: [posts/rust-gtk4/p7, "GObject: 信号"]
 ---
-> 本节将学习 GObject 的 property(属性), 探索其强大且灵活的动态运行时
+> 本节将学习 GObject 的 property(属性), 探索其强大且灵活的运行时
 <!-- more -->
 
 同系列传送门: [rust-gui](/categories/rust-gui)
@@ -27,3 +27,17 @@ glib 虽然以面向过程的 C 为核心, 但却具有面向对象的思想, �
 - 动态注册某个新的属性  
 - 进行属性间的自动绑定  
 - 属性变更时将执行操作 
+
+```rust
+fn build_ui(app: &Application) {
+    // Create the switch
+    let switch = Switch::new();
+
+    // Set and then immediately obtain state
+    switch.set_state(true);
+    let current_state = switch.state();
+
+    // This prints: "The current state is true"
+    println!("The current state is {}", current_state);
+}
+```

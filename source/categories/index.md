@@ -27,6 +27,11 @@ Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
 
 - - -
 
+# 光栅化
+[ ]  [光栅化中的dda与bresenham两种算法](/posts/rasterization-dda-bresenham)
+
+- - -
+
 # 桌面美化
 关于桌面美化的一些文章, 大家可以参考一下  
 [目录~~>](/categories/desktop-beautify)
