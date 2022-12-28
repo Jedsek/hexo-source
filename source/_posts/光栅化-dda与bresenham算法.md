@@ -6,7 +6,6 @@ date: 2022-12-26 17:35:10
 top:
 tags:
 keywords:
-katex: true
 mathjax: true
 ---
 关于 光栅化(rasterrization) 中的 DDA 与 Bresenham 两种算法
@@ -32,25 +31,69 @@ RGB 三原色, 位深分别为 8bit, 即 1byte, 就能构成 (2^8^ * 2^8^ * 2^8^
 并且假设你已经知道for循环, function, 赋值等编程中的基本概念
 
 - - -
-
+ 
 # DDA算法
 DDA(Digital Differential Analyzer), 数字微分分析法, 可别被这名字给吓到了, 实际上这是很容易理解的  
-假设有
+假设每个像素方块, 其左下角为该像素的坐标, 已知起点与终点的坐标 $\begin{cases}(x_1, y_1)\\\\(x_2, y_2)\end{cases}$, 可求出其斜率k  
+当k<1时, 如图所示, x每增加1时, y需要增加m, 随后将y向下取整得到yy, 然后渲染(x, yy):  
 
-$$
-\left\{
-\begin{array}{ll}
-K_{1}=z_{k},&L_{1}=f(x_{k},y_{k},z_{k}),\\
-K_{2}=z_{k}+\frac{h}{2}L_{1},&L_{2}=f\left(x_{k}+\frac{h}{2},y_{k}+\frac{h}{2}K_{1},z_{k}+\frac{h}{2}h_{1}\right),\\
-K_{3}=z_{k}+\frac{h}{2}L_{2},&L_{3}=f\left(x_{k}+\frac{h}{2},y_{k}+\frac{h}{2}K_{2},z_{k}+\frac{h}{2}L_{2}\right),\\
-K_{4}=z_{k}+hL_{3},&L_{4}=f\left(x_{k}+h,y_{k}+hK_{3},z_{k}+hL_{3}
-\right).\\
-\end{array}
-\right.
-\tag{4}
-$$
+![dda-图1](/images/others/dda.png)
 
+用伪代码表示的话, 就是这样:  
 
+```rust
+for x in x1..=x2 step=1.0
+  y1 += k
+  yy = floor(y1)    // 关键, 但可以不是floor
+  write_pixel(x, yy, BLUE)
+```
+
+结合图片, 相信你应该能够看懂
+
+当然, 我们还可以选择不用 floor, 而是 round, 这叫做圆整处理, 可以尽量做到直线平滑  
+此处, 可以将四舍五入理解为圆整处理, 伪代码如下:  
+
+```rust
+for x in x1..=x2 step=1.0
+  y1 += k
+  yy = round(y1)  // 圆整处理
+  write_pixel(x, yy, BLUE)
+```
+
+但还有一些问题, 那就是当斜率k > 1时, 即倾斜角大于 45 度时, 如果按照 "x不断+1, y不断+k" 的套路, 将无法连续, 如下左图所示  
+此时, 我们就应该反转一下, 按照 "y不断+1, x不断+1/k" 的套路, 才能做到尽量连续, 即反转了x与y轴, 如下右图所示  
+
+![dda-图2](/images/others/dda_2.png)
+
+我们将沿着x轴的方向, 或沿着y轴的方向, 移动幅度大的那一个方向, 称作 主位移方向  
+如上面的图1, x轴为主位移方向, 而在图2中, y轴是主位移方向  
+
+当斜率k为负数时, 也可以按照以上两种思路进行处理, 要同时处理正负, 避免if分情况判断的话, 用 abs 计算绝对值即可  
+
+完整处理的伪代码如下:  
+
+```rust
+dx = abs(x2 - x1)
+dy = abs(y2 - y1)
+
+// 确定主位移方向是x轴还是y轴, 记得要用绝对值来避免对正负讨论
+d = max(dx, dy)
+
+// 当主位移方向为x轴, 则按照 "x不断+1, y不断+k", 不然按照 "y不断+1, x不断+1/k"
+dxx = dx / d
+dyy = dy / d
+
+// 从x1遍历到x2
+// 当主位移方向为x轴时, dxx=1,   dyy=k
+// 当主位移方向为y轴时, dxx=1/k, dyy=1
+for x in x1..=x2 step=dxx
+  y1 += dyy
+  yy = round(y1)  // 圆整处理
+  write_pixel(x, yy, COLOR)
+```
+
+但还是不够高效, 因为涉及了大量浮点数计算, 比如 `y1 += dyy`  
+同时, for 循环那里可能因为浮点计算不够精准, 次数不够准确, 可以改写为遍历 step 次, 然后在循环体内 `x += dxx`, 但为了美观我懒得改了
 
 - - -
 
