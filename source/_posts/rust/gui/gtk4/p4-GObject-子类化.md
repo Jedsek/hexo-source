@@ -241,6 +241,9 @@ fn obj(&self) -> crate::BorrowedObject<Self::Type>
 还记得 `Self::Type` 是什么吗? 没错, 就是被暴露的那个 `CustomButton`, 而非 `imp::CustomButton`, 它才是被使用的真正实例(instance)  
 此处的 `obj()` 方法, 其别名就是 `instance()`, 得到的是在 `main.rs` 中被创建的那个真正实例的引用  
 
+总而言之, 我们的所谓 `子类化`, 在rust中其实就是一个 warpper, 包装了一个来自gtk的部件  
+随后通过实现诸如 `ObjectImpl` 之类的 trait, 修改了父部件原本的行为  
+
 顺便再复习一下, 防止有人看见这里而感疑惑: 为什么是 `clicked(&self)` 而非 `clicked(&mut self)`, 这样不应该更方便吗?  
 这是因为每个 GObject 都是引用计数的, 所以能绕过编译器的检查(全是不可变借用), 之前提到过了  
 
