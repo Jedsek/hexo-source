@@ -37,7 +37,7 @@ DDA(Digital Differential Analyzer), 数字微分分析法, 可别被这名字给
 假设每个像素方块, 其左下角为该像素的坐标, 已知起点与终点的坐标 $\begin{cases}(x_1, y_1)\\\\(x_2, y_2)\end{cases}$, 可求出其斜率k  
 当k<1时, 如图所示, x每增加1时, y需要增加m, 随后将y向下取整得到yy, 然后渲染(x, yy):  
 
-![dda-图1](/images/others/dda.png)
+![dda-图1](/images/others/dda_1.png)
 
 用伪代码表示的话, 就是这样:  
 
