@@ -18,8 +18,10 @@ keywords:
 [x]  [p3~> GObject: 内存管理](/posts/rust-gtk4/p3)
 [x]  [p4~> GObject: 子类化](/posts/rust-gtk4/p4)
 [x]  [p5~> GObject: 通用类型](/posts/rust-gtk4/p5)
-[ ]  [p6~> GObject: 属性](/posts/rust-gtk4/p6)
-[ ]  [p7~> GObject: 信号](/posts/rust-gtk4/p7)
+[x]  [p6~> GObject: 属性](/posts/rust-gtk4/p6)
+[x]  [p7~> GObject: 信号](/posts/rust-gtk4/p7)
+[ ]  [p8~> 主事件循环](/posts/rust-gtk4/p8)
+[ ]  [p9~> 设置持久化](/posts/rust-gtk4/p9)
 
 - - -
 

@@ -97,8 +97,9 @@ fn build_ui(app: &Application) {
 `bi-directional` 的意思是 `双向`, 我们在这里进行了双向绑定, `switch_1` 的 `state` 已经与 `switch_2` 的 `state` 绑在了一起  
 于是, 两个 `switch` 的 `state` 属性会一直保持一样, 修改其中一个, 另外一个也会被自动修改  
 
+如果你不添加任何 `BindingFlags`, 则为默认的 `BindingFlags::DEFAULT`, 作用是由源属性向目标属性进行更新  
 
-可以来自官方教程的动图, 当我们切换其中一个按钮的状态时, 另外一个会自动保持相同:  
+可以看下来自官方教程的动图, 当我们切换其中一个按钮的状态时, 另外一个会自动保持相同:  
 
 <video id="video" preload="auto" loop=true autoplay=true>
     <source id="webm" src="/images/rust/gtk4/bidirectional_switches.webm" type="video/webm">
@@ -279,3 +280,14 @@ fn build_ui(app: &Application) {
 - - -
 
 # 属性更改事件
+
+你可以在属性发生更改时, 执行一个闭包, 比如:  
+
+```rust src/main.rs
+    btn_1.connect_notify_local(Some("number"), move |btn, _| {
+        let number = btn.property::<i32>("number");
+        println!("The current number of `btn_1` is {}.", number);
+    });
+```
+
+当 `number` 属性的值发生更改后, 会在标准输出中, 打印按钮当前显示的数值  
