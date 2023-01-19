@@ -22,7 +22,7 @@ Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
 [ ]  [异步](/categories/rust-async)
 [ ]  [音视频处理 (gstreamer)](/categories/rust-gstreamer)
 [x]  [命令行 (clap-rs)](/posts/rust-clap/intro)
-[ ]  [GUI (gtk4 && relm4)](/categories/rust-gui)
+[ ]  [GUI (gtk4/iced/relm4)](/categories/rust-gui)
 [ ]  [TUI (tui-rs)](/categories/rust-tui)
 
 - - -
