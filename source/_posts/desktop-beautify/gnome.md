@@ -12,17 +12,31 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 > 关于 GNOME 的入坑指南, 让你了解, 配置, 美化桌面环境
 <!-- more -->
 
+# 开篇说明
+
 **注意:**  
 本篇文章的配置皆在注重简洁, 高效, 美观  
 想要平铺式, 炫酷效果, 更多功能的, 请自行配置, 或查看我的另外一篇博客: [Hyprland 平铺式](/posts/desktop-beautify/hyprland)  
-请注意GNOME版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新  
-目前, 该篇文章的GNOME 版本为: **42**  
+请注意 GNOME 版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新  
+目前, 该篇文章的适用 GNOME 版本为: **44**  (**于2023年5月20更新本文**)
+
+- - -
+
+# 版本迁移
+
+**每次更新本文时, 一切更新记录都是在开篇, 也就是这里, 进行记录, 方便读者进行版本迁移 (比如从 43 -> 44)**  
+**版本的不同, 在除了插件方面会有所差异, 其他地方是几乎一样的, 就算真有不一样的地方我也会标注的, 请放心**  
+**一般来说, 每次更新本文时, 主要更新的是 [推荐的扩展](#tui-jian-de-kuo-zhan) 这部分, 如果你已经看过本文了, 一般只需要跳转至那一部分即可**
+
+- - -
 
 # 成品展示
-2022年了, GNOME 又靠谱又好用, 但有些人的界面仍然像是十年前...  
-我个人认为简洁+美观比较重要, 当然你也可以自行修改进行DIY, 请自己动手, 丰衣足食吧!  
+2023年了, GNOME 又靠谱又好用, 但有些人的界面仍处于是十年前的样子...  
+我个人认为 **简洁** + **大气** + **美观** 比较重要, 当然你也可以自行修改进行DIY  
+如果真的有需求, 请自己动手, 丰衣足食吧! ~~(虽然我认为本文已经详细地不能再详细了)~~ 
 
-![按下Super后的Overview](/images/gnome/overview.png)  
+![44(当前版本的图片)](/images/gnome/overview_44.png)
+![42(旧版本的保留图片)](/images/gnome/overview_42.png)  
 
 - - -
 
@@ -37,7 +51,10 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 你可能在年份久远的文章中听说过 `gconf`, 这是什么? 与 `dconf` 有啥区别?  
 答: 其作用也类似注册表, 但现在已经停止使用, 被效率更高的 `dconf` 所取代  
 
-接下来的大部分配置, 都会使用 `gsettings`  
+接下来的大部分配置, 都会使用 `gsettings` 在命令行中进行操作
+
+当然, 你也可以通过图形化界面, 比如 `gnome-control-center` 进行设置, 但有一些东西是界面里不存在/无法调整的  
+而且为了方便读者进行复制粘贴, 特此写成命令形式  
 
 - - - 
 
@@ -71,10 +88,13 @@ gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
 - 三指左右: 切换Workspace
 - 三指上: 打开Overview (不常用, 按Super更快)
 - 三指下: 显示任务栏 (当你隐藏任务栏时)
+
+(安装一些扩展后, 相关快捷键可能会发生改变)
+
 - - -
 
 # 安装扩展
-GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的自由与强大, 说是一半的灵魂, 也不为过之  
+GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的 **自由** 与 **强大**, 说是 GNOME 一半的 **灵魂** 所在, 也不为过之  
 我将先介绍如何安装/使用它们, 因为后面需要用到扩展  
 
 有两种安装方法, 一种从命令行安装, 一种从浏览器安装  
@@ -166,7 +186,9 @@ Edge 的插件商店里无, 但可以下载 iGuge (谷歌访问助手), 然后�
 - - -
 
 # 查看/配置扩展
-通过 `gnome-extensions` 这个命令, 我们可以查看/配置当前扩展  
+此处推荐使用浏览器来设置插件, 在 [https://extensions.gnome.org/local/](https://extensions.gnome.org/local/) 页面管理与配置插件  
+
+如果你想通过命令行, 则可以使用 `gnome-extensions` 这个命令, 来查看/配置扩展:  
 
 ```bash
 # 获取帮助, `Command` 为可选项
@@ -201,97 +223,123 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@exten
 # set    org.gnome.shell.extensions.nothing-to-say show-osd
 ```
 
-你也可以参考或[**直接加载**](#jia-zai-pei-zhi) `dconf.settings` 文件  
-**注意:** 如何你选择直接加载我的配置, 请注意 `picture-uri` 符合自己实际  
+你可以在已经配置好插件的机器上, 导出 `dconf.settings` 文件, 并在新机器上加载它, 避免更换机器/重装系统之后再次设置扩展  
+详情请见 [**加载配置**](#jia-zai-pei-zhi)  
 
 - - -
 
 # 推荐的扩展
-以下是我目前正在使用且推荐的扩展  
+以下是我目前正在使用且推荐的扩展, 适用版本为 **44**  
 
 **注意:**
-如果你是通过我的博客 jedsek.xyz 观看的话, 我默认隐藏了这些图片  
-你可以展开任意一张图片后, 点击图片, 在 fancybox 种通过方向键切换图片 :)  
+<!-- 如果你是通过我的博客 [jedsek.xyz](https://jedsek.xyz) 观看的话, 我默认隐藏了这些图片  -->
+<!-- 你可以展开任意一张图片后, 点击图片, 然后可以通过方向键切换图片 :)  -->
 
-- [auto-move-windows](https://extensions.gnome.org/extension/16/auto-move-windows/):  
+- [transparent-top-bar(adjustable-transparency)](https://extensions.gnome.org/extension/3960/transparent-top-bar-adjustable-transparency/)
+让顶栏变透明的插件, 当窗口最大化或者与顶栏重叠时, 为了显示清晰会自动重新变回不透明  
+
+- [auto-move-windows](https://extensions.gnome.org/extension/16/auto-move-windows/)  
 通过指定窗口规则, 使得打开某个app时, 将其自动分配到特定工作区 (需要指定的.desktop文件)  
-**无图片**
 
-<br>
+- [color-app-menu-icon](https://extensions.gnome.org/extension/5473/color-app-menu-icon-for-gnome-40/)
+顶栏左上角会显示你当前所在应用的图标与名称  
 
-- [refresh-wifi-connections](https://extensions.gnome.org/extension/905/refresh-wifi-connections/)
-当你通过右上角的菜单选择 WIFI 时, 会多出来一个刷新键  
+- [draw-on-your-screen-2](https://extensions.gnome.org/extension/4937/draw-on-you-screen-2/)
+通过设置的快捷键, 让你可以在屏幕上用画笔画画, 在录制视频, 向他人演示, 标记重点的时候非常有用  
 
+- [removable-drive-menu](https://extensions.gnome.org/extension/7/removable-drive-menu/)
+当你插入u盘之后, 顶栏会出现显示图标, 让你快速访问文件, u盘拔出之后图标自动消失  
+
+- [run-cat](https://extensions.gnome.org/extension/2986/runcat/)
+在顶栏出现一只奔跑的小猫与 cpu 的利用率, cpu 利用率越高, 小猫跑得越快  
+
+- [quick-touchpad-toggle](https://extensions.gnome.org/extension/5292/quick-touchpad-toggle/)
+在 quick-settings 中增加一个选项, 让你快速启用/禁用触摸板  
+
+- [quick-close-in-overview](https://extensions.gnome.org/extension/352/middle-click-to-close-in-overview/)
+在 overview 中, 当你的鼠标移动到对应窗口时, 右上角增加一个叉叉, 让你快速关闭窗口  
+
+- [just-another-search-bar](https://extensions.gnome.org/extension/5522/just-another-search-bar/)
+让你自己设置一个快捷键, 按下之后打开一个搜索框, 然后用你的默认浏览器搜索输入内容, 你可以设置搜索引擎(google/bing)  
+这个操作在 overview 中也可以做到, 名字都说了是 just-another, 是为了更美观  
+
+- [coverflow-alt-tab](https://extensions.gnome.org/extension/97/coverflow-alt-tab/)
+让你在使用 `super+tab`/`alt+tab` 切换窗口时, 获得好看美观的特效  
+
+- [customize-iBus](https://extensions.gnome.org/extension/4112/customize-ibus/)
+ibus 是 gnome 内置的一个输入法, 已经和 fcitx5 差不多了, 默认情况下就已经非常好看了  
+你可以使用这个插件, 深度自定义 ibus 的行为, 比如我现在, 打字时就能够让候选框随着我打字的节奏而抖动, 非常爽  
+再比如设置中英文切换时, 指示器的显示时间, 抖动效果, 闪烁特效等  
 >>> **点击展开/隐藏图片**
-![refresh-wifi-connections](/images/gnome/refresh-wifi-connections.png)
+![ibus默认情况下的外表/系统暗色主题](/images/gnome/ibus.png)
 >>>
 
-<br>
+- [quake-mode](https://extensions.gnome.org/extension/1411/quake-mode/)  
+雷神模式!! 该插件可以让你以雷神模式打开一些与快捷键绑定的应用, 即以下拉式打开任意一个app, 全部工作区共享一个app  
+quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效, 具体效果可以点击链接看动图演示即可    
+
+- [color-pciker](https://extensions.gnome.org/extension/3396/color-picker/)
+采色笔, 用来采集颜色, 有相关需求的话非常有用, 没什么好说的  
+
+- [battery-time](https://extensions.gnome.org/extension/5425/battery-time/)
+在 quick-setting 中显示你的电量还可以撑多久  
+
+- [bluetooth-battery-indicator](https://extensions.gnome.org/extension/3991/bluetooth-battery/)
+当你连接蓝牙设备之后, 会在顶栏显示电量  
+
+- [bluetooth-quick-connect](https://extensions.gnome.org/extension/1401/bluetooth-quick-connect/)
+在 quick-setting 中, 让你快速连接/断开已经配对过的蓝牙设备, 非常有用  
+
+- [control-blur-effect-on-lock-screen](https://extensions.gnome.org/extension/2935/control-blur-effect-on-lock-screen/)
+锁屏之后, 背景图片会变得模糊(blur), 这个插件可以修改模糊度, 我个人喜欢背景完全不模糊  
+
+<!-- Deprecated -->
+<!-- - [refresh-wifi-connections](https://extensions.gnome.org/extension/905/refresh-wifi-connections/) -->
+<!-- 当你通过右上角的菜单选择 WIFI 时, 会多出来一个刷新键   -->
+<!--  -->
+<!-- >>> **点击展开/隐藏图片** -->
+<!-- ![refresh-wifi-connections](/images/gnome/refresh-wifi-connections.png) -->
+<!-- >>> -->
+<!--  -->
+<!-- <br> -->
 
 - [transparent-window-moving](https://extensions.gnome.org/extension/1446/transparent-window-moving/)
 在对窗口进行移动/调整大小时, 使窗口变得透明  
->>> **点击展开/隐藏图片**
-![transparent-window-moving](/images/gnome/transparent-window-moving.png)
->>>
-
-<br>
 
 - [just-perfection](https://extensions.gnome.org/extension/3843/just-perfection/)
 我最喜欢的一个扩展, 用于对界面进行大量自定义与精简  
 比如, 可以隐藏 Dash (按Super后底部的一行), 改变顶栏元素等  
 >>> **点击展开/隐藏图片**
-![just-perfection](/images/gnome/overview.png)
+![just-perfection](/images/gnome/overview_44.png)
 >>>
 
 <br>
 
-- [eye-extended](https://extensions.gnome.org/extension/3139/eye-extended/)
-很有趣的扩展, 平时当作小挂件, 但危机时或许可以派上用场  
-在顶栏显示一个眼睛, 眼珠子会一直注视着你的鼠标, 点一下会出现以你鼠标为中心的黄色圆圈  
->>> **点击展开/隐藏图片**
-![eye-extended](/images/gnome/eye-extended.png)
->>>
-
-<br>
 
 - [nothing-to-say](https://extensions.gnome.org/extension/1113/nothing-to-say/)
 用于切断/恢复声音的输入, 对我来说蛮有用的:  
 当与同学打游戏, 撞上爸妈查房, 立刻按下 `Super+\`, 防止爸妈训我的声音流入同学耳中, 维护尊严 :)  
->>> **点击展开/隐藏图片**
-![nothing-to-say](/images/gnome/nothing-to-say.png)
->>>
-
-<br>
 
 - [space-bar](https://extensions.gnome.org/extension/5090/space-bar/)
-模仿 I3/Sway/Bspwm 等窗口管理器, 将左上角烦人的 `Activities` 替换为 `Workspaces`, 有些类似的扩展, 但这个最好  
+模仿 I3/Sway/Bspwm 等窗口管理器, 将左上角烦人的 `Activities` 替换为 `Workspaces`, 有些类似的扩展, 但这个人认为最好  
 >>> **点击展开/隐藏图片**
-![space-bar](/images/gnome/space-bar.png)
+![space-bar/名称](/images/gnome/space-bar_name.png)
+![space-bar/数字](/images/gnome/space-bar_number.png)
 >>>
 
 <br>
 
-- [static-background-in-overview](https://extensions.gnome.org/extension/4696/static-background-in-overview/)
-在按下 `Super` 进入 `Overview` 时, 背景图片能够填补四边的空缺, 比起默认的四周黑框框更加好看  
->>> **点击展开/隐藏图片**
-![static-background-in-overview](/images/gnome/overview.png)
->>>
-
-<br>
-
-- [workspace-switcher-manager](https://extensions.gnome.org/extension/4788/workspace-switcher-manager/)
-美化通过键盘(我配成了 `Super + 1..9`), 切换工作区时的动画效果, 很赞很好看, 可以高度 DIY  
->>> **点击展开/隐藏图片**
-![workspace-switcher-manager](/images/gnome/workspace-switcher-manager.png)
->>>
-
-<br>
+<!-- Deprecated -->
+<!-- - [workspace-switcher-manager](https://extensions.gnome.org/extension/4788/workspace-switcher-manager/) -->
+<!-- 美化通过键盘(我配成了 `Super + 1..9`), 切换工作区时的动画效果, 很赞很好看, 可以高度 DIY   -->
+<!-- >>> **点击展开/隐藏图片** -->
+<!-- ![workspace-switcher-manager](/images/gnome/workspace-switcher-manager.png) -->
+<!-- >>> -->
+<!--  -->
+<!-- <br> -->
 
 - [disable-workspace-switch-animation-for-GNOME40+](https://extensions.gnome.org/extension/4290/disable-workspace-switch-animation-for-gnome-40/)
 消除通过键盘切换工作区时的过渡动画, 获得急速切换的体验感  
-**无图片**
-
-<br>
 
 - [gsconnect](https://extensions.gnome.org/extension/1319/gsconnect/)
 GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上角菜单添加对应菜单, 以便快速打开  
@@ -302,95 +350,74 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 
 <br>
 
-- [blur-my-shell](https://extensions.gnome.org/extension/3193/blur-my-shell/)
-用于让面板, 顶栏, Overview, 锁屏, gnome自带的截屏, 甚至特定的app, 都能被毛玻璃化, 很强大的扩展  
->>> **点击展开/隐藏图片**
-![blur-my-shell](/images/gnome/overview.png)
->>>
+<!-- Deprecated -->
+<!-- - [blur-my-shell](https://extensions.gnome.org/extension/3193/blur-my-shell/) -->
+<!-- 用于让面板, 顶栏, Overview, 锁屏, gnome自带的截屏, 甚至特定的app, 都能被毛玻璃化, 很强大的扩展   -->
+<!-- 但我并不推荐这个扩展, 因为修改的东西太多, 和其他插件一起的话, 有概率发生死机等问题   -->
+<!-- >>> **点击展开/隐藏图片** -->
+<!-- ![blur-my-shell](/images/gnome/overview.png) -->
+<!-- >>> -->
+<!--  -->
+<!-- <br> -->
 
-<br>
-
-- [big-avatar](https://extensions.gnome.org/extension/3488/big-avatar/)
-让右上角菜单出现你的头像, 点击之后触发自定义的命令, 但这功能不常用, 提升逼格而已  
->>> **点击展开/隐藏图片**
-![big-avatar](/images/gnome/big-avatar.png)
->>>
-
-<br>
-
-- [cpudots](https://extensions.gnome.org/extension/4530/cpudots/)
-监视你当前的CPU频率, 以百分数的形式呈现在顶栏  
->>> **点击展开/隐藏图片**
-![cpudots](/images/gnome/right-corner.png)
->>>
-
-<br>
-
-- [colorful-battery-indicator](https://extensions.gnome.org/extension/4817/colorful-battery-indicator/)
-让右上角的电池变成彩色, 根据电量, 分别呈现绿色, 黄色, 黄色, 美观且提示作用强  
->>> **点击展开/隐藏图片**
-![colorful-battery-indicator](/images/gnome/right-corner.png)
->>>
-
-<br>
+- [user-avatar-in-quick-settings](https://extensions.gnome.org/extension/5506/user-avatar-in-quick-settings/)
+让右上角菜单出现你的头像, 提升美观而已  
 
 - [gnome40-ui-improvements](https://extensions.gnome.org/extension/4158/gnome-40-ui-improvements/)
-按下 `Super`, 进入 `Overview` 后, 在中上方显示工作区的内容  
+按下 `Super`, 进入 `Overview` 后, 在中上方显示工作区, 与下面的插件 `v-shell`  不兼容, 二选一, 我推荐下面的 `v-shell`  
 >>> **点击展开/隐藏图片**
 ![gnome40-ui-improvements](/images/gnome/gnome40-ui-improvements.png)
 >>>
 
 <br>
 
-- [gnome-fuzzy-app-search](https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/)
-出于某些目的, 默认的 `GNOME` 在 `Overview` 中不支持模糊查找, 可以通过该扩展修改  
+- [v-shell](https://extensions.gnome.org/extension/5177/vertical-workspaces/)
+按下 `Super`, 进入 `Overview` 后, 在左边显示工作区, 同时附赠了各种非常好用的操作, 与上面的 `gnome40-ui-improvements` 二选一    
+当你进入 `Overview` 后, 按下 `space` 后可以查询打开的窗口, `alt+space` 查询最近修改的文件  
 >>> **点击展开/隐藏图片**
-![gnome-fuzzy-app-search](/images/gnome/gnome-fuzzy-app-search.png)
+![v-shell](/images/gnome/overview_44.png)
 >>>
 
 <br>
+
+- [gnome-fuzzy-app-search](https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/)
+出于某些目的, 默认的 `GNOME` 在 `Overview` 中不支持模糊查找, 可以通过该扩展修改行为  
 
 - [pip-on-top](https://extensions.gnome.org/extension/4691/pip-on-top/)
 当你通过浏览器中的画中画模式, 观看视频时, 让窗口一直保持在最顶部, 即使焦点在别的窗口  
-**无图片**
-
-<br>
 
 - [frequency-boost-switch](https://extensions.gnome.org/extension/4792/frequency-boost-switch/)
 在右上角菜单中的 `电池策略` 中添加一个 `Checkox`, 用于切换 `是否允许超频`  
->>> **点击展开/隐藏图片**
-![frequency-boost-switch](/images/gnome/frequency-boost-switch.png)
->>>
 
-<br>
+<!-- Deprecated -->
+<!-- - [overview-navigation](https://extensions.gnome.org/extension/1702/overview-navigation/) -->
+<!-- 当按下 `Super` 进入 `Overview` 后, 可以按下 `空格键`, 窗口上会出现字母   -->
+<!-- 输入小写字母就切换到对应窗口, 按下 `Shift` 会使字母颜色变红, 此时输入字母会关闭对应窗口   -->
+<!-- >>> **点击展开/隐藏图片** -->
+<!-- ![overview-navigation](/images/gnome/overview-navigation.png) -->
+<!-- >>> -->
+<!--  -->
+<!-- <br> -->
 
-- [overview-navigation](https://extensions.gnome.org/extension/1702/overview-navigation/)
-当按下 `Super` 进入 `Overview` 后, 可以按下 `空格键`, 窗口上会出现字母  
-输入小写字母就切换到对应窗口, 按下 `Shift` 会使字母颜色变红, 此时输入字母会关闭对应窗口  
->>> **点击展开/隐藏图片**
-![overview-navigation](/images/gnome/overview-navigation.png)
->>>
-
-<br>
-
-- [cleaner-overview](https://extensions.gnome.org/extension/3759/cleaner-overview/)
-进入 `Overview` 时, 将窗口排列整齐, 简单实用  
->>> **点击展开/隐藏图片**
-![cleaner-overview](/images/gnome/overview-navigation.png)
->>>
-
-<br>
+<!-- Deprecated -->
+<!-- - [cleaner-overview](https://extensions.gnome.org/extension/3759/cleaner-overview/) -->
+<!-- 进入 `Overview` 时, 将窗口排列整齐, 简单实用   -->
+<!-- >>> **点击展开/隐藏图片** -->
+<!-- ![cleaner-overview](/images/gnome/overview-navigation.png) -->
+<!-- >>> -->
+<!--  -->
+<!-- <br> -->
 
 - [user-theme](https://extensions.gnome.org/extension/19/user-themes/)
 从用户目录加载对应的主题 (之后的换主题教程中会讲到)  
 注意: 还需要使用 `gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com` 指定主题  
-**无图片**
-
-<br>
+但我个人还是喜欢 GNOME 默认的暗色主题, 默认的就已经非常好看了  
 
 - [user-syle-sheet](https://extensions.gnome.org/extension/3414/user-stylesheet-font/)
 读取 `~/.local/share/gnome-shell/gnome-shell.css` 直接修改 GNOME 的默认CSS, 十分逆天, 适合重度 DIY 患者  
-**无图片**
+
+
+
 - - -
 
 # 美化
@@ -451,7 +478,7 @@ gsettings set org.gnome.shell favorite-apps "[]"
 此扩展得到官方支持, 可以将桌面 `化简`, 包括Dash  
 如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[禁用快捷键](#jin-yong-kuai-jie-jian)  
 
-- 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: `space-bar` 或 `workspace-bar`)  
+- 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: `space-bar`)  
 
 ```bash
 # 自定义工作区的名称, 不然就是默认的数字
@@ -468,7 +495,10 @@ gsettings set org.gnome.desktop.wm.preferences workspace-names "['Browser', 'Ter
 当然, 你还可以禁用一些快捷键, 做到一些事情, 比如消除 Dash  
 
 **注意:**  
-快捷键之间有冲突的话, 可能无法生效, 请通过 `gnome-control-center keyboard` 查看快捷键冲突  
+快捷键部分, 还是推荐通过 `gnome-control-center keyboard` 打开设置中心的键盘区, 在其中自定义快捷键  
+(如果图形界面无法满足你的需求, 你可以再捉摸着, 看看下面的命令行部分, 或许可以帮到你)
+
+快捷键之间有冲突的话, 可能无法生效, 请通过 `gnome-control-center keyboard` 查看快捷键冲突并重置快捷键至默认  
 
 
 ## 查找快捷键
@@ -557,7 +587,7 @@ gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']" 
 gsettings set org.gnome.desktop.wm.keybindings show-desktop      "['<Super>d']"     #Default: None
 ```
 
-- 还有套很重要的快捷键, 就是切换工作区了, 搭配消除过渡动画/增加特效的扩展, 流畅感Max:  
+- 还有套很重要的快捷键, 就是切换工作区了, 搭配先前提到过的消除过渡动画的扩展, 流畅感Max:  
 
 ```bash
 for i in $(seq 9)
@@ -605,7 +635,7 @@ gsettings set $gp1/custom1/ binding  '<Super>e'
 
 ## Browser
 gsettings set $gp1/custom2/ name     'Browser'
-gsettings set $gp1/custom2/ command  'microsoft-edge-beta'
+gsettings set $gp1/custom2/ command  'firefox'
 gsettings set $gp1/custom2/ binding  '<Super>b'
 
 ## Fcitx5 Reload

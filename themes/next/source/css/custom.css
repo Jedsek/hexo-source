@@ -37,6 +37,11 @@
   src: url('./FiraCode-Regular.woff')
 }
 
+// @font-face {
+//   font-family: 'GenShin';
+//   src: url('./genshin.woff2')
+// }
+
 .tips {
   padding-left: 10px;
   background-color rgba(52,152,219,.3);
