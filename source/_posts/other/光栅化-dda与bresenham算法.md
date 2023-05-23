@@ -1,6 +1,6 @@
 ---
 title: 光栅化-对直线的dda与bresenham算法
-abbrlink: posts/rasterization-dda-bresenham
+abbrlink: posts/other/rasterization-dda-bresenham
 hidden: false
 date: 2022-12-26 17:35:10
 top:

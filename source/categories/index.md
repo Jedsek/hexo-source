@@ -15,6 +15,12 @@ quicklink: true
 在此贴出来, 相当于给自己定个小目标, 提醒自己不要忘记, 要坚持学习  
 
 - - -
+# Novel
+二作同人文, 会在文章名前标出原创作品  
+[ ]  [明日方舟/浪潮涌没的终焉与永恒之爱](/posts/novel/浪潮涌没的终焉与永恒之爱)
+[ ]  [东方Project/墨染樱下幽魂](/posts/novel/墨染樱下幽魂)
+
+- - -
 
 # Rust
 Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
@@ -28,7 +34,7 @@ Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
 - - -
 
 # 光栅化
-[ ]  [光栅化中的dda与bresenham两种算法](/posts/rasterization-dda-bresenham)
+[ ]  [光栅化中的dda与bresenham两种算法](/posts/other/rasterization-dda-bresenham)
 
 - - -
 

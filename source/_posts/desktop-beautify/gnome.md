@@ -15,18 +15,28 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 # 开篇说明
 
 **注意:**  
-本篇文章的配置皆在注重简洁, 高效, 美观  
+本篇文章的配置皆在注重 **简洁**, **美观**, **高效**  
 想要平铺式, 炫酷效果, 更多功能的, 请自行配置, 或查看我的另外一篇博客: [Hyprland 平铺式](/posts/desktop-beautify/hyprland)  
 请注意 GNOME 版本是否相符, 有少许地方或因版本差异而不同, 我将尽量保持同步, 使该文章最新  
-目前, 该篇文章的适用 GNOME 版本为: **44**  (**于2023年5月20更新本文**)
+目前, 该篇文章的适用 GNOME 版本为: **44**  (**于2023年5月21更新本文**)
+
+**注意:**  
+如果你是在我的博客上阅读本文, 请善用右侧目录功能  
 
 - - -
 
-# 版本迁移
+# 更新说明
 
-**每次更新本文时, 一切更新记录都是在开篇, 也就是这里, 进行记录, 方便读者进行版本迁移 (比如从 43 -> 44)**  
+**每次更新本文时, 一切更改记录都会放在这里, 方便读者进行版本迁移 (比如从 43 -> 44), 或者发现新的有用的插件**
 **版本的不同, 在除了插件方面会有所差异, 其他地方是几乎一样的, 就算真有不一样的地方我也会标注的, 请放心**  
-**一般来说, 每次更新本文时, 主要更新的是 [推荐的扩展](#tui-jian-de-kuo-zhan) 这部分, 如果你已经看过本文了, 一般只需要跳转至那一部分即可**
+**一般来说, 每次更新本文时, 主要更新的是 [推荐插件列表](#tui-jian-cha-jian-lie-biao) 这部分, 如果你已经看过本文了, 一般只需要跳转至那一部分即可**
+
+- 2023.5.21  
+更新了本文版本以适配 GNOME-44  
+更新了推荐插件列表及相应配图  
+添加了 "gdm下部分设置无法生效" 的解决方法  
+
+
 
 - - -
 
@@ -40,12 +50,13 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 
 - - -
 
-# dconf && gsettings
+# 使用工具说明
+
 - `dconf`:
-是一套基于键的配置系统, 十分高效, 相当于 Windows 下的注册表  
+是一套基于键的配置系统, 十分高效, 你可以将其视作 Windows 下的注册表, 但修改起来非常简单  
 
 - `gsettings`:
-是 GNOME-DE 下的高级API, 是命令行工具/前端, 用来简化对 dconf 的操作  
+是 GNOME 下的高级API, 是一个命令行工具, 用来简化对 dconf 的操作  
  
 
 你可能在年份久远的文章中听说过 `gconf`, 这是什么? 与 `dconf` 有啥区别?  
@@ -54,14 +65,16 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 接下来的大部分配置, 都会使用 `gsettings` 在命令行中进行操作
 
 当然, 你也可以通过图形化界面, 比如 `gnome-control-center` 进行设置, 但有一些东西是界面里不存在/无法调整的  
-而且为了方便读者进行复制粘贴, 特此写成命令形式  
+同时, 为了方便读者进行复制粘贴, 特此写成命令形式 ~~(快说蟹蟹!!)~~  
 
 - - - 
 
-# 触摸板
+# 常用设置
+以下是各种方面的设置, 直接复制粘贴, 有些地方进行下修改, 适配自己情况即可  
+
+## 触摸板
 触摸板可是笔记本党的灵魂啊, 尤其对于我这种万年不用鼠标, 除非打CSGO ~~(但CS我也能用触摸板玩)~~
 
-## 配置
 有一些 Linux 发行版的 GNOME比较贴近上游, `轻击模拟鼠标点击` 默认未开启  
 这导致触摸板很难用, 得按下去才能模拟鼠标的点击  
 
@@ -82,33 +95,59 @@ gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
 - 调整触摸板速度, 默认为0
 - 打字时禁用触摸板, 默认为true
 
-## 手势
+常用手势:  
 - 单指: 移动鼠标
 - 双指上下: 翻页
 - 三指左右: 切换Workspace
 - 三指上: 打开Overview (不常用, 按Super更快)
 - 三指下: 显示任务栏 (当你隐藏任务栏时)
 
-(安装一些扩展后, 相关快捷键可能会发生改变)
+(安装一些插件后, 相关快捷键可能会发生改变)
+
+## 窗口与工作区
+你可以自定义窗口的最大化/最小化/全屏/隐藏/更改大小/移动, 与有关工作区部分的快捷键  
+鉴于这一部分属于设置快捷键系列, 请您移动至本文后面的 **[修改快捷键](#xiu-gai-kuai-jie-jian)** 目录  
+
+举个例子:  
+比如 "move window", 普通来讲你可能会双击窗口的标题栏, 然后拖动窗口进行移动, 但你完全可以将这个操作绑定在快捷键 "Super+x" 上  
+然后按一次该快捷键, 进入 "move mode", 移动完毕之后再按一次(或者点击一下), 就可以确定窗口位置  
+如果你不满意, 可以按一下 `Esc`, 恢复到初始位置  
+
+还有很多操作, 比如移动某个窗口至指定工作区, 或者切换至某个工作区, 就像是使用着类似 "i3/sway/hyprland" 等 "window manager" 一样的体验  
 
 - - -
 
-# 安装扩展
-GNOME 的扩展(Extensions)是其重要的组成, 赋予了随意组合的 **自由** 与 **强大**, 说是 GNOME 一半的 **灵魂** 所在, 也不为过之  
-我将先介绍如何安装/使用它们, 因为后面需要用到扩展  
+# GDM
+稍微说明下, 如果你在登陆之后使用 gsettings 进行的设置, 无法在 GDM 中生效时, 极大概率是用户与权限问题  
+
+比如, 你发现触摸板明明已经设置了轻触模拟点击, 但在 GDM 中无效, 那就指定 `gdm` 用户, 再设置一遍即可:  
+
+```bash
+xhost +SI:localuser:gdm
+sudo -u gdm gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+sudo -u gdm gsettings set org.gnome.desktop.peripherals.touchpad speed 0.57
+sudo -u gdm gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
+```
+
+- - -
+
+# 插件
+## 安装插件
+GNOME 的插件(Extensions)是其重要的组成, 赋予了随意组合的 **自由** 与 **强大**, 说是 GNOME 一半的 **灵魂** 所在, 也不为过之  
+我将先介绍如何安装/使用它们, 因为后面需要用到插件  
 
 有两种安装方法, 一种从命令行安装, 一种从浏览器安装  
 我更倾向于前者, 因为不需要下载对应的东西, 适合快速部署, 但两者我都会介绍  
 
-## 从命令行
+### 从命令行
 **提示**  
-请确保拥有以下命令: unzip, jq, 有些发行版默认连 unzip 都没有...  
-下载成功后, 切记要 logout, 然后再登进来  
+请确保拥有以下命令: `unzip`, `jq`, 有些发行版默认连 `unzip` 都没有...  
+下载成功后, 切记要 logout, 然后再登进来, 运行 `gnome-session-quit` 即可  
 
-每个GNOME扩展都拥有独一无二的, 名为 `uuid` 的标识符, 我们可以通过 `uuid`, 下载扩展  
+每个GNOME插件都拥有独一无二的, 名为 `uuid` 的标识符, 我们可以通过 `uuid`, 下载插件  
 
-你可以在 [Extensions-GNOME](https://extensions.gnome.org/) 这个网站上, 浏览并下载扩展  
-请将以 .zip 结尾的扩展放在同一目录下, 假设该目录叫 `exts_list`  
+你可以在 [Extensions-GNOME](https://extensions.gnome.org/) 这个网站上, 浏览并下载插件  
+请将以 .zip 结尾的插件放在同一目录下, 假设该目录叫 `exts_list`  
 
 下面是 Bash/Fish 脚本, 传入该目录的路径, 自动进行安装:  
 
@@ -170,7 +209,7 @@ sudo dbus-send --type=method_call --dest=org.gnome.Shell /org/gnome/Shell \
   org.gnome.Shell.Extensions.InstallRemoteExtension string:'xxxxx_uuid'
 ```
 
-## 从浏览器
+### 从浏览器
 该方法其实也蛮方便的, 但不适合快速部署  
 你需要安装两个玩意, 才能直接从 [Extension-GNOME](https://extensions.gnome.org/) 上直接下载  
 
@@ -185,51 +224,51 @@ Edge 的插件商店里无, 但可以下载 iGuge (谷歌访问助手), 然后�
 
 - - -
 
-# 查看/配置扩展
+## 查看与配置插件
 此处推荐使用浏览器来设置插件, 在 [https://extensions.gnome.org/local/](https://extensions.gnome.org/local/) 页面管理与配置插件  
 
-如果你想通过命令行, 则可以使用 `gnome-extensions` 这个命令, 来查看/配置扩展:  
+如果你想通过命令行, 则可以使用 `gnome-extensions` 这个命令, 来查看并配置插件:  
 
 ```bash
 # 获取帮助, `Command` 为可选项
 gnome-extensions help [Command]
 
-# 查看扩展列表
-gnome-extensions list --user    # 查看用户级扩展
-gnome-extensions list --system  # 查看系统级扩展
+# 查看插件列表
+gnome-extensions list --user    # 查看用户级插件
+gnome-extensions list --system  # 查看系统级插件
 
-# 查看扩展的信息
+# 查看插件的信息
 gnome-extensions info launch-new-instance@gnome-shell-extensions.gcampax.github.com
 
-# 启用/禁用某个扩展
+# 启用/禁用某个插件
 gnome-extensions enable nothing-to-say@extensions.gnome.wouter.bolsterl.ee
 gnome-extensions disable nothing-to-say@extensions.gnome.wouter.bolsterl.ee
 
-# 配置某个扩展 (打开 GUI 界面)
+# 配置某个插件 (打开 GUI 界面)
 gnome-extensions prefs nothing-to-say@extensions.gnome.wouter.bolsterl.ee
 ```
 
-或者通过 `gsettings` 来配置某个扩展, 但不推荐, 因为麻烦:  
+或者通过 `gsettings` 来配置某个插件, 但不推荐, 因为麻烦:  
 
 ```bash
-# 查看某个扩展的所有选项
+# 查看某个插件的所有选项
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@extensions.gnome.wouter.bolsterl.ee/schemas/  \
   list-recursively org.gnome.shell.extensions.nothing-to-say
   
-# 得到/重置/设置 某个扩展的某选项当前的值 (根据上面这条命令查看所有选项)
+# 得到/重置/设置 某个插件的某选项当前的值 (根据上面这条命令查看所有选项)
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@extensions.gnome.wouter.bolsterl.ee/schemas/  \
   get    org.gnome.shell.extensions.nothing-to-say show-osd
 # reset  org.gnome.shell.extensions.nothing-to-say show-osd
 # set    org.gnome.shell.extensions.nothing-to-say show-osd
 ```
 
-你可以在已经配置好插件的机器上, 导出 `dconf.settings` 文件, 并在新机器上加载它, 避免更换机器/重装系统之后再次设置扩展  
+你可以在已经配置好插件的机器上, 导出 `dconf.settings` 文件, 并在新机器上加载它, 避免更换机器/重装系统之后再次设置插件  
 详情请见 [**加载配置**](#jia-zai-pei-zhi)  
 
 - - -
 
-# 推荐的扩展
-以下是我目前正在使用且推荐的扩展, 适用版本为 **44**  
+# 推荐插件列表
+以下是我目前正在使用且推荐的插件, 适用版本为 **44**  
 
 **注意:**
 <!-- 如果你是通过我的博客 [jedsek.xyz](https://jedsek.xyz) 观看的话, 我默认隐藏了这些图片  -->
@@ -307,7 +346,7 @@ quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效,
 在对窗口进行移动/调整大小时, 使窗口变得透明  
 
 - [just-perfection](https://extensions.gnome.org/extension/3843/just-perfection/)
-我最喜欢的一个扩展, 用于对界面进行大量自定义与精简  
+我最喜欢的一个插件, 用于对界面进行大量自定义与精简  
 比如, 可以隐藏 Dash (按Super后底部的一行), 改变顶栏元素等  
 >>> **点击展开/隐藏图片**
 ![just-perfection](/images/gnome/overview_44.png)
@@ -321,7 +360,7 @@ quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效,
 当与同学打游戏, 撞上爸妈查房, 立刻按下 `Super+\`, 防止爸妈训我的声音流入同学耳中, 维护尊严 :)  
 
 - [space-bar](https://extensions.gnome.org/extension/5090/space-bar/)
-模仿 I3/Sway/Bspwm 等窗口管理器, 将左上角烦人的 `Activities` 替换为 `Workspaces`, 有些类似的扩展, 但这个人认为最好  
+模仿 I3/Sway/Bspwm 等窗口管理器, 在左上角显示工作区, 有些类似的插件, 但个人认为, 这个插件最好  
 >>> **点击展开/隐藏图片**
 ![space-bar/名称](/images/gnome/space-bar_name.png)
 ![space-bar/数字](/images/gnome/space-bar_number.png)
@@ -352,8 +391,8 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 
 <!-- Deprecated -->
 <!-- - [blur-my-shell](https://extensions.gnome.org/extension/3193/blur-my-shell/) -->
-<!-- 用于让面板, 顶栏, Overview, 锁屏, gnome自带的截屏, 甚至特定的app, 都能被毛玻璃化, 很强大的扩展   -->
-<!-- 但我并不推荐这个扩展, 因为修改的东西太多, 和其他插件一起的话, 有概率发生死机等问题   -->
+<!-- 用于让面板, 顶栏, Overview, 锁屏, gnome自带的截屏, 甚至特定的app, 都能被毛玻璃化, 很强大的插件   -->
+<!-- 但我并不推荐这个插件, 因为修改的东西太多, 和其他插件一起的话, 有概率发生死机等问题   -->
 <!-- >>> **点击展开/隐藏图片** -->
 <!-- ![blur-my-shell](/images/gnome/overview.png) -->
 <!-- >>> -->
@@ -381,7 +420,7 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 <br>
 
 - [gnome-fuzzy-app-search](https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/)
-出于某些目的, 默认的 `GNOME` 在 `Overview` 中不支持模糊查找, 可以通过该扩展修改行为  
+出于某些目的, 默认的 `GNOME` 在 `Overview` 中不支持模糊查找, 可以通过该插件修改行为  
 
 - [pip-on-top](https://extensions.gnome.org/extension/4691/pip-on-top/)
 当你通过浏览器中的画中画模式, 观看视频时, 让窗口一直保持在最顶部, 即使焦点在别的窗口  
@@ -422,7 +461,7 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 
 # 美化
 以下美化工作涉及暗模式, 背景, 头像, 主题, 字体, Dash等  
-还有很多扩展有帮助, 上面 [推荐的扩展](#tui-jian-de-kuo-zhan) 里有提到, 比如那个更改css的, 这里不说了  
+还有很多插件有帮助, 上面 [推荐插件列表](#tui-jian-cha-jian-lie-biao) 里有提到, 比如那个更改css的, 这里不说了  
 
 - 启动暗模式:  
 
@@ -455,7 +494,7 @@ git clone https://gitee.com/mirror_jedsek/Nordic.git
 gsettings set org.gnome.desktop.interface gtk-theme 'Nordic'
 gsettings set org.gnome.desktop.wm.preferences theme 'Nordic'
 
-# 你也可以使用 `user-theme` 这个扩展进行设置:  
+# 你也可以使用 `user-theme` 这个插件进行设置:  
 mkdir ~/.themes/ && cd ~/.themes/
 git clone https://gitee.com/mirror_jedsek/Nordic.gi
 gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com
@@ -474,11 +513,11 @@ gsettings set org.gnome.shell favorite-apps "[]"
 ```
 
 **注意:**  
-以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 `Just-perfection` 扩展  
-此扩展得到官方支持, 可以将桌面 `化简`, 包括Dash  
-如果你只是使用扩展, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[禁用快捷键](#jin-yong-kuai-jie-jian)  
+以上命令仅仅移除 Dash 中的app, 但仍然会留下一个空的Dash栏, 彻底隐藏, 请使用 `Just-perfection` 插件  
+此插件得到官方支持, 可以将桌面 `化简`, 包括Dash  
+如果你只是使用插件, 将 Dash 隐藏, 未置空列表, 相关快捷键仍然生效, 需被禁用而彻底消除Dash, 请看下面的[禁用快捷键](#jin-yong-kuai-jie-jian)  
 
-- 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装扩展: `space-bar`)  
+- 去掉左上角的 `Activities`: 可将其换成 I3/Sway 式, 显示工作区名称 (请安装插件: `space-bar`)  
 
 ```bash
 # 自定义工作区的名称, 不然就是默认的数字
@@ -543,7 +582,7 @@ gsettings set org.gnome.mutter.wayland.keybindings restore-shortcuts "[]" # Defa
 修改, 也就是覆写默认的快捷键, 与下文要讲的 [添加快捷键](#tian-jia-kuai-jie-jian) 不是一个概念  
 单纯的改改改而已, 下面是我个人修改的一套快捷键, 供大家参考  
 
-- Vim 式的案件, 改变窗口布局, 替代原有的 `Super+方向键`:  
+- Vim 式的按键, 改变窗口布局, 替代原有的 `Super+方向键`:  
 
 ```bash
 # 其实还有更丧心病狂的, 可以绑定快捷键, 将窗口放左上角, 右上角, 中间左边, 中间右边的......
@@ -554,7 +593,7 @@ gsettings set org.gnome.desktop.wm.keybindings  unmaximize         "['<Super>k']
 gsettings set org.gnome.mutter.keybindings      toggle-tiled-right "['<Super>l']" # 放右边
 ```
 
-对了, 如果你追求平铺式的话, 扩展可以满足一部分要求, 但肯定比不上专业的窗管...  
+对了, 如果你追求平铺式的话, 插件可以满足一部分要求, 但肯定比不上专业的窗管...  
 
 - move, resize, kill 一个窗口:  
 
@@ -587,7 +626,7 @@ gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']" 
 gsettings set org.gnome.desktop.wm.keybindings show-desktop      "['<Super>d']"     #Default: None
 ```
 
-- 还有套很重要的快捷键, 就是切换工作区了, 搭配先前提到过的消除过渡动画的扩展, 流畅感Max:  
+- 还有套很重要的快捷键, 就是切换工作区了, 搭配先前提到过的消除过渡动画的插件, 流畅感Max:  
 
 ```bash
 for i in $(seq 9)
@@ -619,8 +658,8 @@ gp1="org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:\
 # Custom Keys
 # 注意!!!!!!!
 # 不要在最后添加逗号
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[     \
-    '$gp0/custom0/', '$gp0/custom1/', '$gp0/custom2/', '$gp0/custom3/'               \
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[             \
+    '$gp0/custom0/', '$gp0/custom1/', '$gp0/custom2/', '$gp0/custom3/', '$gp0/custom4/'      \
 ]"
 
 ## Terminal
@@ -638,14 +677,19 @@ gsettings set $gp1/custom2/ name     'Browser'
 gsettings set $gp1/custom2/ command  'firefox'
 gsettings set $gp1/custom2/ binding  '<Super>b'
 
+## Logout
+gsettings set $gp1/custom3  name     'Logout'
+gsettings set $gp1/custom3/ command  'gnome-session-quit'
+gsettings set $gp1/custom3/ binding  '<Super><Shift>Escape'
+
 ## Fcitx5 Reload
-gsettings set $gp1/custom3/ name     'Fcitx5_Reload'
-gsettings set $gp1/custom3/ command  'fcitx5 -r'
-gsettings set $gp1/custom3/ binding  '<Alt>space'
+gsettings set $gp1/custom4/ name     'Fcitx5_Reload'
+gsettings set $gp1/custom4/ command  'fcitx5 -r'
+gsettings set $gp1/custom4/ binding  '<Alt><Shift>space'
 ```
 
-我相信你不会将时间浪费在掉在坑里面了  
-上面的一切已经非常非常全了  
+上面的一切已经非常非常详细, 但接下来还要解决最后的问题:  
+如果你更换了机器/重装了系统, 如何快速恢复先前的工作环境?  
 
 - - -
 
@@ -653,6 +697,11 @@ gsettings set $gp1/custom3/ binding  '<Alt>space'
 我们可以通过 dconf 这个工具, 导入或导出记载着 GNOME 数据的配置文件  
 你可以导出记载当前DE的配置文件, 然后导出到另一台机器上  
 这意味着, 当你重装系统时, 按下面的方法能快速恢复到先前的DE  
+
+**注意:**  
+我相信你还没有忘记, 如何把插件下载下来, 将十几个zip文件放在一个文件夹里面, 然后用bash脚本自动下载安装吧?  
+请跳转至上面的 [安装插件/从命令行](#cong-ming-ling-xing) 目录
+
 
 ## 对于非Nixos
 对于普通的Linux发行版, 直接按下面的方式  

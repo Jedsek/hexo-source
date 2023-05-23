@@ -4,6 +4,7 @@
 !themes/
 !themes/next/
 !themes/next/_config.yaml
+!themes/next/source/css/custom.css
 
 !source/
 !source/**
