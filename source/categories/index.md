@@ -24,6 +24,7 @@ quicklink: true
 
 # Rust
 Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
+[ ]  [Rust中那些常见的错误](/posts/rust-common-errors)
 [ ]  [声明宏](/categories/rust-decl-macro)
 [ ]  [异步](/categories/rust-async)
 [ ]  [音视频处理 (gstreamer)](/categories/rust-gstreamer)

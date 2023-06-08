@@ -105,7 +105,17 @@ gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
 (安装一些插件后, 相关快捷键可能会发生改变)
 
 ## 窗口与工作区
-你可以自定义窗口的最大化/最小化/全屏/隐藏/更改大小/移动, 与有关工作区部分的快捷键  
+我个人喜欢将工作区设置为静态, 也就是禁止动态工作区, 防止窗口自由移动, 同时将工作区设置为10个:  
+
+```bash
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 10
+```
+
+(Mutter 是 GNOME 自己的窗口管理器)  
+ 
+
+对于快捷键, 你可以自定义窗口的最大化/最小化/全屏/隐藏/更改大小/移动, 与有关工作区的部分  
 鉴于这一部分属于设置快捷键系列, 请您移动至本文后面的 **[修改快捷键](#xiu-gai-kuai-jie-jian)** 目录  
 
 举个例子:  
