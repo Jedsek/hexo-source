@@ -12,3 +12,4 @@ keywords:
 ---
 
 [x]  [p1-系列说明](/posts/rust-tui/p1)
+[ ]  [p2-基础架构](/posts/rust-tui/p2)
