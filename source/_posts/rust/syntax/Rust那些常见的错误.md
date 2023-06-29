@@ -1,9 +1,9 @@
 ---
-title: Rust那些常见的错误
+title: Rust中那些常见的错误
 abbrlink: posts/rust-common-errors
 hidden: false
 date: 2023-06-08 12:08:42
-top:
+top: 49999
 tags: [Rust]
 keywords: [Rust]
 ---

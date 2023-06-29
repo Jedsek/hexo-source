@@ -31,6 +31,7 @@ Rust, 是一门高性能, 工具链友善, 类型严格显式的编程语言
 [x]  [命令行 (clap-rs)](/posts/rust-clap/intro)
 [ ]  [GUI (gtk4/iced/relm4)](/categories/rust-gui)
 [ ]  [TUI (ratatui-rs)](/categories/rust-tui)
+[ ]  [并发中的原子与锁](/categories/rust-atomics-and-locks)
 
 - - -
 

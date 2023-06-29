@@ -3,6 +3,10 @@
   line-height: 1.2
 }
 
+li {
+  line-height: 1;
+}
+
 .post br {
   line-height: 1.45
 }
