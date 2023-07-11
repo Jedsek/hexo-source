@@ -102,6 +102,7 @@ creative_commons:
 menu:
   home: /  || iconfont icon-home
   about: /about/ || iconfont icon-about
+  sayings:  /sayings || iconfont icon-yulu
   categories: /categories/ || iconfont icon-Z-fenleidaohang
   # guestbook: /guestbook/ || fa fa-comments
   # tags: /tags/ || fa fa-tags

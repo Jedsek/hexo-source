@@ -12,4 +12,6 @@ keywords:
 ---
 
 [x]  [p1~> 系列说明](/posts/rust-atomics-and-locks/p1)
-[ ]  [p2~> 基础概念](/posts/rust-atomics-and-locks/p2)
+[x]  [p2~> 基础概念](/posts/rust-atomics-and-locks/p2)
+[ ]  [p3~> 原子](/posts/rust-atomics-and-locks/p3)
+

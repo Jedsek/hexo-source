@@ -30,15 +30,16 @@ GTK4 是 Linux 平台上推荐的选项, 说简单肯定不至于, 但说稳是�
 
 - - -
 
+# Relm4
+基于 GTK4, 加上了 Elm 语言的模型, 可以看作是 gtk-rs 的语法糖版本, 而且甜了好几个数量级
+
+- - -
+
 # Iced
-Iced 使用 Elm 语言的模型, 很有趣也非常简单易学, 加上跨平台与能轻松编译到 web 端的特性, 很是推荐  
+Iced 使用 Elm 语言的模型, 很有趣, 且简单易学  
 [ ]  [p1~> 系列说明](/posts/rust-iced/p1)
 [ ]  [p2~> Elm式架构](/posts/rust-iced/p2)
 [ ]  [p3~> 布局](/posts/rust-iced/p3)
 [ ]  [p4~> 样式](/posts/rust-iced/p4)
 
 
-- - -
-
-# Relm4
-基于 GTK4, 加上了 Elm 语言的模型, 可以看作是 gtk-rs 的语法糖版本 ~~(应该?)~~, 一般推荐  

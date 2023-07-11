@@ -7,6 +7,7 @@ title:
   schedule: schedule
   guestbook: guestbook
   about: about
+  sayings: sayings
 menu:
   home: " 首页"
   archives: 归档
@@ -14,6 +15,7 @@ menu:
   tags: 标签
   guestbook: 留言
   about: " 关于"
+  sayings: " 语录"
   search: 搜索
   schedule: 日程表
   sitemap: 站点地图

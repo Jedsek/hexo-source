@@ -11,6 +11,10 @@ li {
   line-height: 1.45
 }
 
+p br {
+  line-height: 1.74
+}
+
 .sidebar-inner {
   padding: 0px;
   margin: 0px;
