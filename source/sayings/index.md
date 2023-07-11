@@ -10,6 +10,7 @@ tags:
 categories:
 keywords:
 ---
+> 苦苦追寻着喜爱的艺术, 对不存于世的美好和与世隔绝的幻想, 抱以无上热忱!  
 
 # galgame
 
