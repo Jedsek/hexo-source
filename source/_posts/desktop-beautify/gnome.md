@@ -34,7 +34,7 @@ next_post: [posts/desktop-beautify/hyprland, Hyprland 平铺式]
 - 2023.5.21  
 更新了本文版本以适配 GNOME-44  
 更新了推荐插件列表及相应配图  
-添加了 "gdm下部分设置无法生效" 的解决方法  
+添加了 "gdm下部分设置无法生效" 的解决方法  <br/>
 
 
 
@@ -296,63 +296,63 @@ gsettings --schemadir ~/.local/share/gnome-shell/extensions/nothing-to-say@exten
 <!-- 你可以展开任意一张图片后, 点击图片, 然后可以通过方向键切换图片 :)  -->
 
 - [transparent-top-bar(adjustable-transparency)](https://extensions.gnome.org/extension/3960/transparent-top-bar-adjustable-transparency/)
-让顶栏变透明的插件, 当窗口最大化或者与顶栏重叠时, 为了显示清晰会自动重新变回不透明  
+让顶栏变透明的插件, 当窗口最大化或者与顶栏重叠时, 为了显示清晰会自动重新变回不透明  <br/>
 
 - [auto-move-windows](https://extensions.gnome.org/extension/16/auto-move-windows/)  
-通过指定窗口规则, 使得打开某个app时, 将其自动分配到特定工作区 (需要指定的.desktop文件)  
+通过指定窗口规则, 使得打开某个app时, 将其自动分配到特定工作区 (需要指定的.desktop文件)  <br/> 
 
 - [color-app-menu-icon](https://extensions.gnome.org/extension/5473/color-app-menu-icon-for-gnome-40/)
-顶栏左上角会显示你当前所在应用的图标与名称  
+顶栏左上角会显示你当前所在应用的图标与名称   <br/>
 
 - [draw-on-your-screen-2](https://extensions.gnome.org/extension/4937/draw-on-you-screen-2/)
-通过设置的快捷键, 让你可以在屏幕上用画笔画画, 在录制视频, 向他人演示, 标记重点的时候非常有用  
+通过设置的快捷键, 让你可以在屏幕上用画笔画画, 在录制视频, 向他人演示, 标记重点的时候非常有用  <br/> 
 
 - [removable-drive-menu](https://extensions.gnome.org/extension/7/removable-drive-menu/)
-当你插入u盘之后, 顶栏会出现显示图标, 让你快速访问文件, u盘拔出之后图标自动消失  
+当你插入u盘之后, 顶栏会出现显示图标, 让你快速访问文件, u盘拔出之后图标自动消失   <br/>
 
 - [run-cat](https://extensions.gnome.org/extension/2986/runcat/)
-在顶栏出现一只奔跑的小猫与 cpu 的利用率, cpu 利用率越高, 小猫跑得越快  
+在顶栏出现一只奔跑的小猫与 cpu 的利用率, cpu 利用率越高, 小猫跑得越快   <br/>
 
 - [quick-touchpad-toggle](https://extensions.gnome.org/extension/5292/quick-touchpad-toggle/)
-在 quick-settings 中增加一个选项, 让你快速启用/禁用触摸板  
+在 quick-settings 中增加一个选项, 让你快速启用/禁用触摸板   <br/>
 
 - [quick-close-in-overview](https://extensions.gnome.org/extension/352/middle-click-to-close-in-overview/)
-在 overview 中, 当你的鼠标移动到对应窗口时, 右上角增加一个叉叉, 让你快速关闭窗口  
+在 overview 中, 当你的鼠标移动到对应窗口时, 右上角增加一个叉叉, 让你快速关闭窗口  <br/> 
 
 - [just-another-search-bar](https://extensions.gnome.org/extension/5522/just-another-search-bar/)
 让你自己设置一个快捷键, 按下之后打开一个搜索框, 然后用你的默认浏览器搜索输入内容, 你可以设置搜索引擎(google/bing)  
-这个操作在 overview 中也可以做到, 名字都说了是 just-another, 是为了更美观  
+这个操作在 overview 中也可以做到, 名字都说了是 just-another, 是为了更美观   <br/>
 
 - [coverflow-alt-tab](https://extensions.gnome.org/extension/97/coverflow-alt-tab/)
-让你在使用 `super+tab`/`alt+tab` 切换窗口时, 获得好看美观的特效  
+让你在使用 `super+tab`/`alt+tab` 切换窗口时, 获得好看美观的特效   <br/>
 
 - [customize-iBus](https://extensions.gnome.org/extension/4112/customize-ibus/)
 ibus 是 gnome 内置的一个输入法, 但没有 fcitx5 强, 不过默认情况下已经蛮好看了  
 该插件可以深度自定义 ibus 的行为, 比如打字时能让候选框随着打字的节奏而抖动, 非常爽  
 再比如设置中英文切换时, 指示器的显示时间, 抖动效果, 闪烁特效等  
-~~(但我还是选择无敌的 fcitx5)~~  
+~~(但我还是选择无敌的 fcitx5)~~   <br/>
 >>> **点击展开/隐藏图片**
 ![ibus默认情况下的外表/系统暗色主题](/images/gnome/ibus.png)
 >>>
 
 - [quake-mode](https://extensions.gnome.org/extension/1411/quake-mode/)  
 雷神模式!! 该插件可以让你以雷神模式打开一些与快捷键绑定的应用, 即以下拉式打开任意一个app, 全部工作区共享一个app  
-quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效, 具体效果可以点击链接看动图演示即可    
+quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效, 具体效果可以点击链接看动图演示即可    <br/> 
 
 - [color-pciker](https://extensions.gnome.org/extension/3396/color-picker/)
-采色笔, 用来采集颜色, 有相关需求的话非常有用, 没什么好说的  
+采色笔, 用来采集颜色, 有相关需求的话非常有用, 没什么好说的   <br/>
 
 - [battery-time](https://extensions.gnome.org/extension/5425/battery-time/)
-在 quick-setting 中显示你的电量还可以撑多久  
+在 quick-setting 中显示你的电量还可以撑多久   <br/>
 
 - [bluetooth-battery-indicator](https://extensions.gnome.org/extension/3991/bluetooth-battery/)
-当你连接蓝牙设备之后, 会在顶栏显示电量  
+当你连接蓝牙设备之后, 会在顶栏显示电量   <br/>
 
 - [bluetooth-quick-connect](https://extensions.gnome.org/extension/1401/bluetooth-quick-connect/)
-在 quick-setting 中, 让你快速连接/断开已经配对过的蓝牙设备, 非常有用  
+在 quick-setting 中, 让你快速连接/断开已经配对过的蓝牙设备, 非常有用  <br/> 
 
 - [control-blur-effect-on-lock-screen](https://extensions.gnome.org/extension/2935/control-blur-effect-on-lock-screen/)
-锁屏之后, 背景图片会变得模糊(blur), 这个插件可以修改模糊度, 我个人喜欢背景完全不模糊  
+锁屏之后, 背景图片会变得模糊(blur), 这个插件可以修改模糊度, 我个人喜欢背景完全不模糊  <br/> 
 
 <!-- Deprecated -->
 <!-- - [refresh-wifi-connections](https://extensions.gnome.org/extension/905/refresh-wifi-connections/) -->
@@ -365,11 +365,11 @@ quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效,
 <!-- <br> -->
 
 - [transparent-window-moving](https://extensions.gnome.org/extension/1446/transparent-window-moving/)
-在对窗口进行移动/调整大小时, 使窗口变得透明  
+在对窗口进行移动/调整大小时, 使窗口变得透明   <br/>
 
 - [just-perfection](https://extensions.gnome.org/extension/3843/just-perfection/)
 我最喜欢的一个插件, 用于对界面进行大量自定义与精简  
-比如, 可以隐藏 Dash (按Super后底部的一行), 改变顶栏元素等  
+比如, 可以隐藏 Dash (按Super后底部的一行), 改变顶栏元素等   <br/>
 >>> **点击展开/隐藏图片**
 ![just-perfection](/images/gnome/overview_44_wave_dark_wallpaper.png)
 >>>
@@ -379,10 +379,10 @@ quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效,
 
 - [nothing-to-say](https://extensions.gnome.org/extension/1113/nothing-to-say/)
 用于切断/恢复声音的输入, 对我来说蛮有用的:  
-当与同学打游戏, 撞上爸妈查房, 立刻按下 `Super+\`, 防止爸妈训我的声音流入同学耳中, 维护尊严 :)  
+当与同学打游戏, 撞上爸妈查房, 立刻按下 `Super+\`, 防止爸妈训我的声音流入同学耳中, 维护尊严 :)  <br/> 
 
 - [space-bar](https://extensions.gnome.org/extension/5090/space-bar/)
-模仿 I3/Sway/Bspwm 等窗口管理器, 在左上角显示工作区, 有些类似的插件, 但个人认为, 这个插件最好  
+模仿 I3/Sway/Bspwm 等窗口管理器, 在左上角显示工作区, 有些类似的插件, 但个人认为, 这个插件最好  <br/> 
 >>> **点击展开/隐藏图片**
 ![space-bar/名称](/images/gnome/space-bar_name.png)
 ![space-bar/数字](/images/gnome/space-bar_number.png)
@@ -400,11 +400,11 @@ quake-mode 配上你喜欢的任意一个终端, 都会产生非常棒的奇效,
 <!-- <br> -->
 
 - [disable-workspace-switch-animation-for-GNOME40+](https://extensions.gnome.org/extension/4290/disable-workspace-switch-animation-for-gnome-40/)
-消除通过键盘切换工作区时的过渡动画, 获得急速切换的体验感  
+消除通过键盘切换工作区时的过渡动画, 获得急速切换的体验感  <br/> 
 
 - [gsconnect](https://extensions.gnome.org/extension/1319/gsconnect/)
 GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上角菜单添加对应菜单, 以便快速打开  
-手机需安装 `kdeconnect`, 你可以从本博客下载 apk 进行安装: [kdeconnect](/downloads/gnome/kdeconnect.apk)  
+手机需安装 `kdeconnect`, 你可以从本博客下载 apk 进行安装: [kdeconnect](/downloads/gnome/kdeconnect.apk)  <br/> 
 >>> **点击展开/隐藏图片**
 ![gsconnect](/images/gnome/gsconnect.png)
 >>>
@@ -422,10 +422,10 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 <!-- <br> -->
 
 - [user-avatar-in-quick-settings](https://extensions.gnome.org/extension/5506/user-avatar-in-quick-settings/)
-让右上角菜单出现你的头像, 提升美观而已  
+让右上角菜单出现你的头像, 提升美观而已   <br/>
 
 - [gnome40-ui-improvements](https://extensions.gnome.org/extension/4158/gnome-40-ui-improvements/)
-按下 `Super`, 进入 `Overview` 后, 在中上方显示工作区, 与下面的插件 `v-shell`  不兼容, 二选一, 我推荐下面的 `v-shell`  
+按下 `Super`, 进入 `Overview` 后, 在中上方显示工作区, 与下面的插件 `v-shell`  不兼容, 二选一, 我推荐下面的 `v-shell`  <br/> 
 >>> **点击展开/隐藏图片**
 ![gnome40-ui-improvements](/images/gnome/gnome40-ui-improvements.png)
 >>>
@@ -434,7 +434,7 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 
 - [v-shell](https://extensions.gnome.org/extension/5177/vertical-workspaces/)
 按下 `Super`, 进入 `Overview` 后, 在左边显示工作区, 同时附赠了各种非常好用的操作, 与上面的 `gnome40-ui-improvements` 二选一    
-当你进入 `Overview` 后, 按下 `space` 后可以查询打开的窗口, `alt+space` 查询最近修改的文件  
+当你进入 `Overview` 后, 按下 `space` 后可以查询打开的窗口, `alt+space` 查询最近修改的文件  <br/> 
 >>> **点击展开/隐藏图片**
 ![v-shell](/images/gnome/overview_44_wave_dark_wallpaper.png)
 >>>
@@ -442,13 +442,13 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 <br>
 
 - [gnome-fuzzy-app-search](https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/)
-出于某些目的, 默认的 `GNOME` 在 `Overview` 中不支持模糊查找, 可以通过该插件修改行为  
+出于某些目的, 默认的 `GNOME` 在 `Overview` 中不支持模糊查找, 可以通过该插件修改行为  <br/> 
 
 - [pip-on-top](https://extensions.gnome.org/extension/4691/pip-on-top/)
-当你通过浏览器中的画中画模式, 观看视频时, 让窗口一直保持在最顶部, 即使焦点在别的窗口  
+当你通过浏览器中的画中画模式, 观看视频时, 让窗口一直保持在最顶部, 即使焦点在别的窗口  <br/> 
 
 - [frequency-boost-switch](https://extensions.gnome.org/extension/4792/frequency-boost-switch/)
-在右上角菜单中的 `电池策略` 中添加一个 `Checkox`, 用于切换 `是否允许超频`  
+在右上角菜单中的 `电池策略` 中添加一个 `Checkox`, 用于切换 `是否允许超频`  <br/> 
 
 <!-- Deprecated -->
 <!-- - [overview-navigation](https://extensions.gnome.org/extension/1702/overview-navigation/) -->
@@ -472,10 +472,10 @@ GNOME版的 `kdeconnect`, 用于电脑与手机互连 (一个网下), 在右上�
 - [user-theme](https://extensions.gnome.org/extension/19/user-themes/)
 从用户目录加载对应的主题 (之后的换主题教程中会讲到)  
 注意: 还需要使用 `gnome-extensions prefs user-theme@gnome-shell-extensions.gcampax.github.com` 指定主题  
-但我个人还是喜欢 GNOME 默认的暗色主题, 默认的就已经非常好看了  
+但我个人还是喜欢 GNOME 默认的暗色主题, 默认的就已经非常好看了  <br/> 
 
 - [user-syle-sheet](https://extensions.gnome.org/extension/3414/user-stylesheet-font/)
-读取 `~/.local/share/gnome-shell/gnome-shell.css` 直接修改 GNOME 的默认CSS, 十分逆天, 适合重度 DIY 患者  
+读取 `~/.local/share/gnome-shell/gnome-shell.css` 直接修改 GNOME 的默认CSS, 十分逆天, 适合重度 DIY 患者  <br/> 
 
 
 
